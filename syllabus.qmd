@@ -2,6 +2,7 @@
 title: QMIR 2026 Syllabus
 author: Tristan Muno
 draft: true
+draft-mode: visible
 ---
 
 ## Session 1: Quantitative Research as Inference Under Uncertainty

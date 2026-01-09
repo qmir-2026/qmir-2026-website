@@ -1,5 +1,7 @@
 ---
-title: "Getting Started: Installation Guide" 
+title: "Getting Started: Installation Guide"
+draft: true
+draft-mode: visible
 ---
 
 ## Why so many tools?

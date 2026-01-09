@@ -1,6 +1,7 @@
 ---
 title: "About"
 draft: true
+draft-mode: visible
 ---
 
 About this site

@@ -1,9 +1,14 @@
 ---
 title: "QMIR 2026"
 subtitle: "University of Mannheim"
-draft: false
+draft: true
+draft-mode: visible
 ---
+
+⚠️ This website is currently under development. Content may be incomplete and subject to change.
 
 Welcome to the course website of quantitative methods in international relations 2026!
 
 You can find the course outline [here](syllabus.qmd).
+
+This website is still under development.
