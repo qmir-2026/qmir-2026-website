@@ -1,0 +1,44 @@
+[
+  {
+    "objectID": "ideas.html",
+    "href": "ideas.html",
+    "title": "Idea collection",
+    "section": "",
+    "text": "week getting-to-know-each-other-survey questions\n\nWhich tools have you used for writing?\nWhich tools have you used for quantitative analyses?\nFor each software tool, indicate how much or not you are familiar with it\n\nMS Word\nMS Excel\nStata\nLateX\nR\nMarkdown\nGit\nQuarto\nGitHub\nPython\nStan\n# Pre-Course Survey: Background, Experience, and Scientific Reasoning"
+  },
+  {
+    "objectID": "ideas.html#warm-up-background",
+    "href": "ideas.html#warm-up-background",
+    "title": "Idea collection",
+    "section": "Warm-Up & Background",
+    "text": "Warm-Up & Background\n\nW1. What is your primary field of study (major)?\n(Short text)\nW2. Do you have a secondary field of study (minor)?\n(Short text or “None”)\nW3. Which semester of your Bachelor’s program are you currently in?\n(Single choice)\n\n3rd semester\n\n4th semester\n\n5th semester\n\n6th semester\n\nOther / extended program\n\nW4. Have you taken a quantitative methods or statistics course before?\n(Single choice)\n\nNo\n\nYes, one course\n\nYes, more than one course\n\n\nW5. Why did you register for this class?\n(Multiple choice — pick all that apply 😎)\n\nMy degree says I have to (mandatory course)\n\nMy degree says I should take something like this (elective)\n\nI’m here voluntarily — I actually want to learn quantitative methods\n\nI optimized my schedule and this was the least painful option\n\nI heard the professor is cool / the class is fun\n\nI was curious and just decided to give it a shot\nW6. Which statement best describes how you feel about quantitative methods right now?\n(Single choice)\n\nCurious and motivated\n\nNeutral\n\nSlightly nervous\n\nVery nervous\n\nActively avoiding thinking about it 😅"
+  },
+  {
+    "objectID": "ideas.html#section-a-technical-experience-tools",
+    "href": "ideas.html#section-a-technical-experience-tools",
+    "title": "Idea collection",
+    "section": "Section A — Technical Experience & Tools",
+    "text": "Section A — Technical Experience & Tools\n\nA1. Which of the following tools have you heard of before?\n(Multiple selection)\n\nR\n\nRStudio / Positron\n\nQuarto / R Markdown\n\nGit\n\nGitHub\n\nPython\n\nStata\n\nSPSS\n\nExcel (advanced use beyond basic spreadsheets)\n\nLaTeX\n\nCommand line / terminal\n\nA2. Which of the following tools have you actively worked with before?\n(Multiple selection)\n\nR\n\nRStudio / Positron\n\nQuarto / R Markdown\n\nGit\n\nGitHub\n\nPython\n\nStata\n\nSPSS\n\nExcel\n\nLaTeX\n\nCommand line / terminal\n\nNone of the above\n\nA3. How would you describe your overall confidence in working with code?\n(Single choice)\n\nVery low – I find code intimidating\n\nLow – I can follow examples but struggle independently\n\nMedium – I can modify existing code and troubleshoot basic issues\n\nHigh – I can write code for my own analyses\n\nVery high – I regularly work with code-based projects"
+  },
+  {
+    "objectID": "ideas.html#section-b-scientific-reasoning-inference",
+    "href": "ideas.html#section-b-scientific-reasoning-inference",
+    "title": "Idea collection",
+    "section": "Section B — Scientific Reasoning & Inference",
+    "text": "Section B — Scientific Reasoning & Inference\n\nB1. Please indicate how much you agree or disagree with the following statements:\n(Likert scale: strongly disagree → strongly agree)\n\nStatistical analysis is mainly about determining whether a hypothesis is true or false.\n\nEmpirical data can increase or decrease our confidence in a theoretical claim.\n\nUncertainty should be explicitly reported when presenting empirical results.\n\nScientific knowledge is always provisional and subject to revision with new data.\n\nA single statistical result can definitively prove or disprove a theory.\n\nModels are simplifications of reality rather than exact representations.\n\nB2. When you see a numerical result in a paper (e.g., an estimate or coefficient), what are you usually most interested in?\n(Select up to two)\n\nWhether it is “statistically significant”\n\nThe size of the effect\n\nThe uncertainty around the estimate\n\nWhether the result fits the theory\n\nWhether the model assumptions seem plausible\n\nI am usually unsure how to interpret such results"
+  },
+  {
+    "objectID": "ideas.html#section-c-modeling-data-analysis-experience",
+    "href": "ideas.html#section-c-modeling-data-analysis-experience",
+    "title": "Idea collection",
+    "section": "Section C — Modeling & Data Analysis Experience",
+    "text": "Section C — Modeling & Data Analysis Experience\n\nC1. Which of the following methods or analyses have you heard of?\n(Multiple selection)\n\nDescriptive statistics\nCorrelation analysis\n\nLinear regression\n\nMultivariate regression\n\nLogistic regression\n\nInteraction effects\n\nPanel data / fixed effects\n\nMultilevel / mixed-effects models\n\nCausal diagrams (DAGs)\n\nSimulation / Monte Carlo methods\n\nC2. Which of the following have you actively applied yourself (e.g., in assignments, term papers, or projects)?\n(Multiple selection)\n\nDescriptive statistics\nCorrelation analysis\n\nLinear regression\n\nMultivariate regression\n\nLogistic regression\n\nInteraction effects\n\nPanel data / fixed effects\n\nMultilevel / mixed-effects models\n\nCausal diagrams (DAGs)\n\nSimulation / Monte Carlo methods\n\nNone of the above\n\nC3. In previous coursework, data analysis was mostly…\n(Single choice)\n\nInterpreting outputs produced by others\n\nFollowing step-by-step instructions\n\nApplying methods to my own research questions\n\nDesigning and executing a full analysis independently"
+  },
+  {
+    "objectID": "ideas.html#optional-reflection",
+    "href": "ideas.html#optional-reflection",
+    "title": "Idea collection",
+    "section": "Optional Reflection",
+    "text": "Optional Reflection\n\nD1. Is there anything you are particularly confident about or particularly anxious about regarding quantitative methods?\n(Short text)"
+  }
+]

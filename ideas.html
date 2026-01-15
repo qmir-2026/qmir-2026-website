@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Getting Started: Installation Guide – QMIR 2026</title>
+<title>Idea collection – QMIR 2026</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,41 +19,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -102,7 +67,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
-<meta name="quarto:status" content="draft">
 
 
 <link rel="stylesheet" href="styles.css">
@@ -111,7 +75,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <body class="nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top"><div id="quarto-draft-alert" class="alert alert-warning"><i class="bi bi-pencil-square"></i>Draft</div>
+  <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
@@ -140,19 +104,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
-  <ul class="collapse">
-  <li><a href="#installation-guide" id="toc-installation-guide" class="nav-link active" data-scroll-target="#installation-guide">Installation Guide</a></li>
-  <li><a href="#sec-r" id="toc-sec-r" class="nav-link" data-scroll-target="#sec-r">Installing R</a></li>
-  <li><a href="#sec-positron" id="toc-sec-positron" class="nav-link" data-scroll-target="#sec-positron">Installing Positron</a></li>
-  <li><a href="#sec-compiler" id="toc-sec-compiler" class="nav-link" data-scroll-target="#sec-compiler">Installing a C++ Compiler</a></li>
-  <li><a href="#sec-git" id="toc-sec-git" class="nav-link" data-scroll-target="#sec-git">Installing Git</a>
-  <ul class="collapse">
-  <li><a href="#step-3-configure-git" id="toc-step-3-configure-git" class="nav-link" data-scroll-target="#step-3-configure-git">Step 3: Configure Git</a></li>
-  <li><a href="#step-4-create-a-github-account" id="toc-step-4-create-a-github-account" class="nav-link" data-scroll-target="#step-4-create-a-github-account">Step 4: Create a GitHub account</a></li>
-  </ul></li>
-  <li><a href="#installing-the-tinytex-package" id="toc-installing-the-tinytex-package" class="nav-link" data-scroll-target="#installing-the-tinytex-package">Installing the <code>tinytex</code> package</a></li>
-  <li><a href="#installing-the-tidyverse-package" id="toc-installing-the-tidyverse-package" class="nav-link" data-scroll-target="#installing-the-tidyverse-package">Installing the <code>tidyverse</code> package</a></li>
-  <li><a href="#installing-the-brms-package" id="toc-installing-the-brms-package" class="nav-link" data-scroll-target="#installing-the-brms-package">Installing the <code>brms</code> package</a></li>
+  <ul>
+  <li><a href="#warm-up-background" id="toc-warm-up-background" class="nav-link active" data-scroll-target="#warm-up-background">Warm-Up &amp; Background</a></li>
+  <li><a href="#section-a-technical-experience-tools" id="toc-section-a-technical-experience-tools" class="nav-link" data-scroll-target="#section-a-technical-experience-tools">Section A — Technical Experience &amp; Tools</a></li>
+  <li><a href="#section-b-scientific-reasoning-inference" id="toc-section-b-scientific-reasoning-inference" class="nav-link" data-scroll-target="#section-b-scientific-reasoning-inference">Section B — Scientific Reasoning &amp; Inference</a></li>
+  <li><a href="#section-c-modeling-data-analysis-experience" id="toc-section-c-modeling-data-analysis-experience" class="nav-link" data-scroll-target="#section-c-modeling-data-analysis-experience">Section C — Modeling &amp; Data Analysis Experience</a></li>
+  <li><a href="#optional-reflection" id="toc-optional-reflection" class="nav-link" data-scroll-target="#optional-reflection">Optional Reflection</a></li>
   </ul>
 </nav>
     </div>
@@ -161,7 +118,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Getting Started: Installation Guide</h1>
+<h1 class="title">Idea collection</h1>
 </div>
 
 
@@ -178,187 +135,270 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="why-so-many-tools" class="level3">
-<h3 class="anchored" data-anchor-id="why-so-many-tools">Why so many tools?</h3>
-<p>This course introduces you to a range of software tools which, taken together, form a powerful and contemporary toolbox for transparent, reproducible, and scalable empirical research. Rather than relying on a single piece of software, you will learn how different tools interact and complement one another — much like they do in real-world research workflows.</p>
-</section>
-<section id="feeling-overwhelmed-is-normal-and-expected" class="level3">
-<h3 class="anchored" data-anchor-id="feeling-overwhelmed-is-normal-and-expected">Feeling overwhelmed is normal (and expected)</h3>
-<p>Encountering many tools at once can feel complex and, at times, overwhelming. This is entirely normal and an expected part of the learning process. Modern research environments evolve quickly, with new libraries, platforms, and technologies (including AI-based tools) constantly emerging. One of the central goals of this course is therefore not just to teach specific tools, but to help you develop the ability to learn how to learn programming and computational methods — an essential and transferable skill for any data-driven career.</p>
-</section>
-<section id="tools-as-part-of-a-research-workflow" class="level3">
-<h3 class="anchored" data-anchor-id="tools-as-part-of-a-research-workflow">Tools as part of a research workflow</h3>
-<p>Importantly, these tools are not only used to perform calculations or produce results. They also help you document decisions, protocol analytical steps, collaborate with others, and build workflows that can be extended, reproduced, and scaled. In this sense, the course aims to familiarize you with research practices that more closely resemble how high-quality empirical work is actually conducted.</p>
-</section>
-<section id="learning-concepts-not-just-commands" class="level3">
-<h3 class="anchored" data-anchor-id="learning-concepts-not-just-commands">Learning concepts, not just commands</h3>
-<p>Given the scope of the course, we will inevitably only scratch the surface — the “tip of the iceberg” — of many of these tools. However, I will emphasize conceptual understanding: how the tools work in principle, why they are useful, and in which situations they are beneficial. This foundation is designed to enable you to work independently and confidently with these (and future) tools beyond the course.</p>
-</section>
-<section id="pragmatism-over-dogmatism" class="level3">
-<h3 class="anchored" data-anchor-id="pragmatism-over-dogmatism">Pragmatism over dogmatism</h3>
-<p>The workflow and software stack presented here reflect my own experience and day-to-day research practice. They are not meant to be prescriptive or dogmatic. There is no single “correct” way to code or to structure an analysis, and many different approaches can lead to the same goal. Pragmatism matters: tools should serve your research questions, not the other way around.</p>
-</section>
-<section id="installation-timeline" class="level3">
-<h3 class="anchored" data-anchor-id="installation-timeline">Installation timeline</h3>
-<p>This site provides an overview of all software you are expected to install for the course. While not all tools will be used in the first week, I strongly recommend installing everything as early as possible. This gives us time to troubleshoot potential issues and ensures that technical setup does not become a bottleneck once we move into substantive work.</p>
-</section>
-<section id="installation-guide" class="level1">
-<h1>Installation Guide</h1>
-</section>
-<section id="sec-r" class="level1">
-<h1>Installing R</h1>
-<p>First, you need to install R, a free and open-source programming language widely used for statistical analysis, data visualization, and reproducible research. R will be our main “tool”, you can think of it as an enginge that deals with our calculations.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
-<div class="tabset-margin-container"></div><div class="panel-tabset" data-group="os">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Windows</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">MacOS</a></li></ul>
-<div class="tab-content" data-group="os">
-<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <ol type="1">
-<li>Go to the <a href="https://cran.r-project.org/">Comprehensive R Archive Network (CRAN) website</a>.</li>
-<li>Click “Download R for Windows”.</li>
-<li>Select <code>base</code> and download the installation file.</li>
-<li>Run the downloaded file to install R.</li>
-</ol>
-</div>
-<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
-<ol type="1">
-<li>Go to the <a href="https://cran.r-project.org/">Comprehensive R Archive Network (CRAN) website</a>.</li>
-<li>Click “Download R for MacOS”.</li>
-<li>Choose the latest version (4.5.2 at the time of writing):
+<li>week getting-to-know-each-other-survey questions
+<ol type="a">
+<li>Which tools have you used for writing?</li>
+<li>Which tools have you used for quantitative analyses?</li>
+<li>For each software tool, indicate how much or not you are familiar with it
 <ul>
-<li>For Apple silicon chips: <code>R-4.5.2-arm64.pkg</code></li>
-<li>For Intel Macs: <code>R-4.5.2-x86_64.pkg</code></li>
+<li>MS Word</li>
+<li>MS Excel</li>
+<li>Stata</li>
+<li>LateX</li>
+<li>R</li>
+<li>Markdown</li>
+<li>Git</li>
+<li>Quarto</li>
+<li>GitHub</li>
+<li>Python</li>
+<li>Stan</li>
 </ul></li>
-<li>Download and install the selected file.</li>
-<li>Also <a href="https://www.xquartz.org/">download and install XQuartz</a>.</li>
+<li></li>
+</ol></li>
 </ol>
-</div>
-</div>
-</div>
-</section>
-<section id="sec-positron" class="level1">
-<h1>Installing Positron</h1>
-<p>Next, we will use Positron as our integrated development environment (IDE) to program with R. You can think of it as the car dashboard for our engine (R), as it provides a graphic user interface (GUI) to better control, monitor and implement R code. Positron is a free and source available IDE designed specifically for data science with R and Python.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Why are we not using RStudio?
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>If you had any contact with R already or know people who have, you may be aware that one of the most widespread IDEs for R is actually RStudio. I decided to teach Positron for a couple of reasons:</p>
-<ol type="1">
-<li>It is a modern and super useful IDE for both programming and project management that contains nice new features that allow both for good integration of coding with R and writing with Quarto.</li>
-<li>It works neatly with R <em>and</em> Python — although we learn R here, I consider it highly valuable to have the future possibility of incorporating Python as well, as many scientific disciplines and applied enterprises use Python.</li>
-<li>It has a very good graphical integration of version controlling using git.</li>
-<li>It is built on an open source precessor of ant thus very similar to VS Code, one of the most popular IDE globally.</li>
-<li>Finally, I am confident that if you learn to navigate and work with Positron, you will have no problem adapting to RStudio.</li>
-</ol>
-</div>
-</div>
-<div class="tabset-margin-container"></div><div class="panel-tabset" data-group="os">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Windows</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">MacOS</a></li></ul>
-<div class="tab-content" data-group="os">
-<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
-<ol type="1">
-<li>Navigate to https://positron.posit.co/install.html</li>
-<li>Make sure to install all prerequisites listed for your operating system (you ignore the <code>Python setup</code> and <code>R setup</code> panes).</li>
-<li>Accept the license agreement by ticking the box.</li>
-<li>Click <code>Download Positron for Windows</code> and run the downloaded file to install Positron.</li>
-</ol>
-</div>
-<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
-<ol type="1">
-<li>Navigate to https://positron.posit.co/install.html</li>
-<li>Make sure to install all prerequisites listed for your operating system (you ignore the <code>Python setup</code> and <code>R setup</code> panes).</li>
-<li>Accept the license agreement by ticking the box.</li>
-<li>Click <code>Download Positron for MacOS</code> and run the downloaded file to install Positron.</li>
-</ol>
-</div>
-</div>
-</div>
-</section>
-<section id="sec-compiler" class="level1">
-<h1>Installing a C++ Compiler</h1>
-<p>Some R packages we will use later in the course rely internally on <strong>C++</strong>, a much more efficient programming language for computationally intensive tasks. To make this work, R needs access to a <strong>C++ compiler</strong> so that it can compile and run C++ code <em>behind the scenes</em>. You will usually not interact with C++ directly, but the compiler is required for installing and using certain R packages.</p>
-<div class="tabset-margin-container"></div><div class="panel-tabset" data-group="os">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">Windows</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">macOS</a></li></ul>
-<div class="tab-content" data-group="os">
-<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
-<ol type="1">
-<li>Go to the <a href="https://cran.r-project.org/bin/windows/Rtools/">RTools page on CRAN</a>.</li>
-<li>Download and install the <strong>Rtools45 installer</strong> (matching your R version).</li>
-<li>Follow the installation instructions and keep the default settings unless instructed otherwise.</li>
-</ol>
-</div>
-<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
-<ol type="1">
-<li>Download and install <strong>Xcode</strong> from the <a href="https://developer.apple.com/xcode/resources/">Mac App Store</a>.</li>
-<li>After installation, open the Terminal and run the following command to install the command-line tools as well:</li>
-</ol>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">xcode-select</span> <span class="at">--install</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Once installed, your system will be able to compile C++ code required by some R packages.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="sec-git" class="level1">
-<h1>Installing Git</h1>
-<p><strong>Git</strong> is a free and open-source version control system—a tool that tracks changes in your files over time. It allows you to see what has changed, revert to earlier versions, and collaborate with others without overwriting each other’s work. <strong>GitHub</strong> is an online platform that hosts Git repositories and adds powerful collaboration features, such as pull requests, issues, and automated workflows. Together, Git and GitHub make it easier to write code, analyze data, and manage research projects in a <strong>transparent and reproducible</strong> way.</p>
-<div class="tabset-margin-container"></div><div class="panel-tabset" data-group="os">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true">Windows</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false">MacOS</a></li></ul>
-<div class="tab-content" data-group="os">
-<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
-<ol type="1">
-<li>Go to the <a href="https://git-scm.com/install/windows">Git download page</a>.<br>
+<p># Pre-Course Survey: Background, Experience, and Scientific Reasoning</p>
+<section id="warm-up-background" class="level2">
+<h2 class="anchored" data-anchor-id="warm-up-background">Warm-Up &amp; Background</h2>
+<ul>
+<li><p><strong>W1. What is your primary field of study (major)?</strong><br>
+<em>(Short text)</em></p></li>
+<li><p><strong>W2. Do you have a secondary field of study (minor)?</strong><br>
+<em>(Short text or “None”)</em></p></li>
+<li><p><strong>W3. Which semester of your Bachelor’s program are you currently in?</strong><br>
+<em>(Single choice)</em></p>
+<ul>
+<li>3rd semester<br>
 </li>
-<li>Press the <code>Click here to download</code> link.</li>
-<li>Open the downloaded <code>.exe</code> file and follow the installation instructions.</li>
-<li>Open the Windows PowerShell or Terminal application and type:</li>
-</ol>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>You should see a version number. If so, Git is installed correctly.</p>
-</div>
-<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
-<p>Since you installed Xcode, you should have Git as it is shipped by Apple in Xcode. Open the terminal and enter:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>You should see a version number. If so, Git is installed correctly.</p>
-</div>
-</div>
-</div>
-<section id="step-3-configure-git" class="level2">
-<h2 class="anchored" data-anchor-id="step-3-configure-git">Step 3: Configure Git</h2>
-<p>To use Git, you need to set a <strong>name</strong> and <strong>email address</strong>. These will be associated with every change (commit) you make, acting like a digital signature. You do not need to use your full name, but it is recommended.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.name <span class="st">"Your Name"</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.email <span class="st">"your@mail.com"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<li>4th semester<br>
+</li>
+<li>5th semester<br>
+</li>
+<li>6th semester<br>
+</li>
+<li>Other / extended program</li>
+</ul></li>
+<li><p><strong>W4. Have you taken a quantitative methods or statistics course before?</strong><br>
+<em>(Single choice)</em></p>
+<ul>
+<li>No<br>
+</li>
+<li>Yes, one course<br>
+</li>
+<li>Yes, more than one course</li>
+</ul></li>
+</ul>
+<p><strong>W5. Why did you register for this class?</strong><br>
+(<em>Multiple choice — pick all that apply 😎</em>)</p>
+<ul>
+<li><p>My degree says I <em>have to</em> (mandatory course)<br>
+</p></li>
+<li><p>My degree says I <em>should</em> take something like this (elective)<br>
+</p></li>
+<li><p>I’m here voluntarily — I actually want to <em>learn quantitative methods</em><br>
+</p></li>
+<li><p>I optimized my schedule and this was the <em>least painful option</em><br>
+</p></li>
+<li><p>I heard the professor is <em>cool</em> / the class is fun<br>
+</p></li>
+<li><p>I was curious and just decided to <em>give it a shot</em></p></li>
+<li><p><strong>W6. Which statement best describes how you feel about quantitative methods right now?</strong><br>
+<em>(Single choice)</em></p>
+<ul>
+<li>Curious and motivated<br>
+</li>
+<li>Neutral<br>
+</li>
+<li>Slightly nervous<br>
+</li>
+<li>Very nervous<br>
+</li>
+<li>Actively avoiding thinking about it 😅</li>
+</ul></li>
+</ul>
+<hr>
 </section>
-<section id="step-4-create-a-github-account" class="level2">
-<h2 class="anchored" data-anchor-id="step-4-create-a-github-account">Step 4: Create a GitHub account</h2>
-<p>If you don’t already have one, <a href="https://github.com/join">create a free GitHub account here</a>.<br>
-GitHub will allow you to store repositories online, collaborate with others, and track your work from anywhere.</p>
+<section id="section-a-technical-experience-tools" class="level2">
+<h2 class="anchored" data-anchor-id="section-a-technical-experience-tools">Section A — Technical Experience &amp; Tools</h2>
+<ul>
+<li><strong>A1. Which of the following tools have you heard of before?</strong><br>
+<em>(Multiple selection)</em>
+<ul>
+<li>R<br>
+</li>
+<li>RStudio / Positron<br>
+</li>
+<li>Quarto / R Markdown<br>
+</li>
+<li>Git<br>
+</li>
+<li>GitHub<br>
+</li>
+<li>Python<br>
+</li>
+<li>Stata<br>
+</li>
+<li>SPSS<br>
+</li>
+<li>Excel (advanced use beyond basic spreadsheets)<br>
+</li>
+<li>LaTeX<br>
+</li>
+<li>Command line / terminal</li>
+</ul></li>
+<li><strong>A2. Which of the following tools have you actively worked with before?</strong><br>
+<em>(Multiple selection)</em>
+<ul>
+<li>R<br>
+</li>
+<li>RStudio / Positron<br>
+</li>
+<li>Quarto / R Markdown<br>
+</li>
+<li>Git<br>
+</li>
+<li>GitHub<br>
+</li>
+<li>Python<br>
+</li>
+<li>Stata<br>
+</li>
+<li>SPSS<br>
+</li>
+<li>Excel<br>
+</li>
+<li>LaTeX<br>
+</li>
+<li>Command line / terminal<br>
+</li>
+<li>None of the above</li>
+</ul></li>
+<li><strong>A3. How would you describe your overall confidence in working with code?</strong><br>
+<em>(Single choice)</em>
+<ul>
+<li>Very low – I find code intimidating<br>
+</li>
+<li>Low – I can follow examples but struggle independently<br>
+</li>
+<li>Medium – I can modify existing code and troubleshoot basic issues<br>
+</li>
+<li>High – I can write code for my own analyses<br>
+</li>
+<li>Very high – I regularly work with code-based projects</li>
+</ul></li>
+</ul>
+<hr>
 </section>
+<section id="section-b-scientific-reasoning-inference" class="level2">
+<h2 class="anchored" data-anchor-id="section-b-scientific-reasoning-inference">Section B — Scientific Reasoning &amp; Inference</h2>
+<ul>
+<li><strong>B1. Please indicate how much you agree or disagree with the following statements:</strong><br>
+<em>(Likert scale: strongly disagree → strongly agree)</em>
+<ul>
+<li>Statistical analysis is mainly about determining whether a hypothesis is true or false.<br>
+</li>
+<li>Empirical data can increase or decrease our confidence in a theoretical claim.<br>
+</li>
+<li>Uncertainty should be explicitly reported when presenting empirical results.<br>
+</li>
+<li>Scientific knowledge is always provisional and subject to revision with new data.<br>
+</li>
+<li>A single statistical result can definitively prove or disprove a theory.<br>
+</li>
+<li>Models are simplifications of reality rather than exact representations.</li>
+</ul></li>
+<li><strong>B2. When you see a numerical result in a paper (e.g., an estimate or coefficient), what are you usually most interested in?</strong><br>
+<em>(Select up to two)</em>
+<ul>
+<li>Whether it is “statistically significant”<br>
+</li>
+<li>The size of the effect<br>
+</li>
+<li>The uncertainty around the estimate<br>
+</li>
+<li>Whether the result fits the theory<br>
+</li>
+<li>Whether the model assumptions seem plausible<br>
+</li>
+<li>I am usually unsure how to interpret such results</li>
+</ul></li>
+</ul>
+<hr>
 </section>
-<section id="installing-the-tinytex-package" class="level1">
-<h1>Installing the <code>tinytex</code> package</h1>
+<section id="section-c-modeling-data-analysis-experience" class="level2">
+<h2 class="anchored" data-anchor-id="section-c-modeling-data-analysis-experience">Section C — Modeling &amp; Data Analysis Experience</h2>
+<ul>
+<li><strong>C1. Which of the following methods or analyses have you heard of?</strong><br>
+<em>(Multiple selection)</em>
+<ul>
+<li>Descriptive statistics</li>
+<li>Correlation analysis<br>
+</li>
+<li>Linear regression<br>
+</li>
+<li>Multivariate regression<br>
+</li>
+<li>Logistic regression<br>
+</li>
+<li>Interaction effects<br>
+</li>
+<li>Panel data / fixed effects<br>
+</li>
+<li>Multilevel / mixed-effects models<br>
+</li>
+<li>Causal diagrams (DAGs)<br>
+</li>
+<li>Simulation / Monte Carlo methods</li>
+</ul></li>
+<li><strong>C2. Which of the following have you actively applied yourself (e.g., in assignments, term papers, or projects)?</strong><br>
+<em>(Multiple selection)</em>
+<ul>
+<li>Descriptive statistics</li>
+<li>Correlation analysis<br>
+</li>
+<li>Linear regression<br>
+</li>
+<li>Multivariate regression<br>
+</li>
+<li>Logistic regression<br>
+</li>
+<li>Interaction effects<br>
+</li>
+<li>Panel data / fixed effects<br>
+</li>
+<li>Multilevel / mixed-effects models<br>
+</li>
+<li>Causal diagrams (DAGs)<br>
+</li>
+<li>Simulation / Monte Carlo methods<br>
+</li>
+<li>None of the above</li>
+</ul></li>
+<li><strong>C3. In previous coursework, data analysis was mostly…</strong><br>
+<em>(Single choice)</em>
+<ul>
+<li>Interpreting outputs produced by others<br>
+</li>
+<li>Following step-by-step instructions<br>
+</li>
+<li>Applying methods to my own research questions<br>
+</li>
+<li>Designing and executing a full analysis independently</li>
+</ul></li>
+</ul>
+<hr>
 </section>
-<section id="installing-the-tidyverse-package" class="level1">
-<h1>Installing the <code>tidyverse</code> package</h1>
-</section>
-<section id="installing-the-brms-package" class="level1">
-<h1>Installing the <code>brms</code> package</h1>
+<section id="optional-reflection" class="level2">
+<h2 class="anchored" data-anchor-id="optional-reflection">Optional Reflection</h2>
+<ul>
+<li><strong>D1. Is there anything you are particularly confident about or particularly anxious about regarding quantitative methods?</strong><br>
+<em>(Short text)</em></li>
+</ul>
 
 
 </section>
 
-
-<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
-
-<ol>
-<li id="fn1"><p>The engine-dashboard-analogy is borrowed from <a href="https://datavizf25.classes.andrewheiss.com/syllabus.html#r-and-rstudio">Andrew Heiss</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section></div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
