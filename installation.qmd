@@ -2,53 +2,67 @@
 title: "Getting Started: Installation Guide"
 draft: true
 draft-mode: visible
+toc-depth: 2
 ---
 
-## Why so many tools?
+### Why so many tools?
 
 This course introduces you to a range of software tools which, taken together, form a powerful and contemporary toolbox for transparent, reproducible, and scalable empirical research. Rather than relying on a single piece of software, you will learn how different tools interact and complement one another --- much like they do in real-world research workflows.
 
-## Feeling overwhelmed is normal (and expected)
+### Feeling overwhelmed is normal (and expected)
 
 Encountering many tools at once can feel complex and, at times, overwhelming. This is entirely normal and an expected part of the learning process. Modern research environments evolve quickly, with new libraries, platforms, and technologies (including AI-based tools) constantly emerging. One of the central goals of this course is therefore not just to teach specific tools, but to help you develop the ability to learn how to learn programming and computational methods --- an essential and transferable skill for any data-driven career.
 
-## Tools as part of a research workflow
+### Tools as part of a research workflow
 
 Importantly, these tools are not only used to perform calculations or produce results. They also help you document decisions, protocol analytical steps, collaborate with others, and build workflows that can be extended, reproduced, and scaled. In this sense, the course aims to familiarize you with research practices that more closely resemble how high-quality empirical work is actually conducted.
 
-## Learning concepts, not just commands
+### Learning concepts, not just commands
 
 Given the scope of the course, we will inevitably only scratch the surface --- the “tip of the iceberg” --- of many of these tools. However, I will emphasize conceptual understanding: how the tools work in principle, why they are useful, and in which situations they are beneficial. This foundation is designed to enable you to work independently and confidently with these (and future) tools beyond the course.
 
-## Pragmatism over dogmatism
+### Pragmatism over dogmatism
 
 The workflow and software stack presented here reflect my own experience and day-to-day research practice. They are not meant to be prescriptive or dogmatic. There is no single “correct” way to code or to structure an analysis, and many different approaches can lead to the same goal. Pragmatism matters: tools should serve your research questions, not the other way around.
 
-## Installation timeline
+### Installation timeline
 
 This site provides an overview of all software you are expected to install for the course. While not all tools will be used in the first week, I strongly recommend installing everything as early as possible. This gives us time to troubleshoot potential issues and ensures that technical setup does not become a bottleneck once we move into substantive work.
 
-# Installing R
+# Installation Guide
+
+# Installing R {#sec-r}
 
 First, you need to install R, a free and open-source programming language widely used for statistical analysis, data visualization, and reproducible research. R will be our main "tool", you can think of it as an enginge that deals with our calculations.[^renginge] 
 
 [^renginge]: The engine-dashboard-analogy is borrowed from [Andrew Heiss](https://datavizf25.classes.andrewheiss.com/syllabus.html#r-and-rstudio).
 
-1. Go to the Comprehensive R Archive Network (CRAN) website: https://cran.r-project.org/
-2. Click "Download R for Windows" or "Download R for MacOS", depending on your operating system.
-3. If on **Windows**, select `base` and the installation file will be downloaded. If on **MacOS**, click the latest version (4.5.2 at the time of writing this manual) either for Apple silicon chips (`R-4.5.2-arm64.pkg`) or older Macs with Intel chips (`R-4.5.2-x86_64.pkg`).
-4. If you are on Mac, [download and install XQuartz](https://www.xquartz.org/) as well. For windows, this step is not necessary.
+::: {.panel-tabset group="os"}
+
+## Windows
+
+1. Go to the [Comprehensive R Archive Network (CRAN) website](https://cran.r-project.org/).
+2. Click "Download R for Windows".
+3. Select `base` and download the installation file.
+4. Run the downloaded file to install R.
+
+## MacOS
+
+1. Go to the [Comprehensive R Archive Network (CRAN) website](https://cran.r-project.org/).
+2. Click "Download R for MacOS".
+3. Choose the latest version (4.5.2 at the time of writing):
+   - For Apple silicon chips: `R-4.5.2-arm64.pkg`
+   - For Intel Macs: `R-4.5.2-x86_64.pkg`
+4. Download and install the selected file.
+5. Also [download and install XQuartz](https://www.xquartz.org/).
+
+:::
 
 
-# Installing Positron
+# Installing Positron {#sec-positron}
 
 Next, we will use Positron as our integrated development environment (IDE) to program with R.
 You can think of it as the car dashboard for our engine (R), as it provides a graphic user interface (GUI) to better control, monitor and implement R code. Positron is a free and source available IDE designed specifically for data science with R and Python.
-
-1. Navigate to https://positron.posit.co/install.html
-2. Make sure to install all prerequisites listed for your operating system (you ignore the `Python setup` and `R setup` panes).
-3. Accept the license agreement by ticking the box.
-4. Click `Download Positron for XX` and run the downloaded file to install Positron.
 
 ::: {.callout-note}
 ## Why are we not using RStudio?
@@ -56,7 +70,7 @@ You can think of it as the car dashboard for our engine (R), as it provides a gr
 If you had any contact with R already or know people who have, you may be aware that one of the most widespread IDEs for R is actually RStudio.
 I decided to teach Positron for a couple of reasons:
 
-1. It is a modern and super useful for both programming and project management that contains nice new features that allow both for good integration of coding with R and writing with Quarto.
+1. It is a modern and super useful IDE for both programming and project management that contains nice new features that allow both for good integration of coding with R and writing with Quarto.
 2. It works neatly with R *and* Python --- although we learn R here, I consider it highly valuable to have the future possibility of incorporating Python as well, as many scientific disciplines and applied enterprises use Python.
 3. It has a very good graphical integration of version controlling using git.
 4. It is built on an open source precessor of ant thus very similar to VS Code, one of the most popular IDE globally.
@@ -64,10 +78,102 @@ I decided to teach Positron for a couple of reasons:
 
 :::
 
+::: {.panel-tabset group="os"}
+
+## Windows
+
+1. Navigate to https://positron.posit.co/install.html
+2. Make sure to install all prerequisites listed for your operating system (you ignore the `Python setup` and `R setup` panes).
+3. Accept the license agreement by ticking the box.
+4. Click `Download Positron for Windows` and run the downloaded file to install Positron.
+
+## MacOS
+
+1. Navigate to https://positron.posit.co/install.html
+2. Make sure to install all prerequisites listed for your operating system (you ignore the `Python setup` and `R setup` panes).
+3. Accept the license agreement by ticking the box.
+4. Click `Download Positron for MacOS` and run the downloaded file to install Positron.
+
+:::
+
+
+# Installing a C++ Compiler {#sec-compiler}
+
+Some R packages we will use later in the course rely internally on **C++**, a much more efficient programming language for computationally intensive tasks. To make this work, R needs access to a **C++ compiler** so that it can compile and run C++ code *behind the scenes*. You will usually not interact with C++ directly, but the compiler is required for installing and using certain R packages.
+
+::: {.panel-tabset group="os"}
+
+## Windows
+
+1. Go to the [RTools page on CRAN](https://cran.r-project.org/bin/windows/Rtools/).
+2. Download and install the **Rtools45 installer** (matching your R version).
+3. Follow the installation instructions and keep the default settings unless instructed otherwise.
+
+## macOS
+
+1. Download and install **Xcode** from the [Mac App Store](https://developer.apple.com/xcode/resources/).
+2. After installation, open the Terminal and run the following command to install the command-line tools as well:
+
+```bash
+xcode-select --install
+```
+
+Once installed, your system will be able to compile C++ code required by some R packages.
+
+:::
+
+# Installing Git {#sec-git}
+
+**Git** is a free and open-source version control system—a tool that tracks changes in your files over time. It allows you to see what has changed, revert to earlier versions, and collaborate with others without overwriting each other’s work. **GitHub** is an online platform that hosts Git repositories and adds powerful collaboration features, such as pull requests, issues, and automated workflows. Together, Git and GitHub make it easier to write code, analyze data, and manage research projects in a **transparent and reproducible** way.
+
+::: {.panel-tabset group="os"}
+
+## Windows
+
+1. Go to the [Git download page](https://git-scm.com/install/windows).  
+2. Press the `Click here to download` link.
+3. Open the downloaded `.exe` file and follow the installation instructions.
+4. Open the Windows PowerShell or Terminal application and type:
+
+```bash
+git --version
+```
+
+You should see a version number. If so, Git is installed correctly.
+
+## MacOS
+
+Since you installed Xcode, you should have Git as it is shipped by Apple in Xcode. Open the terminal and enter:
+
+```bash
+git --version
+```
+
+You should see a version number. If so, Git is installed correctly.
+
+:::
+
+
+
+## Configure Git
+
+To use Git, you need to set a **name** and **email address**. These will be associated with every change (commit) you make, acting like a digital signature. You do not need to use your full name, but it is recommended.
+
+```bash
+git config --global user.name "Your Name"
+git config --global user.email "your@mail.com"
+```
+
+## Create a GitHub account
+
+If you don’t already have one, [create a free GitHub account here](https://github.com/join).  
+GitHub will allow you to store repositories online, collaborate with others, and track your work from anywhere.
+We will use GitHub to distribute course materials.
+
+
+
+# Installing the `tinytex` package
+
 # Installing the `tidyverse` package
-
-# Installing Git
-
-# Installing a C++ compiler
 
 # Installing the `brms` package
