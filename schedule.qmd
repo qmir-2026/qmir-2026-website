@@ -48,7 +48,7 @@ Here's your roadmap for the semester!
 | 11    | Fixed Effects and Within-Unit Inference | May 04 | May 07 | [{{< fa chalkboard >}}]{style="color: lightgray"} | [{{< fa code >}}]{style="color: lightgray"}  | [{{< fa laptop-code >}}]{style="color: lightgray"} | [{{< fa book class="pending" >}}]{style="color: lightgray"} |
 | 12    | Multilevel Models and Partial Pooling  | May 11 | May 21 | [{{< fa chalkboard >}}]{style="color: lightgray"} | [{{< fa code >}}]{style="color: lightgray"}  | [{{< fa laptop-code >}}]{style="color: lightgray"} | [{{< fa book class="pending" >}}]{style="color: lightgray"} |
 | 13    | Semester Wrap Up and Moving On | May 18 | May 28 | [{{< fa chalkboard >}}]{style="color: lightgray"} | [{{< fa code >}}]{style="color: lightgray"}  | [{{< fa laptop-code >}}]{style="color: lightgray"} | [{{< fa book class="pending" >}}]{style="color: lightgray"} |
-| 14    | Take Home Exam | May 28 19:00 -- June 05 23:59 | May 28 | [{{< fa chalkboard >}}]{style="color: lightgray"} | [{{< fa code >}}]{style="color: lightgray"}  | [{{< fa laptop-code >}}]{style="color: lightgray"} | [{{< fa book class="pending" >}}]{style="color: lightgray"} |
+| 14    | Take Home Exam | May 28 19:00 -- June 05 23:59 | May 28 19:00 -- June 05 23:59 | [{{< fa chalkboard >}}]{style="color: lightgray"} | [{{< fa code >}}]{style="color: lightgray"}  | [{{< fa laptop-code >}}]{style="color: lightgray"} | [{{< fa book class="pending" >}}]{style="color: lightgray"} |
 
 
 
