@@ -23,6 +23,8 @@ website:
     right: |
       Made with  ♥ and [Quarto](https://quarto.org/)
 
+freeze: true
+
 format:
   html:
     theme:
