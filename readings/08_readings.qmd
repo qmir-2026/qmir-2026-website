@@ -1,0 +1,8 @@
+---
+title: Week 8 Readings
+nocite: |
+  @mcelreath2020statistical
+---
+
+::: {#refs}
+:::

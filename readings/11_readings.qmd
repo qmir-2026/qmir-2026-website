@@ -1,0 +1,8 @@
+---
+title: Week 11 Readings
+nocite: |
+  @mcelreath2020statistical
+---
+
+::: {#refs}
+:::

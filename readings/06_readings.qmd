@@ -1,0 +1,8 @@
+---
+title: Week 6 Readings
+nocite: |
+  @mcelreath2020statistical
+---
+
+::: {#refs}
+:::
