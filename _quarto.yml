@@ -15,7 +15,7 @@ website:
         text: Installation Guide
   repo-url: "https://github.com/qmir-2026/qmir-2026.github.io"
   repo-actions: [source, issue]
-  reader-mode: true
+  reader-mode: false
   page-footer:
     left: |
       © 2026 Tristan Muno  
