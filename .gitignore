@@ -1,4 +1,7 @@
 /.quarto/
 /_site/
+_freeze
 
 ideas.qmd
+
+survey_data
