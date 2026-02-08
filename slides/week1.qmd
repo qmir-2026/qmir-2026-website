@@ -307,6 +307,134 @@ ggplot(
 
 ------------------------------------------------------------------------
 
+```{r}
+#| label: fig-tools-used
+#| fig-cap: "Your answers to: *Which of the following tools have you actively worked with before?*"
+
+tools_used_long <- responses |>
+  select(contains("Q928658")) |>
+  # rename columns by replacing SQ### with tool names
+  rename_with(~ str_replace_all(., tool_names), .cols = everything()) |>
+  # pivot longer for ggplot
+  pivot_longer(
+    cols = everything(),
+    names_to = "tool",
+    values_to = "answer"
+  ) |>
+  mutate(tool = str_replace(tool, "Q928658.", ""))
+
+max_count <- tools_used_long |>
+  group_by(tool) |>
+  count(answer, sort = T) |>
+  ungroup() |>
+  slice(1) |>
+  pull(n)
+
+
+ggplot(
+  data = tools_used_long,
+  mapping = aes(y = fct_infreq(answer))
+) +
+  geom_bar(
+    fill = color_main,
+    width = 0.5
+  ) +
+  theme_pubr() +
+  labs(
+    x = "Count",
+    y = "Answer"
+  ) +
+  theme(aspect.ratio = 0.618) +
+  scale_x_continuous(
+    breaks = seq(from = 0, to = max_count, by = 1)
+  ) +
+  facet_wrap(~tool)
+
+```
+
+------------------------------------------------------------------------
+
+```{r}
+#| label: fig-code-experience
+#| fig-cap: "Your answers to: *How would you describe your overall confidence in working with code?*"
+
+ggplot(
+  data = responses,
+  mapping = aes(y = fct_infreq(Q278073))
+) +
+  geom_bar(
+    fill = color_main,
+    width = 0.5
+  ) +
+  theme_pubr() +
+  labs(
+    x = "Count",
+    y = "Answer"
+  ) +
+  theme(aspect.ratio = 0.618)
+
+```
+
+------------------------------------------------------------------------
+
+```{r}
+#| label: fig-agreescales
+#| fig-cap: "Your answers in the agreement/disagreement items."
+
+items_map <- c(
+  "Q751740" = "Statistical analysis is mainly about determining whether a hypothesis is true or false.",
+  "Q91718" = "Empirical data can increase or decrease our confidence in a theoretical claim.",
+  "Q797817" = "Uncertainty should be explicitly reported when presenting empirical results.",
+  "Q235999" = "Scientific knowledge is always provisional and subject to revision with new data.",
+  "Q402631" = "A single statistical results can definitely prove or disprove a theory.",
+  "Q613049" = "Models are simplifications of reality rather than exact representations."
+)
+
+responses |>
+  select(all_of(c(
+    "Q751740",
+    "Q91718",
+    "Q797817",
+    "Q235999",
+    "Q402631",
+    "Q613049"
+  ))) |>
+  pivot_longer(
+    cols = everything(),
+    names_to = "question",
+    values_to = "response"
+  ) |>
+  mutate(
+    question = items_map[question] # map variable names to full statements
+  ) |>
+  ggplot(
+    mapping = aes(x = response)
+  ) +
+  geom_bar(
+    fill = color_main,
+    width = 0.5
+  ) +
+  theme_pubr() +
+  labs(
+    x = "Count",
+    y = "Answer"
+  ) +
+  scale_x_continuous(
+    breaks = 1:5,
+    labels = c(
+      "Strongly\ndisagree",
+      "disagree",
+      "neither\nagree nor\ndisagree",
+      "agree",
+      "strongly\nagree"
+    )
+  ) +
+  theme(aspect.ratio = 0.618, axis.text.x = element_text(size = 8)) +
+  facet_wrap(~question)
+
+```
+
+------------------------------------------------------------------------
 
 
 ## Outlook
