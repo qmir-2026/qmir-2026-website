@@ -83,3 +83,16 @@ $presentation-heading-color: #003056;
     }
   }
 }
+
+
+.reveal details > summary {
+  font-size: 0.5em;
+  padding: 0;
+  background: none;
+  border: none;
+  color: "#DE7E50"
+}
+
+.reveal details > summary:hover {
+  color: "#003056";
+}

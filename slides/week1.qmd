@@ -10,12 +10,15 @@ format:
     preview-links: false
     slideNumber: true 
     incremental: true
+    code-fold: true
+    code-summary: "View source"
+    pdfSeparateFragments: true
     footer:  QMIR -- {{< meta date >}} --  Week 1 
     logo:  ./images/uma_ss.png
     theme: theme.scss
 editor: source
-preview-links: true
-freeze: true
+execute: 
+  freeze: true
 ---
 
 ## QMIR 2026
@@ -102,6 +105,8 @@ responses <- responses |>
 ```{r}
 #| label: fig-primary-study
 #| fig-cap: "Your answers to: *What is your primary field of study (major/Hauptfach)?*"
+#| code-fold: true
+#| echo: true
 
 library(ggpubr)
 
@@ -450,7 +455,10 @@ responses |>
       "strongly\nagree"
     )
   ) +
-  theme(aspect.ratio = 0.618, axis.text.x = element_text(size = 8)) +
+  theme(
+    aspect.ratio = 0.618,
+    axis.text.x = element_text(size = 8)
+  ) +
   facet_wrap(~question)
 
 ```
@@ -461,26 +469,19 @@ responses |>
 
 ```{r}
 #| label: fig-agreescales-II
-#| fig-cap: "Your answers in the agreement/disagreement items II."
+#| fig-cap: "Your answers in the agreement/disagreement items II: *Imagine you read a study claiming that attending a political debate doubles the likelihood of a person voting in the next election. When you see a numerical result like this (e.g., an estimate or coefficient), what are you usually most interested in?*"
 
 items_map <- c(
-  "Q751740" = "Statistical analysis is mainly about determining whether a hypothesis is true or false.",
-  "Q91718" = "Empirical data can increase or decrease our confidence in a theoretical claim.",
-  "Q797817" = "Uncertainty should be explicitly reported when presenting empirical results.",
-  "Q235999" = "Scientific knowledge is always provisional and subject to revision with new data.",
-  "Q402631" = "A single statistical results can definitely prove or disprove a theory.",
-  "Q613049" = "Models are simplifications of reality rather than exact representations."
+  "Q859946" = "Whether it is statistically significant.",
+  "Q65120" = "The size of the effect.",
+  "Q157010" = "The uncertainty around the estimate.",
+  "Q233596" = "Whether the result fits the theory.",
+  "Q699812" = "Whether the model assumptions seem plausible.",
+  "Q975313" = "I am usually unsure how to interpret such results."
 )
 
 responses |>
-  select(all_of(c(
-    "Q751740",
-    "Q91718",
-    "Q797817",
-    "Q235999",
-    "Q402631",
-    "Q613049"
-  ))) |>
+  select(all_of(names(items_map))) |>
   pivot_longer(
     cols = everything(),
     names_to = "question",
@@ -513,7 +514,10 @@ responses |>
       "strongly\nagree"
     )
   ) +
-  theme(aspect.ratio = 0.618, axis.text.x = element_text(size = 8)) +
+  theme(
+    aspect.ratio = 0.618,
+    axis.text.x = element_text(size = 8)
+  ) +
   facet_wrap(~question)
 
 ```
