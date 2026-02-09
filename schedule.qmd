@@ -20,7 +20,7 @@ Here's your roadmap for the semester!
 
 | Week | Topic | Monday | Thursday | Slides | Exercise | Homework | Ressources |
 |:----:|:-----|:------|:--------|:------:|:---:|:------:|:------:|
-| 1    | Course Roadmap & Research Workflow | Feb 09  | Feb 12  | [{{< fa chalkboard >}}]{style="color: lightgray"} | [{{< fa code >}}]{style="color: lightgray"}  | [{{< fa laptop-code >}}]{style="color: lightgray"} | <i class="fa fa-book" style="color: lightgray; font-weight: bold;"></i> |
+| 1    | Course Roadmap & Research Workflow | Feb 09  | Feb 12  | [{{< fa chalkboard >}}]{style="color: lightgray"} |  <i class="fa fa-book" style="color: black; font-weight: bold;"></i>  | [<i class="fa fa-code" style="color: black; font-weight: bold;"></i>](lab/quarto-welcome.qmd) | <i class="fa fa-book" style="color: lightgray; font-weight: bold;"></i> |
 
 #### Block I: Scientific Programming Fundamentals
 
