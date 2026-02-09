@@ -46,9 +46,9 @@ University of Mannheim
 
 ### Contacting me
 
-- {{< fa calendar-check >}} Monday after class: Open office consultation (no appointment needed)
+- {{< fa calendar-check >}} Mondays 14:00-17:00: Open office consultation (no appointment needed)
 
-- You are welcome to stop by on Mondays after class for open consultation.  
+- You are welcome to stop by on Mondays between 14:00 and 17:00 for open consultation.  
 
 - For other times, please email me to arrange an appointment (in person or online). I aim to reply within 24 hours.
 
