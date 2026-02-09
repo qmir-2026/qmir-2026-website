@@ -107,6 +107,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<meta name="robots" content="noindex">
 
 
 <link rel="stylesheet" href="styles.css">
@@ -529,6 +530,7 @@ GitHub will allow you to store repositories online, collaborate with others, and
 <p><strong>What it is:</strong> <code>tinytex</code> is an R package that manages a lightweight LaTeX distribution for you. LaTeX is the system Quarto uses to produce <strong>PDF documents</strong> from your code and text.</p>
 <p><strong>Why we use it:</strong> You won’t need to manually install a full LaTeX distribution. <code>tinytex</code> allows you to compile PDF reports directly from R/Quarto with minimal setup.</p>
 <p><strong>How to install:</strong></p>
+<p>In Positron, find the <code>CONSOLE</code> tab,<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> start an R session (this may happen automatically) and run the following commands in the R console:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tinytex"</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>tinytex<span class="sc">::</span><span class="fu">install_tinytex</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This will install both the package and a minimal LaTeX distribution. Once done, you can render PDFs from Quarto without further setup.</p>
@@ -555,6 +557,7 @@ GitHub will allow you to store repositories online, collaborate with others, and
 
 <ol>
 <li id="fn1"><p>The engine-dashboard-analogy is borrowed from <a href="https://datavizf25.classes.andrewheiss.com/syllabus.html#r-and-rstudio">Andrew Heiss</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p><a href="https://positron.posit.co/layout.html">Positron layout overview</a><a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
