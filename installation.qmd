@@ -181,6 +181,10 @@ We will use GitHub to distribute course materials.
 
 **How to install:**
 
+In Positron, find the `CONSOLE` tab,[^positron-layout] start an R session (this may happen automatically) and run the following commands in the R console:
+
+[^positron-layout]: [Positron layout overview](https://positron.posit.co/layout.html)
+
 ```r
 install.packages("tinytex")
 tinytex::install_tinytex()
