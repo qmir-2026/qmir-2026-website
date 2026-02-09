@@ -5,6 +5,7 @@ nocite: |
   @quarto-guide
   @quarto-cheatsheet
   @white2021git4dummies
+  @wickham2023r4ds-quarto
 ---
 
 ::: {#refs}

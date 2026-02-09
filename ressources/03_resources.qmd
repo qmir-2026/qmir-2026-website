@@ -1,7 +1,8 @@
 ---
 title: Week 3 Resources
 nocite: |
-  @mcelreath2020statistical
+  @wickham2023r4ds-intro
+  @
 ---
 
 ::: {#refs}
