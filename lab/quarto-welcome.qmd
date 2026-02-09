@@ -1,0 +1,65 @@
+---
+format: pdf
+author: Firstname Lastname
+title: Welcome to Quarto
+---
+
+# Section Header
+
+Welcome to **Quarto**! This is a simple example showing basic Markdown syntax.
+
+## Subsection Header
+
+### Text Formatting
+
+You can apply:
+
+- **Bold text**
+- *Italic text*
+- `Inline code`
+- ~~Strikethrough~~
+
+### Lists
+
+**Unordered list:**
+
+- Item 1
+- Item 2
+  - Subitem 2a
+  - Subitem 2b
+
+**Ordered list:**
+
+1. First
+2. Second
+3. Third
+
+### Links and Images
+
+[Quarto website](https://quarto.org)
+
+![Quarto Logo](https://quarto.org/quarto.png)
+
+### Code Blocks
+
+```r
+# R code example
+x <- 1:5
+mean(x)
+```
+
+
+### Tables
+
+| Name       | Age | City       |
+|------------|-----|------------|
+| Alice      | 30  | Berlin     |
+| Bob        | 25  | Paris      |
+| Charlie    | 28  | Madrid     |
+
+### Blockquotes
+
+> This is a blockquote. Quarto supports Markdown-style quotes.
+>
+> > Nested blockquote example.
+
