@@ -10,7 +10,7 @@
   </url>
   <url>
     <loc>https://qmir-2026.github.io/schedule.html</loc>
-    <lastmod>2026-02-09T14:01:14.851Z</lastmod>
+    <lastmod>2026-02-13T11:25:48.034Z</lastmod>
   </url>
   <url>
     <loc>https://qmir-2026.github.io/ressources/12_resources.html</loc>
@@ -34,7 +34,7 @@
   </url>
   <url>
     <loc>https://qmir-2026.github.io/ressources/02_resources.html</loc>
-    <lastmod>2026-02-09T13:45:22.242Z</lastmod>
+    <lastmod>2026-02-12T09:28:03.060Z</lastmod>
   </url>
   <url>
     <loc>https://qmir-2026.github.io/LICENSE.html</loc>
@@ -45,8 +45,12 @@
     <lastmod>2026-02-09T13:07:32.460Z</lastmod>
   </url>
   <url>
+    <loc>https://qmir-2026.github.io/debug.html</loc>
+    <lastmod>2026-02-12T10:44:23.033Z</lastmod>
+  </url>
+  <url>
     <loc>https://qmir-2026.github.io/index.html</loc>
-    <lastmod>2026-02-09T12:57:09.388Z</lastmod>
+    <lastmod>2026-02-13T11:26:39.584Z</lastmod>
   </url>
   <url>
     <loc>https://qmir-2026.github.io/lab/quarto-welcome.html</loc>
@@ -86,6 +90,6 @@
   </url>
   <url>
     <loc>https://qmir-2026.github.io/slides/week2.html</loc>
-    <lastmod>2026-02-09T14:21:36.039Z</lastmod>
+    <lastmod>2026-02-13T11:11:28.093Z</lastmod>
   </url>
 </urlset>

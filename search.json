@@ -165,7 +165,7 @@
     "href": "ressources/02_resources.html",
     "title": "Week 2 Resources",
     "section": "",
-    "text": "Nick White. 2021. Git Tutorial for Dummies. YouTube. https://www.youtube.com/watch?v=mJ-qvsxPHpY.\n\n\nPosit Software, PBC. n.d. Positron Layout. Posit. https://positron.posit.co/layout.html.\n\n\n———. n.d. Quarto Guide. Posit. https://quarto.org/docs/guide/.\n\n\n———. 2025. Publish and Share with Quarto: Quarto Cheatsheet. Posit. https://rstudio.github.io/cheatsheets/html/quarto.html.\n\n\nWickham, Hadley, Mine Çetinkaya-Rundel, and Garrett Grolemund. 2023. “Quarto.” In R for Data Science: Import, Tidy, Transform, Visualize, and Model Data, edited by Hadley Wickham, Mine Çetinkaya-Rundel, and Garrett Grolemund, 2nd ed. O’Reilly. https://r4ds.hadley.nz/quarto.html."
+    "text": "Knuth, Donald Ervin. 1984. “Literate Programming.” The Computer Journal 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97.\n\n\nNick White. 2021. Git Tutorial for Dummies. YouTube. https://www.youtube.com/watch?v=mJ-qvsxPHpY.\n\n\nPosit Software, PBC. n.d. Positron Layout. Posit. https://positron.posit.co/layout.html.\n\n\n———. n.d. Quarto Guide. Posit. https://quarto.org/docs/guide/.\n\n\n———. 2025. Publish and Share with Quarto: Quarto Cheatsheet. Posit. https://rstudio.github.io/cheatsheets/html/quarto.html.\n\n\nWickham, Hadley, Mine Çetinkaya-Rundel, and Garrett Grolemund. 2023. “Quarto.” In R for Data Science: Import, Tidy, Transform, Visualize, and Model Data, edited by Hadley Wickham, Mine Çetinkaya-Rundel, and Garrett Grolemund, 2nd ed. O’Reilly. https://r4ds.hadley.nz/quarto.html."
   },
   {
     "objectID": "LICENSE.html",
@@ -201,6 +201,13 @@
     "title": "Getting Started: Installation Guide",
     "section": "Footnotes",
     "text": "Footnotes\n\n\nThe engine-dashboard-analogy is borrowed from Andrew Heiss.↩︎\nPositron layout overview↩︎"
+  },
+  {
+    "objectID": "debug.html",
+    "href": "debug.html",
+    "title": "QMIR 2026",
+    "section": "",
+    "text": "qmd preview error (something with “Deno”) -&gt; close / delete current terminal session and click preview again -&gt; most of the times works now -&gt; delete .quarto or .freeze folders -&gt; else manually type quarto render [file], as preview does much more complicated stuff behind the scenes\nQuarto works in the following order: -&gt; is YAML correct? -&gt; are code cell options correct? -&gt; evaluate code -&gt; “knit” together code, code output and markdown text -&gt; render to desired output"
   },
   {
     "objectID": "index.html",
@@ -284,48 +291,216 @@
     "href": "slides/week2.html#qmir-2026",
     "title": "QMIR 2026",
     "section": "QMIR 2026",
-    "text": "QMIR 2026\nWeek 2: Reproducible Research with R, Quarto & Git\n Tristan Muno            February 9, 2026"
+    "text": "QMIR 2026\nWeek 2: Reproducible Research with R, Quarto & Git\n Tristan Muno            February 13, 2026"
   },
   {
-    "objectID": "slides/week2.html#notes-on-last-week",
-    "href": "slides/week2.html#notes-on-last-week",
+    "objectID": "slides/week2.html#course-logistics-philosophy",
+    "href": "slides/week2.html#course-logistics-philosophy",
     "title": "QMIR 2026",
-    "section": "Notes on last week",
-    "text": "Notes on last week\n\nSend me GitHub Account name/email\nIf you mail me please include QMIR in the Betreff\nI show you a complex workflow, but be pragmatic not dogmatic\n\nTools should serve you, not the other way around\n\n80/20 principle\nDont let perfect be the enemy of good"
+    "section": "Course Logistics & Philosophy",
+    "text": "Course Logistics & Philosophy\n\nPractical\n\nSend me your GitHub username\nIf you email me, please include “QMIR” in the subject line\n\nPhilosophy\n\nI will show you a powerful workflow – not a rigid religion\nTools should serve you, not the other way around – be pragmatic, not dogmatic!\n80/20 principle – don’t let perfect be the enemy of good"
+  },
+  {
+    "objectID": "slides/week2.html#week-2-goals",
+    "href": "slides/week2.html#week-2-goals",
+    "title": "QMIR 2026",
+    "section": "Week 2 Goals",
+    "text": "Week 2 Goals\nBy the end of today, you should:\n\nUnderstand how Quarto + R + Git + GitHub fit together\nBe able to create a project with version control\nHave pushed your first reproducible document to GitHub"
   },
   {
     "objectID": "slides/week2.html#agenda",
     "href": "slides/week2.html#agenda",
     "title": "QMIR 2026",
     "section": "Agenda",
-    "text": "Agenda\n\nRecap: The toolbox\n\nPositron\nQuarto\nGit and GitHub"
+    "text": "Agenda\n\nThe Big Picture – What is Reproducible Research?\nWhat is Literate Programming?\nVersion Control – The Concept\nGitHub as Infrastructure\nWalkthrough & Exercises"
   },
   {
-    "objectID": "slides/week2.html#positron",
-    "href": "slides/week2.html#positron",
+    "objectID": "slides/week2.html#what-is-reproducible-research",
+    "href": "slides/week2.html#what-is-reproducible-research",
     "title": "QMIR 2026",
-    "section": "Positron",
-    "text": "Positron"
+    "section": "What is Reproducible Research?",
+    "text": "What is Reproducible Research?"
   },
   {
-    "objectID": "slides/week2.html#quarto",
-    "href": "slides/week2.html#quarto",
+    "objectID": "slides/week2.html#what-is-reproducible-research-1",
+    "href": "slides/week2.html#what-is-reproducible-research-1",
     "title": "QMIR 2026",
-    "section": "Quarto",
-    "text": "Quarto\nquarto render mydocument.qmd\nquarto preview mydocument.qmd"
+    "section": "What is Reproducible Research?",
+    "text": "What is Reproducible Research?\n\n\n\nReproducible research means:\n\nEvery results can be regenerated from raw data\nEvery transformation and coding decision is documented\nEvery table and figure can be recreated automatically\nAnalytical choices are transparent and traceable\n\n\n\n\nWhy this matters:\n\nReviewers can understand and verify your analysis\nCoauthors can follow and extend your work\nYou can easily test alternative specifications (e.g., add variable X)\nYour future self knows exactly what you did\nIf your laptop dies tomorrow, nothing is lost"
   },
   {
-    "objectID": "slides/week2.html#git",
-    "href": "slides/week2.html#git",
+    "objectID": "slides/week2.html#what-is-reproducible-research-2",
+    "href": "slides/week2.html#what-is-reproducible-research-2",
     "title": "QMIR 2026",
-    "section": "Git",
-    "text": "Git\ngit add mydocument.qmd\n-&gt; this command tells git to stage a change\ngit commit mydocument.qmd -m \"Made some changes\"\n-&gt; this command tells git to commit a change\ngit push\n-&gt; this command tells git to push the newest changes to the remote repository on GitHub"
+    "section": "What is Reproducible Research?",
+    "text": "What is Reproducible Research?\n\nQuarto \\(\\rightarrow\\) integrates writing and code ✍️💻\nR \\(\\rightarrow\\) performs computation and analysis 📊🧮\nGit \\(\\rightarrow\\) tracks changes over time 🔄📝\nGitHub \\(\\rightarrow\\) enables remote storage and collaboration ☁️🤝"
+  },
+  {
+    "objectID": "slides/week2.html#what-is-reproducible-research-3",
+    "href": "slides/week2.html#what-is-reproducible-research-3",
+    "title": "QMIR 2026",
+    "section": "What is Reproducible Research?",
+    "text": "What is Reproducible Research?\nUsed properly, this workflow promotes\n\nReproducibility\nTransparency\nTraceability\nAutomation"
+  },
+  {
+    "objectID": "slides/week2.html#what-is-reproducible-research-4",
+    "href": "slides/week2.html#what-is-reproducible-research-4",
+    "title": "QMIR 2026",
+    "section": "What is Reproducible Research?",
+    "text": "What is Reproducible Research?\n\nFor small or one-off tasks, this workflow may seem excessive\n\n\nIts advantages become substantial as projects increase in scope, duration, or collaboration"
+  },
+  {
+    "objectID": "slides/week2.html#the-workflow",
+    "href": "slides/week2.html#the-workflow",
+    "title": "QMIR 2026",
+    "section": "The Workflow",
+    "text": "The Workflow\n\n\n\n\n\n\n\n\n\n\n\n\n\nA\n\n.qmd\n(source document)\n\n\n\nB\n\nrendered output\n(e.g. html, pdf, docx)\n\n\n\nA-&gt;B\n\n\n\n\n\nC\n\nLocal Git repository\n(snapshot)\n\n\n\nB-&gt;C\n\n\n\n\n\nD\n\nGitHub\n(remote repository)\n\n\n\nC-&gt;D\n\n\n\n\n\n\n\n\nFigure 1: The basic workflow\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 2: Illustration of Quarto. Source: Posit Software, PBC (2025)\n\n\n\n\n\nRepository: just a fancy word for (code-based) project folder with memory"
+  },
+  {
+    "objectID": "slides/week2.html#literate-programming",
+    "href": "slides/week2.html#literate-programming",
+    "title": "QMIR 2026",
+    "section": "Literate Programming",
+    "text": "Literate Programming"
+  },
+  {
+    "objectID": "slides/week2.html#literate-programming-1",
+    "href": "slides/week2.html#literate-programming-1",
+    "title": "QMIR 2026",
+    "section": "Literate Programming",
+    "text": "Literate Programming\nCore idea (Knuth 1984):"
+  },
+  {
+    "objectID": "slides/week2.html#literate-programming-2",
+    "href": "slides/week2.html#literate-programming-2",
+    "title": "QMIR 2026",
+    "section": "Literate Programming",
+    "text": "Literate Programming\nCore idea (Knuth 1984):\n\nThe document is the analysis"
+  },
+  {
+    "objectID": "slides/week2.html#literate-programming-3",
+    "href": "slides/week2.html#literate-programming-3",
+    "title": "QMIR 2026",
+    "section": "Literate Programming",
+    "text": "Literate Programming\nOur tool for literate programming: Quarto markdown files (.qmd)"
+  },
+  {
+    "objectID": "slides/week2.html#literate-programming-4",
+    "href": "slides/week2.html#literate-programming-4",
+    "title": "QMIR 2026",
+    "section": "Literate Programming",
+    "text": "Literate Programming\nOur tool for literate programming: Quarto markdown files (.qmd)\n\nMarkdown\nCode cells\nOutput embedded in document\nNo copy-paste between different programs"
+  },
+  {
+    "objectID": "slides/week2.html#markdown",
+    "href": "slides/week2.html#markdown",
+    "title": "QMIR 2026",
+    "section": "Markdown",
+    "text": "Markdown\n\n\n# Section header\n\n## A subsection\n\n*This sentence is written in italics.*\n**This one is bold.**\nUsing backticks formats text to `look like code`.\n\n[This is a hyperlink](www.uni-mannheim.de)\n\nA Section\nA subsection\nThis sentence is written in italics. This one is bold. Using backticks formats text to look like code.\nThis is a hyperlink"
+  },
+  {
+    "objectID": "slides/week2.html#code-cells",
+    "href": "slides/week2.html#code-cells",
+    "title": "QMIR 2026",
+    "section": "Code Cells",
+    "text": "Code Cells\n\n\n## A subsection\n\n*This sentence is written in italics.*\n**This one is bold.**\nUsing backticks formats text to `look like code`.\n\n```r\n#| echo: true\n#| eval: true\nage &lt;- c(18, 23, 21, 57, 24, 19)\nmean_age &lt;- mean(age)\n```\n\nThe mean age is ``{r} mean_age``.\n\nA subsection\nThis sentence is written in italics. This one is bold. Using backticks formats text to look like code.\n\n\nView source\nage &lt;- c(18, 23, 21, 57, 24, 19)\nmean_age &lt;- mean(age)\n\n\nThe mean age is 27."
+  },
+  {
+    "objectID": "slides/week2.html#output-embedded-in-documents",
+    "href": "slides/week2.html#output-embedded-in-documents",
+    "title": "QMIR 2026",
+    "section": "Output embedded in documents",
+    "text": "Output embedded in documents\n\n\n## Example of embedded figure\n\n```r\n#| echo: true\n#| eval: true\n#| label: fig-demo\n#| fig-cap: \"A demo figure\"\nlibrary(forcats)\nlibrary(ggplot2)\n\ndemo_data &lt;- data.frame(\n  country = c(\"Germany\", \"France\", \"Italy\", \"Spain\", \"Poland\"),\n  pop = c(83, 67, 60, 47, 38)\n)\n\nggplot(\n  data = demo_data,\n  aes(x = fct_reorder(country, pop), y = pop)\n) +\n  geom_col(fill = \"white\", color = \"black\") +\n  theme_bw() +\n  labs(x = \"Country\", y = \"Population in Million\")\n```\n\n@fig-demo shows an embedded figure.\n\nExample of embedded figure\n\n\nView source\nlibrary(forcats)\nlibrary(ggplot2)\n\ndemo_data &lt;- data.frame(\n  country = c(\"Germany\", \"France\", \"Italy\", \"Spain\", \"Poland\"),\n  pop = c(83, 67, 60, 47, 38)\n)\n\nggplot(\n  data = demo_data,\n  aes(x = fct_reorder(country, pop), y = pop)\n) +\n  geom_col(fill = \"white\", color = \"black\") +\n  theme_bw() +\n  labs(x = \"Country\", y = \"Population in Million\")\n\n\n\n\n\n\n\n\nFigure 3: A demo figure\n\n\n\n\n\nFigure 3 shows an embedded figure."
+  },
+  {
+    "objectID": "slides/week2.html#version-control-with-git-1",
+    "href": "slides/week2.html#version-control-with-git-1",
+    "title": "QMIR 2026",
+    "section": "Version Control with Git",
+    "text": "Version Control with Git\n\nRepository (repo) \\(\\rightarrow\\) project folder with memory 🗂️\ngit init \\(\\rightarrow\\) Turns a normal folder into a Git repository 🚀\nStage (git add) \\(\\rightarrow\\) Select changes you want to include in the next snapshot 📦\nCommit \\(\\rightarrow\\) A saved snapshot of staged changes 📸\nCommit message \\(\\rightarrow\\) Short explanation of what and why you changed something 💬\nHistory (git log) \\(\\rightarrow\\) Timeline of all committed snapshots 🕰️\nRemote \\(\\rightarrow\\) Online copy of your repository (e.g., GitHub) ☁️"
+  },
+  {
+    "objectID": "slides/week2.html#version-control-with-git-2",
+    "href": "slides/week2.html#version-control-with-git-2",
+    "title": "QMIR 2026",
+    "section": "Version Control with Git",
+    "text": "Version Control with Git"
+  },
+  {
+    "objectID": "slides/week2.html#version-control-with-git-3",
+    "href": "slides/week2.html#version-control-with-git-3",
+    "title": "QMIR 2026",
+    "section": "Version Control with Git",
+    "text": "Version Control with Git\nWhat we want to avoid:\nanalysis_final.R\nanalysis_final2.R\nanalysis_REALLY_final.R\n\ndraft1.pdf\ndraft2.pdf\ndraft2_final.pdf\nThis is manual version control – and it breaks down quickly.\n\nRemember: Git tracks changes inside files – not by duplicating them"
+  },
+  {
+    "objectID": "slides/week2.html#github-as-infrastructure-1",
+    "href": "slides/week2.html#github-as-infrastructure-1",
+    "title": "QMIR 2026",
+    "section": "GitHub as Infrastructure",
+    "text": "GitHub as Infrastructure\n\nRemote backup of your repositories ☁️\nCollaboration via pull requests & issues 👥\nTransparency & reproducibility 🔎\nPlatform for public research visibility 📢\nHub for open-source software development 🧩"
+  },
+  {
+    "objectID": "slides/week2.html#github-as-infrastructure-2",
+    "href": "slides/week2.html#github-as-infrastructure-2",
+    "title": "QMIR 2026",
+    "section": "GitHub as Infrastructure",
+    "text": "GitHub as Infrastructure\n\nRemote backup of your repositories ☁️\nCollaboration via pull requests & issues 👥\nTransparency & reproducibility 🔎\nPlatform for public research visibility 📢\nHub for open-source software development 🧩\n\n\nToday, sharing code on GitHub is often part of the research output itself."
+  },
+  {
+    "objectID": "slides/week2.html#a-critical-note-on-platform-choice",
+    "href": "slides/week2.html#a-critical-note-on-platform-choice",
+    "title": "QMIR 2026",
+    "section": "A Critical Note on Platform Choice",
+    "text": "A Critical Note on Platform Choice\n\nGitHub is a US-based, privately owned company (Microsoft)\nThere are alternatives (e.g. GitLab, Codeberg)\nPlatform choice is therefore also a question of:\n\nData governance\nDigital sovereignty\nInfrastructure dependence"
+  },
+  {
+    "objectID": "slides/week2.html#a-critical-note-on-platform-choice-1",
+    "href": "slides/week2.html#a-critical-note-on-platform-choice-1",
+    "title": "QMIR 2026",
+    "section": "A Critical Note on Platform Choice",
+    "text": "A Critical Note on Platform Choice\n\nGitHub is a US-based, privately owned company (Microsoft)\nThere are alternatives (e.g. GitLab, Codeberg)\nPlatform choice is therefore also a question of:\n\nData governance\nDigital sovereignty\nInfrastructure dependence\n\n\n\n🔐 Reminder: Uploading data to US-hosted platforms can have legal implications. Never upload personal or restricted data without checking GDPR and institutional regulations."
+  },
+  {
+    "objectID": "slides/week2.html#so-why-use-github",
+    "href": "slides/week2.html#so-why-use-github",
+    "title": "QMIR 2026",
+    "section": "So why use GitHub?",
+    "text": "So why use GitHub?\n\nIt is industry standard 🌐\nMost open-source projects are hosted there 🧑‍💻\nMost active developers and scientists use it 🧪\nLearning GitHub increases career portability 📚"
+  },
+  {
+    "objectID": "slides/week2.html#so-why-use-github-1",
+    "href": "slides/week2.html#so-why-use-github-1",
+    "title": "QMIR 2026",
+    "section": "So why use GitHub?",
+    "text": "So why use GitHub?\n\nIt is industry standard 🌐\nMost open-source projects are hosted there 🧑‍💻\nMost active developers and scientists use it 🧪\nLearning GitHub increases career portability 📚\n\nFor these pragmatic reasons, we will use GitHub in this course."
   },
   {
     "objectID": "slides/week2.html#github",
     "href": "slides/week2.html#github",
     "title": "QMIR 2026",
     "section": "GitHub",
-    "text": "GitHub\nCourse GitHub"
+    "text": "GitHub\n\n📁 GitHub QMIR2026 organization: https://github.com/qmir-2026\n\nCourse Website Repo\nHomework Repos"
+  },
+  {
+    "objectID": "slides/week2.html#test-if-git-is-installed",
+    "href": "slides/week2.html#test-if-git-is-installed",
+    "title": "QMIR 2026",
+    "section": "Test if Git is installed",
+    "text": "Test if Git is installed\ngit status"
+  },
+  {
+    "objectID": "slides/week2.html#live-demo-1-create-new-empty-project",
+    "href": "slides/week2.html#live-demo-1-create-new-empty-project",
+    "title": "QMIR 2026",
+    "section": "Live Demo 1: Create new empty project",
+    "text": "Live Demo 1: Create new empty project\n\nStep 1: Create new empty project Step 2: Create .qmd file Step 3: initialize repository Step 4: Stage and Commit .qmd file Step 5: Switch to GitHub and create new private repo Step 6: Show GitHub instructions to connect GitHub and local git Step 7: Push Step 8: change file.qmd Step 9: Show file changes viewer Step 10: stage Step 11: Commit Step 12: Push Step 13: repeat"
+  },
+  {
+    "objectID": "slides/week2.html#live-demo-2-clone-repo-from-github",
+    "href": "slides/week2.html#live-demo-2-clone-repo-from-github",
+    "title": "QMIR 2026",
+    "section": "Live Demo 2: Clone repo from GitHub",
+    "text": "Live Demo 2: Clone repo from GitHub\n\nStep 1: Go to GitHub repo Step 2: Copy link Step 3: Open Positron Step 4: Click Open Folder from GitHub Step 5: Paste Link Step 6: Create Step 7: Change files -&gt; show file changes viewe Step 8: Push wont work, you dont have access Step 9: For homeworks you will Step 10: Show how I see in GitHub the date and time of commits"
   }
 ]
