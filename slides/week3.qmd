@@ -170,6 +170,44 @@ nchar(country)
 
 ---
 
+## Functions -- Doing Things with Objects {.smaller}
+
+::::: columns
+::: {.column width="50%" .nonincremental}
+
+You can write your own functions.
+
+Functions can be:
+
+- small personal helpers  
+- reusable analysis tools  
+- shared with others  
+
+👉 Collections of useful, published functions form **packages**. We will expore some next  week.
+
+Packages are what make R (and Python) powerful ecosystems.
+
+:::
+
+::: {.column width="50%"}
+
+![](https://mathspace-production-media.mathspace.co/media/upload/images/001_Chapter_Entries/Logs_Polynomials_Functions/function-machine.png){width="300"}
+
+```{r}
+# A small custom helper
+add_tax <- function(price) {
+  price * 1.19
+}
+
+add_tax(10)
+```
+
+
+:::
+:::::
+
+---
+
 ## The Pipe -- Chaining Operations
 
 Without the pipe, nested calls become hard to read:
@@ -275,14 +313,19 @@ Numbers stored as characters are **not** numbers -- R won't do math with them:
 #| error: true
 
 "42" + 1 # this does not work
+
+as.numeric("42") + 1 # transforming the string to numeric makes it work
 ```
 
 ---
 
-## Logical / Boolean
+## Logical / Boolean {.smaller}
 
 ```{r}
 is_eu_member <- TRUE
+
+is_eu_member
+
 population <- 84000000
 
 # Comparisons produce logical values
@@ -296,17 +339,31 @@ Logicals are the backbone of **filtering** -- you'll use them constantly when su
 
 ---
 
-## Specialized Types: Factors, Dates, Times {.smaller}
+## Logical Operators {.smaller}
+
+| Operator | Meaning | Example |
+|---|---|---|
+| `<` | Less than | `3 < 5` |
+| `<=` | Less than or equal | `3 <= 3` |
+| `>` | Greater than | `5 > 3` |
+| `>=` | Greater than or equal | `5 >= 5` |
+| `==` | Equal to | `3 == 3` |
+| `!=` | Not equal to | `3 != 5` |
+| `&` | AND (vectorised) | `(3 > 1) & (5 > 2)` |
+| `\|` | OR (vectorised) | `(3 > 5) \| (5 > 2)` |
+| `!` | NOT | `!(3 > 5)` |
+| `%in%` | Is element contained in vector | `"Germany" %in% c("France", "Germany")` |
+
+---
+
+## Specialized Types: Factors & Dates {.smaller}
 
 :::::: columns
 ::: {.column width="50%"}
 
-**Factors** — categorical variables with fixed levels
+**Factors** -- categorical variables with fixed levels
 
 ```{r}
-#| echo: true
-#| eval: true
-
 regime <- factor(
   c("democracy", "autocracy", "democracy", "hybrid"),
   levels = c("autocracy", "hybrid", "democracy")
@@ -327,15 +384,15 @@ levels(regime)
 #| eval: true
 
 today <- Sys.Date()
+today
 treaty <- as.Date("1957-03-25") # Treaty of Rome
-
+treaty
 today - treaty # date arithmetic!
 ```
 
 :::
 ::::::
 
-. . .
 
 > You'll encounter these often in real data. The key insight: R treats them differently from plain text so it can do useful things like ordering, arithmetic, and plotting.
 
@@ -343,15 +400,10 @@ today - treaty # date arithmetic!
 Don't go too deep here. Factors will come up naturally in visualization (Week 4). lubridate for dates can be mentioned as an optional depth topic.
 :::
 
----
 
 # Part III: Data Structures
 
----
-
 ## How Is Information Organized?
-
-*[Image suggestion: a layered or nested diagram — this is the most important visual in the deck. Suggest: scalar at top, then vector, then matrix (2D, one type) and list (flexible), then dataframe at bottom as the combination. Color-code "homogeneous" vs "heterogeneous".]*
 
 | Structure | Dimensions | Types allowed |
 |---|---|---|
@@ -363,22 +415,22 @@ Don't go too deep here. Factors will come up naturally in visualization (Week 4)
 
 ---
 
-## Vectors — The Building Block
+## Vectors -- The Building Block
 
 ```{r}
-#| echo: true
-#| eval: true
-
 # c() combines values into a vector
-countries <- c("Germany", "France", "Italy", "Spain")
-population <- c(84, 68, 60, 47) # millions
-eu_member <- c(TRUE, TRUE, TRUE, TRUE)
+countries <- c("Germany", "France", "Italy", "Spain", "Turkey")
+population <- c(84, 68, 60, 47, 88) # millions
+eu_member <- c(TRUE, TRUE, TRUE, TRUE, FALSE)
 
-length(countries)
-class(population)
+length(countries) # number of elements in vector
+class(countries) # check type
+class(eu_member) # check type
 ```
 
-. . .
+--- 
+
+## Vectors -- The Building Block
 
 A vector can only hold **one type**. If you mix types, R silently converts:
 
@@ -405,7 +457,7 @@ m
 . . .
 
 - 2D, one type
-- Useful for linear algebra behind the scenes
+- Used for linear algebra behind the scenes
 - In practice: once you meet data frames, you'll rarely use matrices directly
 
 ::: notes
@@ -414,7 +466,7 @@ Keep this brief — 2 minutes max. It's here for conceptual completeness.
 
 ---
 
-## Data Frames — The Workhorse {.smaller}
+## Data Frames -- The Workhorse {.smaller}
 
 :::::: columns
 ::: {.column width="50%"}
@@ -424,21 +476,16 @@ Keep this brief — 2 minutes max. It's here for conceptual completeness.
 - Columns can be **different types** from each other
 - Each row is an **observation**
 
-*[Image suggestion: a small visual table with column headers and colored cells — like a mini spreadsheet with country/pop/eu_member columns]*
-
 :::
 
 ::: {.column width="50%"}
 
 ```{r}
-#| echo: true
-#| eval: true
-
 eu_data <- data.frame(
-  country = c("Germany", "France", "Italy"),
-  population = c(84, 68, 60),
-  eu_member = c(TRUE, TRUE, TRUE),
-  regime = c("democracy", "democracy", "democracy")
+  country = c("Germany", "France", "Italy", "Spain", "Turkey"),
+  population = c(84, 68, 60, 47, 88),
+  eu_member = c(TRUE, TRUE, TRUE, TRUE, FALSE),
+  regime = c("democracy", "democracy", "democracy", "democracy", "hybrid")
 )
 
 eu_data
@@ -449,24 +496,35 @@ eu_data
 
 ---
 
-## Data Frames — The Workhorse
+## Data Frames -- The Workhorse {.smaller}
+
+
+:::::: columns
+::: {.column width="50%"}
 
 ```{r}
-#| echo: true
-#| eval: true
-
 nrow(eu_data) # number of rows (observations)
 ncol(eu_data) # number of columns (variables)
-str(eu_data) # compact structure overview
+head(eu_data) # first 5 rows of df
 ```
+
+:::
+
+::: {.column width="50%"}
+
+```{r}
+str(eu_data)
+summary(eu_data)
+```
+
+:::
+::::::
 
 ---
 
-## Lists — The Flexible Container
+## Lists -- The Flexible Container {.smaller}
 
 ```{r}
-#| echo: true
-#| eval: true
 
 country_info <- list(
   name = "Germany",
@@ -478,31 +536,25 @@ country_info <- list(
 country_info
 ```
 
-. . .
-
-Lists can hold **anything** — including other lists. They're less intuitive than data frames, but you'll encounter them constantly as outputs of statistical models.
-
----
+Lists can hold **anything** -- including other lists. They're less intuitive than data frames, but you'll encounter them constantly as outputs of statistical models.
 
 # Part IV: Accessing & Exploring Data
-
----
 
 ## Reaching Inside Structures
 
 Two main tools:
 
-- `[ ]` — index by **position** or **condition**
-- `$` — index by **name** (for data frames and lists)
+- `[ ]` -- index by **position** or **condition**
+- `$` -- index by **name** (for data frames and lists)
 
 ---
 
 ## Indexing Vectors with `[ ]`
 
-```{r}
-#| echo: true
-#| eval: true
+:::::: columns
+::: {.column width="50%"}
 
+```{r}
 countries <- c("Germany", "France", "Italy", "Spain", "Poland")
 
 countries[1] # first element
@@ -510,114 +562,79 @@ countries[c(1, 3)] # first and third
 countries[-2] # everything except second
 ```
 
-. . .
+:::
+
+::: {.column width="50%"}
 
 ```{r}
-#| echo: true
-#| eval: true
-
 population <- c(84, 68, 60, 47, 38)
 
 # Logical indexing — filter by condition
 countries[population > 50]
 ```
 
+:::
+::::::
+
 ---
 
-## Indexing Data Frames with `[ ]` and `$` {.smaller}
+## Indexing DFs with `[ ]` and `$` {.smaller}
+
+:::::: columns
+::: {.column width="50%"}
 
 ```{r}
-#| echo: true
-#| eval: true
-
-# [row, column] — leave blank to mean "all"
+# [row, column] -- leave blank to mean "all"
 eu_data[1, ] # first row, all columns
 eu_data[, 2] # all rows, second column
 eu_data[1, 2] # specific cell
 ```
 
-. . .
-
 ```{r}
-#| echo: true
-#| eval: true
-
-# $ accesses a column by name — returns a vector
+# $ accesses a column by name -- returns a vector
 eu_data$country
 eu_data$population
 ```
 
-. . .
+:::
+
+::: {.column width="50%"}
 
 ```{r}
-#| echo: true
-#| eval: true
-
 # Combine: filter rows by condition
 eu_data[eu_data$population > 65, ]
 ```
 
----
-
-## Indexing Lists with `[[ ]]` and `$`
-
-```{r}
-#| echo: true
-#| eval: true
-
-country_info[["name"]] # double brackets for lists
-country_info$population
-country_info$parties[2] # chain indexing
-```
-
-. . .
-
-| Syntax | Returns |
-|---|---|
-| `list["name"]` | A list of length 1 |
-| `list[["name"]]` | The element itself |
-| `list$name` | The element itself (same as `[[]]`) |
+:::
+::::::
 
 ---
 
-## Exploring Data — Your First Questions
+### Exploring Data -- Your First Questions
 
 ```{r}
-#| echo: true
-#| eval: true
-
 str(eu_data) # structure: types, dimensions, preview
 ```
 
 ---
 
-## Exploring Data — Your First Questions
+### Exploring Data -- Your First Questions
 
 ```{r}
-#| echo: true
-#| eval: true
-
 summary(eu_data) # summary statistics per column
 ```
 
 ---
 
-## Exploring Data — Your First Questions
+### Exploring Data -- Your First Questions
 
 ```{r}
-#| echo: true
-#| eval: true
-
 head(eu_data, 2) # first n rows
 class(eu_data) # what kind of object is this?
-typeof(eu_data$population)
+class(eu_data$population) # what class/type is this variable?
 ```
 
-. . .
-
-These are the first things you should run whenever you encounter a new dataset.
-
----
+These are some of the first things you should run whenever you encounter a new dataset.
 
 # Time to Practice!
 
@@ -636,22 +653,19 @@ Live-code the clone step briefly to warm students up. Then let them work. Circul
 
 ---
 
-## Exercise Structure
+## Exercise Structure {.smaller}
 
 **Core tasks** (everyone):
 
 1. Create vectors of different types and check their class
-2. Build a small data frame from scratch — use a political science example
+2. Build a small data frame from scratch -- use a political science example
 3. Subset with `[ ]` and `$`
 4. Write clean, commented code throughout
-
-. . .
 
 **Optional depth exercises** (fast movers):
 
 - Working with factors: level ordering and `table()`
 - Date arithmetic with `as.Date()` and `lubridate`
-- Exploring a list: navigating model output structure
 
 ---
 
@@ -661,14 +675,9 @@ Live-code the clone step briefly to warm students up. Then let them work. Circul
 - Submit a rendered Quarto document (`.qmd` + rendered PDF)
 - **Due:** one week from today
 
-. . .
 
-The homework follows the same arc as today — you'll work with a small political dataset to practice types, structures, and subsetting. Read the task descriptions carefully and write comments explaining your reasoning.
+The homework follows the same arc as today -- you'll work with a small political dataset to practice types, structures, and subsetting. Read the task descriptions carefully and write comments explaining your reasoning.
 
----
-
-
-------------------------------------------------------------------------
 
 # Thank you for your attention and see you next week!
 
