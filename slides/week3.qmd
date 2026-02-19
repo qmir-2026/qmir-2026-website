@@ -56,6 +56,10 @@ By the end of today, you should:
 -   Cloning from GitHub
     -   This is how you access and submit the homeworks and take home exam
 -   Creating and linking your private projects with GitHub
+- Habits for effective and efficient coding:
+  - learn to use shortcuts (e.g. opening and closing Positron panels)
+  - learn to use your keyboard (e.g. highlighting text, adding code cells)
+  - set theme and font that makes you feel good
 
 ::: notes
 Budget \~10 minutes
@@ -83,7 +87,7 @@ This quote is a good anchor. The point is that R has a very consistent grammar o
 
 ------------------------------------------------------------------------
 
-## Objects — Storing Information
+## Objects -- Storing Information
 
 ::::: columns
 ::: {.column .nonincremental width="50%"}
@@ -118,7 +122,7 @@ The arrow \<- is read as "gets". country gets the value "Germany". Emphasize tha
 
 ------------------------------------------------------------------------
 
-## Objects — Storing Information
+## Objects -- Storing Information
 
 ```{r}
 #| echo: true
@@ -133,7 +137,7 @@ is_eu_member
 
 ------------------------------------------------------------------------
 
-## Functions — Doing Things with Objects {.smaller}
+## Functions -- Doing Things with Objects {.smaller}
 
 ::::: columns
 ::: {.column width="50%" .nonincremental}
@@ -166,7 +170,7 @@ nchar(country)
 
 ---
 
-## The Pipe — Chaining Operations
+## The Pipe -- Chaining Operations
 
 Without the pipe, nested calls become hard to read:
 
@@ -176,14 +180,14 @@ round(mean(sqrt(gdp_values)), digits = 2)
 
 
 
-With the pipe `|>`, read left to right — "and then":
+With the pipe `|>`, read left to right -- "and then":
 
 ```{r}
 
 gdp_values |> sqrt() |> mean() |> round(digits = 2)
 ```
 
-
+. . .
 
 > The pipe says: *take this, and then do that.*
 
@@ -194,10 +198,9 @@ The native pipe |> was introduced in R 4.1. Students may also encounter %>% from
 
 ---
 
-## Comments — Code as Communication {.smaller}
+## Comments -- Code as Communication {.smaller}
 
 ```{r}
-#| echo: true
 #| eval: false
 
 # BAD: comments that just repeat the code
@@ -215,25 +218,21 @@ x <- x + 1 # index starts at 0, shift to 1-based for plotting
 . . .
 
 > Your most important collaborator is your future self — six months from now, you will not remember why you did what you did.
-> Thanks to our **Quarto literate programming workflow**, you are living in the golden age of commenting -- you can literally write full prose between code chunks instead of apologizing in hashtags later.
+> Thanks to our **Quarto literate programming workflow**, you are living in the golden age of commenting -- you can literally write full prose between code cells instead of apologizing in hashtags later.
 
----
 
 # Part II: Data Types
 
----
+## What Kind of Information Does R Store? {.smaller}
 
-## What Kind of Information Does R Store?
-
-*[Image suggestion: a clean two-column table or visual grid — type name on left, example on right, perhaps color-coded]*
 
 | Type | Description | Example |
 |---|---|---|
 | `double` | Decimal numbers | `3.14`, `54300.5` |
-| `integer` | Whole numbers | `42L`, `2026L` |
+| `integer` | Whole numbers | `42`, `2026` |
 | `character` | Text / strings | `"Germany"`, `"hello"` |
 | `logical` | True or false | `TRUE`, `FALSE` |
-| `factor` | Ordered categories | `"low"`, `"medium"`, `"high"` |
+| `factor` | Categories | `"low"`, `"medium"`, `"high"` |
 | `Date` | Calendar dates | `2026-02-23` |
 
 ---
@@ -241,45 +240,41 @@ x <- x + 1 # index starts at 0, shift to 1-based for plotting
 ## Numeric: Double & Integer
 
 ```{r}
-#| echo: true
-#| eval: true
-
 gdp <- 54300.5 # double (default for numbers)
 seats <- 736L # integer (the L suffix makes it explicit)
 
-typeof(gdp)
-typeof(seats)
+class(gdp)
+class(seats)
 ```
 
-. . .
-
-For most purposes in this course, the distinction doesn't matter — R handles it behind the scenes. But it's good to know it exists.
+<div style="font-size: 0.85em;">
+- For most purposes in this course, the integer/double distinction doesn't matter -- R handles it behind the scenes. But it's good to know it exists. 
+- It is **important** that you know how to find out if objects are *numeric*.
+</div>
 
 ---
 
 ## Character / String
 
 ```{r}
-#| echo: true
-#| eval: true
-
-country <- "Germany"
 capital <- 'Berlin' # single or double quotes both work
+country <- "Germany" # but double quotes are sometimes easier to see
 
 nchar(country) # how many characters?
 toupper(country) # string manipulation
 paste(country, "is in the EU")
 ```
 
-. . .
+--- 
 
-Numbers stored as characters are **not** numbers — R won't do math with them:
+## Character / String
+
+Numbers stored as characters are **not** numbers -- R won't do math with them:
 
 ```{r}
-#| echo: true
-#| eval: false
+#| error: true
 
-"42" + 1 # Error!
+"42" + 1 # this does not work
 ```
 
 ---
@@ -287,9 +282,6 @@ Numbers stored as characters are **not** numbers — R won't do math with them:
 ## Logical / Boolean
 
 ```{r}
-#| echo: true
-#| eval: true
-
 is_eu_member <- TRUE
 population <- 84000000
 
@@ -299,9 +291,8 @@ population == 84000000
 !is_eu_member # NOT
 ```
 
-. . .
 
-Logicals are the backbone of **filtering** — you'll use them constantly when subsetting data.
+Logicals are the backbone of **filtering** -- you'll use them constantly when subsetting data.
 
 ---
 
