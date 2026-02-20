@@ -2,6 +2,7 @@
 title: Week 6 Resources
 nocite: |
   @mcelreath2020statistical
+  @datacamp-foundations-probability
 ---
 
 ::: {#refs}
