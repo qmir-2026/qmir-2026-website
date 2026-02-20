@@ -1,7 +1,7 @@
 ---
 title: Week 4 Resources
 nocite: |
-  @mcelreath2020statistical
+  @datacamp-tidyverse
 ---
 
 ::: {#refs}
