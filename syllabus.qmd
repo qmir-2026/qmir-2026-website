@@ -46,6 +46,12 @@ Starting in Week 2 (no homework will be assigned in the final week of the semest
 
 To fulfill this requirement, students must pass at least **80% of the assignments (9 out of 11 homeworks)**. Homework must demonstrate a serious and complete attempt at solving the tasks. Submissions that are empty or clearly insufficient will not be counted as passed.
 
+::: {.callout-note}
+
+As homework assignments only started in **Week 3**, the total number of assignments is **10**. Consequently, students must pass at least **8 out of 10 homework assignments** to be eligible to take the take-home exam.
+
+:::
+
 **2. Active Participation (*Mitarbeit*)**  
 Active participation, as described in the Attendance Policy, is a required coursework component and will be assessed on a pass/fail basis.
 
