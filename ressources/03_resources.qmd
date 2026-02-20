@@ -2,7 +2,7 @@
 title: Week 3 Resources
 nocite: |
   @wickham2023r4ds-intro
-  @
+  @datacamp-intro-r
 ---
 
 ::: {#refs}
