@@ -515,7 +515,7 @@
     "href": "slides/week3.html#qmir-2026",
     "title": "QMIR 2026",
     "section": "QMIR 2026",
-    "text": "QMIR 2026\nWeek 3: R Fundamentals – Data Types & Structures\n Tristan Muno            February 19, 2026"
+    "text": "QMIR 2026\nWeek 3: R Fundamentals – Data Types & Structures\n Tristan Muno            February 22, 2026"
   },
   {
     "objectID": "slides/week3.html#week-3-goals",
@@ -571,7 +571,28 @@
     "href": "slides/week3.html#functions-doing-things-with-objects-1",
     "title": "QMIR 2026",
     "section": "Functions – Doing Things with Objects",
-    "text": "Functions – Doing Things with Objects\n\n\nYou can write your own functions.\nFunctions can be:\n\nsmall personal helpers\n\nreusable analysis tools\n\nshared with others\n\n👉 Collections of useful, published functions form packages. We will expore some next week.\nPackages are what make R (and Python) powerful ecosystems.\n\n\n\n\nView source\n# A small custom helper\nadd_tax &lt;- function(price) {\n  price * 1.19\n}\n\nadd_tax(10)\n\n\n[1] 11.9"
+    "text": "Functions – Doing Things with Objects\n\n\nYou can write your own functions.\nFunctions can be anything from simple one-liners to complex software components. Among other things, they can be:\n\nsmall personal helpers\n\nreusable analysis tools\nshared with others\n\nCollections of useful, published functions form packages. We will expore some next week.\nPackages are what make R – like Python and many other programming languages – a powerful ecosystem.\n\n\n\n\nView source\n# A small custom helper\nadd_tax &lt;- function(price) {\n  price * 1.19\n}\n\nadd_tax(10)\n\n\n[1] 11.9"
+  },
+  {
+    "objectID": "slides/week3.html#recap",
+    "href": "slides/week3.html#recap",
+    "title": "QMIR 2026",
+    "section": "Recap",
+    "text": "Recap"
+  },
+  {
+    "objectID": "slides/week3.html#getting-help",
+    "href": "slides/week3.html#getting-help",
+    "title": "QMIR 2026",
+    "section": "Getting help",
+    "text": "Getting help\nTo open the documentation page of a function,\nhelp(function)\n?function()\nfor example:\n\n\nView source\nhelp(mean)\n?mean()"
+  },
+  {
+    "objectID": "slides/week3.html#control-structures-in-r",
+    "href": "slides/week3.html#control-structures-in-r",
+    "title": "QMIR 2026",
+    "section": "Control Structures in R",
+    "text": "Control Structures in R\n\n\n\n\n\n\n\n\nStructure\nSyntax Example\nDescription\n\n\n\n\nif\nif (x &gt; 0) { ... }\nExecutes code if condition is TRUE\n\n\nif-else\nif (x &gt; 0) { ... } else { ... }\nChooses between two branches\n\n\nifelse\nifelse(x &gt; 0, \"pos\", \"neg\")\nVectorized conditional\n\n\nfor\nfor (i in 1:5) { print(i) }\nLoop over a sequence\n\n\nwhile\nwhile (x &lt; 10) { x &lt;- x + 1 }\nRepeat while condition TRUE\n\n\nrepeat\nrepeat { ...; if (x&gt;10) break }\nInfinite loop until break\n\n\nbreak\nbreak\nExit a loop immediately\n\n\nnext\nnext\nSkip current iteration in a loop"
   },
   {
     "objectID": "slides/week3.html#the-pipe-chaining-operations",
@@ -634,14 +655,14 @@
     "href": "slides/week3.html#specialized-types-factors-dates",
     "title": "QMIR 2026",
     "section": "Specialized Types: Factors & Dates",
-    "text": "Specialized Types: Factors & Dates\n\n\nFactors – categorical variables with fixed levels\n\n\nView source\nregime &lt;- factor(\n  c(\"democracy\", \"autocracy\", \"democracy\", \"hybrid\"),\n  levels = c(\"autocracy\", \"hybrid\", \"democracy\")\n)\n\nregime\n\n\n[1] democracy autocracy democracy hybrid   \nLevels: autocracy hybrid democracy\n\n\nView source\nlevels(regime)\n\n\n[1] \"autocracy\" \"hybrid\"    \"democracy\"\n\n\n\nDates\n\n\nView source\ntoday &lt;- Sys.Date()\ntoday\n\n\n[1] \"2026-02-19\"\n\n\nView source\ntreaty &lt;- as.Date(\"1957-03-25\") # Treaty of Rome\ntreaty\n\n\n[1] \"1957-03-25\"\n\n\nView source\ntoday - treaty # date arithmetic!\n\n\nTime difference of 25168 days\n\n\n\n\nYou’ll encounter these often in real data. The key insight: R treats them differently from plain text so it can do useful things like ordering, arithmetic, and plotting.\n\n\nDon’t go too deep here. Factors will come up naturally in visualization (Week 4). lubridate for dates can be mentioned as an optional depth topic."
+    "text": "Specialized Types: Factors & Dates\n\n\nFactors – categorical variables with fixed levels\n\n\nView source\nregime &lt;- factor(\n  c(\"democracy\", \"autocracy\", \"democracy\", \"hybrid\"),\n  levels = c(\"autocracy\", \"hybrid\", \"democracy\")\n)\n\nregime\n\n\n[1] democracy autocracy democracy hybrid   \nLevels: autocracy hybrid democracy\n\n\nView source\nlevels(regime)\n\n\n[1] \"autocracy\" \"hybrid\"    \"democracy\"\n\n\n\nDates\n\n\nView source\ntoday &lt;- Sys.Date()\ntoday\n\n\n[1] \"2026-02-22\"\n\n\nView source\ntreaty &lt;- as.Date(\"1957-03-25\") # Treaty of Rome\ntreaty\n\n\n[1] \"1957-03-25\"\n\n\nView source\ntoday - treaty # date arithmetic!\n\n\nTime difference of 25171 days\n\n\n\n\nYou’ll encounter these often in real data. The key insight: R treats them differently from plain text so it can do useful things like ordering, arithmetic, and plotting.\n\n\nDon’t go too deep here. Factors will come up naturally in visualization (Week 4). lubridate for dates can be mentioned as an optional depth topic."
   },
   {
     "objectID": "slides/week3.html#how-is-information-organized",
     "href": "slides/week3.html#how-is-information-organized",
     "title": "QMIR 2026",
     "section": "How Is Information Organized?",
-    "text": "How Is Information Organized?\n\n\n\nStructure\nDimensions\nTypes allowed\n\n\n\n\nVector\n1D\nOne\n\n\nMatrix\n2D\nOne\n\n\nArray\nnD\nOne\n\n\nData frame\n2D\nMultiple\n\n\nList\nAny\nMultiple"
+    "text": "How Is Information Organized?\n\n\n\n\n\n\n\n\n\n\nStructure\nDimensions\nTypes allowed\nFormal notation\nOther names (across fields)\n\n\n\n\nVector\n1\nOne\n\\(\\mathbf{x}_i\\)\nfeature vector, embedding, signal, series\n\n\nMatrix\n2\nOne\n\\(\\mathbf{X}_{i_1, i_2}\\)\ndesign matrix, adjacency matrix, image, tensor (order 2)\n\n\nData frame\n2\nMultiple\n\ndataset, table, rectangular data, tibble\n\n\nArray\nN\nOne\n\\(\\mathcal{X}_{i_1 i_2 \\dots i_N}\\)\ntensor, cube, multidimensional array\n\n\nList\nAny\nMultiple\n\ncontainer, object, record, nested data"
   },
   {
     "objectID": "slides/week3.html#vectors-the-building-block",
@@ -661,8 +682,8 @@
     "objectID": "slides/week3.html#matrices-arrays-briefly",
     "href": "slides/week3.html#matrices-arrays-briefly",
     "title": "QMIR 2026",
-    "section": "Matrices & Arrays — Briefly",
-    "text": "Matrices & Arrays — Briefly\n\n\nView source\nm &lt;- matrix(1:6, nrow = 2, ncol = 3)\nm\n\n\n     [,1] [,2] [,3]\n[1,]    1    3    5\n[2,]    2    4    6\n\n\n\n\n2D, one type\nUsed for linear algebra behind the scenes\nIn practice: once you meet data frames, you’ll rarely use matrices directly\n\n\nKeep this brief — 2 minutes max. It’s here for conceptual completeness."
+    "section": "Matrices & Arrays – Briefly",
+    "text": "Matrices & Arrays – Briefly\n\n\nView source\nmatrix(1:6, nrow = 2, ncol = 3)\n\n\n     [,1] [,2] [,3]\n[1,]    1    3    5\n[2,]    2    4    6\n\n\nView source\nmatrix(c(\"A\", \"B\", \"C\", \"D\"), nrow = 2, ncol = 2)\n\n\n     [,1] [,2]\n[1,] \"A\"  \"C\" \n[2,] \"B\"  \"D\" \n\n\n\n2D structures storing elements of the same type\n\nFundamental for linear algebra and numerical computations\n\nData frames are more flexible for tabular data, but matrices remain crucial in statistical modeling\n\n\nKeep this brief — 2 minutes max. It’s here for conceptual completeness."
   },
   {
     "objectID": "slides/week3.html#data-frames-the-workhorse",
@@ -697,7 +718,7 @@
     "href": "slides/week3.html#indexing-vectors-with",
     "title": "QMIR 2026",
     "section": "Indexing Vectors with [ ]",
-    "text": "Indexing Vectors with [ ]\n\n\n\n\nView source\ncountries &lt;- c(\"Germany\", \"France\", \"Italy\", \"Spain\", \"Poland\")\n\ncountries[1] # first element\n\n\n[1] \"Germany\"\n\n\nView source\ncountries[c(1, 3)] # first and third\n\n\n[1] \"Germany\" \"Italy\"  \n\n\nView source\ncountries[-2] # everything except second\n\n\n[1] \"Germany\" \"Italy\"   \"Spain\"   \"Poland\" \n\n\n\n\n\nView source\npopulation &lt;- c(84, 68, 60, 47, 38)\n\n# Logical indexing — filter by condition\ncountries[population &gt; 50]\n\n\n[1] \"Germany\" \"France\"  \"Italy\""
+    "text": "Indexing Vectors with [ ]\n\n\n\n\nView source\ncountries &lt;- c(\"Germany\", \"France\", \"Italy\", \"Spain\", \"Poland\")\n\ncountries[1] # first element\n\n\n[1] \"Germany\"\n\n\nView source\ncountries[c(1, 3)] # first and third\n\n\n[1] \"Germany\" \"Italy\"  \n\n\nView source\ncountries[-2] # everything except second\n\n\n[1] \"Germany\" \"Italy\"   \"Spain\"   \"Poland\" \n\n\n\n\n\nView source\npopulation &lt;- c(84, 68, 60, 47, 38)\n\n# Logical indexing -- filter by condition\ncountries[population &gt; 50]\n\n\n[1] \"Germany\" \"France\"  \"Italy\""
   },
   {
     "objectID": "slides/week3.html#indexing-dfs-with-and",
@@ -718,7 +739,7 @@
     "href": "slides/week3.html#exercise-structure",
     "title": "QMIR 2026",
     "section": "Exercise Structure",
-    "text": "Exercise Structure\nCore tasks (everyone):\n\nCreate vectors of different types and check their class\nBuild a small data frame from scratch – use a political science example\nSubset with [ ] and $\nWrite clean, commented code throughout\n\nOptional depth exercises (fast movers):\n\nWorking with factors: level ordering and table()\nDate arithmetic with as.Date() and lubridate"
+    "text": "Exercise Structure\nCore tasks (everyone):\n\nCreate vectors of different types and check their class\nBuild a small data frame from scratch – use a political science example\nSubset with [ ] and $\nWrite clean, commented code throughout\n\nOptional exercises:\n\nWorking with factors: level ordering and table()\nDate arithmetic with as.Date()\n\nOptional advanced exercises:\n\nif-conditions and for-loops"
   },
   {
     "objectID": "slides/week3.html#homework",
