@@ -692,26 +692,6 @@ Live-code the clone step briefly to warm students up. Then let them work. Circul
 
 ---
 
-## Exercise Structure {.smaller}
-
-**Core tasks** (everyone):
-
-1. Create vectors of different types and check their class
-2. Build a small data frame from scratch -- use a political science example
-3. Subset with `[ ]` and `$`
-4. Write clean, commented code throughout
-
-**Optional exercises**:
-
-- Working with factors: level ordering and `table()`
-- Date arithmetic with `as.Date()`
-
-**Optional advanced exercises**:
-
-- `if`-conditions and `for`-loops
-
----
-
 ## Homework
 
 - Distributed via GitHub (same workflow as Week 2)
