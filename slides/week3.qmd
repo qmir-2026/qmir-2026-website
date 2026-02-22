@@ -13,7 +13,7 @@ format:
     code-fold: show
     code-summary: "View source"
     pdfSeparateFragments: true
-    footer:  QMIR -- {{< meta date >}} --  Week 2 
+    footer:  QMIR -- {{< meta date >}} --  Week 3 
     logo:  ./images/uma_ss.png
     theme: theme.scss
 editor: source
@@ -177,15 +177,15 @@ nchar(country)
 
 You can write your own functions.
 
-Functions can be:
+Functions can be anything from simple one-liners to complex software components. Among other things, they can be:
 
 - small personal helpers  
-- reusable analysis tools  
+- reusable analysis tools
 - shared with others  
 
-👉 Collections of useful, published functions form **packages**. We will expore some next  week.
+Collections of useful, published functions form **packages**. We will expore some next week.
 
-Packages are what make R (and Python) powerful ecosystems.
+Packages are what make R -- like Python and many other programming languages -- a powerful ecosystem.
 
 :::
 
@@ -205,6 +205,47 @@ add_tax(10)
 
 :::
 :::::
+
+---
+
+## Recap
+
+![](images/tidyverse-meme.png)
+
+---
+
+## Getting help
+
+To open the documentation page of a function,
+
+```r
+help(function)
+?function()
+```
+
+for example:
+
+```{r}
+#| eval: false
+
+help(mean)
+?mean()
+```
+
+---
+
+## Control Structures in R {.smaller}
+
+| Structure | Syntax Example | Description |
+|-----------|----------------|-------------|
+| if        | `if (x > 0) { ... }` | Executes code if condition is TRUE |
+| if-else   | `if (x > 0) { ... } else { ... }` | Chooses between two branches |
+| ifelse    | `ifelse(x > 0, "pos", "neg")` | Vectorized conditional |
+| for       | `for (i in 1:5) { print(i) }` | Loop over a sequence |
+| while     | `while (x < 10) { x <- x + 1 }` | Repeat while condition TRUE |
+| repeat    | `repeat { ...; if (x>10) break }` | Infinite loop until `break` |
+| break     | `break` | Exit a loop immediately |
+| next      | `next` | Skip current iteration in a loop |
 
 ---
 
@@ -403,15 +444,15 @@ Don't go too deep here. Factors will come up naturally in visualization (Week 4)
 
 # Part III: Data Structures
 
-## How Is Information Organized?
+## How Is Information Organized? {.smaller}
 
-| Structure | Dimensions | Types allowed |
-|---|---|---|
-| Vector | 1D | One |
-| Matrix | 2D | One |
-| Array | nD | One |
-| **Data frame** | 2D | **Multiple** |
-| List | Any | **Multiple** |
+| Structure | Dimensions | Types allowed | Formal notation | Other names (across fields) |
+|---|---|---|---|----------------|
+| Vector | 1 | One | $\mathbf{x}_i$ | feature vector, embedding, signal, series |
+| Matrix | 2 | One | $\mathbf{X}_{i_1, i_2}$ | design matrix, adjacency matrix, image, tensor (order 2) |
+| **Data frame** | 2 | **Multiple** | | dataset, table, rectangular data, tibble |
+| Array | N | One | $\mathcal{X}_{i_1 i_2 \dots i_N}$ | tensor, cube, multidimensional array |
+| List | Any | **Multiple** |  | container, object, record, nested data |
 
 ---
 
@@ -435,8 +476,6 @@ class(eu_member) # check type
 A vector can only hold **one type**. If you mix types, R silently converts:
 
 ```{r}
-#| echo: true
-#| eval: true
 
 mixed <- c(1, 2, "three") # all become character!
 mixed
@@ -444,25 +483,25 @@ mixed
 
 ---
 
-## Matrices & Arrays — Briefly
+## Matrices & Arrays -- Briefly {.smaller}
 
 ```{r}
-#| echo: true
-#| eval: true
 
-m <- matrix(1:6, nrow = 2, ncol = 3)
-m
+matrix(1:6, nrow = 2, ncol = 3)
+matrix(c("A", "B", "C", "D"), nrow = 2, ncol = 2)
 ```
 
-. . .
-
-- 2D, one type
-- Used for linear algebra behind the scenes
-- In practice: once you meet data frames, you'll rarely use matrices directly
+- 2D structures storing elements of the same type  
+- Fundamental for linear algebra and numerical computations  
+- Data frames are more flexible for tabular data, but matrices remain crucial in statistical modeling
 
 ::: notes
 Keep this brief — 2 minutes max. It's here for conceptual completeness.
 :::
+
+---
+
+![](images/matrix.png)
 
 ---
 
@@ -569,7 +608,7 @@ countries[-2] # everything except second
 ```{r}
 population <- c(84, 68, 60, 47, 38)
 
-# Logical indexing — filter by condition
+# Logical indexing -- filter by condition
 countries[population > 50]
 ```
 
@@ -662,10 +701,14 @@ Live-code the clone step briefly to warm students up. Then let them work. Circul
 3. Subset with `[ ]` and `$`
 4. Write clean, commented code throughout
 
-**Optional depth exercises** (fast movers):
+**Optional exercises**:
 
 - Working with factors: level ordering and `table()`
-- Date arithmetic with `as.Date()` and `lubridate`
+- Date arithmetic with `as.Date()`
+
+**Optional advanced exercises**:
+
+- `if`-conditions and `for`-loops
 
 ---
 

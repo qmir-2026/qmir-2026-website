@@ -41,6 +41,17 @@ $presentation-heading-color: #003056;
     color: $main-text;
 }
 
+
+.reveal table {
+  color: $main-text;
+}
+.reveal table th, .reveal table td {
+  color: $main-text;
+}
+.reveal table code, .reveal table .katex {
+  color: $main-text;
+}
+
 .reveal .slide-number {
     background-color: $footnote-background;
     color: $main-text;
