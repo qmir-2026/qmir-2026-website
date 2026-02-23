@@ -16,3 +16,7 @@
 .hw-hidden {
   display: none;
 }
+
+.hw-visible {
+  display: block;
+}
