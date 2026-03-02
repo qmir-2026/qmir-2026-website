@@ -2,6 +2,9 @@
 title: Week 4 Resources
 nocite: |
   @datacamp-tidyverse
+  @wickham2023r4ds-whole-game
+  @ccetinkaya2021educator
+  @wickham2023ggplot2
 ---
 
 ::: {#refs}

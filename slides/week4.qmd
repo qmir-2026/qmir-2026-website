@@ -31,53 +31,25 @@ execute:
 
 # Leftovers & Housekeeping
 
----
-
 ## Git & GitHub -- A Folder Structure Reminder {.smaller}
 
-A few students ran into problems with last week's homework. Here is a summary of how to set things up correctly, once and for all.
-
-. . .
+A few students ran into problems with last week's homework. Here is a summary of how to set things up correctly.
 
 **One dedicated QMIR folder**, at a stable path on your computer:
 
 ```
 Documents/
-  QMIR_2026/          ← your top-level course folder
-    week02_exercises/ ← individual repos go INSIDE here
-    week03_exercises/
-    week04_exercises/
-    my_project/
+  QMIR_2026/  ← your top-level course folder. Individual repos go INSIDE here, e.g:
+    hw-w04/ 
+    lab-w04/
+    ...
 ```
-
-. . .
 
 ::: {.nonincremental}
 - ✅ Place individual repositories **inside** the QMIR folder
 - ❌ Do **not** turn the top-level `QMIR_2026/` folder itself into a Git repo — Git repos inside Git repos cause problems
 - ❌ Do **not** place your QMIR folder inside a **cloud-synced folder** (iCloud Drive, Google Drive, OneDrive, Dropbox) — syncing services and Git conflict with each other and corrupt repositories
 :::
-
-. . .
-
-> Once this is set up correctly, you should not need to think about it again. Git + GitHub will just work.
-
----
-
-## Homework Reminder -- `error: true` {.smaller}
-
-If your code has an error and you cannot fix it before the deadline, you can still submit a **fully rendered PDF**:
-
-```yaml
-execute:
-  error: true
-```
-
-Setting `error: true` in the YAML header tells Quarto to **keep rendering even when a code cell fails**. The error message will appear in the output instead of blocking the render.
-
-. . .
-
-This is not an invitation to submit broken code -- it is a safety net. You should always try to fix errors. But if you are stuck, a rendered document with an error message is better than no submission.
 
 ---
 
@@ -145,19 +117,15 @@ One `library()` call loads the core set.
 ## Core Tidyverse Packages {.smaller}
 
 | Package | Role | Key functions |
-|---|---|---|
+|---|---------|----------------------|
 | `readr` | Import rectangular data | `read_csv()`, `read_tsv()` |
 | `tibble` | Modern data frames | `tibble()`, `as_tibble()` |
-| `dplyr` | Data manipulation | `filter()`, `select()`, `mutate()`, `summarise()`, `group_by()` |
+| `dplyr` | Data manipulation | `filter()`, `select()`, `mutate()`, `summarise()`, `group_by()` `distinct()` `count()` |
 | `tidyr` | Reshape data | `pivot_longer()`, `pivot_wider()` |
 | `ggplot2` | Data visualisation | `ggplot()`, `geom_*()` |
 | `stringr` | String manipulation | `str_detect()`, `str_replace()` |
 | `forcats` | Factor handling | `fct_reorder()`, `fct_relevel()` |
 | `purrr` | Functional programming | `map()`, `map_df()` |
-
-. . .
-
-> Today we focus on `readr`, `dplyr`, and `ggplot2`. The others will appear naturally as the course progresses.
 
 ---
 
@@ -217,7 +185,7 @@ A dataset is **tidy** when:
 | country | gdpPercap_1952 | gdpPercap_1957 | gdpPercap_1962 |
 |---|---|---|---|
 | Germany | 7144 | 10188 | 12902 |
-| France | 7029 | 8663 | 10560 |
+| France | 7030 | 8663 | 10560 |
 
 . . .
 
@@ -227,7 +195,7 @@ A dataset is **tidy** when:
 |---|---|---|
 | Germany | 1952 | 7144 |
 | Germany | 1957 | 10188 |
-| France | 1952 | 7029 |
+| France | 1952 | 7030 |
 | France | 1957 | 8663 |
 
 . . .
@@ -272,8 +240,6 @@ Everything we do in this course fits somewhere in this cycle:
 
 **Import** → **Tidy** → **Transform** → **Visualise** → **Model** → **Communicate**
 
-. . .
-
 Where we are today:
 
 - ✅ **Import** -- `readr`
@@ -287,7 +253,7 @@ Where we are today:
 
 ::: {.column width="45%"}
 
-![Source: R for Data Science (Wickham et al.)](https://r4ds.hadley.nz/diagrams/data-science/base.png){width="100%"}
+![Source: @wickham2023r4ds](https://r4ds.hadley.nz/diagrams/data-science/base.png){width="100%"}
 
 :::
 ::::::
@@ -318,7 +284,7 @@ library(gapminder)
 . . .
 
 ::: {.callout-tip}
-Never put `install.packages()` inside a Quarto document you intend to render or share. It will re-install the package every time the document is rendered and may cause errors in others' environments.
+Never put `install.packages()` inside a Quarto document that you intend to render or share. Quarto blocks package installation during rendering for security reasons, so the document will fail to render and throw an error. In addition, even if it were allowed, it would attempt to reinstall the package every time the document is rendered, which can create unnecessary delays and compatibility issues in other users’ environments.
 :::
 
 ---
@@ -470,22 +436,25 @@ gapminder |>
 
 # Part VI: Data Manipulation with `dplyr`
 
----
-
 ## `dplyr` -- A Grammar of Data Manipulation {.smaller}
+
+:::::: columns
+::: {.column width="30%"}
 
 All `dplyr` functions follow the same pattern:
 
-- **First argument**: the data frame
+- **First argument**: the data frame (automatically filled if working with pipe `|>`)
 - **Subsequent arguments**: what to do
 - **Return value**: always a (new) data frame
 
-. . .
+:::
+
+::: {.column width="70%"}
 
 The core verbs:
 
 | Verb | What it does |
-|---|---|
+|---|-----------------|
 | `filter()` | Keep rows that meet a condition |
 | `select()` | Keep or drop columns |
 | `mutate()` | Create or modify variables |
@@ -493,6 +462,9 @@ The core verbs:
 | `summarise()` | Compute summary statistics |
 | `group_by()` | Group rows for grouped operations |
 | `ungroup()` | Remove grouping |
+
+:::
+::::::
 
 ---
 
@@ -515,8 +487,8 @@ gapminder |>
 # Multiple conditions -- AND
 gapminder |>
   filter(
-    continent == "Europe",
-    year == 2007
+    continent == "Europe" &
+      year == 2007
   )
 ```
 
@@ -767,7 +739,7 @@ gapminder |>
 
 . . .
 
-Both produce the same result. The piped version reads like a sentence and requires no intermediate objects.
+Both produce the same result. The piped version reads like a sentence and requires no intermediate objects. However, **you should always be aware of what each individual pipe step does**. Especially when learning, test each step separately in the console to make sure you understand how the data changes at every stage.
 
 # Part VII: A First Look at `ggplot2`
 
@@ -842,7 +814,7 @@ Notice:
 
 ---
 
-## Log Scale and `facet_wrap()` -- A Taste of What's Coming {.smaller}
+## Log Scale and `facet_wrap()` {.smaller}
 
 :::::: columns
 ::: {.column width="55%"}
@@ -876,8 +848,6 @@ gapminder |>
 `scale_x_log10()` -- log-transforms the x axis, making the skewed GDP distribution easier to read.
 
 `facet_wrap(~ continent)` -- creates one small panel per continent.
-
-. . .
 
 We will go much deeper on `ggplot2` next week. Today you are just seeing the shape of it.
 
@@ -918,18 +888,15 @@ my_plot
 ## Cell Options Reference {.smaller}
 
 | Option | Values | What it controls |
-|---|---|---|
+|---|-------|-------------------------|
 | `eval` | `true` / `false` | Whether the code is executed |
 | `echo` | `true` / `false` | Whether the source code is shown |
 | `warning` | `true` / `false` | Whether warnings appear in output |
 | `message` | `true` / `false` | Whether messages appear in output |
 | `error` | `true` / `false` | Whether errors stop rendering |
 | `include` | `true` / `false` | Whether cell output appears at all |
-| `code-fold` | `true` / `false` / `"show"` | Collapsible code block |
 | `label` | `fig-*` / `tbl-*` / any string | Cell identifier for cross-referencing |
 | `fig-cap` | string | Caption for figure output |
-| `fig-width` | number | Figure width in inches |
-| `fig-height` | number | Figure height in inches |
 
 ---
 
@@ -969,8 +936,6 @@ continents since 1952.
 - `@fig-lifeexp` in prose becomes "Figure 1" (auto-numbered) in the rendered output
 - Figure numbers update automatically if you add or reorder figures
 - Works in HTML, PDF, and Word output
-
-. . .
 
 This is how academic papers keep figure references consistent. Your future self will thank you.
 
@@ -1043,7 +1008,7 @@ Live-load gapminder, show glimpse(), run a filter-mutate-summarise pipe together
 - Submit a rendered Quarto document (`.qmd` + rendered PDF)
 - **Due:** one week from today
 
-The homework follows the arc of today's session. You will work with the gapminder dataset to practice `dplyr` wrangling and produce at least one properly labelled and captioned figure that you cross-reference in your prose. The rendered document must use `message: false` and `warning: false` globally so that the PDF is clean.
+The homework follows the arc of today's session. You will work with the gapminder dataset to practice `dplyr` wrangling and produce at least one properly labelled and captioned figure that you cross-reference in your prose.
 
 # Thank you for your attention and see you next week!
 
