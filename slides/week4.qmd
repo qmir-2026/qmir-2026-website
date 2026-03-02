@@ -442,20 +442,31 @@ names(gapminder)
 
 ---
 
-## Frequency Tables with `table()` {.smaller}
+## Counting with `count()` and `distinct()` {.smaller}
+
+:::::: columns
+::: {.column width="50%"}
 
 ```{r}
 # How many observations per continent?
-table(gapminder$continent)
+# count() is the tidyverse alternative to table()
+gapminder |>
+  count(continent)
 ```
 
-. . .
+:::
+
+::: {.column width="50%"}
 
 ```{r}
-# How many unique years are in the data?
-length(unique(gapminder$year))
-unique(gapminder$year)
+# Which years are in the data?
+# distinct() returns unique combinations of columns
+gapminder |>
+  distinct(year)
 ```
+
+:::
+::::::
 
 # Part VI: Data Manipulation with `dplyr`
 
@@ -504,8 +515,8 @@ gapminder |>
 # Multiple conditions -- AND
 gapminder |>
   filter(
-    continent == "Europe" &
-      year == 2007
+    continent == "Europe",
+    year == 2007
   )
 ```
 
