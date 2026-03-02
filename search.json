@@ -28,489 +28,6 @@
     "text": "Course Logistics\n\nGeneral Information\nEach session consists of an instructor-led lecture on concepts and theory, followed by hands-on exercises. Homework is assigned at the end of class and due one week later. Readings provide background, theory, and context for the session. Because homework deadlines are tied to class days, students should remain in their assigned group (Mon or Thu) as their main class. Attending the other day is allowed in case of sickness or other exceptions, but this should remain the exception rather than the norm.\n\n\nAttendance Policy\nActive participation (Mitarbeit) is a required component of the coursework (Studienleistung). This course consists of 13 class sessions. Successful participation is presumed if a student attends at least 80% of class sessions (at least 11 out of 13 sessions).\nIf attendance falls below 80% but remains at or above 60% (8–10 out of 13 sessions), successful participation is not presumed; in such cases, the possibility of fulfilling the participation requirement will be assessed on a case-by-case basis.\nIf attendance falls below 60% (fewer than 8 out of 13 sessions), successful participation is normally considered impossible under the examination regulations.\nIf class sessions are cancelled during the semester, the absolute number of required sessions will be adjusted accordingly while the percentage thresholds (80% and 60%) remain unchanged.\n\n\nGrading Policy\nAccording to the examination regulations, course assessment consists of coursework (Studienleistung, pass/fail) and a final examination (Prüfungsleistung, graded).\nSuccessful completion of all coursework requirements is a prerequisite for admission to the final take-home exam.\n\nCoursework (Studienleistung, pass/fail)\nCoursework consists of two components:\n1. Weekly Homework Assignments\nStarting in Week 2 (no homework will be assigned in the final week of the semester), students must complete 11 weekly homework assignments. Assignments will be distributed via GitHub and assessed on a pass/fail basis.\nTo fulfill this requirement, students must pass at least 80% of the assignments (9 out of 11 homeworks). Homework must demonstrate a serious and complete attempt at solving the tasks. Submissions that are empty or clearly insufficient will not be counted as passed.\n\n\n\n\n\n\nNote\n\n\n\nAs homework assignments only started in Week 3, the total number of assignments is 10. Consequently, students must pass at least 8 out of 10 homework assignments to be eligible to take the take-home exam.\n\n\n2. Active Participation (Mitarbeit)\nActive participation, as described in the Attendance Policy, is a required coursework component and will be assessed on a pass/fail basis.\nBoth components must be passed in order to fulfill the Studienleistung requirement.\n\n\nFinal Examination (Prüfungsleistung, graded)\nThe final examination consists of a take-home exam, currently scheduled for:\nMay 28, 19:00 — June 05, 23:59\nThe exam will be distributed via GitHub. You will receive a dataset and a problem description for a cumulative data analysis project.\nYou must submit a complete project repository (project folder) via GitHub. The repository must include:\n\nFully documented and reproducible code\n\nA rendered PDF file presenting your results (structured similarly to a data, methods, and analysis section of a research paper)\n\nAll relevant LLM chat histories, if AI tools were used\nA statutory declaration according to the University’s guidelines\n\nThe version of the repository available on GitHub at the moment the deadline passes will be evaluated.\nThe take-home exam will be graded according to the university grading scale (1.0 = very good to 5.0 = insufficient) and determines the overall course grade.\nAll tools and workflows necessary to complete the exam will be taught during the course.\n\n\n\nLanguage and Software Policy\nThe course is taught entirely in English and focuses on using R, Quarto, and Git/GitHub for data analysis, reproducible research, and project management. Students are encouraged to work with these tools, as the course exercises and workflows are designed around them. For the take-home exam, students may use other script-based languages (e.g., Python or Stata), but this is not recommended, and no guidance will be provided for non-R workflows. The emphasis is on understanding the tools, practicing them, and learning how to independently find solutions.\n\n\nHardware\nYou are required to have a computer available during class. For the purposes of this course, a standard laptop is sufficient; there are no specific requirements regarding RAM, external GPUs, or other advanced hardware components.\nIf you do not own a suitable device, the University of Mannheim’s IT department offers a laptop rental service. Students are encouraged to make use of this option if needed.\n\n\nSoftware\nPlease install all required software programs and tools following the separate installation guide before the first session, so we can address any potential issues on that day and fully begin the programming component in the subsequent lecture.\n\n\nOptional Practice Materials\nIt is highly recommended that you take advantage of the access to DataCamp provided by this course. DataCamp is an online learning platform offering valuable opportunities to practice the material covered in this course and beyond. A good starting point is the Introduction to R tutorial. DataCamp courses are voluntary and not part of the mandatory requirements to pass the course.\n\n\nLate Work Policy\nLate submissions will not be accepted. If you anticipate any difficulties in meeting a deadline, you must discuss this issue with me before the deadline, not after.\n\n\nAI Policy\nAll submissions will be checked for plagiarism, and violations of the code of conduct may result in failing the course or expulsion. While generative AI tools, such as ChatGPT or Gemini, are permitted for the final examination, any AI-generated content or code must be clearly highlighted, thoroughly commented, and accompanied by the chat history to demonstrate understanding. I will aim to occasionally provide guidance on using AI responsibly, but relying on it from the start can hinder learning: research shows AI is most effective for those who already understand the topic. For a detailed explanation of why AI can undermine learning, see this explanation by Andrew Heiss.\n\n\nMental Health Support\nLife and learning at the University of Mannheim can sometimes feel complicated, challenging, or even overwhelming. This is completely normal. You are not expected to fully understand or memorize course content on the first attempt. If you ever feel mentally or emotionally strained, you may find helpful advice on the University of Mannheim’s Good Mental Health and Studying page. Additionally, the Help in Times of Crises page provides an overview of the various counseling and support services available at the university."
   },
   {
-    "objectID": "slides/week2.html#qmir-2026",
-    "href": "slides/week2.html#qmir-2026",
-    "title": "QMIR 2026",
-    "section": "QMIR 2026",
-    "text": "QMIR 2026\nWeek 2: Reproducible Research with R, Quarto & Git\n Tristan Muno            February 13, 2026"
-  },
-  {
-    "objectID": "slides/week2.html#course-logistics-philosophy",
-    "href": "slides/week2.html#course-logistics-philosophy",
-    "title": "QMIR 2026",
-    "section": "Course Logistics & Philosophy",
-    "text": "Course Logistics & Philosophy\n\nPractical\n\nSend me your GitHub username\nIf you email me, please include “QMIR” in the subject line\n\nPhilosophy\n\nI will show you a powerful workflow – not a rigid religion\nTools should serve you, not the other way around – be pragmatic, not dogmatic!\n80/20 principle – don’t let perfect be the enemy of good"
-  },
-  {
-    "objectID": "slides/week2.html#week-2-goals",
-    "href": "slides/week2.html#week-2-goals",
-    "title": "QMIR 2026",
-    "section": "Week 2 Goals",
-    "text": "Week 2 Goals\nBy the end of today, you should:\n\nUnderstand how Quarto + R + Git + GitHub fit together\nBe able to create a project with version control\nHave pushed your first reproducible document to GitHub"
-  },
-  {
-    "objectID": "slides/week2.html#agenda",
-    "href": "slides/week2.html#agenda",
-    "title": "QMIR 2026",
-    "section": "Agenda",
-    "text": "Agenda\n\nThe Big Picture – What is Reproducible Research?\nWhat is Literate Programming?\nVersion Control with Git\nGitHub as Infrastructure\nWalkthrough & Exercises"
-  },
-  {
-    "objectID": "slides/week2.html#what-is-reproducible-research",
-    "href": "slides/week2.html#what-is-reproducible-research",
-    "title": "QMIR 2026",
-    "section": "What is Reproducible Research?",
-    "text": "What is Reproducible Research?"
-  },
-  {
-    "objectID": "slides/week2.html#what-is-reproducible-research-1",
-    "href": "slides/week2.html#what-is-reproducible-research-1",
-    "title": "QMIR 2026",
-    "section": "What is Reproducible Research?",
-    "text": "What is Reproducible Research?\n\n\n\nReproducible research means:\n\nEvery results can be regenerated from raw data\nEvery transformation and coding decision is documented\nEvery table and figure can be recreated automatically\nAnalytical choices are transparent and traceable\n\n\n\n\nWhy this matters:\n\nReviewers can understand and verify your analysis\nCoauthors can follow and extend your work\nYou can easily test alternative specifications (e.g., add variable X)\nYour future self knows exactly what you did\nIf your laptop dies tomorrow, nothing is lost"
-  },
-  {
-    "objectID": "slides/week2.html#what-is-reproducible-research-2",
-    "href": "slides/week2.html#what-is-reproducible-research-2",
-    "title": "QMIR 2026",
-    "section": "What is Reproducible Research?",
-    "text": "What is Reproducible Research?\n\nQuarto \\(\\rightarrow\\) integrates writing and code ✍️💻\nR \\(\\rightarrow\\) performs computation and analysis 📊🧮\nGit \\(\\rightarrow\\) tracks changes over time 🔄📝\nGitHub \\(\\rightarrow\\) enables remote storage and collaboration ☁️🤝"
-  },
-  {
-    "objectID": "slides/week2.html#what-is-reproducible-research-3",
-    "href": "slides/week2.html#what-is-reproducible-research-3",
-    "title": "QMIR 2026",
-    "section": "What is Reproducible Research?",
-    "text": "What is Reproducible Research?\nUsed properly, this workflow promotes\n\nReproducibility\nTransparency\nTraceability\nAutomation"
-  },
-  {
-    "objectID": "slides/week2.html#what-is-reproducible-research-4",
-    "href": "slides/week2.html#what-is-reproducible-research-4",
-    "title": "QMIR 2026",
-    "section": "What is Reproducible Research?",
-    "text": "What is Reproducible Research?\n\nFor small or one-off tasks, this workflow may seem excessive\n\n\nIts advantages become substantial as projects increase in scope, duration, or collaboration"
-  },
-  {
-    "objectID": "slides/week2.html#the-workflow",
-    "href": "slides/week2.html#the-workflow",
-    "title": "QMIR 2026",
-    "section": "The Workflow",
-    "text": "The Workflow\n\n\n\n\n\n\n\n\n\n\n\n\n\nA\n\n.qmd\n(source document)\n\n\n\nB\n\nrendered output\n(e.g. html, pdf, docx)\n\n\n\nA-&gt;B\n\n\n\n\n\nC\n\nLocal Git repository\n(snapshot)\n\n\n\nB-&gt;C\n\n\n\n\n\nD\n\nGitHub\n(remote repository)\n\n\n\nC-&gt;D\n\n\n\n\n\n\n\n\nFigure 1: The basic workflow\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 2: Illustration of Quarto. Source: Posit Software, PBC (2025)\n\n\n\n\n\nRepository: just a fancy word for (code-based) project folder with memory"
-  },
-  {
-    "objectID": "slides/week2.html#literate-programming",
-    "href": "slides/week2.html#literate-programming",
-    "title": "QMIR 2026",
-    "section": "Literate Programming",
-    "text": "Literate Programming"
-  },
-  {
-    "objectID": "slides/week2.html#literate-programming-1",
-    "href": "slides/week2.html#literate-programming-1",
-    "title": "QMIR 2026",
-    "section": "Literate Programming",
-    "text": "Literate Programming\nCore idea (Knuth 1984):"
-  },
-  {
-    "objectID": "slides/week2.html#literate-programming-2",
-    "href": "slides/week2.html#literate-programming-2",
-    "title": "QMIR 2026",
-    "section": "Literate Programming",
-    "text": "Literate Programming\nCore idea (Knuth 1984):\n\nThe document is the analysis"
-  },
-  {
-    "objectID": "slides/week2.html#literate-programming-3",
-    "href": "slides/week2.html#literate-programming-3",
-    "title": "QMIR 2026",
-    "section": "Literate Programming",
-    "text": "Literate Programming\nOur tool for literate programming: Quarto markdown files (.qmd)"
-  },
-  {
-    "objectID": "slides/week2.html#literate-programming-4",
-    "href": "slides/week2.html#literate-programming-4",
-    "title": "QMIR 2026",
-    "section": "Literate Programming",
-    "text": "Literate Programming\nOur tool for literate programming: Quarto markdown files (.qmd)\n\nMarkdown\nCode cells\nOutput embedded in document\nNo copy-paste between different programs"
-  },
-  {
-    "objectID": "slides/week2.html#markdown",
-    "href": "slides/week2.html#markdown",
-    "title": "QMIR 2026",
-    "section": "Markdown",
-    "text": "Markdown\n\n\n# Section header\n\n## A subsection\n\n*This sentence is written in italics.*\n**This one is bold.**\nUsing backticks formats text to `look like code`.\n\n[This is a hyperlink](www.uni-mannheim.de)\n\nA Section\nA subsection\nThis sentence is written in italics. This one is bold. Using backticks formats text to look like code.\nThis is a hyperlink"
-  },
-  {
-    "objectID": "slides/week2.html#quarto-markdown",
-    "href": "slides/week2.html#quarto-markdown",
-    "title": "QMIR 2026",
-    "section": "Quarto Markdown",
-    "text": "Quarto Markdown\n\n\n---\nformat: html\n---\n\n# Section header\n\n## A subsection\n\n*This sentence is written in italics.*\n**This one is bold.**\nUsing backticks formats text to `look like code`.\n\n[This is a hyperlink](www.uni-mannheim.de)\n\nA Section\nA subsection\nThis sentence is written in italics. This one is bold. Using backticks formats text to look like code.\nThis is a hyperlink"
-  },
-  {
-    "objectID": "slides/week2.html#code-cells",
-    "href": "slides/week2.html#code-cells",
-    "title": "QMIR 2026",
-    "section": "Code Cells",
-    "text": "Code Cells\n\n\n## A subsection\n\n*This sentence is written in italics.*\n**This one is bold.**\nUsing backticks formats text to `look like code`.\n\n```r\n#| echo: true\n#| eval: true\nage &lt;- c(18, 23, 21, 57, 24, 19)\nmean_age &lt;- mean(age)\n```\n\nThe mean age is ``{r} mean_age``.\n\nA subsection\nThis sentence is written in italics. This one is bold. Using backticks formats text to look like code.\n\n\nView source\nage &lt;- c(18, 23, 21, 57, 24, 19)\nmean_age &lt;- mean(age)\n\n\nThe mean age is 27."
-  },
-  {
-    "objectID": "slides/week2.html#output-embedded-in-documents",
-    "href": "slides/week2.html#output-embedded-in-documents",
-    "title": "QMIR 2026",
-    "section": "Output embedded in documents",
-    "text": "Output embedded in documents\n\n\n## Example of embedded figure\n\n```r\n#| echo: true\n#| eval: true\n#| label: fig-demo\n#| fig-cap: \"A demo figure\"\nlibrary(forcats)\nlibrary(ggplot2)\n\ndemo_data &lt;- data.frame(\n  country = c(\"Germany\", \"France\", \"Italy\", \"Spain\", \"Poland\"),\n  pop = c(83, 67, 60, 47, 38)\n)\n\nggplot(\n  data = demo_data,\n  aes(x = fct_reorder(country, pop), y = pop)\n) +\n  geom_col(fill = \"white\", color = \"black\") +\n  theme_bw() +\n  labs(x = \"Country\", y = \"Population in Million\")\n```\n\n@fig-demo shows an embedded figure.\n\nExample of embedded figure\n\n\nView source\nlibrary(forcats)\nlibrary(ggplot2)\n\ndemo_data &lt;- data.frame(\n  country = c(\"Germany\", \"France\", \"Italy\", \"Spain\", \"Poland\"),\n  pop = c(83, 67, 60, 47, 38)\n)\n\nggplot(\n  data = demo_data,\n  aes(x = fct_reorder(country, pop), y = pop)\n) +\n  geom_col(fill = \"white\", color = \"black\") +\n  theme_bw() +\n  labs(x = \"Country\", y = \"Population in Million\")\n\n\n\n\n\n\n\n\nFigure 3: A demo figure\n\n\n\n\n\nFigure 3 shows an embedded figure."
-  },
-  {
-    "objectID": "slides/week2.html#version-control-with-git-1",
-    "href": "slides/week2.html#version-control-with-git-1",
-    "title": "QMIR 2026",
-    "section": "Version Control with Git",
-    "text": "Version Control with Git\n\nRepository (repo) \\(\\rightarrow\\) project folder with memory 🗂️\ngit init \\(\\rightarrow\\) Turns a normal folder into a Git repository 🚀\nStage (git add) \\(\\rightarrow\\) Select changes you want to include in the next snapshot 📦\nCommit \\(\\rightarrow\\) A saved snapshot of staged changes 📸\nCommit message \\(\\rightarrow\\) Short explanation of what and why you changed something 💬\nHistory (git log) \\(\\rightarrow\\) Timeline of all committed snapshots 🕰️\nRemote \\(\\rightarrow\\) Online copy of your repository (e.g., GitHub) ☁️"
-  },
-  {
-    "objectID": "slides/week2.html#version-control-with-git-2",
-    "href": "slides/week2.html#version-control-with-git-2",
-    "title": "QMIR 2026",
-    "section": "Version Control with Git",
-    "text": "Version Control with Git"
-  },
-  {
-    "objectID": "slides/week2.html#version-control-with-git-3",
-    "href": "slides/week2.html#version-control-with-git-3",
-    "title": "QMIR 2026",
-    "section": "Version Control with Git",
-    "text": "Version Control with Git\nWhat we want to avoid:\nanalysis_final.R\nanalysis_final2.R\nanalysis_REALLY_final.R\n\ndraft1.pdf\ndraft2.pdf\ndraft2_final.pdf\nThis is manual version control – and it breaks down quickly.\n\nRemember: Git tracks changes inside files – not by duplicating them"
-  },
-  {
-    "objectID": "slides/week2.html#github-as-infrastructure-1",
-    "href": "slides/week2.html#github-as-infrastructure-1",
-    "title": "QMIR 2026",
-    "section": "GitHub as Infrastructure",
-    "text": "GitHub as Infrastructure\n\nRemote backup of your repositories ☁️\nCollaboration via pull requests & issues 👥\nTransparency & reproducibility 🔎\nPlatform for public research visibility 📢\nHub for open-source software development 🧩"
-  },
-  {
-    "objectID": "slides/week2.html#github-as-infrastructure-2",
-    "href": "slides/week2.html#github-as-infrastructure-2",
-    "title": "QMIR 2026",
-    "section": "GitHub as Infrastructure",
-    "text": "GitHub as Infrastructure\n\nRemote backup of your repositories ☁️\nCollaboration via pull requests & issues 👥\nTransparency & reproducibility 🔎\nPlatform for public research visibility 📢\nHub for open-source software development 🧩\n\n\nToday, sharing code on GitHub is often part of the research output itself."
-  },
-  {
-    "objectID": "slides/week2.html#a-critical-note-on-platform-choice",
-    "href": "slides/week2.html#a-critical-note-on-platform-choice",
-    "title": "QMIR 2026",
-    "section": "A Critical Note on Platform Choice",
-    "text": "A Critical Note on Platform Choice\n\nGitHub is a US-based, privately owned company (Microsoft)\nThere are alternatives (e.g. GitLab, Codeberg)\nPlatform choice is therefore also a question of:\n\nData governance\nDigital sovereignty\nInfrastructure dependence"
-  },
-  {
-    "objectID": "slides/week2.html#a-critical-note-on-platform-choice-1",
-    "href": "slides/week2.html#a-critical-note-on-platform-choice-1",
-    "title": "QMIR 2026",
-    "section": "A Critical Note on Platform Choice",
-    "text": "A Critical Note on Platform Choice\n\nGitHub is a US-based, privately owned company (Microsoft)\nThere are alternatives (e.g. GitLab, Codeberg)\nPlatform choice is therefore also a question of:\n\nData governance\nDigital sovereignty\nInfrastructure dependence\n\n\n\n🔐 Reminder: Uploading data to US-hosted platforms can have legal implications. Never upload personal or restricted data without checking GDPR and institutional regulations."
-  },
-  {
-    "objectID": "slides/week2.html#so-why-use-github",
-    "href": "slides/week2.html#so-why-use-github",
-    "title": "QMIR 2026",
-    "section": "So why use GitHub?",
-    "text": "So why use GitHub?\n\nIt is industry standard 🌐\nMost open-source projects are hosted there 🧑‍💻\nMost active developers and scientists use it 🧪\nLearning GitHub increases career portability 📚"
-  },
-  {
-    "objectID": "slides/week2.html#so-why-use-github-1",
-    "href": "slides/week2.html#so-why-use-github-1",
-    "title": "QMIR 2026",
-    "section": "So why use GitHub?",
-    "text": "So why use GitHub?\n\nIt is industry standard 🌐\nMost open-source projects are hosted there 🧑‍💻\nMost active developers and scientists use it 🧪\nLearning GitHub increases career portability 📚\n\nFor these pragmatic reasons, we will use GitHub in this course."
-  },
-  {
-    "objectID": "slides/week2.html#github",
-    "href": "slides/week2.html#github",
-    "title": "QMIR 2026",
-    "section": "GitHub",
-    "text": "GitHub\n\n📁 GitHub QMIR2026 organization: https://github.com/qmir-2026\n\nCourse Website Repo\nHomework Repos"
-  },
-  {
-    "objectID": "slides/week2.html#test-if-git-is-installed",
-    "href": "slides/week2.html#test-if-git-is-installed",
-    "title": "QMIR 2026",
-    "section": "Test if Git is installed",
-    "text": "Test if Git is installed\ngit status"
-  },
-  {
-    "objectID": "slides/week2.html#live-demo-1-create-new-empty-project",
-    "href": "slides/week2.html#live-demo-1-create-new-empty-project",
-    "title": "QMIR 2026",
-    "section": "Live Demo 1: Create new empty project",
-    "text": "Live Demo 1: Create new empty project\n\nStep 1: Create new empty project Step 2: Create .qmd file Step 3: initialize repository Step 4: Stage and Commit .qmd file Step 5: Switch to GitHub and create new private repo Step 6: Show GitHub instructions to connect GitHub and local git Step 7: Push Step 8: change file.qmd Step 9: Show file changes viewer Step 10: stage Step 11: Commit Step 12: Push Step 13: repeat"
-  },
-  {
-    "objectID": "slides/week2.html#live-demo-2-clone-repo-from-github",
-    "href": "slides/week2.html#live-demo-2-clone-repo-from-github",
-    "title": "QMIR 2026",
-    "section": "Live Demo 2: Clone repo from GitHub",
-    "text": "Live Demo 2: Clone repo from GitHub\n\nStep 1: Go to GitHub repo Step 2: Copy link Step 3: Open Positron Step 4: Click Open Folder from GitHub Step 5: Paste Link Step 6: Create Step 7: Change files -&gt; show file changes viewe Step 8: Push wont work, you dont have access Step 9: For homeworks you will Step 10: Show how I see in GitHub the date and time of commits"
-  },
-  {
-    "objectID": "slides/images/COPYRIGHTS.html",
-    "href": "slides/images/COPYRIGHTS.html",
-    "title": "QMIR 2026",
-    "section": "",
-    "text": "Copyright and Usage Restrictions for University Assets\nImportant Notice: The R package code is licensed under the GNU General Public License v3.0. However, the following assets included in this package are the intellectual property of the University of Mannheim and are not covered by the GPL-3.0 license.\nThe logo of the University of Mannheim and the photo of the main palace are the exclusive property of the university, and their use is subject to strict conditions as outlined on the university’s homepage. The marketing rights are exclusively held by the university’s Service und Marketing GmbH.\n\nCopyright Holder: Universität Mannheim Service und Marketing GmbH\nCopyright Status: All Rights Reserved.\nPermitted Use: These assets are provided in this package for the official, work-related use of university staff and faculty (e.g., for presentations, posters, and publications) to create materials in line with the university’s corporate design. According to university policy, the use of the logo is strictly reserved for employees and, in specific cases, Ph.D. students.\nProhibited Use: Use of these assets by students (except for Ph.D. students on presentations and dissertations) and external partners is not permitted without prior, explicit authorization from the university’s Communications and Marketing department.\n\nFor a full overview of the university’s corporate design guidelines and official usage policies, please refer to the university’s official website. The brief descriptions provided here are for informational purposes only; the legally binding rules are those stated on the university’s website.\nBy using this package, you agree to abide by these terms and confirm that your use of the logo is in accordance with the university’s official policies."
-  },
-  {
-    "objectID": "ressources/13_resources.html",
-    "href": "ressources/13_resources.html",
-    "title": "Week 13 Resources",
-    "section": "",
-    "text": "McElreath, Richard. 2020. Statistical Rethinking: A Bayesian Course with Examples in r and STAN. 2nd ed. Chapman; Hall/CRC. https://doi.org/10.1201/9780429029608."
-  },
-  {
-    "objectID": "ressources/11_resources.html",
-    "href": "ressources/11_resources.html",
-    "title": "Week 11 Resources",
-    "section": "",
-    "text": "McElreath, Richard. 2020. Statistical Rethinking: A Bayesian Course with Examples in r and STAN. 2nd ed. Chapman; Hall/CRC. https://doi.org/10.1201/9780429029608."
-  },
-  {
-    "objectID": "ressources/09_resources.html",
-    "href": "ressources/09_resources.html",
-    "title": "Week 9 Resources",
-    "section": "",
-    "text": "McElreath, Richard. 2020. Statistical Rethinking: A Bayesian Course with Examples in r and STAN. 2nd ed. Chapman; Hall/CRC. https://doi.org/10.1201/9780429029608."
-  },
-  {
-    "objectID": "ressources/07_resources.html",
-    "href": "ressources/07_resources.html",
-    "title": "Week 7 Resources",
-    "section": "",
-    "text": "McElreath, Richard. 2020. Statistical Rethinking: A Bayesian Course with Examples in r and STAN. 2nd ed. Chapman; Hall/CRC. https://doi.org/10.1201/9780429029608."
-  },
-  {
-    "objectID": "ressources/05_resources.html",
-    "href": "ressources/05_resources.html",
-    "title": "Week 5 Resources",
-    "section": "",
-    "text": "McElreath, Richard. 2020. Statistical Rethinking: A Bayesian Course with Examples in r and STAN. 2nd ed. Chapman; Hall/CRC. https://doi.org/10.1201/9780429029608."
-  },
-  {
-    "objectID": "ressources/03_resources.html",
-    "href": "ressources/03_resources.html",
-    "title": "Week 3 Resources",
-    "section": "",
-    "text": "DataCamp. 2022. Getting Started with R Cheat Sheet. DataCamp. https://www.datacamp.com/cheat-sheet/getting-started-r.\n\n\n———. 2026. Introduction to R. DataCamp. https://www.datacamp.com/courses/free-introduction-to-r.\n\n\nMcNeill, Mhairi. 2015. Base R: Cheatsheet. IQSS, Harvard University. https://iqss.github.io/dss-workshops/R/Rintro/base-r-cheat-sheet.pdf.\n\n\nWickham, Hadley, Mine Çetinkaya-Rundel, and Garrett Grolemund. 2023. “Introduction.” In R for Data Science: Import, Tidy, Transform, Visualize, and Model Data, edited by Hadley Wickham, Mine Çetinkaya-Rundel, and Garrett Grolemund, 2nd ed. O’Reilly. https://r4ds.hadley.nz/intro.html."
-  },
-  {
-    "objectID": "ressources/01_resources.html",
-    "href": "ressources/01_resources.html",
-    "title": "Week 1 Ressources",
-    "section": "",
-    "text": "References\n\nPosit Software, PBC. n.d. Positron Layout. Posit. https://positron.posit.co/layout.html."
-  },
-  {
-    "objectID": "lab/quarto-welcome.html",
-    "href": "lab/quarto-welcome.html",
-    "title": "Welcome to Quarto",
-    "section": "",
-    "text": "Welcome to Quarto! This is a simple example showing basic Markdown syntax.\n\n\n\n\nYou can apply:\n\nBold text\nItalic text\nInline code\nStrikethrough\n\n\n\n\nUnordered list:\n\nItem 1\nItem 2\n\nSubitem 2a\nSubitem 2b\n\n\nOrdered list:\n\nFirst\nSecond\nThird\n\n\n\n\nQuarto website\n\n\n\nQuarto Logo\n\n\n\n\n\n# R code example\nx &lt;- 1:5\nmean(x)\n\n\n\n\n\n\nName\nAge\nCity\n\n\n\n\nAlice\n30\nBerlin\n\n\nBob\n25\nParis\n\n\nCharlie\n28\nMadrid\n\n\n\n\n\n\n\nThis is a blockquote. Quarto supports Markdown-style quotes.\n\nNested blockquote example."
-  },
-  {
-    "objectID": "lab/quarto-welcome.html#subsection-header",
-    "href": "lab/quarto-welcome.html#subsection-header",
-    "title": "Welcome to Quarto",
-    "section": "",
-    "text": "You can apply:\n\nBold text\nItalic text\nInline code\nStrikethrough\n\n\n\n\nUnordered list:\n\nItem 1\nItem 2\n\nSubitem 2a\nSubitem 2b\n\n\nOrdered list:\n\nFirst\nSecond\nThird\n\n\n\n\nQuarto website\n\n\n\nQuarto Logo\n\n\n\n\n\n# R code example\nx &lt;- 1:5\nmean(x)\n\n\n\n\n\n\nName\nAge\nCity\n\n\n\n\nAlice\n30\nBerlin\n\n\nBob\n25\nParis\n\n\nCharlie\n28\nMadrid\n\n\n\n\n\n\n\nThis is a blockquote. Quarto supports Markdown-style quotes.\n\nNested blockquote example."
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Quantitative Methods in International Relations",
-    "section": "",
-    "text": "Spring 2026 Department of Political Science School of Social Sciences University of Mannheim\n\n\n\nInstructor\n\n Tristan Muno\n A 5, 6 – Room A 351\n tristan.muno@uni-mannheim.de\n\n\n\nCourse details\n\n\n\n\nMonday\nThursday\n\n\n\nFeb 9 – May 18\nFeb 12 – May 28\n\n\n\n12:00 – 13:30\n17:15 – 18:45\n\n\n\nA5,6 C-108\nA5,6 C-108\n\n\n\nMarch 30, April 6, May 25\nApril 2, April 9, May 14\n\n\n\n\n\nContacting me\n\n Mondays 14:00-17:00: Open office consultation (no appointment needed)\nYou are welcome to stop by on Mondays between 14:00 and 17:00 for open consultation.\nFor other times, please email me to arrange an appointment (in person or online). I aim to reply within 24 hours."
-  },
-  {
-    "objectID": "debug.html",
-    "href": "debug.html",
-    "title": "QMIR 2026",
-    "section": "",
-    "text": "qmd preview error (something with “Deno”) -&gt; close / delete current terminal session and click preview again -&gt; most of the times works now -&gt; delete .quarto or .freeze folders -&gt; else manually type quarto render [file], as preview does much more complicated stuff behind the scenes\nQuarto works in the following order: -&gt; is YAML correct? -&gt; are code cell options correct? -&gt; evaluate code -&gt; “knit” together code, code output and markdown text -&gt; render to desired output"
-  },
-  {
-    "objectID": "installation.html",
-    "href": "installation.html",
-    "title": "Getting Started: Installation Guide",
-    "section": "",
-    "text": "This course introduces you to a range of software tools which, taken together, form a powerful and contemporary toolbox for transparent, reproducible, and scalable empirical research. Rather than relying on a single piece of software, you will learn how different tools interact and complement one another — much like they do in real-world research workflows."
-  },
-  {
-    "objectID": "installation.html#configure-git",
-    "href": "installation.html#configure-git",
-    "title": "Getting Started: Installation Guide",
-    "section": "Configure Git",
-    "text": "Configure Git\nTo use Git, you need to set a name and email address. These will be associated with every change (commit) you make, acting like a digital signature. You do not need to use your full name, but it is recommended.\ngit config --global user.name \"Your Name\"\ngit config --global user.email \"your@mail.com\""
-  },
-  {
-    "objectID": "installation.html#create-a-github-account",
-    "href": "installation.html#create-a-github-account",
-    "title": "Getting Started: Installation Guide",
-    "section": "Create a GitHub account",
-    "text": "Create a GitHub account\nIf you don’t already have one, create a free GitHub account here.\nGitHub will allow you to store repositories online, collaborate with others, and track your work from anywhere. We will use GitHub to distribute course materials."
-  },
-  {
-    "objectID": "installation.html#footnotes",
-    "href": "installation.html#footnotes",
-    "title": "Getting Started: Installation Guide",
-    "section": "Footnotes",
-    "text": "Footnotes\n\n\nThe engine-dashboard-analogy is borrowed from Andrew Heiss.↩︎\nPositron layout overview↩︎"
-  },
-  {
-    "objectID": "LICENSE.html",
-    "href": "LICENSE.html",
-    "title": "QMIR 2026",
-    "section": "",
-    "text": "Attribution-NonCommercial 4.0 International\n=======================================================================\nCreative Commons Corporation (“Creative Commons”) is not a law firm and does not provide legal services or legal advice. Distribution of Creative Commons public licenses does not create a lawyer-client or other relationship. Creative Commons makes its licenses and related information available on an “as-is” basis. Creative Commons gives no warranties regarding its licenses, any material licensed under their terms and conditions, or any related information. Creative Commons disclaims all liability for damages resulting from their use to the fullest extent possible.\nUsing Creative Commons Public Licenses\nCreative Commons public licenses provide a standard set of terms and conditions that creators and other rights holders may use to share original works of authorship and other material subject to copyright and certain other rights specified in the public license below. The following considerations are for informational purposes only, are not exhaustive, and do not form part of our licenses.\n Considerations for licensors: Our public licenses are\n intended for use by those authorized to give the public\n permission to use material in ways otherwise restricted by\n copyright and certain other rights. Our licenses are\n irrevocable. Licensors should read and understand the terms\n and conditions of the license they choose before applying it.\n Licensors should also secure all rights necessary before\n applying our licenses so that the public can reuse the\n material as expected. Licensors should clearly mark any\n material not subject to the license. This includes other CC-\n licensed material, or material used under an exception or\n limitation to copyright. More considerations for licensors:\nwiki.creativecommons.org/Considerations_for_licensors\n\n Considerations for the public: By using one of our public\n licenses, a licensor grants the public permission to use the\n licensed material under specified terms and conditions. If\n the licensor's permission is not necessary for any reason--for\n example, because of any applicable exception or limitation to\n copyright--then that use is not regulated by the license. Our\n licenses grant only permissions under copyright and certain\n other rights that a licensor has authority to grant. Use of\n the licensed material may still be restricted for other\n reasons, including because others have copyright or other\n rights in the material. A licensor may make special requests,\n such as asking that all changes be marked or described.\n Although not required by our licenses, you are encouraged to\n respect those requests where reasonable. More considerations\n for the public:\nwiki.creativecommons.org/Considerations_for_licensees\n=======================================================================\nCreative Commons Attribution-NonCommercial 4.0 International Public License\nBy exercising the Licensed Rights (defined below), You accept and agree to be bound by the terms and conditions of this Creative Commons Attribution-NonCommercial 4.0 International Public License (“Public License”). To the extent this Public License may be interpreted as a contract, You are granted the Licensed Rights in consideration of Your acceptance of these terms and conditions, and the Licensor grants You such rights in consideration of benefits the Licensor receives from making the Licensed Material available under these terms and conditions.\nSection 1 – Definitions.\n\nAdapted Material means material subject to Copyright and Similar Rights that is derived from or based upon the Licensed Material and in which the Licensed Material is translated, altered, arranged, transformed, or otherwise modified in a manner requiring permission under the Copyright and Similar Rights held by the Licensor. For purposes of this Public License, where the Licensed Material is a musical work, performance, or sound recording, Adapted Material is always produced where the Licensed Material is synched in timed relation with a moving image.\nAdapter’s License means the license You apply to Your Copyright and Similar Rights in Your contributions to Adapted Material in accordance with the terms and conditions of this Public License.\nCopyright and Similar Rights means copyright and/or similar rights closely related to copyright including, without limitation, performance, broadcast, sound recording, and Sui Generis Database Rights, without regard to how the rights are labeled or categorized. For purposes of this Public License, the rights specified in Section 2(b)(1)-(2) are not Copyright and Similar Rights.\nEffective Technological Measures means those measures that, in the absence of proper authority, may not be circumvented under laws fulfilling obligations under Article 11 of the WIPO Copyright Treaty adopted on December 20, 1996, and/or similar international agreements.\nExceptions and Limitations means fair use, fair dealing, and/or any other exception or limitation to Copyright and Similar Rights that applies to Your use of the Licensed Material.\nLicensed Material means the artistic or literary work, database, or other material to which the Licensor applied this Public License.\nLicensed Rights means the rights granted to You subject to the terms and conditions of this Public License, which are limited to all Copyright and Similar Rights that apply to Your use of the Licensed Material and that the Licensor has authority to license.\nLicensor means the individual(s) or entity(ies) granting rights under this Public License.\nNonCommercial means not primarily intended for or directed towards commercial advantage or monetary compensation. For purposes of this Public License, the exchange of the Licensed Material for other material subject to Copyright and Similar Rights by digital file-sharing or similar means is NonCommercial provided there is no payment of monetary compensation in connection with the exchange.\nShare means to provide material to the public by any means or process that requires permission under the Licensed Rights, such as reproduction, public display, public performance, distribution, dissemination, communication, or importation, and to make material available to the public including in ways that members of the public may access the material from a place and at a time individually chosen by them.\nSui Generis Database Rights means rights other than copyright resulting from Directive 96/9/EC of the European Parliament and of the Council of 11 March 1996 on the legal protection of databases, as amended and/or succeeded, as well as other essentially equivalent rights anywhere in the world.\nYou means the individual or entity exercising the Licensed Rights under this Public License. Your has a corresponding meaning.\n\nSection 2 – Scope.\n\nLicense grant.\n\nSubject to the terms and conditions of this Public License, the Licensor hereby grants You a worldwide, royalty-free, non-sublicensable, non-exclusive, irrevocable license to exercise the Licensed Rights in the Licensed Material to:\n\nreproduce and Share the Licensed Material, in whole or in part, for NonCommercial purposes only; and\nproduce, reproduce, and Share Adapted Material for NonCommercial purposes only.\n\nExceptions and Limitations. For the avoidance of doubt, where Exceptions and Limitations apply to Your use, this Public License does not apply, and You do not need to comply with its terms and conditions.\nTerm. The term of this Public License is specified in Section 6(a).\nMedia and formats; technical modifications allowed. The Licensor authorizes You to exercise the Licensed Rights in all media and formats whether now known or hereafter created, and to make technical modifications necessary to do so. The Licensor waives and/or agrees not to assert any right or authority to forbid You from making technical modifications necessary to exercise the Licensed Rights, including technical modifications necessary to circumvent Effective Technological Measures. For purposes of this Public License, simply making modifications authorized by this Section 2(a)\n\nnever produces Adapted Material.\n\nDownstream recipients.\n\nOffer from the Licensor – Licensed Material. Every recipient of the Licensed Material automatically receives an offer from the Licensor to exercise the Licensed Rights under the terms and conditions of this Public License.\nNo downstream restrictions. You may not offer or impose any additional or different terms or conditions on, or apply any Effective Technological Measures to, the Licensed Material if doing so restricts exercise of the Licensed Rights by any recipient of the Licensed Material.\n\nNo endorsement. Nothing in this Public License constitutes or may be construed as permission to assert or imply that You are, or that Your use of the Licensed Material is, connected with, or sponsored, endorsed, or granted official status by, the Licensor or others designated to receive attribution as provided in Section 3(a)(1)(A)(i).\n\nOther rights.\n\nMoral rights, such as the right of integrity, are not licensed under this Public License, nor are publicity, privacy, and/or other similar personality rights; however, to the extent possible, the Licensor waives and/or agrees not to assert any such rights held by the Licensor to the limited extent necessary to allow You to exercise the Licensed Rights, but not otherwise.\nPatent and trademark rights are not licensed under this Public License.\nTo the extent possible, the Licensor waives any right to collect royalties from You for the exercise of the Licensed Rights, whether directly or through a collecting society under any voluntary or waivable statutory or compulsory licensing scheme. In all other cases the Licensor expressly reserves any right to collect such royalties, including when the Licensed Material is used other than for NonCommercial purposes.\n\n\nSection 3 – License Conditions.\nYour exercise of the Licensed Rights is expressly made subject to the following conditions.\n\nAttribution.\n\nIf You Share the Licensed Material (including in modified form), You must:\n\nretain the following if it is supplied by the Licensor with the Licensed Material:\n\nidentification of the creator(s) of the Licensed Material and any others designated to receive attribution, in any reasonable manner requested by the Licensor (including by pseudonym if designated);\na copyright notice;\na notice that refers to this Public License;\na notice that refers to the disclaimer of warranties;\na URI or hyperlink to the Licensed Material to the extent reasonably practicable;\n\nindicate if You modified the Licensed Material and retain an indication of any previous modifications; and\nindicate the Licensed Material is licensed under this Public License, and include the text of, or the URI or hyperlink to, this Public License.\n\nYou may satisfy the conditions in Section 3(a)(1) in any reasonable manner based on the medium, means, and context in which You Share the Licensed Material. For example, it may be reasonable to satisfy the conditions by providing a URI or hyperlink to a resource that includes the required information.\nIf requested by the Licensor, You must remove any of the information required by Section 3(a)(1)(A) to the extent reasonably practicable.\nIf You Share Adapted Material You produce, the Adapter’s License You apply must not prevent recipients of the Adapted Material from complying with this Public License.\n\n\nSection 4 – Sui Generis Database Rights.\nWhere the Licensed Rights include Sui Generis Database Rights that apply to Your use of the Licensed Material:\n\nfor the avoidance of doubt, Section 2(a)(1) grants You the right to extract, reuse, reproduce, and Share all or a substantial portion of the contents of the database for NonCommercial purposes only;\nif You include all or a substantial portion of the database contents in a database in which You have Sui Generis Database Rights, then the database in which You have Sui Generis Database Rights (but not its individual contents) is Adapted Material; and\nYou must comply with the conditions in Section 3(a) if You Share all or a substantial portion of the contents of the database.\n\nFor the avoidance of doubt, this Section 4 supplements and does not replace Your obligations under this Public License where the Licensed Rights include other Copyright and Similar Rights.\nSection 5 – Disclaimer of Warranties and Limitation of Liability.\n\nUNLESS OTHERWISE SEPARATELY UNDERTAKEN BY THE LICENSOR, TO THE EXTENT POSSIBLE, THE LICENSOR OFFERS THE LICENSED MATERIAL AS-IS AND AS-AVAILABLE, AND MAKES NO REPRESENTATIONS OR WARRANTIES OF ANY KIND CONCERNING THE LICENSED MATERIAL, WHETHER EXPRESS, IMPLIED, STATUTORY, OR OTHER. THIS INCLUDES, WITHOUT LIMITATION, WARRANTIES OF TITLE, MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, ABSENCE OF LATENT OR OTHER DEFECTS, ACCURACY, OR THE PRESENCE OR ABSENCE OF ERRORS, WHETHER OR NOT KNOWN OR DISCOVERABLE. WHERE DISCLAIMERS OF WARRANTIES ARE NOT ALLOWED IN FULL OR IN PART, THIS DISCLAIMER MAY NOT APPLY TO YOU.\nTO THE EXTENT POSSIBLE, IN NO EVENT WILL THE LICENSOR BE LIABLE TO YOU ON ANY LEGAL THEORY (INCLUDING, WITHOUT LIMITATION, NEGLIGENCE) OR OTHERWISE FOR ANY DIRECT, SPECIAL, INDIRECT, INCIDENTAL, CONSEQUENTIAL, PUNITIVE, EXEMPLARY, OR OTHER LOSSES, COSTS, EXPENSES, OR DAMAGES ARISING OUT OF THIS PUBLIC LICENSE OR USE OF THE LICENSED MATERIAL, EVEN IF THE LICENSOR HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH LOSSES, COSTS, EXPENSES, OR DAMAGES. WHERE A LIMITATION OF LIABILITY IS NOT ALLOWED IN FULL OR IN PART, THIS LIMITATION MAY NOT APPLY TO YOU.\nThe disclaimer of warranties and limitation of liability provided above shall be interpreted in a manner that, to the extent possible, most closely approximates an absolute disclaimer and waiver of all liability.\n\nSection 6 – Term and Termination.\n\nThis Public License applies for the term of the Copyright and Similar Rights licensed here. However, if You fail to comply with this Public License, then Your rights under this Public License terminate automatically.\nWhere Your right to use the Licensed Material has terminated under Section 6(a), it reinstates:\n\nautomatically as of the date the violation is cured, provided it is cured within 30 days of Your discovery of the violation; or\nupon express reinstatement by the Licensor.\n\nFor the avoidance of doubt, this Section 6(b) does not affect any right the Licensor may have to seek remedies for Your violations of this Public License.\nFor the avoidance of doubt, the Licensor may also offer the Licensed Material under separate terms or conditions or stop distributing the Licensed Material at any time; however, doing so will not terminate this Public License.\nSections 1, 5, 6, 7, and 8 survive termination of this Public License.\n\nSection 7 – Other Terms and Conditions.\n\nThe Licensor shall not be bound by any additional or different terms or conditions communicated by You unless expressly agreed.\nAny arrangements, understandings, or agreements regarding the Licensed Material not stated herein are separate from and independent of the terms and conditions of this Public License.\n\nSection 8 – Interpretation.\n\nFor the avoidance of doubt, this Public License does not, and shall not be interpreted to, reduce, limit, restrict, or impose conditions on any use of the Licensed Material that could lawfully be made without permission under this Public License.\nTo the extent possible, if any provision of this Public License is deemed unenforceable, it shall be automatically reformed to the minimum extent necessary to make it enforceable. If the provision cannot be reformed, it shall be severed from this Public License without affecting the enforceability of the remaining terms and conditions.\nNo term or condition of this Public License will be waived and no failure to comply consented to unless expressly agreed to by the Licensor.\nNothing in this Public License constitutes or may be interpreted as a limitation upon, or waiver of, any privileges and immunities that apply to the Licensor or You, including from the legal processes of any jurisdiction or authority.\n\n=======================================================================\nCreative Commons is not a party to its public licenses. Notwithstanding, Creative Commons may elect to apply one of its public licenses to material it publishes and in those instances will be considered the “Licensor.” The text of the Creative Commons public licenses is dedicated to the public domain under the CC0 Public Domain Dedication. Except for the limited purpose of indicating that material is shared under a Creative Commons public license or as otherwise permitted by the Creative Commons policies published at creativecommons.org/policies, Creative Commons does not authorize the use of the trademark “Creative Commons” or any other trademark or logo of Creative Commons without its prior written consent including, without limitation, in connection with any unauthorized modifications to any of its public licenses or any other arrangements, understandings, or agreements concerning use of licensed material. For the avoidance of doubt, this paragraph does not form part of the public licenses.\nCreative Commons may be contacted at creativecommons.org."
-  },
-  {
-    "objectID": "ressources/02_resources.html",
-    "href": "ressources/02_resources.html",
-    "title": "Week 2 Resources",
-    "section": "",
-    "text": "Knuth, Donald Ervin. 1984. “Literate Programming.” The Computer Journal 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97.\n\n\nNick White. 2021. Git Tutorial for Dummies. YouTube. https://www.youtube.com/watch?v=mJ-qvsxPHpY.\n\n\nPosit Software, PBC. n.d. Positron Layout. Posit. https://positron.posit.co/layout.html.\n\n\n———. n.d. Quarto Guide. Posit. https://quarto.org/docs/guide/.\n\n\n———. 2025. Publish and Share with Quarto: Quarto Cheatsheet. Posit. https://rstudio.github.io/cheatsheets/html/quarto.html.\n\n\nWickham, Hadley, Mine Çetinkaya-Rundel, and Garrett Grolemund. 2023. “Quarto.” In R for Data Science: Import, Tidy, Transform, Visualize, and Model Data, edited by Hadley Wickham, Mine Çetinkaya-Rundel, and Garrett Grolemund, 2nd ed. O’Reilly. https://r4ds.hadley.nz/quarto.html."
-  },
-  {
-    "objectID": "ressources/04_resources.html",
-    "href": "ressources/04_resources.html",
-    "title": "Week 4 Resources",
-    "section": "",
-    "text": "DataCamp. 2026. Introduction to the Tidyverse. DataCamp. https://www.datacamp.com/courses/introduction-to-the-tidyverse."
-  },
-  {
-    "objectID": "ressources/06_resources.html",
-    "href": "ressources/06_resources.html",
-    "title": "Week 6 Resources",
-    "section": "",
-    "text": "DataCamp. 2022. Foundations of Probability in r. DataCamp. https://www.datacamp.com/courses/foundations-of-probability-in-r.\n\n\nMcElreath, Richard. 2020. Statistical Rethinking: A Bayesian Course with Examples in r and STAN. 2nd ed. Chapman; Hall/CRC. https://doi.org/10.1201/9780429029608."
-  },
-  {
-    "objectID": "ressources/08_resources.html",
-    "href": "ressources/08_resources.html",
-    "title": "Week 8 Resources",
-    "section": "",
-    "text": "McElreath, Richard. 2020. Statistical Rethinking: A Bayesian Course with Examples in r and STAN. 2nd ed. Chapman; Hall/CRC. https://doi.org/10.1201/9780429029608."
-  },
-  {
-    "objectID": "ressources/10_resources.html",
-    "href": "ressources/10_resources.html",
-    "title": "Week 10 Resources",
-    "section": "",
-    "text": "McElreath, Richard. 2020. Statistical Rethinking: A Bayesian Course with Examples in r and STAN. 2nd ed. Chapman; Hall/CRC. https://doi.org/10.1201/9780429029608."
-  },
-  {
-    "objectID": "ressources/12_resources.html",
-    "href": "ressources/12_resources.html",
-    "title": "Week 12 Resources",
-    "section": "",
-    "text": "McElreath, Richard. 2020. Statistical Rethinking: A Bayesian Course with Examples in r and STAN. 2nd ed. Chapman; Hall/CRC. https://doi.org/10.1201/9780429029608."
-  },
-  {
-    "objectID": "schedule.html",
-    "href": "schedule.html",
-    "title": "Schedule",
-    "section": "",
-    "text": "Here’s your roadmap for the semester!\n\nClass\n\n Instructor-led lecture: concepts, theory and foundations.\n Hands-on exercises with guidance.\n\nHomework ()\n\nAssigned at the end of class.\nDue 7 days later (Mon → next Mon 13:30; Thu → next Thu 18:45)\n\nAdditional resources ()\n\nFurther readings and online learning resources\n\n\n\nSemester Schedule\n\n\n\nWeek\nTopic\nMonday\nThursday\nSlides\nExercise\nHomework\nRessources\n\n\n\n\n1\nCourse Roadmap & Research Workflow\nFeb 09\nFeb 12\n\n\n\n\n\n\n\n\nBlock I: Scientific Programming Fundamentals\n\n\n\nWeek\nTopic\nMonday\nThursday\nSlides\nExercise\nHomework\nRessources\n\n\n\n\n2\nReproducible Research with R, Quarto & Git\nFeb 16\nFeb 19\n\n\n\n\n\n\n3\nR Fundamentals: Data Types & Structures\nFeb 23\nFeb 26\n\n\n Mon Thu  \n\n\n\n4\nTidy Data: Wrangling & Visualization\nMar 02\nMar 05\n\n\n\n\n\n\n5\nReshaping & Merging Data\nMar 09\nMar 12\n\n\n\n\n\n\n\n\n\nBlock II: The Logic of Bayesian Inference\n\n\n\n\n\n\n\n\n\n\n\n\n\nWeek\nTopic\nMonday\nThursday\nSlides\nExercise\nHomework\nRessources\n\n\n\n\n6\nProbability, Simulation & Bayes’ Theorem\nMar 16\nMar 19\n\n\n\n\n\n\n7\nBayesian Inference & MCMC\nMar 23\nMar 26\n\n\n\n\n\n\n\n\n\nBlock III: Applied Data Analysis\n\n\n\n\n\n\n\n\n\n\n\n\n\nWeek\nTopic\nMonday\nThursday\nSlides\nExercise\nHomework\nRessources\n\n\n\n\n8\nBivariate Linear Regression\nApr 13\nApr 16\n\n\n\n\n\n\n9\nMultivariate Regression & Interactions\nApr 20\nApr 23\n\n\n\n\n\n\n10\nModeling Binary Outcomes\nApr 27\nApr 30\n\n\n\n\n\n\n11\nFixed Effects & Within-Unit Inference\nMay 04\nMay 07\n\n\n\n\n\n\n12\nMultilevel Models & Partial Pooling\nMay 11\nMay 21\n\n\n\n\n\n\n13\nBeyond the Course: Applying What You’ve Learned\nMay 18\nMay 28\n\n\n\n\n\n\n14\nTake Home Exam\nMay 28 19:00 – June 05 23:59\nMay 28 19:00 – June 05 23:59"
-  },
-  {
-    "objectID": "slides/week1.html#qmir-2026",
-    "href": "slides/week1.html#qmir-2026",
-    "title": "QMIR 2026",
-    "section": "QMIR 2026",
-    "text": "QMIR 2026\nWeek 1: Course Roadmap & Research Workflow\n Tristan Muno            February 9, 2026"
-  },
-  {
-    "objectID": "slides/week1.html#agenda",
-    "href": "slides/week1.html#agenda",
-    "title": "QMIR 2026",
-    "section": "Agenda",
-    "text": "Agenda\n\nIntroduction\n\nAbout me\nAbout you\n\nCourse overview and expectations\n\nWhat you will learn\nWhat this course does not cover\nWhy the course is structured this way\n\nGetting started\n\nInstallation\nFirst look at Positron"
-  },
-  {
-    "objectID": "slides/week1.html#survey",
-    "href": "slides/week1.html#survey",
-    "title": "QMIR 2026",
-    "section": "Survey",
-    "text": "Survey\nPlease fill out the following survey:\ndertristan.limesurvey.net/qmir-2026-welcome"
-  },
-  {
-    "objectID": "slides/week1.html#about-me",
-    "href": "slides/week1.html#about-me",
-    "title": "QMIR 2026",
-    "section": "About me",
-    "text": "About me"
-  },
-  {
-    "objectID": "slides/week1.html#about-you",
-    "href": "slides/week1.html#about-you",
-    "title": "QMIR 2026",
-    "section": "About you",
-    "text": "About you\n\nWhat name would you like us to call you?\nWhat natural (spoken) languages do you speak or are currently learning? (e.g., German, Spanish, Arabic – not programming languages)\nHow do you usually spend your time outside university? (This can be anything: a side job, vocational/civilian service, volunteering, sports, creative hobbies, gaming, family time – whatever is part of your life)"
-  },
-  {
-    "objectID": "slides/week1.html#about-you-continued",
-    "href": "slides/week1.html#about-you-continued",
-    "title": "QMIR 2026",
-    "section": "About you continued",
-    "text": "About you continued"
-  },
-  {
-    "objectID": "slides/week1.html#what-you-will-learn",
-    "href": "slides/week1.html#what-you-will-learn",
-    "title": "QMIR 2026",
-    "section": "What you will learn",
-    "text": "What you will learn\n\nHow to build a reproducible, open-source research workflow – integrating data, code, analysis, and writing into a transparent scientific process\nHow to use statistical models to learn from data – understanding what models assume, what they estimate, how they update our beliefs, and how to interpret results responsibly\nHow to communicate empirical results clearly and responsibly – through well-structured reports, visualizations, and reproducible documents"
-  },
-  {
-    "objectID": "slides/week1.html#what-this-course-does-not-cover",
-    "href": "slides/week1.html#what-this-course-does-not-cover",
-    "title": "QMIR 2026",
-    "section": "What this course does not cover",
-    "text": "What this course does not cover\n\nData collection and research design – we work with existing datasets and do not cover survey design, measurement strategies, or fieldwork (the university offers dedicated courses and resources in these areas)\nCausal inference methods – we focus on analyzing and interpreting associations between variables rather than formal causal identification (specialized courses cover causal inference in depth)\nSubstantive political theory or normative argumentation – we use real political science examples, but the focus is methodological and conceptual training rather than developing theoretical frameworks"
-  },
-  {
-    "objectID": "slides/week1.html#why-the-course-is-structured-this-way",
-    "href": "slides/week1.html#why-the-course-is-structured-this-way",
-    "title": "QMIR 2026",
-    "section": "Why the course is structured this way",
-    "text": "Why the course is structured this way"
-  },
-  {
-    "objectID": "slides/week1.html#why-the-course-is-structured-this-way-1",
-    "href": "slides/week1.html#why-the-course-is-structured-this-way-1",
-    "title": "QMIR 2026",
-    "section": "Why the course is structured this way",
-    "text": "Why the course is structured this way\n\nAn (toy) example of a fully integrated, reproducible research pipeline in action: Quarto manuscript\nWe will build up to this step by step, learning and integrating each piece along the way"
-  },
-  {
-    "objectID": "slides/week1.html#why-the-course-is-structured-this-way-2",
-    "href": "slides/week1.html#why-the-course-is-structured-this-way-2",
-    "title": "QMIR 2026",
-    "section": "Why the course is structured this way",
-    "text": "Why the course is structured this way\n\nAdmittedly overkill for simple tasks, but it provides a scalable, FOSS toolbox for complex projects, advanced models, and fully reproducible workflows\n\nBuilds a foundation in quantitative methods and data science that’s useful across disciplines and careers, helping you understand research from other fields while gaining essential data skills"
-  },
-  {
-    "objectID": "slides/week1.html#installation",
-    "href": "slides/week1.html#installation",
-    "title": "QMIR 2026",
-    "section": "Installation",
-    "text": "Installation\nInstallation guide"
-  },
-  {
-    "objectID": "slides/week1.html#first-glance-at-positron",
-    "href": "slides/week1.html#first-glance-at-positron",
-    "title": "QMIR 2026",
-    "section": "First glance at Positron",
-    "text": "First glance at Positron\nPositron documentation"
-  },
-  {
     "objectID": "slides/week3.html#qmir-2026",
     "href": "slides/week3.html#qmir-2026",
     "title": "QMIR 2026",
@@ -747,5 +264,740 @@
     "title": "QMIR 2026",
     "section": "Homework",
     "text": "Homework\n\nDistributed via GitHub (same workflow as Week 2)\nSubmit a rendered Quarto document (.qmd + rendered PDF)\nDue: one week from today\n\nThe homework follows the same arc as today – you’ll work with a small political dataset to practice types, structures, and subsetting. Read the task descriptions carefully and write comments explaining your reasoning."
+  },
+  {
+    "objectID": "slides/week1.html#qmir-2026",
+    "href": "slides/week1.html#qmir-2026",
+    "title": "QMIR 2026",
+    "section": "QMIR 2026",
+    "text": "QMIR 2026\nWeek 1: Course Roadmap & Research Workflow\n Tristan Muno            February 9, 2026"
+  },
+  {
+    "objectID": "slides/week1.html#agenda",
+    "href": "slides/week1.html#agenda",
+    "title": "QMIR 2026",
+    "section": "Agenda",
+    "text": "Agenda\n\nIntroduction\n\nAbout me\nAbout you\n\nCourse overview and expectations\n\nWhat you will learn\nWhat this course does not cover\nWhy the course is structured this way\n\nGetting started\n\nInstallation\nFirst look at Positron"
+  },
+  {
+    "objectID": "slides/week1.html#survey",
+    "href": "slides/week1.html#survey",
+    "title": "QMIR 2026",
+    "section": "Survey",
+    "text": "Survey\nPlease fill out the following survey:\ndertristan.limesurvey.net/qmir-2026-welcome"
+  },
+  {
+    "objectID": "slides/week1.html#about-me",
+    "href": "slides/week1.html#about-me",
+    "title": "QMIR 2026",
+    "section": "About me",
+    "text": "About me"
+  },
+  {
+    "objectID": "slides/week1.html#about-you",
+    "href": "slides/week1.html#about-you",
+    "title": "QMIR 2026",
+    "section": "About you",
+    "text": "About you\n\nWhat name would you like us to call you?\nWhat natural (spoken) languages do you speak or are currently learning? (e.g., German, Spanish, Arabic – not programming languages)\nHow do you usually spend your time outside university? (This can be anything: a side job, vocational/civilian service, volunteering, sports, creative hobbies, gaming, family time – whatever is part of your life)"
+  },
+  {
+    "objectID": "slides/week1.html#about-you-continued",
+    "href": "slides/week1.html#about-you-continued",
+    "title": "QMIR 2026",
+    "section": "About you continued",
+    "text": "About you continued"
+  },
+  {
+    "objectID": "slides/week1.html#what-you-will-learn",
+    "href": "slides/week1.html#what-you-will-learn",
+    "title": "QMIR 2026",
+    "section": "What you will learn",
+    "text": "What you will learn\n\nHow to build a reproducible, open-source research workflow – integrating data, code, analysis, and writing into a transparent scientific process\nHow to use statistical models to learn from data – understanding what models assume, what they estimate, how they update our beliefs, and how to interpret results responsibly\nHow to communicate empirical results clearly and responsibly – through well-structured reports, visualizations, and reproducible documents"
+  },
+  {
+    "objectID": "slides/week1.html#what-this-course-does-not-cover",
+    "href": "slides/week1.html#what-this-course-does-not-cover",
+    "title": "QMIR 2026",
+    "section": "What this course does not cover",
+    "text": "What this course does not cover\n\nData collection and research design – we work with existing datasets and do not cover survey design, measurement strategies, or fieldwork (the university offers dedicated courses and resources in these areas)\nCausal inference methods – we focus on analyzing and interpreting associations between variables rather than formal causal identification (specialized courses cover causal inference in depth)\nSubstantive political theory or normative argumentation – we use real political science examples, but the focus is methodological and conceptual training rather than developing theoretical frameworks"
+  },
+  {
+    "objectID": "slides/week1.html#why-the-course-is-structured-this-way",
+    "href": "slides/week1.html#why-the-course-is-structured-this-way",
+    "title": "QMIR 2026",
+    "section": "Why the course is structured this way",
+    "text": "Why the course is structured this way"
+  },
+  {
+    "objectID": "slides/week1.html#why-the-course-is-structured-this-way-1",
+    "href": "slides/week1.html#why-the-course-is-structured-this-way-1",
+    "title": "QMIR 2026",
+    "section": "Why the course is structured this way",
+    "text": "Why the course is structured this way\n\nAn (toy) example of a fully integrated, reproducible research pipeline in action: Quarto manuscript\nWe will build up to this step by step, learning and integrating each piece along the way"
+  },
+  {
+    "objectID": "slides/week1.html#why-the-course-is-structured-this-way-2",
+    "href": "slides/week1.html#why-the-course-is-structured-this-way-2",
+    "title": "QMIR 2026",
+    "section": "Why the course is structured this way",
+    "text": "Why the course is structured this way\n\nAdmittedly overkill for simple tasks, but it provides a scalable, FOSS toolbox for complex projects, advanced models, and fully reproducible workflows\n\nBuilds a foundation in quantitative methods and data science that’s useful across disciplines and careers, helping you understand research from other fields while gaining essential data skills"
+  },
+  {
+    "objectID": "slides/week1.html#installation",
+    "href": "slides/week1.html#installation",
+    "title": "QMIR 2026",
+    "section": "Installation",
+    "text": "Installation\nInstallation guide"
+  },
+  {
+    "objectID": "slides/week1.html#first-glance-at-positron",
+    "href": "slides/week1.html#first-glance-at-positron",
+    "title": "QMIR 2026",
+    "section": "First glance at Positron",
+    "text": "First glance at Positron\nPositron documentation"
+  },
+  {
+    "objectID": "schedule.html",
+    "href": "schedule.html",
+    "title": "Schedule",
+    "section": "",
+    "text": "Here’s your roadmap for the semester!\n\nClass\n\n Instructor-led lecture: concepts, theory and foundations.\n Hands-on exercises with guidance.\n\nHomework ()\n\nAssigned at the end of class.\nDue 7 days later (Mon → next Mon 13:30; Thu → next Thu 18:45)\n\nAdditional resources ()\n\nFurther readings and online learning resources\n\n\n\nSemester Schedule\n\n\n\nWeek\nTopic\nMonday\nThursday\nSlides\nExercise\nHomework\nRessources\n\n\n\n\n1\nCourse Roadmap & Research Workflow\nFeb 09\nFeb 12\n\n\n\n\n\n\n\n\nBlock I: Scientific Programming Fundamentals\n\n\n\nWeek\nTopic\nMonday\nThursday\nSlides\nExercise\nHomework\nRessources\n\n\n\n\n2\nReproducible Research with R, Quarto & Git\nFeb 16\nFeb 19\n\n\n\n\n\n\n3\nR Fundamentals: Data Types & Structures\nFeb 23\nFeb 26\n\n\n Mon Thu  \n\n\n\n4\nTidy Data: Wrangling & Visualization\nMar 02\nMar 05\n\n\n\n\n\n\n5\nReshaping & Merging Data\nMar 09\nMar 12\n\n\n\n\n\n\n\n\n\nBlock II: The Logic of Bayesian Inference\n\n\n\n\n\n\n\n\n\n\n\n\n\nWeek\nTopic\nMonday\nThursday\nSlides\nExercise\nHomework\nRessources\n\n\n\n\n6\nProbability, Simulation & Bayes’ Theorem\nMar 16\nMar 19\n\n\n\n\n\n\n7\nBayesian Inference & MCMC\nMar 23\nMar 26\n\n\n\n\n\n\n\n\n\nBlock III: Applied Data Analysis\n\n\n\n\n\n\n\n\n\n\n\n\n\nWeek\nTopic\nMonday\nThursday\nSlides\nExercise\nHomework\nRessources\n\n\n\n\n8\nBivariate Linear Regression\nApr 13\nApr 16\n\n\n\n\n\n\n9\nMultivariate Regression & Interactions\nApr 20\nApr 23\n\n\n\n\n\n\n10\nModeling Binary Outcomes\nApr 27\nApr 30\n\n\n\n\n\n\n11\nFixed Effects & Within-Unit Inference\nMay 04\nMay 07\n\n\n\n\n\n\n12\nMultilevel Models & Partial Pooling\nMay 11\nMay 21\n\n\n\n\n\n\n13\nBeyond the Course: Applying What You’ve Learned\nMay 18\nMay 28\n\n\n\n\n\n\n14\nTake Home Exam\nMay 28 19:00 – June 05 23:59\nMay 28 19:00 – June 05 23:59"
+  },
+  {
+    "objectID": "ressources/12_resources.html",
+    "href": "ressources/12_resources.html",
+    "title": "Week 12 Resources",
+    "section": "",
+    "text": "McElreath, Richard. 2020. Statistical Rethinking: A Bayesian Course with Examples in r and STAN. 2nd ed. Chapman; Hall/CRC. https://doi.org/10.1201/9780429029608."
+  },
+  {
+    "objectID": "ressources/10_resources.html",
+    "href": "ressources/10_resources.html",
+    "title": "Week 10 Resources",
+    "section": "",
+    "text": "McElreath, Richard. 2020. Statistical Rethinking: A Bayesian Course with Examples in r and STAN. 2nd ed. Chapman; Hall/CRC. https://doi.org/10.1201/9780429029608."
+  },
+  {
+    "objectID": "ressources/08_resources.html",
+    "href": "ressources/08_resources.html",
+    "title": "Week 8 Resources",
+    "section": "",
+    "text": "McElreath, Richard. 2020. Statistical Rethinking: A Bayesian Course with Examples in r and STAN. 2nd ed. Chapman; Hall/CRC. https://doi.org/10.1201/9780429029608."
+  },
+  {
+    "objectID": "ressources/06_resources.html",
+    "href": "ressources/06_resources.html",
+    "title": "Week 6 Resources",
+    "section": "",
+    "text": "DataCamp. 2022. Foundations of Probability in r. DataCamp. https://www.datacamp.com/courses/foundations-of-probability-in-r.\n\n\nMcElreath, Richard. 2020. Statistical Rethinking: A Bayesian Course with Examples in r and STAN. 2nd ed. Chapman; Hall/CRC. https://doi.org/10.1201/9780429029608."
+  },
+  {
+    "objectID": "ressources/04_resources.html",
+    "href": "ressources/04_resources.html",
+    "title": "Week 4 Resources",
+    "section": "",
+    "text": "Çetinkaya-Rundel, Mine, Johanna Hardin, Benjamin S Baumer, Amelia McNamara, Nicholas J Horton, and Colin Rundel. 2021. “An Educator’s Perspective of the Tidyverse.” arXiv Preprint arXiv:2108.03510. https://doi.org/10.48550/arXiv.2108.03510.\n\n\nDataCamp. 2026. Introduction to the Tidyverse. DataCamp. https://www.datacamp.com/courses/introduction-to-the-tidyverse.\n\n\nWickham, Hadley, Mine Çetinkaya-Rundel, and Garrett Grolemund. 2023. “Whole Game.” In R for Data Science: Import, Tidy, Transform, Visualize, and Model Data, edited by Hadley Wickham, Mine Çetinkaya-Rundel, and Garrett Grolemund, 2nd ed. O’Reilly. https://r4ds.hadley.nz/intro.html.\n\n\nWickham, Hadley, Danielle Navarro, and Thomas Lin Pedersen. 2023. Ggplot2: Elegant Graphics for Data Analysis. 3rd ed. https://ggplot2-book.org/."
+  },
+  {
+    "objectID": "ressources/02_resources.html",
+    "href": "ressources/02_resources.html",
+    "title": "Week 2 Resources",
+    "section": "",
+    "text": "Knuth, Donald Ervin. 1984. “Literate Programming.” The Computer Journal 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97.\n\n\nNick White. 2021. Git Tutorial for Dummies. YouTube. https://www.youtube.com/watch?v=mJ-qvsxPHpY.\n\n\nPosit Software, PBC. n.d. Positron Layout. Posit. https://positron.posit.co/layout.html.\n\n\n———. n.d. Quarto Guide. Posit. https://quarto.org/docs/guide/.\n\n\n———. 2025. Publish and Share with Quarto: Quarto Cheatsheet. Posit. https://rstudio.github.io/cheatsheets/html/quarto.html.\n\n\nWickham, Hadley, Mine Çetinkaya-Rundel, and Garrett Grolemund. 2023. “Quarto.” In R for Data Science: Import, Tidy, Transform, Visualize, and Model Data, edited by Hadley Wickham, Mine Çetinkaya-Rundel, and Garrett Grolemund, 2nd ed. O’Reilly. https://r4ds.hadley.nz/quarto.html."
+  },
+  {
+    "objectID": "LICENSE.html",
+    "href": "LICENSE.html",
+    "title": "QMIR 2026",
+    "section": "",
+    "text": "Attribution-NonCommercial 4.0 International\n=======================================================================\nCreative Commons Corporation (“Creative Commons”) is not a law firm and does not provide legal services or legal advice. Distribution of Creative Commons public licenses does not create a lawyer-client or other relationship. Creative Commons makes its licenses and related information available on an “as-is” basis. Creative Commons gives no warranties regarding its licenses, any material licensed under their terms and conditions, or any related information. Creative Commons disclaims all liability for damages resulting from their use to the fullest extent possible.\nUsing Creative Commons Public Licenses\nCreative Commons public licenses provide a standard set of terms and conditions that creators and other rights holders may use to share original works of authorship and other material subject to copyright and certain other rights specified in the public license below. The following considerations are for informational purposes only, are not exhaustive, and do not form part of our licenses.\n Considerations for licensors: Our public licenses are\n intended for use by those authorized to give the public\n permission to use material in ways otherwise restricted by\n copyright and certain other rights. Our licenses are\n irrevocable. Licensors should read and understand the terms\n and conditions of the license they choose before applying it.\n Licensors should also secure all rights necessary before\n applying our licenses so that the public can reuse the\n material as expected. Licensors should clearly mark any\n material not subject to the license. This includes other CC-\n licensed material, or material used under an exception or\n limitation to copyright. More considerations for licensors:\nwiki.creativecommons.org/Considerations_for_licensors\n\n Considerations for the public: By using one of our public\n licenses, a licensor grants the public permission to use the\n licensed material under specified terms and conditions. If\n the licensor's permission is not necessary for any reason--for\n example, because of any applicable exception or limitation to\n copyright--then that use is not regulated by the license. Our\n licenses grant only permissions under copyright and certain\n other rights that a licensor has authority to grant. Use of\n the licensed material may still be restricted for other\n reasons, including because others have copyright or other\n rights in the material. A licensor may make special requests,\n such as asking that all changes be marked or described.\n Although not required by our licenses, you are encouraged to\n respect those requests where reasonable. More considerations\n for the public:\nwiki.creativecommons.org/Considerations_for_licensees\n=======================================================================\nCreative Commons Attribution-NonCommercial 4.0 International Public License\nBy exercising the Licensed Rights (defined below), You accept and agree to be bound by the terms and conditions of this Creative Commons Attribution-NonCommercial 4.0 International Public License (“Public License”). To the extent this Public License may be interpreted as a contract, You are granted the Licensed Rights in consideration of Your acceptance of these terms and conditions, and the Licensor grants You such rights in consideration of benefits the Licensor receives from making the Licensed Material available under these terms and conditions.\nSection 1 – Definitions.\n\nAdapted Material means material subject to Copyright and Similar Rights that is derived from or based upon the Licensed Material and in which the Licensed Material is translated, altered, arranged, transformed, or otherwise modified in a manner requiring permission under the Copyright and Similar Rights held by the Licensor. For purposes of this Public License, where the Licensed Material is a musical work, performance, or sound recording, Adapted Material is always produced where the Licensed Material is synched in timed relation with a moving image.\nAdapter’s License means the license You apply to Your Copyright and Similar Rights in Your contributions to Adapted Material in accordance with the terms and conditions of this Public License.\nCopyright and Similar Rights means copyright and/or similar rights closely related to copyright including, without limitation, performance, broadcast, sound recording, and Sui Generis Database Rights, without regard to how the rights are labeled or categorized. For purposes of this Public License, the rights specified in Section 2(b)(1)-(2) are not Copyright and Similar Rights.\nEffective Technological Measures means those measures that, in the absence of proper authority, may not be circumvented under laws fulfilling obligations under Article 11 of the WIPO Copyright Treaty adopted on December 20, 1996, and/or similar international agreements.\nExceptions and Limitations means fair use, fair dealing, and/or any other exception or limitation to Copyright and Similar Rights that applies to Your use of the Licensed Material.\nLicensed Material means the artistic or literary work, database, or other material to which the Licensor applied this Public License.\nLicensed Rights means the rights granted to You subject to the terms and conditions of this Public License, which are limited to all Copyright and Similar Rights that apply to Your use of the Licensed Material and that the Licensor has authority to license.\nLicensor means the individual(s) or entity(ies) granting rights under this Public License.\nNonCommercial means not primarily intended for or directed towards commercial advantage or monetary compensation. For purposes of this Public License, the exchange of the Licensed Material for other material subject to Copyright and Similar Rights by digital file-sharing or similar means is NonCommercial provided there is no payment of monetary compensation in connection with the exchange.\nShare means to provide material to the public by any means or process that requires permission under the Licensed Rights, such as reproduction, public display, public performance, distribution, dissemination, communication, or importation, and to make material available to the public including in ways that members of the public may access the material from a place and at a time individually chosen by them.\nSui Generis Database Rights means rights other than copyright resulting from Directive 96/9/EC of the European Parliament and of the Council of 11 March 1996 on the legal protection of databases, as amended and/or succeeded, as well as other essentially equivalent rights anywhere in the world.\nYou means the individual or entity exercising the Licensed Rights under this Public License. Your has a corresponding meaning.\n\nSection 2 – Scope.\n\nLicense grant.\n\nSubject to the terms and conditions of this Public License, the Licensor hereby grants You a worldwide, royalty-free, non-sublicensable, non-exclusive, irrevocable license to exercise the Licensed Rights in the Licensed Material to:\n\nreproduce and Share the Licensed Material, in whole or in part, for NonCommercial purposes only; and\nproduce, reproduce, and Share Adapted Material for NonCommercial purposes only.\n\nExceptions and Limitations. For the avoidance of doubt, where Exceptions and Limitations apply to Your use, this Public License does not apply, and You do not need to comply with its terms and conditions.\nTerm. The term of this Public License is specified in Section 6(a).\nMedia and formats; technical modifications allowed. The Licensor authorizes You to exercise the Licensed Rights in all media and formats whether now known or hereafter created, and to make technical modifications necessary to do so. The Licensor waives and/or agrees not to assert any right or authority to forbid You from making technical modifications necessary to exercise the Licensed Rights, including technical modifications necessary to circumvent Effective Technological Measures. For purposes of this Public License, simply making modifications authorized by this Section 2(a)\n\nnever produces Adapted Material.\n\nDownstream recipients.\n\nOffer from the Licensor – Licensed Material. Every recipient of the Licensed Material automatically receives an offer from the Licensor to exercise the Licensed Rights under the terms and conditions of this Public License.\nNo downstream restrictions. You may not offer or impose any additional or different terms or conditions on, or apply any Effective Technological Measures to, the Licensed Material if doing so restricts exercise of the Licensed Rights by any recipient of the Licensed Material.\n\nNo endorsement. Nothing in this Public License constitutes or may be construed as permission to assert or imply that You are, or that Your use of the Licensed Material is, connected with, or sponsored, endorsed, or granted official status by, the Licensor or others designated to receive attribution as provided in Section 3(a)(1)(A)(i).\n\nOther rights.\n\nMoral rights, such as the right of integrity, are not licensed under this Public License, nor are publicity, privacy, and/or other similar personality rights; however, to the extent possible, the Licensor waives and/or agrees not to assert any such rights held by the Licensor to the limited extent necessary to allow You to exercise the Licensed Rights, but not otherwise.\nPatent and trademark rights are not licensed under this Public License.\nTo the extent possible, the Licensor waives any right to collect royalties from You for the exercise of the Licensed Rights, whether directly or through a collecting society under any voluntary or waivable statutory or compulsory licensing scheme. In all other cases the Licensor expressly reserves any right to collect such royalties, including when the Licensed Material is used other than for NonCommercial purposes.\n\n\nSection 3 – License Conditions.\nYour exercise of the Licensed Rights is expressly made subject to the following conditions.\n\nAttribution.\n\nIf You Share the Licensed Material (including in modified form), You must:\n\nretain the following if it is supplied by the Licensor with the Licensed Material:\n\nidentification of the creator(s) of the Licensed Material and any others designated to receive attribution, in any reasonable manner requested by the Licensor (including by pseudonym if designated);\na copyright notice;\na notice that refers to this Public License;\na notice that refers to the disclaimer of warranties;\na URI or hyperlink to the Licensed Material to the extent reasonably practicable;\n\nindicate if You modified the Licensed Material and retain an indication of any previous modifications; and\nindicate the Licensed Material is licensed under this Public License, and include the text of, or the URI or hyperlink to, this Public License.\n\nYou may satisfy the conditions in Section 3(a)(1) in any reasonable manner based on the medium, means, and context in which You Share the Licensed Material. For example, it may be reasonable to satisfy the conditions by providing a URI or hyperlink to a resource that includes the required information.\nIf requested by the Licensor, You must remove any of the information required by Section 3(a)(1)(A) to the extent reasonably practicable.\nIf You Share Adapted Material You produce, the Adapter’s License You apply must not prevent recipients of the Adapted Material from complying with this Public License.\n\n\nSection 4 – Sui Generis Database Rights.\nWhere the Licensed Rights include Sui Generis Database Rights that apply to Your use of the Licensed Material:\n\nfor the avoidance of doubt, Section 2(a)(1) grants You the right to extract, reuse, reproduce, and Share all or a substantial portion of the contents of the database for NonCommercial purposes only;\nif You include all or a substantial portion of the database contents in a database in which You have Sui Generis Database Rights, then the database in which You have Sui Generis Database Rights (but not its individual contents) is Adapted Material; and\nYou must comply with the conditions in Section 3(a) if You Share all or a substantial portion of the contents of the database.\n\nFor the avoidance of doubt, this Section 4 supplements and does not replace Your obligations under this Public License where the Licensed Rights include other Copyright and Similar Rights.\nSection 5 – Disclaimer of Warranties and Limitation of Liability.\n\nUNLESS OTHERWISE SEPARATELY UNDERTAKEN BY THE LICENSOR, TO THE EXTENT POSSIBLE, THE LICENSOR OFFERS THE LICENSED MATERIAL AS-IS AND AS-AVAILABLE, AND MAKES NO REPRESENTATIONS OR WARRANTIES OF ANY KIND CONCERNING THE LICENSED MATERIAL, WHETHER EXPRESS, IMPLIED, STATUTORY, OR OTHER. THIS INCLUDES, WITHOUT LIMITATION, WARRANTIES OF TITLE, MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, ABSENCE OF LATENT OR OTHER DEFECTS, ACCURACY, OR THE PRESENCE OR ABSENCE OF ERRORS, WHETHER OR NOT KNOWN OR DISCOVERABLE. WHERE DISCLAIMERS OF WARRANTIES ARE NOT ALLOWED IN FULL OR IN PART, THIS DISCLAIMER MAY NOT APPLY TO YOU.\nTO THE EXTENT POSSIBLE, IN NO EVENT WILL THE LICENSOR BE LIABLE TO YOU ON ANY LEGAL THEORY (INCLUDING, WITHOUT LIMITATION, NEGLIGENCE) OR OTHERWISE FOR ANY DIRECT, SPECIAL, INDIRECT, INCIDENTAL, CONSEQUENTIAL, PUNITIVE, EXEMPLARY, OR OTHER LOSSES, COSTS, EXPENSES, OR DAMAGES ARISING OUT OF THIS PUBLIC LICENSE OR USE OF THE LICENSED MATERIAL, EVEN IF THE LICENSOR HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH LOSSES, COSTS, EXPENSES, OR DAMAGES. WHERE A LIMITATION OF LIABILITY IS NOT ALLOWED IN FULL OR IN PART, THIS LIMITATION MAY NOT APPLY TO YOU.\nThe disclaimer of warranties and limitation of liability provided above shall be interpreted in a manner that, to the extent possible, most closely approximates an absolute disclaimer and waiver of all liability.\n\nSection 6 – Term and Termination.\n\nThis Public License applies for the term of the Copyright and Similar Rights licensed here. However, if You fail to comply with this Public License, then Your rights under this Public License terminate automatically.\nWhere Your right to use the Licensed Material has terminated under Section 6(a), it reinstates:\n\nautomatically as of the date the violation is cured, provided it is cured within 30 days of Your discovery of the violation; or\nupon express reinstatement by the Licensor.\n\nFor the avoidance of doubt, this Section 6(b) does not affect any right the Licensor may have to seek remedies for Your violations of this Public License.\nFor the avoidance of doubt, the Licensor may also offer the Licensed Material under separate terms or conditions or stop distributing the Licensed Material at any time; however, doing so will not terminate this Public License.\nSections 1, 5, 6, 7, and 8 survive termination of this Public License.\n\nSection 7 – Other Terms and Conditions.\n\nThe Licensor shall not be bound by any additional or different terms or conditions communicated by You unless expressly agreed.\nAny arrangements, understandings, or agreements regarding the Licensed Material not stated herein are separate from and independent of the terms and conditions of this Public License.\n\nSection 8 – Interpretation.\n\nFor the avoidance of doubt, this Public License does not, and shall not be interpreted to, reduce, limit, restrict, or impose conditions on any use of the Licensed Material that could lawfully be made without permission under this Public License.\nTo the extent possible, if any provision of this Public License is deemed unenforceable, it shall be automatically reformed to the minimum extent necessary to make it enforceable. If the provision cannot be reformed, it shall be severed from this Public License without affecting the enforceability of the remaining terms and conditions.\nNo term or condition of this Public License will be waived and no failure to comply consented to unless expressly agreed to by the Licensor.\nNothing in this Public License constitutes or may be interpreted as a limitation upon, or waiver of, any privileges and immunities that apply to the Licensor or You, including from the legal processes of any jurisdiction or authority.\n\n=======================================================================\nCreative Commons is not a party to its public licenses. Notwithstanding, Creative Commons may elect to apply one of its public licenses to material it publishes and in those instances will be considered the “Licensor.” The text of the Creative Commons public licenses is dedicated to the public domain under the CC0 Public Domain Dedication. Except for the limited purpose of indicating that material is shared under a Creative Commons public license or as otherwise permitted by the Creative Commons policies published at creativecommons.org/policies, Creative Commons does not authorize the use of the trademark “Creative Commons” or any other trademark or logo of Creative Commons without its prior written consent including, without limitation, in connection with any unauthorized modifications to any of its public licenses or any other arrangements, understandings, or agreements concerning use of licensed material. For the avoidance of doubt, this paragraph does not form part of the public licenses.\nCreative Commons may be contacted at creativecommons.org."
+  },
+  {
+    "objectID": "installation.html",
+    "href": "installation.html",
+    "title": "Getting Started: Installation Guide",
+    "section": "",
+    "text": "This course introduces you to a range of software tools which, taken together, form a powerful and contemporary toolbox for transparent, reproducible, and scalable empirical research. Rather than relying on a single piece of software, you will learn how different tools interact and complement one another — much like they do in real-world research workflows."
+  },
+  {
+    "objectID": "installation.html#configure-git",
+    "href": "installation.html#configure-git",
+    "title": "Getting Started: Installation Guide",
+    "section": "Configure Git",
+    "text": "Configure Git\nTo use Git, you need to set a name and email address. These will be associated with every change (commit) you make, acting like a digital signature. You do not need to use your full name, but it is recommended.\ngit config --global user.name \"Your Name\"\ngit config --global user.email \"your@mail.com\""
+  },
+  {
+    "objectID": "installation.html#create-a-github-account",
+    "href": "installation.html#create-a-github-account",
+    "title": "Getting Started: Installation Guide",
+    "section": "Create a GitHub account",
+    "text": "Create a GitHub account\nIf you don’t already have one, create a free GitHub account here.\nGitHub will allow you to store repositories online, collaborate with others, and track your work from anywhere. We will use GitHub to distribute course materials."
+  },
+  {
+    "objectID": "installation.html#footnotes",
+    "href": "installation.html#footnotes",
+    "title": "Getting Started: Installation Guide",
+    "section": "Footnotes",
+    "text": "Footnotes\n\n\nThe engine-dashboard-analogy is borrowed from Andrew Heiss.↩︎\nPositron layout overview↩︎"
+  },
+  {
+    "objectID": "debug.html",
+    "href": "debug.html",
+    "title": "QMIR 2026",
+    "section": "",
+    "text": "qmd preview error (something with “Deno”) -&gt; close / delete current terminal session and click preview again -&gt; most of the times works now -&gt; delete .quarto or .freeze folders -&gt; else manually type quarto render [file], as preview does much more complicated stuff behind the scenes\nQuarto works in the following order: -&gt; is YAML correct? -&gt; are code cell options correct? -&gt; evaluate code -&gt; “knit” together code, code output and markdown text -&gt; render to desired output"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Quantitative Methods in International Relations",
+    "section": "",
+    "text": "Spring 2026 Department of Political Science School of Social Sciences University of Mannheim\n\n\n\nInstructor\n\n Tristan Muno\n A 5, 6 – Room A 351\n tristan.muno@uni-mannheim.de\n\n\n\nCourse details\n\n\n\n\nMonday\nThursday\n\n\n\nFeb 9 – May 18\nFeb 12 – May 28\n\n\n\n12:00 – 13:30\n17:15 – 18:45\n\n\n\nA5,6 C-108\nA5,6 C-108\n\n\n\nMarch 30, April 6, May 25\nApril 2, April 9, May 14\n\n\n\n\n\nContacting me\n\n Mondays 14:00-17:00: Open office consultation (no appointment needed)\nYou are welcome to stop by on Mondays between 14:00 and 17:00 for open consultation.\nFor other times, please email me to arrange an appointment (in person or online). I aim to reply within 24 hours."
+  },
+  {
+    "objectID": "lab/quarto-welcome.html",
+    "href": "lab/quarto-welcome.html",
+    "title": "Welcome to Quarto",
+    "section": "",
+    "text": "Welcome to Quarto! This is a simple example showing basic Markdown syntax.\n\n\n\n\nYou can apply:\n\nBold text\nItalic text\nInline code\nStrikethrough\n\n\n\n\nUnordered list:\n\nItem 1\nItem 2\n\nSubitem 2a\nSubitem 2b\n\n\nOrdered list:\n\nFirst\nSecond\nThird\n\n\n\n\nQuarto website\n\n\n\nQuarto Logo\n\n\n\n\n\n# R code example\nx &lt;- 1:5\nmean(x)\n\n\n\n\n\n\nName\nAge\nCity\n\n\n\n\nAlice\n30\nBerlin\n\n\nBob\n25\nParis\n\n\nCharlie\n28\nMadrid\n\n\n\n\n\n\n\nThis is a blockquote. Quarto supports Markdown-style quotes.\n\nNested blockquote example."
+  },
+  {
+    "objectID": "lab/quarto-welcome.html#subsection-header",
+    "href": "lab/quarto-welcome.html#subsection-header",
+    "title": "Welcome to Quarto",
+    "section": "",
+    "text": "You can apply:\n\nBold text\nItalic text\nInline code\nStrikethrough\n\n\n\n\nUnordered list:\n\nItem 1\nItem 2\n\nSubitem 2a\nSubitem 2b\n\n\nOrdered list:\n\nFirst\nSecond\nThird\n\n\n\n\nQuarto website\n\n\n\nQuarto Logo\n\n\n\n\n\n# R code example\nx &lt;- 1:5\nmean(x)\n\n\n\n\n\n\nName\nAge\nCity\n\n\n\n\nAlice\n30\nBerlin\n\n\nBob\n25\nParis\n\n\nCharlie\n28\nMadrid\n\n\n\n\n\n\n\nThis is a blockquote. Quarto supports Markdown-style quotes.\n\nNested blockquote example."
+  },
+  {
+    "objectID": "ressources/01_resources.html",
+    "href": "ressources/01_resources.html",
+    "title": "Week 1 Ressources",
+    "section": "",
+    "text": "References\n\nPosit Software, PBC. n.d. Positron Layout. Posit. https://positron.posit.co/layout.html."
+  },
+  {
+    "objectID": "ressources/03_resources.html",
+    "href": "ressources/03_resources.html",
+    "title": "Week 3 Resources",
+    "section": "",
+    "text": "DataCamp. 2022. Getting Started with R Cheat Sheet. DataCamp. https://www.datacamp.com/cheat-sheet/getting-started-r.\n\n\n———. 2026. Introduction to R. DataCamp. https://www.datacamp.com/courses/free-introduction-to-r.\n\n\nMcNeill, Mhairi. 2015. Base R: Cheatsheet. IQSS, Harvard University. https://iqss.github.io/dss-workshops/R/Rintro/base-r-cheat-sheet.pdf.\n\n\nWickham, Hadley, Mine Çetinkaya-Rundel, and Garrett Grolemund. 2023. “Introduction.” In R for Data Science: Import, Tidy, Transform, Visualize, and Model Data, edited by Hadley Wickham, Mine Çetinkaya-Rundel, and Garrett Grolemund, 2nd ed. O’Reilly. https://r4ds.hadley.nz/intro.html."
+  },
+  {
+    "objectID": "ressources/05_resources.html",
+    "href": "ressources/05_resources.html",
+    "title": "Week 5 Resources",
+    "section": "",
+    "text": "McElreath, Richard. 2020. Statistical Rethinking: A Bayesian Course with Examples in r and STAN. 2nd ed. Chapman; Hall/CRC. https://doi.org/10.1201/9780429029608."
+  },
+  {
+    "objectID": "ressources/07_resources.html",
+    "href": "ressources/07_resources.html",
+    "title": "Week 7 Resources",
+    "section": "",
+    "text": "McElreath, Richard. 2020. Statistical Rethinking: A Bayesian Course with Examples in r and STAN. 2nd ed. Chapman; Hall/CRC. https://doi.org/10.1201/9780429029608."
+  },
+  {
+    "objectID": "ressources/09_resources.html",
+    "href": "ressources/09_resources.html",
+    "title": "Week 9 Resources",
+    "section": "",
+    "text": "McElreath, Richard. 2020. Statistical Rethinking: A Bayesian Course with Examples in r and STAN. 2nd ed. Chapman; Hall/CRC. https://doi.org/10.1201/9780429029608."
+  },
+  {
+    "objectID": "ressources/11_resources.html",
+    "href": "ressources/11_resources.html",
+    "title": "Week 11 Resources",
+    "section": "",
+    "text": "McElreath, Richard. 2020. Statistical Rethinking: A Bayesian Course with Examples in r and STAN. 2nd ed. Chapman; Hall/CRC. https://doi.org/10.1201/9780429029608."
+  },
+  {
+    "objectID": "ressources/13_resources.html",
+    "href": "ressources/13_resources.html",
+    "title": "Week 13 Resources",
+    "section": "",
+    "text": "McElreath, Richard. 2020. Statistical Rethinking: A Bayesian Course with Examples in r and STAN. 2nd ed. Chapman; Hall/CRC. https://doi.org/10.1201/9780429029608."
+  },
+  {
+    "objectID": "slides/images/COPYRIGHTS.html",
+    "href": "slides/images/COPYRIGHTS.html",
+    "title": "QMIR 2026",
+    "section": "",
+    "text": "Copyright and Usage Restrictions for University Assets\nImportant Notice: The R package code is licensed under the GNU General Public License v3.0. However, the following assets included in this package are the intellectual property of the University of Mannheim and are not covered by the GPL-3.0 license.\nThe logo of the University of Mannheim and the photo of the main palace are the exclusive property of the university, and their use is subject to strict conditions as outlined on the university’s homepage. The marketing rights are exclusively held by the university’s Service und Marketing GmbH.\n\nCopyright Holder: Universität Mannheim Service und Marketing GmbH\nCopyright Status: All Rights Reserved.\nPermitted Use: These assets are provided in this package for the official, work-related use of university staff and faculty (e.g., for presentations, posters, and publications) to create materials in line with the university’s corporate design. According to university policy, the use of the logo is strictly reserved for employees and, in specific cases, Ph.D. students.\nProhibited Use: Use of these assets by students (except for Ph.D. students on presentations and dissertations) and external partners is not permitted without prior, explicit authorization from the university’s Communications and Marketing department.\n\nFor a full overview of the university’s corporate design guidelines and official usage policies, please refer to the university’s official website. The brief descriptions provided here are for informational purposes only; the legally binding rules are those stated on the university’s website.\nBy using this package, you agree to abide by these terms and confirm that your use of the logo is in accordance with the university’s official policies."
+  },
+  {
+    "objectID": "slides/week2.html#qmir-2026",
+    "href": "slides/week2.html#qmir-2026",
+    "title": "QMIR 2026",
+    "section": "QMIR 2026",
+    "text": "QMIR 2026\nWeek 2: Reproducible Research with R, Quarto & Git\n Tristan Muno            February 13, 2026"
+  },
+  {
+    "objectID": "slides/week2.html#course-logistics-philosophy",
+    "href": "slides/week2.html#course-logistics-philosophy",
+    "title": "QMIR 2026",
+    "section": "Course Logistics & Philosophy",
+    "text": "Course Logistics & Philosophy\n\nPractical\n\nSend me your GitHub username\nIf you email me, please include “QMIR” in the subject line\n\nPhilosophy\n\nI will show you a powerful workflow – not a rigid religion\nTools should serve you, not the other way around – be pragmatic, not dogmatic!\n80/20 principle – don’t let perfect be the enemy of good"
+  },
+  {
+    "objectID": "slides/week2.html#week-2-goals",
+    "href": "slides/week2.html#week-2-goals",
+    "title": "QMIR 2026",
+    "section": "Week 2 Goals",
+    "text": "Week 2 Goals\nBy the end of today, you should:\n\nUnderstand how Quarto + R + Git + GitHub fit together\nBe able to create a project with version control\nHave pushed your first reproducible document to GitHub"
+  },
+  {
+    "objectID": "slides/week2.html#agenda",
+    "href": "slides/week2.html#agenda",
+    "title": "QMIR 2026",
+    "section": "Agenda",
+    "text": "Agenda\n\nThe Big Picture – What is Reproducible Research?\nWhat is Literate Programming?\nVersion Control with Git\nGitHub as Infrastructure\nWalkthrough & Exercises"
+  },
+  {
+    "objectID": "slides/week2.html#what-is-reproducible-research",
+    "href": "slides/week2.html#what-is-reproducible-research",
+    "title": "QMIR 2026",
+    "section": "What is Reproducible Research?",
+    "text": "What is Reproducible Research?"
+  },
+  {
+    "objectID": "slides/week2.html#what-is-reproducible-research-1",
+    "href": "slides/week2.html#what-is-reproducible-research-1",
+    "title": "QMIR 2026",
+    "section": "What is Reproducible Research?",
+    "text": "What is Reproducible Research?\n\n\n\nReproducible research means:\n\nEvery results can be regenerated from raw data\nEvery transformation and coding decision is documented\nEvery table and figure can be recreated automatically\nAnalytical choices are transparent and traceable\n\n\n\n\nWhy this matters:\n\nReviewers can understand and verify your analysis\nCoauthors can follow and extend your work\nYou can easily test alternative specifications (e.g., add variable X)\nYour future self knows exactly what you did\nIf your laptop dies tomorrow, nothing is lost"
+  },
+  {
+    "objectID": "slides/week2.html#what-is-reproducible-research-2",
+    "href": "slides/week2.html#what-is-reproducible-research-2",
+    "title": "QMIR 2026",
+    "section": "What is Reproducible Research?",
+    "text": "What is Reproducible Research?\n\nQuarto \\(\\rightarrow\\) integrates writing and code ✍️💻\nR \\(\\rightarrow\\) performs computation and analysis 📊🧮\nGit \\(\\rightarrow\\) tracks changes over time 🔄📝\nGitHub \\(\\rightarrow\\) enables remote storage and collaboration ☁️🤝"
+  },
+  {
+    "objectID": "slides/week2.html#what-is-reproducible-research-3",
+    "href": "slides/week2.html#what-is-reproducible-research-3",
+    "title": "QMIR 2026",
+    "section": "What is Reproducible Research?",
+    "text": "What is Reproducible Research?\nUsed properly, this workflow promotes\n\nReproducibility\nTransparency\nTraceability\nAutomation"
+  },
+  {
+    "objectID": "slides/week2.html#what-is-reproducible-research-4",
+    "href": "slides/week2.html#what-is-reproducible-research-4",
+    "title": "QMIR 2026",
+    "section": "What is Reproducible Research?",
+    "text": "What is Reproducible Research?\n\nFor small or one-off tasks, this workflow may seem excessive\n\n\nIts advantages become substantial as projects increase in scope, duration, or collaboration"
+  },
+  {
+    "objectID": "slides/week2.html#the-workflow",
+    "href": "slides/week2.html#the-workflow",
+    "title": "QMIR 2026",
+    "section": "The Workflow",
+    "text": "The Workflow\n\n\n\n\n\n\n\n\n\n\n\n\n\nA\n\n.qmd\n(source document)\n\n\n\nB\n\nrendered output\n(e.g. html, pdf, docx)\n\n\n\nA-&gt;B\n\n\n\n\n\nC\n\nLocal Git repository\n(snapshot)\n\n\n\nB-&gt;C\n\n\n\n\n\nD\n\nGitHub\n(remote repository)\n\n\n\nC-&gt;D\n\n\n\n\n\n\n\n\nFigure 1: The basic workflow\n\n\n\n\n\n\n\n\n\n\n\n\nFigure 2: Illustration of Quarto. Source: Posit Software, PBC (2025)\n\n\n\n\n\nRepository: just a fancy word for (code-based) project folder with memory"
+  },
+  {
+    "objectID": "slides/week2.html#literate-programming",
+    "href": "slides/week2.html#literate-programming",
+    "title": "QMIR 2026",
+    "section": "Literate Programming",
+    "text": "Literate Programming"
+  },
+  {
+    "objectID": "slides/week2.html#literate-programming-1",
+    "href": "slides/week2.html#literate-programming-1",
+    "title": "QMIR 2026",
+    "section": "Literate Programming",
+    "text": "Literate Programming\nCore idea (Knuth 1984):"
+  },
+  {
+    "objectID": "slides/week2.html#literate-programming-2",
+    "href": "slides/week2.html#literate-programming-2",
+    "title": "QMIR 2026",
+    "section": "Literate Programming",
+    "text": "Literate Programming\nCore idea (Knuth 1984):\n\nThe document is the analysis"
+  },
+  {
+    "objectID": "slides/week2.html#literate-programming-3",
+    "href": "slides/week2.html#literate-programming-3",
+    "title": "QMIR 2026",
+    "section": "Literate Programming",
+    "text": "Literate Programming\nOur tool for literate programming: Quarto markdown files (.qmd)"
+  },
+  {
+    "objectID": "slides/week2.html#literate-programming-4",
+    "href": "slides/week2.html#literate-programming-4",
+    "title": "QMIR 2026",
+    "section": "Literate Programming",
+    "text": "Literate Programming\nOur tool for literate programming: Quarto markdown files (.qmd)\n\nMarkdown\nCode cells\nOutput embedded in document\nNo copy-paste between different programs"
+  },
+  {
+    "objectID": "slides/week2.html#markdown",
+    "href": "slides/week2.html#markdown",
+    "title": "QMIR 2026",
+    "section": "Markdown",
+    "text": "Markdown\n\n\n# Section header\n\n## A subsection\n\n*This sentence is written in italics.*\n**This one is bold.**\nUsing backticks formats text to `look like code`.\n\n[This is a hyperlink](www.uni-mannheim.de)\n\nA Section\nA subsection\nThis sentence is written in italics. This one is bold. Using backticks formats text to look like code.\nThis is a hyperlink"
+  },
+  {
+    "objectID": "slides/week2.html#quarto-markdown",
+    "href": "slides/week2.html#quarto-markdown",
+    "title": "QMIR 2026",
+    "section": "Quarto Markdown",
+    "text": "Quarto Markdown\n\n\n---\nformat: html\n---\n\n# Section header\n\n## A subsection\n\n*This sentence is written in italics.*\n**This one is bold.**\nUsing backticks formats text to `look like code`.\n\n[This is a hyperlink](www.uni-mannheim.de)\n\nA Section\nA subsection\nThis sentence is written in italics. This one is bold. Using backticks formats text to look like code.\nThis is a hyperlink"
+  },
+  {
+    "objectID": "slides/week2.html#code-cells",
+    "href": "slides/week2.html#code-cells",
+    "title": "QMIR 2026",
+    "section": "Code Cells",
+    "text": "Code Cells\n\n\n## A subsection\n\n*This sentence is written in italics.*\n**This one is bold.**\nUsing backticks formats text to `look like code`.\n\n```r\n#| echo: true\n#| eval: true\nage &lt;- c(18, 23, 21, 57, 24, 19)\nmean_age &lt;- mean(age)\n```\n\nThe mean age is ``{r} mean_age``.\n\nA subsection\nThis sentence is written in italics. This one is bold. Using backticks formats text to look like code.\n\n\nView source\nage &lt;- c(18, 23, 21, 57, 24, 19)\nmean_age &lt;- mean(age)\n\n\nThe mean age is 27."
+  },
+  {
+    "objectID": "slides/week2.html#output-embedded-in-documents",
+    "href": "slides/week2.html#output-embedded-in-documents",
+    "title": "QMIR 2026",
+    "section": "Output embedded in documents",
+    "text": "Output embedded in documents\n\n\n## Example of embedded figure\n\n```r\n#| echo: true\n#| eval: true\n#| label: fig-demo\n#| fig-cap: \"A demo figure\"\nlibrary(forcats)\nlibrary(ggplot2)\n\ndemo_data &lt;- data.frame(\n  country = c(\"Germany\", \"France\", \"Italy\", \"Spain\", \"Poland\"),\n  pop = c(83, 67, 60, 47, 38)\n)\n\nggplot(\n  data = demo_data,\n  aes(x = fct_reorder(country, pop), y = pop)\n) +\n  geom_col(fill = \"white\", color = \"black\") +\n  theme_bw() +\n  labs(x = \"Country\", y = \"Population in Million\")\n```\n\n@fig-demo shows an embedded figure.\n\nExample of embedded figure\n\n\nView source\nlibrary(forcats)\nlibrary(ggplot2)\n\ndemo_data &lt;- data.frame(\n  country = c(\"Germany\", \"France\", \"Italy\", \"Spain\", \"Poland\"),\n  pop = c(83, 67, 60, 47, 38)\n)\n\nggplot(\n  data = demo_data,\n  aes(x = fct_reorder(country, pop), y = pop)\n) +\n  geom_col(fill = \"white\", color = \"black\") +\n  theme_bw() +\n  labs(x = \"Country\", y = \"Population in Million\")\n\n\n\n\n\n\n\n\nFigure 3: A demo figure\n\n\n\n\n\nFigure 3 shows an embedded figure."
+  },
+  {
+    "objectID": "slides/week2.html#version-control-with-git-1",
+    "href": "slides/week2.html#version-control-with-git-1",
+    "title": "QMIR 2026",
+    "section": "Version Control with Git",
+    "text": "Version Control with Git\n\nRepository (repo) \\(\\rightarrow\\) project folder with memory 🗂️\ngit init \\(\\rightarrow\\) Turns a normal folder into a Git repository 🚀\nStage (git add) \\(\\rightarrow\\) Select changes you want to include in the next snapshot 📦\nCommit \\(\\rightarrow\\) A saved snapshot of staged changes 📸\nCommit message \\(\\rightarrow\\) Short explanation of what and why you changed something 💬\nHistory (git log) \\(\\rightarrow\\) Timeline of all committed snapshots 🕰️\nRemote \\(\\rightarrow\\) Online copy of your repository (e.g., GitHub) ☁️"
+  },
+  {
+    "objectID": "slides/week2.html#version-control-with-git-2",
+    "href": "slides/week2.html#version-control-with-git-2",
+    "title": "QMIR 2026",
+    "section": "Version Control with Git",
+    "text": "Version Control with Git"
+  },
+  {
+    "objectID": "slides/week2.html#version-control-with-git-3",
+    "href": "slides/week2.html#version-control-with-git-3",
+    "title": "QMIR 2026",
+    "section": "Version Control with Git",
+    "text": "Version Control with Git\nWhat we want to avoid:\nanalysis_final.R\nanalysis_final2.R\nanalysis_REALLY_final.R\n\ndraft1.pdf\ndraft2.pdf\ndraft2_final.pdf\nThis is manual version control – and it breaks down quickly.\n\nRemember: Git tracks changes inside files – not by duplicating them"
+  },
+  {
+    "objectID": "slides/week2.html#github-as-infrastructure-1",
+    "href": "slides/week2.html#github-as-infrastructure-1",
+    "title": "QMIR 2026",
+    "section": "GitHub as Infrastructure",
+    "text": "GitHub as Infrastructure\n\nRemote backup of your repositories ☁️\nCollaboration via pull requests & issues 👥\nTransparency & reproducibility 🔎\nPlatform for public research visibility 📢\nHub for open-source software development 🧩"
+  },
+  {
+    "objectID": "slides/week2.html#github-as-infrastructure-2",
+    "href": "slides/week2.html#github-as-infrastructure-2",
+    "title": "QMIR 2026",
+    "section": "GitHub as Infrastructure",
+    "text": "GitHub as Infrastructure\n\nRemote backup of your repositories ☁️\nCollaboration via pull requests & issues 👥\nTransparency & reproducibility 🔎\nPlatform for public research visibility 📢\nHub for open-source software development 🧩\n\n\nToday, sharing code on GitHub is often part of the research output itself."
+  },
+  {
+    "objectID": "slides/week2.html#a-critical-note-on-platform-choice",
+    "href": "slides/week2.html#a-critical-note-on-platform-choice",
+    "title": "QMIR 2026",
+    "section": "A Critical Note on Platform Choice",
+    "text": "A Critical Note on Platform Choice\n\nGitHub is a US-based, privately owned company (Microsoft)\nThere are alternatives (e.g. GitLab, Codeberg)\nPlatform choice is therefore also a question of:\n\nData governance\nDigital sovereignty\nInfrastructure dependence"
+  },
+  {
+    "objectID": "slides/week2.html#a-critical-note-on-platform-choice-1",
+    "href": "slides/week2.html#a-critical-note-on-platform-choice-1",
+    "title": "QMIR 2026",
+    "section": "A Critical Note on Platform Choice",
+    "text": "A Critical Note on Platform Choice\n\nGitHub is a US-based, privately owned company (Microsoft)\nThere are alternatives (e.g. GitLab, Codeberg)\nPlatform choice is therefore also a question of:\n\nData governance\nDigital sovereignty\nInfrastructure dependence\n\n\n\n🔐 Reminder: Uploading data to US-hosted platforms can have legal implications. Never upload personal or restricted data without checking GDPR and institutional regulations."
+  },
+  {
+    "objectID": "slides/week2.html#so-why-use-github",
+    "href": "slides/week2.html#so-why-use-github",
+    "title": "QMIR 2026",
+    "section": "So why use GitHub?",
+    "text": "So why use GitHub?\n\nIt is industry standard 🌐\nMost open-source projects are hosted there 🧑‍💻\nMost active developers and scientists use it 🧪\nLearning GitHub increases career portability 📚"
+  },
+  {
+    "objectID": "slides/week2.html#so-why-use-github-1",
+    "href": "slides/week2.html#so-why-use-github-1",
+    "title": "QMIR 2026",
+    "section": "So why use GitHub?",
+    "text": "So why use GitHub?\n\nIt is industry standard 🌐\nMost open-source projects are hosted there 🧑‍💻\nMost active developers and scientists use it 🧪\nLearning GitHub increases career portability 📚\n\nFor these pragmatic reasons, we will use GitHub in this course."
+  },
+  {
+    "objectID": "slides/week2.html#github",
+    "href": "slides/week2.html#github",
+    "title": "QMIR 2026",
+    "section": "GitHub",
+    "text": "GitHub\n\n📁 GitHub QMIR2026 organization: https://github.com/qmir-2026\n\nCourse Website Repo\nHomework Repos"
+  },
+  {
+    "objectID": "slides/week2.html#test-if-git-is-installed",
+    "href": "slides/week2.html#test-if-git-is-installed",
+    "title": "QMIR 2026",
+    "section": "Test if Git is installed",
+    "text": "Test if Git is installed\ngit status"
+  },
+  {
+    "objectID": "slides/week2.html#live-demo-1-create-new-empty-project",
+    "href": "slides/week2.html#live-demo-1-create-new-empty-project",
+    "title": "QMIR 2026",
+    "section": "Live Demo 1: Create new empty project",
+    "text": "Live Demo 1: Create new empty project\n\nStep 1: Create new empty project Step 2: Create .qmd file Step 3: initialize repository Step 4: Stage and Commit .qmd file Step 5: Switch to GitHub and create new private repo Step 6: Show GitHub instructions to connect GitHub and local git Step 7: Push Step 8: change file.qmd Step 9: Show file changes viewer Step 10: stage Step 11: Commit Step 12: Push Step 13: repeat"
+  },
+  {
+    "objectID": "slides/week2.html#live-demo-2-clone-repo-from-github",
+    "href": "slides/week2.html#live-demo-2-clone-repo-from-github",
+    "title": "QMIR 2026",
+    "section": "Live Demo 2: Clone repo from GitHub",
+    "text": "Live Demo 2: Clone repo from GitHub\n\nStep 1: Go to GitHub repo Step 2: Copy link Step 3: Open Positron Step 4: Click Open Folder from GitHub Step 5: Paste Link Step 6: Create Step 7: Change files -&gt; show file changes viewe Step 8: Push wont work, you dont have access Step 9: For homeworks you will Step 10: Show how I see in GitHub the date and time of commits"
+  },
+  {
+    "objectID": "slides/week4.html#qmir-2026",
+    "href": "slides/week4.html#qmir-2026",
+    "title": "QMIR 2026",
+    "section": "QMIR 2026",
+    "text": "QMIR 2026\nWeek 4: The Tidyverse & Tidy Data\n Tristan Muno            March 2, 2026"
+  },
+  {
+    "objectID": "slides/week4.html#git-github-a-folder-structure-reminder",
+    "href": "slides/week4.html#git-github-a-folder-structure-reminder",
+    "title": "QMIR 2026",
+    "section": "Git & GitHub – A Folder Structure Reminder",
+    "text": "Git & GitHub – A Folder Structure Reminder\nA few students ran into problems with last week’s homework. Here is a summary of how to set things up correctly.\nOne dedicated QMIR folder, at a stable path on your computer:\nDocuments/\n  QMIR_2026/  ← your top-level course folder. Individual repos go INSIDE here, e.g:\n    hw-w04/ \n    lab-w04/\n    ...\n\n✅ Place individual repositories inside the QMIR folder\n❌ Do not turn the top-level QMIR_2026/ folder itself into a Git repo — Git repos inside Git repos cause problems\n❌ Do not place your QMIR folder inside a cloud-synced folder (iCloud Drive, Google Drive, OneDrive, Dropbox) — syncing services and Git conflict with each other and corrupt repositories"
+  },
+  {
+    "objectID": "slides/week4.html#week-4-goals",
+    "href": "slides/week4.html#week-4-goals",
+    "title": "QMIR 2026",
+    "section": "Week 4 Goals",
+    "text": "Week 4 Goals\nBy the end of today, you should:\n\nUnderstand what the tidyverse is and why it exists\nKnow what tidy data means and why it matters\nBe able to import data with readr\nBe able to explore data with glimpse(), head(), summary()\nBe able to wrangle data with the core dplyr verbs\nHave a first intuition for ggplot2\nKnow how to use Quarto cell options for labels, captions, and execution control"
+  },
+  {
+    "objectID": "slides/week4.html#agenda",
+    "href": "slides/week4.html#agenda",
+    "title": "QMIR 2026",
+    "section": "Agenda",
+    "text": "Agenda\n\nThe Tidyverse – What and Why\nTidy Data\nThe Data Science Cycle\nData Import with readr\nData Exploration with glimpse()\nData Manipulation with dplyr\nA First Look at ggplot2\nQuarto: Cell Options & Cross-References\nWalkthrough & Exercises"
+  },
+  {
+    "objectID": "slides/week4.html#the-tidyverse-a-coherent-ecosystem",
+    "href": "slides/week4.html#the-tidyverse-a-coherent-ecosystem",
+    "title": "QMIR 2026",
+    "section": "The Tidyverse – A Coherent Ecosystem",
+    "text": "The Tidyverse – A Coherent Ecosystem\n\n\nLast week: packages are collections of functions.\nThe tidyverse is a collection of packages that share:\n\na common philosophy of how data should be structured\na consistent grammar (functions behave predictably)\nseamless interoperability – they are designed to work together\n\n\n\nView source\nlibrary(tidyverse)\n\n\nOne library() call loads the core set.\n\n\n\n\nSource: Mine Çetinkaya-Rundel (2020)"
+  },
+  {
+    "objectID": "slides/week4.html#core-tidyverse-packages",
+    "href": "slides/week4.html#core-tidyverse-packages",
+    "title": "QMIR 2026",
+    "section": "Core Tidyverse Packages",
+    "text": "Core Tidyverse Packages\n\n\n\n\n\n\n\n\nPackage\nRole\nKey functions\n\n\n\n\nreadr\nImport rectangular data\nread_csv(), read_tsv()\n\n\ntibble\nModern data frames\ntibble(), as_tibble()\n\n\ndplyr\nData manipulation\nfilter(), select(), mutate(), summarise(), group_by() distinct() count()\n\n\ntidyr\nReshape data\npivot_longer(), pivot_wider()\n\n\nggplot2\nData visualisation\nggplot(), geom_*()\n\n\nstringr\nString manipulation\nstr_detect(), str_replace()\n\n\nforcats\nFactor handling\nfct_reorder(), fct_relevel()\n\n\npurrr\nFunctional programming\nmap(), map_df()"
+  },
+  {
+    "objectID": "slides/week4.html#the-tibble-a-better-data-frame",
+    "href": "slides/week4.html#the-tibble-a-better-data-frame",
+    "title": "QMIR 2026",
+    "section": "The Tibble – A Better Data Frame",
+    "text": "The Tibble – A Better Data Frame\n\n\nThe tidyverse uses tibbles instead of base R data frames.\nThey are the same idea – rows × columns, each column one type – but with better defaults:\n\nPrints only the first 10 rows\nShows column types below the header\nNever converts strings to factors silently\nNever creates row names\n\n\n\n\nView source\nlibrary(gapminder)\n\n# gapminder is already a tibble\ngapminder\n\n\n# A tibble: 1,704 × 6\n   country     continent  year lifeExp      pop gdpPercap\n   &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;\n 1 Afghanistan Asia       1952    28.8  8425333      779.\n 2 Afghanistan Asia       1957    30.3  9240934      821.\n 3 Afghanistan Asia       1962    32.0 10267083      853.\n 4 Afghanistan Asia       1967    34.0 11537966      836.\n 5 Afghanistan Asia       1972    36.1 13079460      740.\n 6 Afghanistan Asia       1977    38.4 14880372      786.\n 7 Afghanistan Asia       1982    39.9 12881816      978.\n 8 Afghanistan Asia       1987    40.8 13867957      852.\n 9 Afghanistan Asia       1992    41.7 16317921      649.\n10 Afghanistan Asia       1997    41.8 22227415      635.\n# ℹ 1,694 more rows"
+  },
+  {
+    "objectID": "slides/week4.html#what-is-tidy-data",
+    "href": "slides/week4.html#what-is-tidy-data",
+    "title": "QMIR 2026",
+    "section": "What is Tidy Data?",
+    "text": "What is Tidy Data?\n\nTidy datasets are all alike, but every messy dataset is messy in its own way.\n– Hadley Wickham\n\n\nA dataset is tidy when:\n\nEach variable has its own column\nEach observation has its own row\nEach value has its own cell"
+  },
+  {
+    "objectID": "slides/week4.html#tidy-vs.-wide-data-an-example",
+    "href": "slides/week4.html#tidy-vs.-wide-data-an-example",
+    "title": "QMIR 2026",
+    "section": "Tidy vs. Wide Data – An Example",
+    "text": "Tidy vs. Wide Data – An Example\nWide format (common in spreadsheets, not tidy):\n\n\n\ncountry\ngdpPercap_1952\ngdpPercap_1957\ngdpPercap_1962\n\n\n\n\nGermany\n7144\n10188\n12902\n\n\nFrance\n7030\n8663\n10560\n\n\n\n\nLong (tidy) format (what the tidyverse expects):\n\n\n\ncountry\nyear\ngdpPercap\n\n\n\n\nGermany\n1952\n7144\n\n\nGermany\n1957\n10188\n\n\nFrance\n1952\n7030\n\n\nFrance\n1957\n8663\n\n\n\n\n\n\nIn the tidy version, year is a variable – a column. In the wide version, year is hiding inside column names. The tidyverse (and especially ggplot2) expects tidy data."
+  },
+  {
+    "objectID": "slides/week4.html#reshaping-with-tidyr-a-brief-preview",
+    "href": "slides/week4.html#reshaping-with-tidyr-a-brief-preview",
+    "title": "QMIR 2026",
+    "section": "Reshaping with tidyr – A Brief Preview",
+    "text": "Reshaping with tidyr – A Brief Preview\nYou will encounter wide data in the wild. tidyr provides two functions to convert between formats:\n\npivot_longer() – wide → long (tidy)\npivot_wider() – long → wide\n\n\n\nView source\n# Hypothetical wide dataset\nwide_data |&gt;\n  pivot_longer(\n    cols = starts_with(\"gdpPercap_\"),\n    names_to = \"year\",\n    values_to = \"gdpPercap\"\n  )\n\n\n\nWe won’t go deep on reshaping today – the gapminder data is already tidy. But knowing these functions exist will save you hours when you start working with real-world data."
+  },
+  {
+    "objectID": "slides/week4.html#the-data-science-cycle",
+    "href": "slides/week4.html#the-data-science-cycle",
+    "title": "QMIR 2026",
+    "section": "The Data Science Cycle",
+    "text": "The Data Science Cycle\n\n\nEverything we do in this course fits somewhere in this cycle:\nImport → Tidy → Transform → Visualise → Model → Communicate\nWhere we are today:\n\n✅ Import – readr\n✅ Tidy – we got lucky, gapminder is already tidy\n✅ Transform – dplyr\n👀 Visualise – ggplot2 preview\n📅 Model – coming later in the course\n✅ Communicate – Quarto, all along\n\n\n\n\n\nSource: Wickham, Çetinkaya-Rundel, and Grolemund (2023)"
+  },
+  {
+    "objectID": "slides/week4.html#installing-and-loading-packages",
+    "href": "slides/week4.html#installing-and-loading-packages",
+    "title": "QMIR 2026",
+    "section": "Installing and Loading Packages",
+    "text": "Installing and Loading Packages\nBefore you can use a package, you need to:\n\nInstall it once (downloads from CRAN to your computer)\nLoad it in each session (makes its functions available)\n\n\n\nView source\n# Install once -- you only need to do this one time\ninstall.packages(\"gapminder\")\ninstall.packages(\"tidyverse\")\n\n# Load every session -- goes at the top of your .qmd\nlibrary(tidyverse)\nlibrary(gapminder)\n\n\n\n\n\n\n\n\n\nTip\n\n\nNever put install.packages() inside a Quarto document that you intend to render or share. Quarto blocks package installation during rendering for security reasons, so the document will fail to render and throw an error. In addition, even if it were allowed, it would attempt to reinstall the package every time the document is rendered, which can create unnecessary delays and compatibility issues in other users’ environments."
+  },
+  {
+    "objectID": "slides/week4.html#data-import-with-readr",
+    "href": "slides/week4.html#data-import-with-readr",
+    "title": "QMIR 2026",
+    "section": "Data Import with readr",
+    "text": "Data Import with readr\nreadr is the tidyverse package for importing rectangular data files.\n\n\n\nFunction\nFile type\n\n\n\n\nread_csv(\"file.csv\")\nComma-separated values\n\n\nread_tsv(\"file.tsv\")\nTab-separated values\n\n\nread_delim(\"file.txt\", delim = \";\")\nAny delimiter\n\n\n\n\n\n\nView source\n# Import a CSV file and assign it to an object\nmy_data &lt;- read_csv(\"data/my_dataset.csv\")\n\n\n\n\nFor other formats:\n\n\nView source\nlibrary(haven)\nmy_data &lt;- read_dta(\"data/dataset.dta\") # Stata\nmy_data &lt;- read_sav(\"data/dataset.sav\") # SPSS\n\nlibrary(readxl)\nmy_data &lt;- read_excel(\"data/dataset.xlsx\") # Excel\n\n\n\n\n\nAlways assign the result to an object. read_csv(\"file.csv\") alone reads the file but immediately discards it."
+  },
+  {
+    "objectID": "slides/week4.html#data-export",
+    "href": "slides/week4.html#data-export",
+    "title": "QMIR 2026",
+    "section": "Data Export",
+    "text": "Data Export\nTo save a data frame to disk:\n\n\nView source\n# Write to CSV\nwrite_csv(my_data, \"output/my_dataset_clean.csv\")\n\n# Write to RDS (R's native format -- preserves types exactly)\nsaveRDS(my_data, \"output/my_dataset_clean.rds\")\n\n# Read it back\nmy_data &lt;- readRDS(\"output/my_dataset_clean.rds\")\n\n\n\n\n\n\n\n\n\n\n\nFormat\nPros\nCons\n\n\n\n\n.csv\nUniversal, opens in Excel\nLoses type info (factors become strings)\n\n\n.rds\nPreserves all R types exactly\nOnly readable in R\n\n\n.dta\nStata-compatible\nRequires haven"
+  },
+  {
+    "objectID": "slides/week4.html#your-first-questions-when-you-see-a-dataset",
+    "href": "slides/week4.html#your-first-questions-when-you-see-a-dataset",
+    "title": "QMIR 2026",
+    "section": "Your First Questions When You See a Dataset",
+    "text": "Your First Questions When You See a Dataset\n\n\n\n\nView source\n# Compact overview: types and first values\nglimpse(gapminder)\n\n\nRows: 1,704\nColumns: 6\n$ country   &lt;fct&gt; \"Afghanistan\", \"Afghanistan\", \"Afghanistan\", \"Afghanistan\", …\n$ continent &lt;fct&gt; Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, …\n$ year      &lt;int&gt; 1952, 1957, 1962, 1967, 1972, 1977, 1982, 1987, 1992, 1997, …\n$ lifeExp   &lt;dbl&gt; 28.801, 30.332, 31.997, 34.020, 36.088, 38.438, 39.854, 40.8…\n$ pop       &lt;int&gt; 8425333, 9240934, 10267083, 11537966, 13079460, 14880372, 12…\n$ gdpPercap &lt;dbl&gt; 779.4453, 820.8530, 853.1007, 836.1971, 739.9811, 786.1134, …\n\n\n\n\n\nView source\n# Summary statistics per column\nsummary(gapminder)\n\n\n        country        continent        year         lifeExp     \n Afghanistan:  12   Africa  :624   Min.   :1952   Min.   :23.60  \n Albania    :  12   Americas:300   1st Qu.:1966   1st Qu.:48.20  \n Algeria    :  12   Asia    :396   Median :1980   Median :60.71  \n Angola     :  12   Europe  :360   Mean   :1980   Mean   :59.47  \n Argentina  :  12   Oceania : 24   3rd Qu.:1993   3rd Qu.:70.85  \n Australia  :  12                  Max.   :2007   Max.   :82.60  \n (Other)    :1632                                                \n      pop              gdpPercap       \n Min.   :6.001e+04   Min.   :   241.2  \n 1st Qu.:2.794e+06   1st Qu.:  1202.1  \n Median :7.024e+06   Median :  3531.8  \n Mean   :2.960e+07   Mean   :  7215.3  \n 3rd Qu.:1.959e+07   3rd Qu.:  9325.5  \n Max.   :1.319e+09   Max.   :113523.1"
+  },
+  {
+    "objectID": "slides/week4.html#more-exploration-functions",
+    "href": "slides/week4.html#more-exploration-functions",
+    "title": "QMIR 2026",
+    "section": "More Exploration Functions",
+    "text": "More Exploration Functions\n\n\n\n\nView source\n# First n rows\nhead(gapminder, 5)\n\n\n# A tibble: 5 × 6\n  country     continent  year lifeExp      pop gdpPercap\n  &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;\n1 Afghanistan Asia       1952    28.8  8425333      779.\n2 Afghanistan Asia       1957    30.3  9240934      821.\n3 Afghanistan Asia       1962    32.0 10267083      853.\n4 Afghanistan Asia       1967    34.0 11537966      836.\n5 Afghanistan Asia       1972    36.1 13079460      740.\n\n\n\n\n\nView source\n# Dimensions and column names\nnrow(gapminder)\n\n\n[1] 1704\n\n\nView source\nncol(gapminder)\n\n\n[1] 6\n\n\nView source\nnames(gapminder)\n\n\n[1] \"country\"   \"continent\" \"year\"      \"lifeExp\"   \"pop\"       \"gdpPercap\""
+  },
+  {
+    "objectID": "slides/week4.html#counting-with-count-and-distinct",
+    "href": "slides/week4.html#counting-with-count-and-distinct",
+    "title": "QMIR 2026",
+    "section": "Counting with count() and distinct()",
+    "text": "Counting with count() and distinct()\n\n\n\n\nView source\n# How many observations per continent?\n# count() is the tidyverse alternative to table()\ngapminder |&gt;\n  count(continent)\n\n\n# A tibble: 5 × 2\n  continent     n\n  &lt;fct&gt;     &lt;int&gt;\n1 Africa      624\n2 Americas    300\n3 Asia        396\n4 Europe      360\n5 Oceania      24\n\n\n\n\n\nView source\n# Which years are in the data?\n# distinct() returns unique combinations of columns\ngapminder |&gt;\n  distinct(year)\n\n\n# A tibble: 12 × 1\n    year\n   &lt;int&gt;\n 1  1952\n 2  1957\n 3  1962\n 4  1967\n 5  1972\n 6  1977\n 7  1982\n 8  1987\n 9  1992\n10  1997\n11  2002\n12  2007"
+  },
+  {
+    "objectID": "slides/week4.html#dplyr-a-grammar-of-data-manipulation",
+    "href": "slides/week4.html#dplyr-a-grammar-of-data-manipulation",
+    "title": "QMIR 2026",
+    "section": "dplyr – A Grammar of Data Manipulation",
+    "text": "dplyr – A Grammar of Data Manipulation\n\n\nAll dplyr functions follow the same pattern:\n\nFirst argument: the data frame (automatically filled if working with pipe |&gt;)\nSubsequent arguments: what to do\nReturn value: always a (new) data frame\n\n\nThe core verbs:\n\n\n\nVerb\nWhat it does\n\n\n\n\nfilter()\nKeep rows that meet a condition\n\n\nselect()\nKeep or drop columns\n\n\nmutate()\nCreate or modify variables\n\n\narrange()\nSort rows\n\n\nsummarise()\nCompute summary statistics\n\n\ngroup_by()\nGroup rows for grouped operations\n\n\nungroup()\nRemove grouping"
+  },
+  {
+    "objectID": "slides/week4.html#filter-keep-rows-by-condition",
+    "href": "slides/week4.html#filter-keep-rows-by-condition",
+    "title": "QMIR 2026",
+    "section": "filter() – Keep Rows by Condition",
+    "text": "filter() – Keep Rows by Condition\n\n\n\n\nView source\n# Keep only European countries\ngapminder |&gt;\n  filter(continent == \"Europe\")\n\n\n# A tibble: 360 × 6\n   country continent  year lifeExp     pop gdpPercap\n   &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;     &lt;dbl&gt;\n 1 Albania Europe     1952    55.2 1282697     1601.\n 2 Albania Europe     1957    59.3 1476505     1942.\n 3 Albania Europe     1962    64.8 1728137     2313.\n 4 Albania Europe     1967    66.2 1984060     2760.\n 5 Albania Europe     1972    67.7 2263554     3313.\n 6 Albania Europe     1977    68.9 2509048     3533.\n 7 Albania Europe     1982    70.4 2780097     3631.\n 8 Albania Europe     1987    72   3075321     3739.\n 9 Albania Europe     1992    71.6 3326498     2497.\n10 Albania Europe     1997    73.0 3428038     3193.\n# ℹ 350 more rows\n\n\n\n\n\nView source\n# Multiple conditions -- AND\ngapminder |&gt;\n  filter(\n    continent == \"Europe\" &\n      year == 2007\n  )\n\n\n# A tibble: 30 × 6\n   country                continent  year lifeExp      pop gdpPercap\n   &lt;fct&gt;                  &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;\n 1 Albania                Europe     2007    76.4  3600523     5937.\n 2 Austria                Europe     2007    79.8  8199783    36126.\n 3 Belgium                Europe     2007    79.4 10392226    33693.\n 4 Bosnia and Herzegovina Europe     2007    74.9  4552198     7446.\n 5 Bulgaria               Europe     2007    73.0  7322858    10681.\n 6 Croatia                Europe     2007    75.7  4493312    14619.\n 7 Czech Republic         Europe     2007    76.5 10228744    22833.\n 8 Denmark                Europe     2007    78.3  5468120    35278.\n 9 Finland                Europe     2007    79.3  5238460    33207.\n10 France                 Europe     2007    80.7 61083916    30470.\n# ℹ 20 more rows"
+  },
+  {
+    "objectID": "slides/week4.html#filter-more-examples",
+    "href": "slides/week4.html#filter-more-examples",
+    "title": "QMIR 2026",
+    "section": "filter() – More Examples",
+    "text": "filter() – More Examples\n\n\n\n\nView source\n# OR condition\ngapminder |&gt;\n  filter(\n    country == \"Germany\" |\n      country == \"France\"\n  )\n\n\n# A tibble: 24 × 6\n   country continent  year lifeExp      pop gdpPercap\n   &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;\n 1 France  Europe     1952    67.4 42459667     7030.\n 2 France  Europe     1957    68.9 44310863     8663.\n 3 France  Europe     1962    70.5 47124000    10560.\n 4 France  Europe     1967    71.6 49569000    13000.\n 5 France  Europe     1972    72.4 51732000    16107.\n 6 France  Europe     1977    73.8 53165019    18293.\n 7 France  Europe     1982    74.9 54433565    20294.\n 8 France  Europe     1987    76.3 55630100    22066.\n 9 France  Europe     1992    77.5 57374179    24704.\n10 France  Europe     1997    78.6 58623428    25890.\n# ℹ 14 more rows\n\n\n\n\n\nView source\n# %in% for multiple values\ngapminder |&gt;\n  filter(\n    country %in% c(\"Germany\", \"France\", \"Italy\")\n  )\n\n\n# A tibble: 36 × 6\n   country continent  year lifeExp      pop gdpPercap\n   &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;\n 1 France  Europe     1952    67.4 42459667     7030.\n 2 France  Europe     1957    68.9 44310863     8663.\n 3 France  Europe     1962    70.5 47124000    10560.\n 4 France  Europe     1967    71.6 49569000    13000.\n 5 France  Europe     1972    72.4 51732000    16107.\n 6 France  Europe     1977    73.8 53165019    18293.\n 7 France  Europe     1982    74.9 54433565    20294.\n 8 France  Europe     1987    76.3 55630100    22066.\n 9 France  Europe     1992    77.5 57374179    24704.\n10 France  Europe     1997    78.6 58623428    25890.\n# ℹ 26 more rows"
+  },
+  {
+    "objectID": "slides/week4.html#select-keep-or-drop-columns",
+    "href": "slides/week4.html#select-keep-or-drop-columns",
+    "title": "QMIR 2026",
+    "section": "select() – Keep or Drop Columns",
+    "text": "select() – Keep or Drop Columns\n\n\n\n\nView source\n# Keep specific columns\ngapminder |&gt;\n  select(country, year, lifeExp)\n\n\n# A tibble: 1,704 × 3\n   country      year lifeExp\n   &lt;fct&gt;       &lt;int&gt;   &lt;dbl&gt;\n 1 Afghanistan  1952    28.8\n 2 Afghanistan  1957    30.3\n 3 Afghanistan  1962    32.0\n 4 Afghanistan  1967    34.0\n 5 Afghanistan  1972    36.1\n 6 Afghanistan  1977    38.4\n 7 Afghanistan  1982    39.9\n 8 Afghanistan  1987    40.8\n 9 Afghanistan  1992    41.7\n10 Afghanistan  1997    41.8\n# ℹ 1,694 more rows\n\n\n\n\n\nView source\n# Drop columns with minus\ngapminder |&gt;\n  select(-continent, -pop)\n\n\n# A tibble: 1,704 × 4\n   country      year lifeExp gdpPercap\n   &lt;fct&gt;       &lt;int&gt;   &lt;dbl&gt;     &lt;dbl&gt;\n 1 Afghanistan  1952    28.8      779.\n 2 Afghanistan  1957    30.3      821.\n 3 Afghanistan  1962    32.0      853.\n 4 Afghanistan  1967    34.0      836.\n 5 Afghanistan  1972    36.1      740.\n 6 Afghanistan  1977    38.4      786.\n 7 Afghanistan  1982    39.9      978.\n 8 Afghanistan  1987    40.8      852.\n 9 Afghanistan  1992    41.7      649.\n10 Afghanistan  1997    41.8      635.\n# ℹ 1,694 more rows"
+  },
+  {
+    "objectID": "slides/week4.html#mutate-create-or-modify-variables",
+    "href": "slides/week4.html#mutate-create-or-modify-variables",
+    "title": "QMIR 2026",
+    "section": "mutate() – Create or Modify Variables",
+    "text": "mutate() – Create or Modify Variables\n\n\n\n\nView source\n# Create a new variable: total GDP\ngapminder |&gt;\n  mutate(gdp_total = pop * gdpPercap) |&gt;\n  select(country, year, gdp_total)\n\n\n# A tibble: 1,704 × 3\n   country      year    gdp_total\n   &lt;fct&gt;       &lt;int&gt;        &lt;dbl&gt;\n 1 Afghanistan  1952  6567086330.\n 2 Afghanistan  1957  7585448670.\n 3 Afghanistan  1962  8758855797.\n 4 Afghanistan  1967  9648014150.\n 5 Afghanistan  1972  9678553274.\n 6 Afghanistan  1977 11697659231.\n 7 Afghanistan  1982 12598563401.\n 8 Afghanistan  1987 11820990309.\n 9 Afghanistan  1992 10595901589.\n10 Afghanistan  1997 14121995875.\n# ℹ 1,694 more rows\n\n\n\n\n\nView source\n# Modify an existing variable: GDP in billions\ngapminder |&gt;\n  mutate(\n    gdp_billions = (pop * gdpPercap) / 1e9\n  ) |&gt;\n  select(country, year, gdp_billions)\n\n\n# A tibble: 1,704 × 3\n   country      year gdp_billions\n   &lt;fct&gt;       &lt;int&gt;        &lt;dbl&gt;\n 1 Afghanistan  1952         6.57\n 2 Afghanistan  1957         7.59\n 3 Afghanistan  1962         8.76\n 4 Afghanistan  1967         9.65\n 5 Afghanistan  1972         9.68\n 6 Afghanistan  1977        11.7 \n 7 Afghanistan  1982        12.6 \n 8 Afghanistan  1987        11.8 \n 9 Afghanistan  1992        10.6 \n10 Afghanistan  1997        14.1 \n# ℹ 1,694 more rows"
+  },
+  {
+    "objectID": "slides/week4.html#arrange-sort-rows",
+    "href": "slides/week4.html#arrange-sort-rows",
+    "title": "QMIR 2026",
+    "section": "arrange() – Sort Rows",
+    "text": "arrange() – Sort Rows\n\n\n\n\nView source\n# Ascending (default)\ngapminder |&gt;\n  filter(year == 2007) |&gt;\n  arrange(lifeExp) |&gt;\n  select(country, lifeExp)\n\n\n# A tibble: 142 × 2\n   country                  lifeExp\n   &lt;fct&gt;                      &lt;dbl&gt;\n 1 Swaziland                   39.6\n 2 Mozambique                  42.1\n 3 Zambia                      42.4\n 4 Sierra Leone                42.6\n 5 Lesotho                     42.6\n 6 Angola                      42.7\n 7 Zimbabwe                    43.5\n 8 Afghanistan                 43.8\n 9 Central African Republic    44.7\n10 Liberia                     45.7\n# ℹ 132 more rows\n\n\n\n\n\nView source\n# Descending with desc()\ngapminder |&gt;\n  filter(year == 2007) |&gt;\n  arrange(desc(lifeExp)) |&gt;\n  select(country, lifeExp)\n\n\n# A tibble: 142 × 2\n   country          lifeExp\n   &lt;fct&gt;              &lt;dbl&gt;\n 1 Japan               82.6\n 2 Hong Kong, China    82.2\n 3 Iceland             81.8\n 4 Switzerland         81.7\n 5 Australia           81.2\n 6 Spain               80.9\n 7 Sweden              80.9\n 8 Israel              80.7\n 9 France              80.7\n10 Canada              80.7\n# ℹ 132 more rows"
+  },
+  {
+    "objectID": "slides/week4.html#summarise-compute-summary-statistics",
+    "href": "slides/week4.html#summarise-compute-summary-statistics",
+    "title": "QMIR 2026",
+    "section": "summarise() – Compute Summary Statistics",
+    "text": "summarise() – Compute Summary Statistics\n\n\n\n\nView source\n# Overall mean life expectancy\ngapminder |&gt;\n  summarise(\n    mean_lifeExp = mean(lifeExp),\n    median_lifeExp = median(lifeExp),\n    n = n()\n  )\n\n\n# A tibble: 1 × 3\n  mean_lifeExp median_lifeExp     n\n         &lt;dbl&gt;          &lt;dbl&gt; &lt;int&gt;\n1         59.5           60.7  1704\n\n\n\n\n\nView source\n# Multiple summary statistics at once\ngapminder |&gt;\n  filter(year == 2007) |&gt;\n  summarise(\n    mean_gdp = mean(gdpPercap),\n    max_gdp = max(gdpPercap),\n    min_gdp = min(gdpPercap)\n  )\n\n\n# A tibble: 1 × 3\n  mean_gdp max_gdp min_gdp\n     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;\n1   11680.  49357.    278."
+  },
+  {
+    "objectID": "slides/week4.html#group_by-summarise-the-power-combo",
+    "href": "slides/week4.html#group_by-summarise-the-power-combo",
+    "title": "QMIR 2026",
+    "section": "group_by() + summarise() – The Power Combo",
+    "text": "group_by() + summarise() – The Power Combo\n\n\n\n\nView source\n# Mean life expectancy by continent\ngapminder |&gt;\n  group_by(continent) |&gt;\n  summarise(mean_lifeExp = mean(lifeExp))\n\n\n# A tibble: 5 × 2\n  continent mean_lifeExp\n  &lt;fct&gt;            &lt;dbl&gt;\n1 Africa            48.9\n2 Americas          64.7\n3 Asia              60.1\n4 Europe            71.9\n5 Oceania           74.3\n\n\n\n\n\nView source\n# Mean life expectancy by continent and year\ngapminder |&gt;\n  group_by(continent, year) |&gt;\n  summarise(\n    mean_lifeExp = mean(lifeExp),\n    .groups = \"drop\" # good practice: always ungroup after\n  )\n\n\n# A tibble: 60 × 3\n   continent  year mean_lifeExp\n   &lt;fct&gt;     &lt;int&gt;        &lt;dbl&gt;\n 1 Africa     1952         39.1\n 2 Africa     1957         41.3\n 3 Africa     1962         43.3\n 4 Africa     1967         45.3\n 5 Africa     1972         47.5\n 6 Africa     1977         49.6\n 7 Africa     1982         51.6\n 8 Africa     1987         53.3\n 9 Africa     1992         53.6\n10 Africa     1997         53.6\n# ℹ 50 more rows"
+  },
+  {
+    "objectID": "slides/week4.html#putting-it-together-a-full-pipeline",
+    "href": "slides/week4.html#putting-it-together-a-full-pipeline",
+    "title": "QMIR 2026",
+    "section": "Putting It Together – A Full Pipeline",
+    "text": "Putting It Together – A Full Pipeline\n\n\nView source\ngapminder |&gt;\n  filter(year == 2007) |&gt;\n  mutate(gdp_billions = (pop * gdpPercap) / 1e9) |&gt;\n  group_by(continent) |&gt;\n  summarise(\n    mean_lifeExp = round(mean(lifeExp), 1),\n    total_gdp_bn = round(sum(gdp_billions), 0),\n    n_countries = n(),\n    .groups = \"drop\"\n  ) |&gt;\n  arrange(desc(mean_lifeExp))\n\n\n# A tibble: 5 × 4\n  continent mean_lifeExp total_gdp_bn n_countries\n  &lt;fct&gt;            &lt;dbl&gt;        &lt;dbl&gt;       &lt;int&gt;\n1 Oceania           80.7          807           2\n2 Europe            77.6        14795          30\n3 Americas          73.6        19418          25\n4 Asia              70.7        20708          33\n5 Africa            54.8         2380          52\n\n\n\n\nRead this as: take gapminder, then keep only 2007, then compute GDP in billions, then group by continent, then summarise, then sort by life expectancy descending."
+  },
+  {
+    "objectID": "slides/week4.html#bad-practice-vs.-good-practice",
+    "href": "slides/week4.html#bad-practice-vs.-good-practice",
+    "title": "QMIR 2026",
+    "section": "Bad Practice vs. Good Practice",
+    "text": "Bad Practice vs. Good Practice\n\n\nBad practice – nested or intermediate objects:\n\n\nView source\ngap_2007 &lt;- filter(gapminder, year == 2007)\ngap_gdp &lt;- mutate(gap_2007, gdp = pop * gdpPercap)\ngap_grp &lt;- group_by(gap_gdp, continent)\nsummarise(gap_grp, mean_gdp = mean(gdp))\n\n\n\nGood practice – piped chain:\n\n\nView source\ngapminder |&gt;\n  filter(year == 2007) |&gt;\n  mutate(gdp = pop * gdpPercap) |&gt;\n  group_by(continent) |&gt;\n  summarise(mean_gdp = mean(gdp))\n\n\n\n\nBoth produce the same result. The piped version reads like a sentence and requires no intermediate objects. However, you should always be aware of what each individual pipe step does. Especially when learning, test each step separately in the console to make sure you understand how the data changes at every stage."
+  },
+  {
+    "objectID": "slides/week4.html#the-grammar-of-graphics",
+    "href": "slides/week4.html#the-grammar-of-graphics",
+    "title": "QMIR 2026",
+    "section": "The Grammar of Graphics",
+    "text": "The Grammar of Graphics\nggplot2 builds plots from layers. Every plot starts the same way:\nggplot(data = &lt;DATA&gt;, aes(x = &lt;VAR&gt;, y = &lt;VAR&gt;, ...)) +\n  geom_*()\n\nThe three essential pieces:\n\nggplot() – sets up the canvas and declares the data\naes() – maps variables to visual properties (x, y, colour, size, …)\ngeom_*() – the geometric object that draws the data (points, lines, bars, …)\n\n\n\n\nNote the + operator, not the pipe |&gt;. ggplot2 layers are added with +."
+  },
+  {
+    "objectID": "slides/week4.html#a-first-scatterplot",
+    "href": "slides/week4.html#a-first-scatterplot",
+    "title": "QMIR 2026",
+    "section": "A First Scatterplot",
+    "text": "A First Scatterplot\n\n\n\n\nView source\ngapminder |&gt;\n  filter(year == 2007) |&gt;\n  ggplot(aes(\n    x = gdpPercap,\n    y = lifeExp,\n    color = continent\n  )) +\n  geom_point() +\n  theme_bw() +\n  labs(\n    x = \"GDP per Capita (USD)\",\n    y = \"Life Expectancy (years)\",\n    color = \"Continent\"\n  )\n\n\n\n\n\n\n\n\nFigure 1: GDP per capita vs. life expectancy, 2007\n\n\n\n\n\n\nThe plot in Figure 1 shows the classic wealth-health relationship: richer countries tend to have longer life expectancies.\nNotice:\n\ndata piped into ggplot()\naes() maps variables to visual properties\ngeom_point() adds the points layer\ntheme_bw() gives a clean look\nlabs() adds axis labels"
+  },
+  {
+    "objectID": "slides/week4.html#log-scale-and-facet_wrap",
+    "href": "slides/week4.html#log-scale-and-facet_wrap",
+    "title": "QMIR 2026",
+    "section": "Log Scale and facet_wrap()",
+    "text": "Log Scale and facet_wrap()\n\n\n\n\nView source\ngapminder |&gt;\n  filter(year == 2007) |&gt;\n  ggplot(aes(\n    x = gdpPercap,\n    y = lifeExp\n  )) +\n  geom_point(alpha = 0.6) +\n  scale_x_log10() +\n  facet_wrap(~continent) +\n  theme_bw() +\n  labs(\n    x = \"GDP per Capita (log scale)\",\n    y = \"Life Expectancy\"\n  )\n\n\n\n\n\n\n\n\nFigure 2: GDP vs. life expectancy by continent, 2007\n\n\n\n\n\n\nscale_x_log10() – log-transforms the x axis, making the skewed GDP distribution easier to read.\nfacet_wrap(~ continent) – creates one small panel per continent.\nWe will go much deeper on ggplot2 next week. Today you are just seeing the shape of it."
+  },
+  {
+    "objectID": "slides/week4.html#execution-options-global-vs.-cell-level",
+    "href": "slides/week4.html#execution-options-global-vs.-cell-level",
+    "title": "QMIR 2026",
+    "section": "Execution Options – Global vs. Cell Level",
+    "text": "Execution Options – Global vs. Cell Level\nLast week you saw echo and eval as cell-level options. You can also set them globally in the YAML header so they apply to all cells at once:\nexecute:\n  eval: true    # run all code cells\n  echo: true    # show all source code\n  warning: false  # suppress warnings (e.g. tidyverse startup)\n  message: false  # suppress messages\n  error: false  # stop on errors (set true to render despite errors)\n  freeze: true  # don't re-run cells unless source changes\n\nCell-level options override global ones for that specific cell:\n```{r}\n#| echo: false   # overrides global echo: true for this cell only\nmy_plot\n```"
+  },
+  {
+    "objectID": "slides/week4.html#cell-options-reference",
+    "href": "slides/week4.html#cell-options-reference",
+    "title": "QMIR 2026",
+    "section": "Cell Options Reference",
+    "text": "Cell Options Reference\n\n\n\n\n\n\n\n\nOption\nValues\nWhat it controls\n\n\n\n\neval\ntrue / false\nWhether the code is executed\n\n\necho\ntrue / false\nWhether the source code is shown\n\n\nwarning\ntrue / false\nWhether warnings appear in output\n\n\nmessage\ntrue / false\nWhether messages appear in output\n\n\nerror\ntrue / false\nWhether errors stop rendering\n\n\ninclude\ntrue / false\nWhether cell output appears at all\n\n\nlabel\nfig-* / tbl-* / any string\nCell identifier for cross-referencing\n\n\nfig-cap\nstring\nCaption for figure output"
+  },
+  {
+    "objectID": "slides/week4.html#labels-and-cross-references",
+    "href": "slides/week4.html#labels-and-cross-references",
+    "title": "QMIR 2026",
+    "section": "Labels and Cross-References",
+    "text": "Labels and Cross-References\nLabelling a code cell that produces a figure enables automatic cross-references in your prose:\n\n\n```{r}\n#| label: fig-lifeexp\n#| fig-cap: \"Life expectancy over time\"\n#| message: false\n\ngapminder |&gt;\n  group_by(year, continent) |&gt;\n  summarise(mean_le = mean(lifeExp),\n            .groups = \"drop\") |&gt;\n  ggplot(aes(x = year, y = mean_le,\n             color = continent)) +\n  geom_line() +\n  theme_bw()\n```\n\nAs shown in @fig-lifeexp, life\nexpectancy has risen across all\ncontinents since 1952.\n\n\nThe label must start with fig- for figures, tbl- for tables\n@fig-lifeexp in prose becomes “Figure 1” (auto-numbered) in the rendered output\nFigure numbers update automatically if you add or reorder figures\nWorks in HTML, PDF, and Word output\n\nThis is how academic papers keep figure references consistent. Your future self will thank you."
+  },
+  {
+    "objectID": "slides/week4.html#suppressing-tidyverse-messages",
+    "href": "slides/week4.html#suppressing-tidyverse-messages",
+    "title": "QMIR 2026",
+    "section": "Suppressing Tidyverse Messages",
+    "text": "Suppressing Tidyverse Messages\nWhen you load tidyverse, R prints a message listing attached packages. When you use read_csv(), it prints column types. These are useful interactively, but clutter your rendered document.\n\nSuppress them with cell options or globally:\n\n\nCell level:\n```{r}\n#| message: false\n#| warning: false\nlibrary(tidyverse)\nlibrary(gapminder)\n```\n\nGlobal YAML (applies to all cells):\nexecute:\n  message: false\n  warning: false\n\n\n\nPrefer the global approach in homework submissions so your rendered PDF looks clean."
+  },
+  {
+    "objectID": "slides/week4.html#walkthrough-overview",
+    "href": "slides/week4.html#walkthrough-overview",
+    "title": "QMIR 2026",
+    "section": "Walkthrough Overview",
+    "text": "Walkthrough Overview\n\nClone the Week 4 exercise repo from GitHub (same workflow as previous weeks)\nOpen exercise_week04.qmd in Positron\nWork through the tasks in order using the gapminder dataset\nFast finishers: optional depth exercises at the bottom of the document\n\n\nLive-load gapminder, show glimpse(), run a filter-mutate-summarise pipe together, then let them work. Circulate. Reserve ~10 min for questions and homework preview."
+  },
+  {
+    "objectID": "slides/week4.html#homework",
+    "href": "slides/week4.html#homework",
+    "title": "QMIR 2026",
+    "section": "Homework",
+    "text": "Homework\n\nDistributed via GitHub (same workflow as previous weeks)\nSubmit a rendered Quarto document (.qmd + rendered PDF)\nDue: one week from today\n\nThe homework follows the arc of today’s session. You will work with the gapminder dataset to practice dplyr wrangling and produce at least one properly labelled and captioned figure that you cross-reference in your prose."
   }
 ]
