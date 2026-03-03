@@ -1,0 +1,33 @@
+a slide on useful Positron shortcuts:
+    - run code
+    - highlight text
+    - comment code
+    - open close explorer/viewer panels
+    - copy / paste
+    - restart R
+    - insert code cell
+
+tidyverse follow up:
+
+a note on summarise():
+    - since the tidyverse function work with tibbles (dataframes)
+    - but many base R summary statistics function (mean(), median(), quantile(), min(), max() etc.) expect vectors, you cannot "pipe" a dataframe into these summary functions
+    - hence the summarise function, it works by piping in a tibble/dataframe and outputs a tibble
+
+wide vs long (tidy) data:
+    pivot_wider and pivot_longer animations
+
+as tibbles by default print only 10 rows, you can steer that manually using print, e.g. data |> print(n=25) prints the first 25 rows
+
+joining data:
+    - leftjoin etc
+
+Missing values:
+    - in R, NA is the missing value coding
+    - is.na() returns True if an element/value is NA, false otherwise
+    - e.g. data |> filter(is.na(variable)) returns only observations (rows) for which variable is NA
+    - if you load in data, make sure to correctly code missings (many datasets use -99 or other special codes to denote missing values)
+    - whole literature no imputation of missing values, but be careful. If you "impute" mean values into missing observations, what assumption does this imply?
+    - Missing values are part of (real) data, there is no way of getting around this. Be transparent!
+
+ggplot continuation
