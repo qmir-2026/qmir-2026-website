@@ -7,6 +7,14 @@ a slide on useful Positron shortcuts:
     - restart R
     - insert code cell
 
+packages notation: package::function
+
+how to look up how to use a function:
+    - Positron auto preview, shows which argument you are currently at
+    - help(function)
+    - ?function()
+    - Search the web for official documentation, many (especially tidyverse) functions have extensive help pages with documentation and examples
+
 tidyverse follow up:
 
 a note on summarise():
@@ -31,3 +39,5 @@ Missing values:
     - Missing values are part of (real) data, there is no way of getting around this. Be transparent!
 
 ggplot continuation
+
+introduce .gitignore file
