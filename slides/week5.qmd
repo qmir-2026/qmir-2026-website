@@ -38,6 +38,13 @@ Missing values:
     - whole literature no imputation of missing values, but be careful. If you "impute" mean values into missing observations, what assumption does this imply?
     - Missing values are part of (real) data, there is no way of getting around this. Be transparent!
 
-ggplot continuation
+janitor, tabyl, kable
+
+inline code example
+
+ggplot continuation: main aesthetics (x, y, color, fill, alpha, size)
+main geoms
+scales, captions, labels
+theme
 
 introduce .gitignore file
