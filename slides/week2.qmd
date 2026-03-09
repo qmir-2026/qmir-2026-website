@@ -12,7 +12,7 @@ format:
     incremental: true
     code-fold: true
     code-summary: "View source"
-    pdfSeparateFragments: true
+    pdfSeparateFragments: false
     footer:  QMIR -- {{< meta date >}} --  Week 2 
     logo:  ./images/uma_ss.png
     theme: theme.scss
