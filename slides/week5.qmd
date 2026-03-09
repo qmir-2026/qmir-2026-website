@@ -12,7 +12,7 @@ format:
     incremental: true
     code-fold: show
     code-summary: "View source"
-    pdfSeparateFragments: true
+    pdfSeparateFragments: false
     footer: QMIR -- {{< meta date >}} -- Week 5
     logo: ./images/uma_ss.png
     theme: theme.scss
@@ -1760,6 +1760,65 @@ data |> select(where(is.character))
 
 :::
 ::::::
+
+---
+
+## Conditional Variables: `if_else()` and `case_when()` {.smaller}
+
+::: {style="font-size: 0.7em;"}
+
+Two tidyverse tools for creating variables whose value depends on a condition.
+
+:::::: columns
+::: {.column width="50%"}
+
+**`if_else()` — one condition, two outcomes:**
+```r
+gap_2007 |>
+  mutate(
+    rich = if_else(gdpPercap > 20000,
+                   "High income",
+                   "Low/mid income")
+  )
+```
+
+- First argument: the condition
+- Second: value if `TRUE`
+- Third: value if `FALSE`
+
+::: {.callout-note}
+Prefer `if_else()` over base R `ifelse()` in tidyverse pipelines — it is stricter about types and handles `NA` more predictably.
+:::
+
+:::
+
+::: {.column width="50%"}
+
+**`case_when()` — multiple conditions:**
+```r
+gap_2007 |>
+  mutate(
+    income_group = case_when(
+      gdpPercap > 30000 ~ "High",
+      gdpPercap > 10000 ~ "Middle",
+      gdpPercap >  3000 ~ "Low",
+      .default          =  "Very low"
+    )
+  )
+```
+
+- Conditions are evaluated **top to bottom**
+- First `TRUE` condition wins — order matters
+- `.default` catches everything not matched above
+
+:::
+::::::
+
+::: {.callout-tip}
+Both functions work inside `mutate()` and return a new column. Use `if_else()` for simple yes/no splits. Switch to `case_when()` as soon as you have three or more outcomes — a chain of nested `if_else()` calls becomes unreadable fast.
+:::
+
+:::
 
 # Time to Practice!
 
