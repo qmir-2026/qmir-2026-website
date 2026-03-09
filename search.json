@@ -669,7 +669,7 @@
     "href": "schedule.html",
     "title": "Schedule",
     "section": "",
-    "text": "Here’s your roadmap for the semester!\n\nClass\n\n Instructor-led lecture: concepts, theory and foundations.\n Hands-on exercises with guidance.\n\nHomework ()\n\nAssigned at the end of class.\nDue 7 days later (Mon → next Mon 13:30; Thu → next Thu 18:45)\n\nAdditional resources ()\n\nFurther readings and online learning resources\n\n\n\nSemester Schedule\n\n\n\nWeek\nTopic\nMonday\nThursday\nSlides\nExercise\nHomework\nRessources\n\n\n\n\n1\nCourse Roadmap & Research Workflow\nFeb 09\nFeb 12\n\n\n\n\n\n\n\n\nBlock I: Scientific Programming Fundamentals\n\n\n\nWeek\nTopic\nMonday\nThursday\nSlides\nExercise\nHomework\nRessources\n\n\n\n\n2\nReproducible Research with R, Quarto & Git\nFeb 16\nFeb 19\n\n\n\n\n\n\n3\nR Fundamentals: Data Types & Structures\nFeb 23\nFeb 26\n\n\n Mon Thu  \n\n\n\n4\nTidy Data: Wrangling & Visualization\nMar 02\nMar 05\n\n\n Mon Thu \n\n\n\n5\nReshaping & Merging Data\nMar 09\nMar 12\n\n\n\n\n\n\n\n\n\nBlock II: The Logic of Bayesian Inference\n\n\n\n\n\n\n\n\n\n\n\n\n\nWeek\nTopic\nMonday\nThursday\nSlides\nExercise\nHomework\nRessources\n\n\n\n\n6\nProbability, Simulation & Bayes’ Theorem\nMar 16\nMar 19\n\n\n\n\n\n\n7\nBayesian Inference & MCMC\nMar 23\nMar 26\n\n\n\n\n\n\n\n\n\nBlock III: Applied Data Analysis\n\n\n\n\n\n\n\n\n\n\n\n\n\nWeek\nTopic\nMonday\nThursday\nSlides\nExercise\nHomework\nRessources\n\n\n\n\n8\nBivariate Linear Regression\nApr 13\nApr 16\n\n\n\n\n\n\n9\nMultivariate Regression & Interactions\nApr 20\nApr 23\n\n\n\n\n\n\n10\nModeling Binary Outcomes\nApr 27\nApr 30\n\n\n\n\n\n\n11\nFixed Effects & Within-Unit Inference\nMay 04\nMay 07\n\n\n\n\n\n\n12\nMultilevel Models & Partial Pooling\nMay 11\nMay 21\n\n\n\n\n\n\n13\nBeyond the Course: Applying What You’ve Learned\nMay 18\nMay 28\n\n\n\n\n\n\n14\nTake Home Exam\nMay 28 19:00 – June 05 23:59\nMay 28 19:00 – June 05 23:59"
+    "text": "Here’s your roadmap for the semester!\n\nClass\n\n Instructor-led lecture: concepts, theory and foundations.\n Hands-on exercises with guidance.\n\nHomework ()\n\nAssigned at the end of class.\nDue 7 days later (Mon → next Mon 13:30; Thu → next Thu 18:45)\n\nAdditional resources ()\n\nFurther readings and online learning resources\n\n\n\nSemester Schedule\n\n\n\nWeek\nTopic\nMonday\nThursday\nSlides\nExercise\nHomework\nRessources\n\n\n\n\n1\nCourse Roadmap & Research Workflow\nFeb 09\nFeb 12\n\n\n\n\n\n\n\n\nBlock I: Scientific Programming Fundamentals\n\n\n\nWeek\nTopic\nMonday\nThursday\nSlides\nExercise\nHomework\nRessources\n\n\n\n\n2\nReproducible Research with R, Quarto & Git\nFeb 16\nFeb 19\n\n\n\n\n\n\n3\nR Fundamentals: Data Types & Structures\nFeb 23\nFeb 26\n\n\n Mon Thu  \n\n\n\n4\nTidy Data: Wrangling & Visualization\nMar 02\nMar 05\n\n\n Mon Thu \n\n\n\n5\nReshaping, Merging & Data Visualization\nMar 09\nMar 12\n\n\n\n\n\n\n\n\n\nBlock II: The Logic of Bayesian Inference\n\n\n\n\n\n\n\n\n\n\n\n\n\nWeek\nTopic\nMonday\nThursday\nSlides\nExercise\nHomework\nRessources\n\n\n\n\n6\nProbability, Simulation & Bayes’ Theorem\nMar 16\nMar 19\n\n\n\n\n\n\n7\nBayesian Inference & MCMC\nMar 23\nMar 26\n\n\n\n\n\n\n\n\n\nBlock III: Applied Data Analysis\n\n\n\n\n\n\n\n\n\n\n\n\n\nWeek\nTopic\nMonday\nThursday\nSlides\nExercise\nHomework\nRessources\n\n\n\n\n8\nBivariate Linear Regression\nApr 13\nApr 16\n\n\n\n\n\n\n9\nMultivariate Regression & Interactions\nApr 20\nApr 23\n\n\n\n\n\n\n10\nModeling Binary Outcomes\nApr 27\nApr 30\n\n\n\n\n\n\n11\nFixed Effects & Within-Unit Inference\nMay 04\nMay 07\n\n\n\n\n\n\n12\nMultilevel Models & Partial Pooling\nMay 11\nMay 21\n\n\n\n\n\n\n13\nBeyond the Course: Applying What You’ve Learned\nMay 18\nMay 28\n\n\n\n\n\n\n14\nTake Home Exam\nMay 28 19:00 – June 05 23:59\nMay 28 19:00 – June 05 23:59"
   },
   {
     "objectID": "slides/week1.html#qmir-2026",
@@ -1001,10 +1001,346 @@
     "text": "Homework\n\nDistributed via GitHub (same workflow as Week 2)\nSubmit a rendered Quarto document (.qmd + rendered PDF)\nDue: one week from today\n\nThe homework follows the same arc as today – you’ll work with a small political dataset to practice types, structures, and subsetting. Read the task descriptions carefully and write comments explaining your reasoning."
   },
   {
-    "objectID": "slides/week5.html",
-    "href": "slides/week5.html",
+    "objectID": "slides/week5.html#qmir-2026",
+    "href": "slides/week5.html#qmir-2026",
     "title": "QMIR 2026",
-    "section": "",
-    "text": "a slide on useful Positron shortcuts: - run code - highlight text - comment code - open close explorer/viewer panels - copy / paste - restart R - insert code cell\npackages notation: package::function\nhow to look up how to use a function: - Positron auto preview, shows which argument you are currently at - help(function) - ?function() - Search the web for official documentation, many (especially tidyverse) functions have extensive help pages with documentation and examples\ntidyverse follow up:\na note on summarise(): - since the tidyverse function work with tibbles (dataframes) - but many base R summary statistics function (mean(), median(), quantile(), min(), max() etc.) expect vectors, you cannot “pipe” a dataframe into these summary functions - hence the summarise function, it works by piping in a tibble/dataframe and outputs a tibble\nwide vs long (tidy) data: pivot_wider and pivot_longer animations\nas tibbles by default print only 10 rows, you can steer that manually using print, e.g. data |&gt; print(n=25) prints the first 25 rows\njoining data: - leftjoin etc\nMissing values: - in R, NA is the missing value coding - is.na() returns True if an element/value is NA, false otherwise - e.g. data |&gt; filter(is.na(variable)) returns only observations (rows) for which variable is NA - if you load in data, make sure to correctly code missings (many datasets use -99 or other special codes to denote missing values) - whole literature no imputation of missing values, but be careful. If you “impute” mean values into missing observations, what assumption does this imply? - Missing values are part of (real) data, there is no way of getting around this. Be transparent!\nggplot continuation\nintroduce .gitignore file"
+    "section": "QMIR 2026",
+    "text": "QMIR 2026\nWeek 5: Reshaping, Merging & Data Visualization\n Tristan Muno            March 9, 2026"
+  },
+  {
+    "objectID": "slides/week5.html#week-5-learning-goals",
+    "href": "slides/week5.html#week-5-learning-goals",
+    "title": "QMIR 2026",
+    "section": "Week 5 Learning Goals",
+    "text": "Week 5 Learning Goals\nBy the end of today, you should be able to:\n\nUse key Positron shortcuts and look up function documentation efficiently\nReshape data between wide and long format using pivot_longer() and pivot_wider()\nLoad and clean messy real-world Excel files using readxl and janitor\nCombine datasets from multiple sources using left_join() and verify the result\nHandle missing values transparently and understand the risks of imputation\nBuild and customise ggplot2 visualisations using aesthetics, geoms, scales, and themes\nProduce publication-ready tables with tabyl(), adorn_totals(), and kable()\nEmbed computed results directly in prose using inline code"
+  },
+  {
+    "objectID": "slides/week5.html#positron-keyboard-shortcuts",
+    "href": "slides/week5.html#positron-keyboard-shortcuts",
+    "title": "QMIR 2026",
+    "section": "Positron Keyboard Shortcuts",
+    "text": "Positron Keyboard Shortcuts\nKnowing these will make your workflow noticeably faster.\n\n\n\n\n\n\n\n\n\nAction\nWindows / Linux\nMac\n\n\n\n\nRun current line / selection\nCtrl + Enter\nCmd + Enter\n\n\nRun current code cell (Quarto)\nCtrl + Shift + Enter\nCmd + Shift + Enter\n\n\nComment / uncomment\nCtrl + /\nCmd + /\n\n\nDuplicate line\nShift + Alt + Down\nShift + Option + Down\n\n\nMove line up / down\nAlt + Up / Down\nOption + Up / Down\n\n\nSelect all occurrences\nCtrl + Shift + L\nCmd + Shift + L\n\n\nRestart R session\nCtrl + Shift + 0\nCmd + Shift + 0\n\n\nInsert Quarto code cell\nCtrl + Shift + I\nCmd + Shift + I\n\n\n\n\n\n\n\n\n\n\nNote\n\n\nAll shortcuts are fully customizable via File → Preferences → Keyboard Shortcuts. If a shortcut here does not work for you, it may already be assigned to something else – check and remap as needed. Visit this page for RStudio shortcuts in Positron.\n\n\n\n\n\n\n\n\n\nTip\n\n\nRestart R frequently. A fresh session catches hidden dependencies between code chunks that can break rendering."
+  },
+  {
+    "objectID": "slides/week5.html#the-packagefunction-notation",
+    "href": "slides/week5.html#the-packagefunction-notation",
+    "title": "QMIR 2026",
+    "section": "The package::function Notation",
+    "text": "The package::function Notation\nYou will encounter this pattern often in documentation and Stack Overflow answers:\ndplyr::filter(gapminder, year == 2007)\n\nThis is equivalent to loading the package and then calling the function:\nlibrary(dplyr)\nfilter(gapminder, year == 2007)\n\n\n\nWhen to use it:\n\nWhen two packages export a function with the same name (e.g., dplyr::filter vs stats::filter)\nIn scripts you share with others, to make dependencies explicit\nWhen you only need one function from a package and don’t want to load the whole thing\n\n\n\n\n\n\n\n\n\n\nNote\n\n\nIf you load the tidyverse with library(tidyverse), you rarely need :: notation within that ecosystem. But you will encounter it – and write it – more as your code grows."
+  },
+  {
+    "objectID": "slides/week5.html#how-to-look-up-a-function",
+    "href": "slides/week5.html#how-to-look-up-a-function",
+    "title": "QMIR 2026",
+    "section": "How to Look Up a Function",
+    "text": "How to Look Up a Function\n\n\nInside Positron:\n\nType the function name and Positron shows a preview with argument hints\nThe argument you are currently typing is highlighted\nhelp(function_name) or ?function_name opens the full documentation pane\n\n# These are equivalent\nhelp(pivot_longer)\n?pivot_longer\n\nOnline:\n\nTidyverse functions have excellent reference pages with worked examples: tidyverse.org\nR for Data Science (2e) is free online and is the textbook behind this course\nStack Overflow / AI for specific errors\n\n\n\n\n\n\n\n\n\nTip\n\n\nHabit to build: Before Googling, try ?function_name first. The Examples section at the bottom of every help file is often the fastest way to understand how something works. When consulting AI, always force it to return a web source, so you can verify the output yourself!"
+  },
+  {
+    "objectID": "slides/week5.html#a-note-on-pipes",
+    "href": "slides/week5.html#a-note-on-pipes",
+    "title": "QMIR 2026",
+    "section": "A Note on Pipes",
+    "text": "A Note on Pipes\nThe pipe |&gt; works because tidyverse functions share one convention: the data frame is always the first argument.\n\n\nView source\ngapminder |&gt; filter(year == 2007)\n# is the same as:\nfilter(gapminder, year == 2007)\n\n\n\nThis means piping works for most tidyverse functions – and many others – but not universally. You will encounter base R functions that expect a vector, not a data frame, as their first argument.\n\n\n\n\nThis works:\n\n\nView source\ngapminder |&gt;\n  pull(lifeExp) |&gt; # extracts a vector\n  mean()\n\n\n[1] 59.47444\n\n\n\nThis does not:\n\n\nView source\n# mean() expects a vector, not a tibble\ngapminder |&gt; mean() # Error\n\n\n[1] NA\n\n\n\n\n\npull() extracts a single column as a vector – useful when you need to pipe into a base R function."
+  },
+  {
+    "objectID": "slides/week5.html#why-summarise-exists",
+    "href": "slides/week5.html#why-summarise-exists",
+    "title": "QMIR 2026",
+    "section": "Why summarise() Exists",
+    "text": "Why summarise() Exists\nLast week you used mean(), median(), and similar functions inside summarise(). Here is why that pattern is necessary.\n\n\n\nBase R functions expect vectors:\n# Works on a vector\nmean(gapminder$lifeExp)\n\n# Does not work on a tibble\ngapminder |&gt; mean()  # Error\n\nsummarise() bridges tibbles and vector functions:\n# Correct: summarise feeds each column\n# as a vector to the function inside\ngapminder |&gt;\n  summarise(\n    mean_le = mean(lifeExp),\n    sd_le   = sd(lifeExp)\n  )\n\n\n\nsummarise() takes a tibble in, applies functions column-by-column, and returns a tibble. It is the bridge between the tidyverse world and base R summary statistics."
+  },
+  {
+    "objectID": "slides/week5.html#controlling-how-much-prints",
+    "href": "slides/week5.html#controlling-how-much-prints",
+    "title": "QMIR 2026",
+    "section": "Controlling How Much Prints",
+    "text": "Controlling How Much Prints\nTibbles print only 10 rows by default. You can override this with print():\n\n\n# Print first 25 rows\ngapminder |&gt; print(n = 25)\n\n# Print all rows\ngapminder |&gt; print(n = Inf)\n\n# Print specific columns wide\ngapminder |&gt; print(width = Inf)\n\nThis is purely for interactive inspection – do not put print(n = Inf) in a document you are rendering. Rendered output should show only what your reader needs to see, controlled with head() or careful selection."
+  },
+  {
+    "objectID": "slides/week5.html#wide-vs.-long-a-reminder",
+    "href": "slides/week5.html#wide-vs.-long-a-reminder",
+    "title": "QMIR 2026",
+    "section": "Wide vs. Long – A Reminder",
+    "text": "Wide vs. Long – A Reminder\nRecall from last week: tidy data means one variable per column, one observation per row.\nWide format (common in spreadsheets, Excel exports, Eurostat downloads):\n\n\n\n\ncountry\nghg_2020\nghg_2021\nghg_2022\n\n\n\n\nGermany\n9.0\n9.4\n9.3\n\n\nFrance\n5.6\n5.9\n5.7\n\n\n\n\n\nLong (tidy) format (what the tidyverse expects):\n\n\n\n\ncountry\nyear\nghg\n\n\n\n\nGermany\n2020\n9.0\n\n\nGermany\n2021\n9.4\n\n\nFrance\n2020\n5.6\n\n\nFrance\n2021\n5.9\n\n\n\n\n\n\n\nIn the wide version, year is hiding inside column names. ggplot2 and dplyr cannot see it there. You must reshape first."
+  },
+  {
+    "objectID": "slides/week5.html#pivot_longer-wide-to-long",
+    "href": "slides/week5.html#pivot_longer-wide-to-long",
+    "title": "QMIR 2026",
+    "section": "pivot_longer() – Wide to Long",
+    "text": "pivot_longer() – Wide to Long\n\n\n\n\nView source\nlibrary(tidyverse)\n\nghg_wide |&gt;\n  pivot_longer(\n    cols = -country, # all columns except country\n    names_to = \"year\", # new column for old headers\n    values_to = \"ghg\" # new column for values\n  )\n\n\nKey arguments:\n\ncols – which columns to reshape (everything that is not an ID variable)\nnames_to – what to call the new column that holds the old column names\nvalues_to – what to call the new column that holds the values\n\n\nBefore:\n\n\n\n\ncountry\n2020\n2021\n2022\n\n\n\n\nGermany\n9.0\n9.4\n9.3\n\n\nFrance\n5.6\n5.9\n5.7\n\n\n\n\nAfter:\n\n\n\n\ncountry\nyear\nghg\n\n\n\n\nGermany\n2020\n9.0\n\n\nGermany\n2021\n9.4\n\n\nGermany\n2022\n9.3\n\n\nFrance\n2020\n5.6\n\n\nFrance\n2021\n5.9\n\n\nFrance\n2022\n5.7"
+  },
+  {
+    "objectID": "slides/week5.html#pivot_wider-long-to-wide",
+    "href": "slides/week5.html#pivot_wider-long-to-wide",
+    "title": "QMIR 2026",
+    "section": "pivot_wider() – Long to Wide",
+    "text": "pivot_wider() – Long to Wide\nThe reverse: sometimes you need wide format for a table or for a specific model.\n\n\n\n\nView source\nghg_long |&gt;\n  pivot_wider(\n    names_from = \"year\", # column whose values become headers\n    values_from = \"ghg\" # column whose values fill the cells\n  )\n\n\n\nBefore:\n\n\n\n\ncountry\nyear\nghg\n\n\n\n\nGermany\n2020\n9.0\n\n\nGermany\n2021\n9.4\n\n\nFrance\n2020\n5.6\n\n\n\n\nAfter:\n\n\n\n\ncountry\n2020\n2021\n\n\n\n\nGermany\n9.0\n9.4\n\n\nFrance\n5.6\nNA\n\n\n\n\n\n\n\n\n\n\n\n\nNote\n\n\npivot_longer() is far more common in practice. Most raw data arrives wide – tidy analysis requires long."
+  },
+  {
+    "objectID": "slides/week5.html#practical-example-what-happens-when-you-load-eurostat-data",
+    "href": "slides/week5.html#practical-example-what-happens-when-you-load-eurostat-data",
+    "title": "QMIR 2026",
+    "section": "Practical Example: What Happens When You Load Eurostat Data",
+    "text": "Practical Example: What Happens When You Load Eurostat Data\nLet’s see what actually happens when we naively load the GHG file:\n\n\n\n\nView source\n# First attempt -- no skip\nghg_raw &lt;- read_excel(\n  \"data/Eurostat_GHGpc.xlsx\",\n  sheet = \"Sheet 1\"\n)\n\nghg_raw |&gt; print(n = 5)\n\n\n# A tibble: 47 × 5\n  `Data extracted on 20/09/2024 17:32:59 from [ESTAT]` ...2    ...3  ...4  ...5 \n  &lt;chr&gt;                                                &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;\n1 Dataset:                                             Net gr… &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt; \n2 Last updated:                                        05/09/… &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt; \n3 &lt;NA&gt;                                                 &lt;NA&gt;    &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt; \n4 Time frequency                                       &lt;NA&gt;    Annu… &lt;NA&gt;  &lt;NA&gt; \n5 Air pollutants and greenhouse gases                  &lt;NA&gt;    Gree… &lt;NA&gt;  &lt;NA&gt; \n# ℹ 42 more rows\n\n\n\n\n\n\n\n\n\nWarning\n\n\nWhat went wrong? The file has 9 rows of metadata before the actual data begins. read_excel() read the first row as column headers – giving us nonsense names like ...2, ...4, Tonnes per capita.\nThis is extremely common with official statistical releases (Eurostat, World Bank, UN). Always inspect your file before loading."
+  },
+  {
+    "objectID": "slides/week5.html#step-1-skip-the-metadata-rows",
+    "href": "slides/week5.html#step-1-skip-the-metadata-rows",
+    "title": "QMIR 2026",
+    "section": "Step 1: Skip the Metadata Rows",
+    "text": "Step 1: Skip the Metadata Rows\nWe know from inspecting the file that the real column headers (TIME, 2019, …) are on row 10. So we skip 9 rows:\n\n\n\n\nView source\nghg_raw &lt;- read_excel(\n  \"data/Eurostat_GHGpc.xlsx\",\n  sheet = \"Sheet 1\",\n  skip = 9 # rows 1–9 are metadata\n)\n\nghg_raw |&gt; print(n = 5)\n\n\n# A tibble: 38 × 5\n  TIME                                      `2019` `2020` `2021` `2022`\n  &lt;chr&gt;                                     &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;\n1 European Union - 27 countries (from 2020) 7.8       7      7.4    7.3\n2 Belgium                                   10.6      9.6    9.9    9.3\n3 Bulgaria                                  6.8       5.9    6.9    7.7\n4 Czechia                                   12.4     11.6   12     11.4\n5 Denmark                                   8.6       7.7    7.7    7.4\n# ℹ 33 more rows\n\n\n\nBetter – but notice:\n\nThe first column is named TIME (we want country)\nColumn names 2019, 2020, … start with a number\nThere are stray footer rows at the bottom (Special value, :)\n\n\n\n\n\n\n\nTip\n\n\nHow to find the right skip value: Open the file in Excel and count how many rows appear before the header row. Subtract 1 – that is your skip value."
+  },
+  {
+    "objectID": "slides/week5.html#step-2-janitorclean_names-to-the-rescue",
+    "href": "slides/week5.html#step-2-janitorclean_names-to-the-rescue",
+    "title": "QMIR 2026",
+    "section": "Step 2: janitor::clean_names() to the Rescue",
+    "text": "Step 2: janitor::clean_names() to the Rescue\nThe janitor package’s clean_names() function converts all column names to safe, consistent snake_case automatically:\n\n\n\n\nView source\nghg_raw &lt;- read_excel(\n  \"data/Eurostat_GHGpc.xlsx\",\n  sheet = \"Sheet 1\",\n  skip = 9\n) |&gt;\n  clean_names()\n\nnames(ghg_raw)\n\n\n[1] \"time\"  \"x2019\" \"x2020\" \"x2021\" \"x2022\"\n\n\n\n\nclean_names() converts 2019 → x2019, 2020 → x2020, etc. – adding an x prefix to columns that would otherwise start with a number.\nThis removes the backtick problem entirely. x2019 is a legal R column name that needs no special quoting.\n\n\n\n\n\n\n\nNote\n\n\nclean_names() also handles spaces, dashes, parentheses, and accented characters. Make it a habit to call it immediately after every read_excel() or read_csv()."
+  },
+  {
+    "objectID": "slides/week5.html#step-3-rename-filter-drop-pivot",
+    "href": "slides/week5.html#step-3-rename-filter-drop-pivot",
+    "title": "QMIR 2026",
+    "section": "Step 3: Rename, Filter, Drop, Pivot",
+    "text": "Step 3: Rename, Filter, Drop, Pivot\n\n\nView source\nghg_clean &lt;- ghg_raw |&gt;\n  rename(country = time) |&gt; # TIME → country\n  filter(!is.na(country), !country %in% c(\"Special value\", \":\")) |&gt; # remove footer rows\n  select(-x2019) |&gt; # drop 2019 (not in GDP data)\n  pivot_longer(\n    cols = -country,\n    names_to = \"year\",\n    values_to = \"ghg_pc\"\n  ) |&gt;\n  mutate(year = as.integer(str_remove(year, \"^x\"))) # \"x2020\" → 2020\n\nghg_clean |&gt; head(4)\n\n\n# A tibble: 4 × 3\n  country                                    year ghg_pc\n  &lt;chr&gt;                                     &lt;int&gt;  &lt;dbl&gt;\n1 European Union - 27 countries (from 2020)  2020    7  \n2 European Union - 27 countries (from 2020)  2021    7.4\n3 European Union - 27 countries (from 2020)  2022    7.3\n4 Belgium                                    2020    9.6\n\n\n\n\n\n\n\n\n\nTip\n\n\nstr_remove(year, \"^x\") strips the leading x that clean_names() added, then as.integer() converts the result to a number. The ^ means “start of string” – a small taste of regular expressions, which we will return to later."
+  },
+  {
+    "objectID": "slides/week5.html#alternative-janitorrow_to_names",
+    "href": "slides/week5.html#alternative-janitorrow_to_names",
+    "title": "QMIR 2026",
+    "section": "Alternative: janitor::row_to_names()",
+    "text": "Alternative: janitor::row_to_names()\nSometimes you cannot easily count the number of skip rows, or the header row is somewhere in the middle of the sheet. janitor::row_to_names() handles this differently: load everything, then promote a specific row to become the column names.\n\n\n\n\nView source\n# Load without skipping anything\nghg_raw &lt;- read_excel(\n  \"data/Eurostat_GHGpc.xlsx\",\n  sheet = \"Sheet 1\",\n  col_names = FALSE # don't treat row 1 as headers\n)\n\n# Promote row 10 to column names, drop rows above it\nghg_raw &lt;- ghg_raw |&gt;\n  row_to_names(row_number = 10, remove_rows_above = TRUE) |&gt;\n  clean_names()\n\n\n\n\nrow_to_names() arguments:\n\nrow_number – which row contains the real headers\nremove_rows_above = TRUE – drops all metadata rows above it automatically\n\n\n\n\n\n\n\n\nNote\n\n\nBoth approaches (skip = and row_to_names()) achieve the same result. Use whichever is clearer for the file you are working with. skip = is simpler when the header row is fixed and predictable. row_to_names() is more robust when the file structure is irregular or when you are not sure how many rows to skip."
+  },
+  {
+    "objectID": "slides/week5.html#why-this-matters-for-pivoting",
+    "href": "slides/week5.html#why-this-matters-for-pivoting",
+    "title": "QMIR 2026",
+    "section": "Why This Matters for Pivoting",
+    "text": "Why This Matters for Pivoting\n\n\n\n\n\ncountry\nx2020\nx2021\nx2022\n\n\n\n\nGermany\n9.0\n9.4\n9.3\n\n\nFrance\n5.6\n5.9\n5.7\n\n\n\nWithout clean_names(), the year columns would be named 2020, 2021 – requiring backticks everywhere. With clean_names(), they become x2020, x2021, which R handles without complaint.\n\nAfter (long / tidy):\n\n\n\ncountry\nyear\nghg_pc\n\n\n\n\nGermany\n2020\n9.0\n\n\nGermany\n2021\n9.4\n\n\nGermany\n2022\n9.3\n\n\nFrance\n2020\n5.6\n\n\n\nOnce pivoted, year is just a regular variable column. No backticks, no special treatment needed.\n\n\n\n\n\n\nNote\n\n\nThe backtick trap still exists in R – column names starting with numbers or containing spaces must be wrapped in backticks. clean_names() is the easiest way to avoid it entirely."
+  },
+  {
+    "objectID": "slides/week5.html#why-join",
+    "href": "slides/week5.html#why-join",
+    "title": "QMIR 2026",
+    "section": "Why Join?",
+    "text": "Why Join?\nReal research rarely lives in a single dataset. You might have:\n\nGHG emissions from Eurostat in one file\nGDP per capita from Eurostat in another file\nEU accession dates from Wikipedia\nCountry codes from a reference package\n\n\nJoining combines these into a single analysis-ready dataset by matching rows on a shared key – usually a country name, country code, or year."
+  },
+  {
+    "objectID": "slides/week5.html#the-four-main-joins",
+    "href": "slides/week5.html#the-four-main-joins",
+    "title": "QMIR 2026",
+    "section": "The Four Main Joins",
+    "text": "The Four Main Joins\nAll joins take two tables and a key (the column(s) to match on).\n\n\n\n\n\n\n\nJoin\nWhat it keeps\n\n\n\n\nleft_join(x, y)\nAll rows from x; matching rows from y; NA where no match\n\n\nright_join(x, y)\nAll rows from y; matching rows from x; NA where no match\n\n\ninner_join(x, y)\nOnly rows that match in both tables\n\n\nfull_join(x, y)\nAll rows from both; NA wherever there is no match\n\n\n\n\n\n\n\n\n\n\nTip\n\n\nIn practice, left_join() is by far the most common. Start with your main analysis dataset on the left, and add variables from auxiliary datasets on the right. Rows in your main dataset are always preserved."
+  },
+  {
+    "objectID": "slides/week5.html#left_join-an-example",
+    "href": "slides/week5.html#left_join-an-example",
+    "title": "QMIR 2026",
+    "section": "left_join() – An Example",
+    "text": "left_join() – An Example\n\n\n\n\nView source\n# Both datasets are now tidy long format\n# with matching columns: country + year\n\neu_data &lt;- ghg |&gt;\n  left_join(gdp, by = join_by(country, year))\n\n\nThe by argument names the key columns – the columns that must match for two rows to be joined.\nIf the key column has different names in the two tables:\nleft_join(x, y, by = join_by(country == nation))\n\nAfter joining, always verify the result:\n# Check dimensions make sense\nnrow(eu_data)\nglimpse(eu_data)\n\n# Check for unexpected NAs introduced by the join\neu_data |&gt;\n  filter(is.na(gdp_pc)) |&gt;\n  distinct(country, year)\n\n\n\n\n\n\nImportant\n\n\nAlways compare row counts before and after joining.\nnrow(ghg)      # rows before\nnrow(eu_data)  # rows after left_join\nIn a left_join, the row count of the result must equal the row count of the left table. If it is larger, your key has duplicates on the right side. If it is smaller, something went wrong. Check immediately – silent row loss is one of the most common data errors."
+  },
+  {
+    "objectID": "slides/week5.html#visualising-the-joins",
+    "href": "slides/week5.html#visualising-the-joins",
+    "title": "QMIR 2026",
+    "section": "Visualising the Joins",
+    "text": "Visualising the Joins\n\n\nx (GHG data):\n\n\n# A tibble: 3 × 2\n  country   ghg\n  &lt;chr&gt;   &lt;dbl&gt;\n1 Germany   9.3\n2 France    5.7\n3 Poland    9.4\n\n\ny (GDP data):\n\n\n# A tibble: 3 × 2\n  country   gdp\n  &lt;chr&gt;   &lt;dbl&gt;\n1 Germany   117\n2 France    103\n3 Spain      86\n\n\n\nleft_join(x, y) – keeps all of x:\n\n\n# A tibble: 3 × 3\n  country   ghg   gdp\n  &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;\n1 Germany   9.3   117\n2 France    5.7   103\n3 Poland    9.4    NA\n\n\ninner_join(x, y) – only matches:\n\n\n# A tibble: 2 × 3\n  country   ghg   gdp\n  &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;\n1 Germany   9.3   117\n2 France    5.7   103"
+  },
+  {
+    "objectID": "slides/week5.html#na-in-r",
+    "href": "slides/week5.html#na-in-r",
+    "title": "QMIR 2026",
+    "section": "NA in R",
+    "text": "NA in R\nIn R, missing values are represented as NA – not available.\n\n\nView source\nx &lt;- c(1, 2, NA, 4)\n\nis.na(x) # TRUE for each NA position\nsum(is.na(x)) # count of NAs\nmean(x) # NA -- most functions propagate NA by default\nmean(x, na.rm = TRUE) # 2.33 -- explicitly remove NAs\n\n\n\n\nNA is not zero. It means the value is unknown.\nNA is contagious. Any arithmetic involving NA returns NA.\nna.rm = TRUE is the standard argument to ignore NAs in summary functions."
+  },
+  {
+    "objectID": "slides/week5.html#finding-and-filtering-missing-values",
+    "href": "slides/week5.html#finding-and-filtering-missing-values",
+    "title": "QMIR 2026",
+    "section": "Finding and Filtering Missing Values",
+    "text": "Finding and Filtering Missing Values\n\n\n\n\nView source\n# Rows where a variable IS missing\ndata |&gt;\n  filter(is.na(gdp_pc))\n\n# Rows where a variable is NOT missing\ndata |&gt;\n  filter(!is.na(gdp_pc))\n\n# Count NAs per column\ndata |&gt;\n  summarise(across(everything(), ~ sum(is.na(.))))\n\n\n\n\n\nView source\n# Remove rows with any NA\ndata |&gt; drop_na()\n\n# Remove rows with NA in specific column\ndata |&gt; drop_na(gdp_pc)\n\n\n\n\n\n\n\n\nWarning\n\n\ndrop_na() silently removes data. Before using it, check how many rows it would remove and ask whether those missing values are informative. A country that never reported GHG emissions is not the same as a country with a data entry error."
+  },
+  {
+    "objectID": "slides/week5.html#the-problem-with-imputation",
+    "href": "slides/week5.html#the-problem-with-imputation",
+    "title": "QMIR 2026",
+    "section": "The Problem with Imputation",
+    "text": "The Problem with Imputation\nA common temptation: replace NA with the column mean.\n\n\nView source\ndata |&gt;\n  mutate(gdp_pc = ifelse(is.na(gdp_pc), mean(gdp_pc, na.rm = TRUE), gdp_pc))\n\n\n\nWhat assumption does this imply?\n\nYou are asserting that the missing country’s GDP is average – but you have no evidence of that.\nMean imputation compresses variance and distorts correlations.\nIt treats missingness as random, which is rarely true. Poor countries may be less likely to report data.\n\n\n\n\n\n\n\n\n\nImportant\n\n\nThere is no free lunch with missing data. Every approach – dropping, imputing, or modelling – makes an assumption. The correct response is to be transparent: report how many observations are missing and why you handled them the way you did. Never silently drop or impute without acknowledgment."
+  },
+  {
+    "objectID": "slides/week5.html#coding-missings-on-import",
+    "href": "slides/week5.html#coding-missings-on-import",
+    "title": "QMIR 2026",
+    "section": "Coding Missings on Import",
+    "text": "Coding Missings on Import\nMany datasets use special codes for missing values: -99, 999, \"n/a\", \".\" (Stata).\n\n\nView source\n# Tell readr which strings to treat as NA\nmy_data &lt;- read_csv(\n  \"data/file.csv\",\n  na = c(\"\", \"NA\", \"-99\", \"n/a\", \".\")\n)\n\n# For Stata files, haven handles this automatically\nlibrary(haven)\nmy_data &lt;- read_dta(\"data/file.dta\")\n\n# After loading, check for suspicious values\nsummary(my_data)\n\n\n\n\n\n\n\n\n\nTip\n\n\nAlways open your raw data file before loading it in R. A two-minute inspection in Excel or a text editor tells you the structure, encoding, missing value codes, and any metadata rows – exactly the information you need to load it correctly."
+  },
+  {
+    "objectID": "slides/week5.html#end-to-end-import-clean-reshape-join",
+    "href": "slides/week5.html#end-to-end-import-clean-reshape-join",
+    "title": "QMIR 2026",
+    "section": "End-to-End: Import, Clean, Reshape, Join",
+    "text": "End-to-End: Import, Clean, Reshape, Join\n\nThe complete pipeline – this is what your homework setup code will look like:\n\n\nView source\nlibrary(tidyverse)\nlibrary(readxl)\nlibrary(janitor)\n\n# --- GHG: skip 9 metadata rows, clean names, pivot ---\nghg &lt;- read_excel(\"data/Eurostat_GHGpc.xlsx\", sheet = \"Sheet 1\", skip = 9) |&gt;\n  clean_names() |&gt;\n  rename(country = time) |&gt;\n  filter(!is.na(country), !country %in% c(\"Special value\", \":\")) |&gt;\n  select(-x2019) |&gt;\n  pivot_longer(-country, names_to = \"year\", values_to = \"ghg_pc\") |&gt;\n  mutate(year = as.integer(str_remove(year, \"^x\")))\n\n# --- GDP: skip 8 metadata rows, clean names, pivot ---\ngdp &lt;- read_excel(\"data/Eurostat_GDPpc.xlsx\", sheet = \"Sheet 1\", skip = 8) |&gt;\n  clean_names() |&gt;\n  rename(country = time) |&gt;\n  filter(!is.na(country)) |&gt;\n  pivot_longer(-country, names_to = \"year\", values_to = \"gdp_pc\") |&gt;\n  mutate(year = as.integer(str_remove(year, \"^x\")))\n\n# --- Join on country + year ---\neu_data &lt;- left_join(ghg, gdp, by = c(\"country\", \"year\"))\n\n\n\n\nRows: 105\nColumns: 4\n$ country &lt;fct&gt; EU27, EU27, EU27, Belgium, Belgium, Belgium, Bulgaria, Bulgari…\n$ year    &lt;int&gt; 2020, 2021, 2022, 2020, 2021, 2022, 2020, 2021, 2022, 2020, 20…\n$ ghg_pc  &lt;dbl&gt; 7.0, 7.4, 7.3, 9.6, 9.9, 9.3, 5.9, 6.9, 7.7, 11.6, 12.0, 11.4,…\n$ gdp_pc  &lt;dbl&gt; 100, 100, 100, 118, 120, 120, 55, 57, 62, 93, 92, 90, 133, 135…"
+  },
+  {
+    "objectID": "slides/week5.html#cleaning-country-names-factors",
+    "href": "slides/week5.html#cleaning-country-names-factors",
+    "title": "QMIR 2026",
+    "section": "Cleaning Country Names & Factors",
+    "text": "Cleaning Country Names & Factors\n\n\nView source\neu_data &lt;- eu_data |&gt;\n  mutate(\n    country = fct(country),\n    country = fct_recode(\n      country,\n      \"EU27\" = \"European Union - 27 countries (from 2020)\"\n    )\n  )\n\n\n\n\n# A tibble: 35 × 2\n  country      n\n  &lt;fct&gt;    &lt;int&gt;\n1 EU27         3\n2 Belgium      3\n3 Bulgaria     3\n4 Czechia      3\n5 Denmark      3\n# ℹ 30 more rows\n\n\n\nWhy factors? Factors store a fixed set of categories. They are essential for correct plot ordering, legend display, and later for regression dummy coding. fct_recode() renames specific levels without touching the others."
+  },
+  {
+    "objectID": "slides/week5.html#recap-the-three-layers",
+    "href": "slides/week5.html#recap-the-three-layers",
+    "title": "QMIR 2026",
+    "section": "Recap: The Three Layers",
+    "text": "Recap: The Three Layers\nEvery ggplot is assembled from the same building blocks:\nggplot(data, aes(x = ..., y = ..., color = ...)) +\n  geom_*() +\n  scale_*() +\n  labs() +\n  theme_*()\n\n\n\n\n\n\n\n\n\nLayer\nPurpose\n\n\n\n\nggplot() + aes()\nCanvas: data and variable-to-visual mappings\n\n\ngeom_*()\nWhat to draw: points, lines, bars, boxes, text, …\n\n\nscale_*()\nHow to map: axis limits, colors, log transforms, …\n\n\nlabs()\nText: title, subtitle, axis labels, captions, legend title\n\n\ntheme_*()\nAppearance: fonts, gridlines, background, …"
+  },
+  {
+    "objectID": "slides/week5.html#the-main-aesthetics",
+    "href": "slides/week5.html#the-main-aesthetics",
+    "title": "QMIR 2026",
+    "section": "The Main Aesthetics",
+    "text": "The Main Aesthetics\naes() maps variables to visual properties. The main ones:\n\n\n\n\nAesthetic\nWhat it controls\n\n\n\n\nx, y\nPosition on axes\n\n\ncolor\nOutline / line / point color\n\n\nfill\nInterior fill color (bars, boxes, ribbons)\n\n\nalpha\nTransparency (0 = invisible, 1 = opaque)\n\n\nsize\nPoint size or line thickness\n\n\nshape\nPoint shape (circle, triangle, square, …)\n\n\nlinetype\nLine style (solid, dashed, dotted, …)\n\n\nlabel\nText label (used with geom_text())\n\n\ngroup\nGrouping without visual distinction\n\n\n\n\n\n\n\n\n\n\n\nNote\n\n\nInside aes() = mapped to data. Outside aes() = fixed constant.\ngeom_point(color = \"red\") makes all points red.\ngeom_point(aes(color = continent)) colors by the continent variable."
+  },
+  {
+    "objectID": "slides/week5.html#key-geoms",
+    "href": "slides/week5.html#key-geoms",
+    "title": "QMIR 2026",
+    "section": "Key Geoms",
+    "text": "Key Geoms\n\n\n\n\n\n\nGeom\nUse case\n\n\n\n\ngeom_point()\nScatterplot\n\n\ngeom_line()\nTime series, trends\n\n\ngeom_col()\nBar chart (uses your values)\n\n\ngeom_bar()\nBar chart (counts rows)\n\n\ngeom_boxplot()\nDistribution summary\n\n\ngeom_histogram()\nDistribution of one variable\n\n\ngeom_density()\nSmoothed distribution\n\n\ngeom_smooth()\nTrend / regression line\n\n\ngeom_text()\nText labels at data positions\n\n\ngeom_hline() / geom_vline()\nReference lines\n\n\n\n\n\nGeoms can be layered:\nggplot(data, aes(x, y)) +\n  geom_point(alpha = 0.5) +\n  geom_smooth(method = \"lm\", se = FALSE)\nAnd combined with group aesthetics:\nggplot(data, aes(x = year,\n                 y = value,\n                 color = country)) +\n  geom_line() +\n  geom_point()"
+  },
+  {
+    "objectID": "slides/week5.html#scales",
+    "href": "slides/week5.html#scales",
+    "title": "QMIR 2026",
+    "section": "Scales",
+    "text": "Scales\nScales control how data values translate into visual properties.\n\n\nAxis scales:\nscale_x_log10()        # log transform x axis\nscale_y_continuous(\n  limits = c(0, 20),   # axis range\n  breaks = seq(0, 20, 5) # tick marks\n)\nscale_x_discrete()     # for factor axes\nColor scales:\nscale_color_brewer(palette = \"Set1\")\nscale_color_manual(values = c(\"red\", \"blue\"))\nscale_fill_viridis_d()  # colorblind-friendly\n\n\nWhy scales matter:\n\nA log scale compresses a skewed distribution, revealing patterns hidden on a linear scale\nColor choice affects readability and accessibility – colorblind viewers cannot distinguish red and green\nviridis palettes are colorblind-safe and print well in grayscale\n\n\n\n\n\n\n\n\nTip\n\n\nFor color-coded plots, always ask: would this still be readable printed in black and white, or by someone with red-green color blindness?"
+  },
+  {
+    "objectID": "slides/week5.html#labels-and-titles",
+    "href": "slides/week5.html#labels-and-titles",
+    "title": "QMIR 2026",
+    "section": "Labels and Titles",
+    "text": "Labels and Titles\nlabs(\n  title    = \"GHG Emissions and GDP per Capita, EU Member States\",\n  subtitle = \"Data: Eurostat, 2020–2022\",\n  x        = \"GDP per Capita (EU27 = 100)\",\n  y        = \"GHG Emissions per Capita (tonnes)\",\n  color    = \"Membership\",\n  caption  = \"Note: EU27 average excluded.\"\n)\n\n\n\n\n\n\n\n\nElement\nGuideline\n\n\n\n\nTitle\nDescribe what the plot shows, not what you conclude\n\n\nSubtitle\nSource, year, or key qualification\n\n\nAxis labels\nAlways include units. “GDP” is ambiguous; “GDP per Capita (EU27 = 100)” is not\n\n\nCaption\nData source, methodological notes, exclusions\n\n\nLegend title\nRename via color =, fill = etc. in labs()"
+  },
+  {
+    "objectID": "slides/week5.html#themes",
+    "href": "slides/week5.html#themes",
+    "title": "QMIR 2026",
+    "section": "Themes",
+    "text": "Themes\nThemes control the non-data appearance of the plot.\n\n\nBuilt-in themes:\ntheme_bw()       # white background, grey gridlines\ntheme_minimal()  # minimal gridlines, no border\ntheme_classic()  # white background, no gridlines\ntheme_void()     # blank canvas (for maps, diagrams)\n\nCustomising a theme:\ntheme_bw() +\ntheme(\n  plot.title      = element_text(size = 14, face = \"bold\"),\n  axis.title      = element_text(size = 11),\n  legend.position = \"bottom\",\n  panel.grid.minor = element_blank(),  # remove minor gridlines\n  aspect.ratio    = 0.618              # golden ratio height/width\n)\n\n\n\n\n\n\n\n\nTip\n\n\nFor academic work, theme_bw() or theme_minimal() are good defaults. Avoid dark backgrounds for documents that will be printed. Set legend.position = \"bottom\" for plots with many categories – it preserves horizontal space."
+  },
+  {
+    "objectID": "slides/week5.html#aspect-ratio-does-it-matter",
+    "href": "slides/week5.html#aspect-ratio-does-it-matter",
+    "title": "QMIR 2026",
+    "section": "Aspect Ratio – Does It Matter?",
+    "text": "Aspect Ratio – Does It Matter?\nWhich of these two plots do you prefer? (They show identical data.)\n\n\n\n\n\n\n\n\nNote\n\n\nPlot B uses aspect.ratio = 0.618 – the golden ratio (~1:1.618 width to height). Many designers and scientists find this proportion visually pleasing and it is a good default for scatter plots. For time series, a wider aspect ratio often reads better. There is no universal rule – but being deliberate about it matters."
+  },
+  {
+    "objectID": "slides/week5.html#example-scatterplot-with-regression-line",
+    "href": "slides/week5.html#example-scatterplot-with-regression-line",
+    "title": "QMIR 2026",
+    "section": "Example: Scatterplot with Regression Line",
+    "text": "Example: Scatterplot with Regression Line\n\n\n\n\nView source\neu_data |&gt;\n  filter(year == 2022, country != \"EU27\") |&gt;\n  ggplot(aes(x = gdp_pc, y = ghg_pc)) +\n  geom_point(alpha = 0.7, size = 2) +\n  geom_smooth(method = \"lm\", se = TRUE, color = \"steelblue\") +\n  theme_bw() +\n  labs(\n    x = \"GDP per Capita (EU27 = 100)\",\n    y = \"GHG Emissions per Capita (tonnes)\",\n    title = \"Wealth and Emissions in the EU, 2022\",\n    caption = \"Source: Eurostat\"\n  ) +\n  theme(aspect.ratio = 0.618)\n\n\n\n\n\n\n\n\nFigure 1: GDP and GHG emissions, EU member states 2022\n\n\n\n\n\n\n\nKey elements:\n\ngeom_smooth(method = \"lm\") adds a linear regression line with a confidence band (se = TRUE)\nalpha = 0.7 reduces overplotting\nsize = 2 makes points more visible\ncountry != \"EU27\" excludes the aggregate from the point cloud\n\nThe positive slope suggests richer EU member states tend to emit more GHG per capita – though with substantial variation."
+  },
+  {
+    "objectID": "slides/week5.html#example-bar-chart-with-custom-fill",
+    "href": "slides/week5.html#example-bar-chart-with-custom-fill",
+    "title": "QMIR 2026",
+    "section": "Example: Bar Chart with Custom Fill",
+    "text": "Example: Bar Chart with Custom Fill\n\n\n\n\nView source\neu_data |&gt;\n  filter(year == 2022, !is.na(ghg_pc), ghg_pc &gt; 0) |&gt;\n  mutate(\n    is_eu27 = country == \"EU27\",\n    country = fct_reorder(country, ghg_pc)\n  ) |&gt;\n  ggplot(aes(x = country, y = ghg_pc, fill = is_eu27)) +\n  geom_col() +\n  scale_fill_manual(\n    values = c(\"FALSE\" = \"steelblue\", \"TRUE\" = \"firebrick\"),\n    labels = c(\"Member State\", \"EU27 Avg\"),\n    name = NULL\n  ) +\n  coord_flip() +\n  theme_bw() +\n  labs(\n    x = NULL,\n    y = \"GHG per Capita (tonnes)\",\n    title = \"GHG Emissions by EU Member State, 2022\",\n    caption = \"Source: Eurostat\"\n  )\n\n\n\n\n\n\n\n\nFigure 2: GHG emissions per capita by EU member state, 2022\n\n\n\n\n\n\nKey elements:\n\nfct_reorder(country, ghg_pc) sorts countries by emission value\nfill = is_eu27 maps a logical variable to color\nscale_fill_manual() assigns specific colors and renames the legend\ncoord_flip() rotates axes – equivalent to swapping x and y in aes(), but keeps your code readable when you are building a horizontal bar chart from a vertical one"
+  },
+  {
+    "objectID": "slides/week5.html#facets",
+    "href": "slides/week5.html#facets",
+    "title": "QMIR 2026",
+    "section": "Facets",
+    "text": "Facets\nfacet_wrap() splits a plot into small multiples by a grouping variable.\n\n\n\n\nView source\neu_data |&gt;\n  filter(country != \"EU27\") |&gt;\n  ggplot(aes(x = gdp_pc, y = ghg_pc)) +\n  geom_point(alpha = 0.5, size = 1.5) +\n  geom_smooth(method = \"lm\", se = FALSE, color = \"steelblue\") +\n  facet_wrap(~year) +\n  theme_bw() +\n  labs(\n    x = \"GDP per Capita (EU27 = 100)\",\n    y = \"GHG per Capita (tonnes)\",\n    caption = \"Source: Eurostat\"\n  )\n\n\n\n\n\n\n\n\nFigure 3: GDP vs. GHG by year, EU member states\n\n\n\n\n\n\nfacet_wrap(~ year) creates one panel per year.\nfacet_grid(row ~ col) for a two-dimensional grid.\nFree vs. fixed scales:\n# Each panel uses the same axes (default)\nfacet_wrap(~ year)\n\n# Each panel scales to its own data\nfacet_wrap(~ year, scales = \"free\")\n\n\n\n\n\n\nWarning\n\n\nFree scales make within-panel patterns clearer, but make cross-panel comparison impossible. Be explicit in your figure caption about which you are using and why."
+  },
+  {
+    "objectID": "slides/week5.html#the-.gitignore-file",
+    "href": "slides/week5.html#the-.gitignore-file",
+    "title": "QMIR 2026",
+    "section": "The .gitignore File",
+    "text": "The .gitignore File\nA .gitignore file tells Git which files to never track. Place it in the root of your repository.\n# .gitignore\n\n# R temporary files\n.Rhistory\n.RData\n.Rproj.user/\n\n# Rendered outputs (optional -- only if you regenerate from source)\n*.pdf\n*.html\n\n# Large data files (if you store data elsewhere)\ndata/*.csv\ndata/*.xlsx\n\n# OS files\n.DS_Store        # Mac\nThumbs.db        # Windows\n\n\n\n\n\n\n\nTip\n\n\nNever commit sensitive data (passwords, API keys, personal data) to a Git repository. Even private repositories can be accidentally made public. Add such files to .gitignore immediately."
+  },
+  {
+    "objectID": "slides/week5.html#analytical-problem-solving",
+    "href": "slides/week5.html#analytical-problem-solving",
+    "title": "QMIR 2026",
+    "section": "Analytical Problem-Solving",
+    "text": "Analytical Problem-Solving\nWhen you face a data analysis task, divide and conquer.\n\nExample: How do EU member states’ GHG emissions relate to their wealth?\n\n\nBreak this into sub-problems:\n\n\nHow do I load the GHG and GDP data into R? (import)\nThe data is wide – how do I reshape it? (pivot)\nThe country names differ slightly – how do I merge? (join)\nI need a new column for membership status (mutate)\nHow do I visualise the relationship? (ggplot)\nEach of these can be broken down further…\n\n\n\n\n\n\n\n\n\n\nTip\n\n\nAfter each sub-problem:\n\nTest in the console – does the intermediate result look right?\nRender your document – does it still compile?\nCommit to Git – you have a working checkpoint to fall back to"
+  },
+  {
+    "objectID": "slides/week5.html#a-practical-workflow-loop",
+    "href": "slides/week5.html#a-practical-workflow-loop",
+    "title": "QMIR 2026",
+    "section": "A Practical Workflow Loop",
+    "text": "A Practical Workflow Loop\n1. Set up .qmd → render once → confirm it works\n2. Write a small chunk → run in console → check result\n3. When chunk is correct → render full document\n4. Commit to Git with a clear message: \"add data import step\"\n5. Repeat\n\nWhy render frequently? Problems compound. A chunk that works in isolation may fail in a rendered document because of:\n\nMissing library() calls\nObjects that exist in your environment but are not created in the document\nChunk execution order dependencies\n\n\n\n\n\n\n\n\n\nTip\n\n\nRule of thumb: If you would be upset to lose the last 20 minutes of work, commit it. Commits are free."
+  },
+  {
+    "objectID": "slides/week5.html#inline-code-in-quarto",
+    "href": "slides/week5.html#inline-code-in-quarto",
+    "title": "QMIR 2026",
+    "section": "Inline Code in Quarto",
+    "text": "Inline Code in Quarto\nYou can embed R results directly in prose using the `{r} expression` syntax. Quarto evaluates the expression and inserts the result as text:\n\nThe dataset contains {r} nrow(eu_data) observations across {r} n_distinct(eu_data$country) countries.\nThe mean GHG per capita in 2022 was {r} eu_data |&gt; filter(year == 2022) |&gt; pull(ghg_pc) |&gt; mean(na.rm = TRUE) |&gt; round(1) tonnes.\n\n\nThe above renders as:\n\nThe dataset contains 105 observations across 35 countries. The mean GHG per capita in 2022 was 7.6 tonnes.\n\n\n\n\n\n\n\n\n\nTip\n\n\nInline code means your text and your numbers never get out of sync. When the data changes, the prose updates automatically on the next render. Use this for all specific numbers you report – never type a number by hand that R could compute for you."
+  },
+  {
+    "objectID": "slides/week5.html#janitor-beyond-clean_names",
+    "href": "slides/week5.html#janitor-beyond-clean_names",
+    "title": "QMIR 2026",
+    "section": "janitor: Beyond clean_names()",
+    "text": "janitor: Beyond clean_names()\n\n\ntabyl() – a tidy frequency table:\n\n\nView source\neu_data |&gt;\n  filter(!is.na(ghg_pc)) |&gt;\n  tabyl(year)\n\n\n year  n   percent\n 2020 28 0.3333333\n 2021 28 0.3333333\n 2022 28 0.3333333\n\n\n\nadorn_totals() adds a totals row (or column):\n\n\nView source\neu_data |&gt;\n  filter(!is.na(ghg_pc)) |&gt;\n  tabyl(year) |&gt;\n  adorn_totals(\"row\")\n\n\n  year  n   percent\n  2020 28 0.3333333\n  2021 28 0.3333333\n  2022 28 0.3333333\n Total 84 1.0000000"
+  },
+  {
+    "objectID": "slides/week5.html#tabyl-adorn_totals-kable",
+    "href": "slides/week5.html#tabyl-adorn_totals-kable",
+    "title": "QMIR 2026",
+    "section": "tabyl → adorn_totals() → kable()",
+    "text": "tabyl → adorn_totals() → kable()\nOne pipeline, publication-ready output:\n\n\n\nView source\neu_data |&gt;\n  filter(!is.na(ghg_pc), country != \"EU27\") |&gt;\n  mutate(high_emitter = ghg_pc &gt; median(ghg_pc, na.rm = TRUE)) |&gt;\n  tabyl(year, high_emitter) |&gt;\n  adorn_totals(c(\"row\", \"col\")) |&gt;\n  kable(\n    col.names = c(\"Year\", \"Below Median\", \"Above Median\", \"Total\"),\n    caption = \"EU member states by emission level relative to median\"\n  )\n\n\n\nEU member states by emission level relative to median\n\n\nYear\nBelow Median\nAbove Median\nTotal\n\n\n\n\n2020\n15\n12\n27\n\n\n2021\n14\n13\n27\n\n\n2022\n14\n13\n27\n\n\nTotal\n43\n38\n81\n\n\n\n\n\n\n\n\n\n\n\n\n\nTip\n\n\ntabyl() → adorn_totals() → kable() is one of the fastest ways to produce a clean, publication-ready summary table. adorn_totals(c(\"row\", \"col\")) adds totals to both margins at once."
+  },
+  {
+    "objectID": "slides/week5.html#kable-for-printed-tables",
+    "href": "slides/week5.html#kable-for-printed-tables",
+    "title": "QMIR 2026",
+    "section": "kable() for Printed Tables",
+    "text": "kable() for Printed Tables\nFor tables in rendered documents, knitr::kable() produces clean output in both HTML and PDF:\n\n\n\n\n\nView source\neu_data |&gt;\n  filter(year == 2022, country != \"EU27\") |&gt;\n  slice_max(ghg_pc, n = 5) |&gt;\n  select(country, ghg_pc, gdp_pc) |&gt;\n  kable(\n    col.names = c(\"Country\", \"GHG pc (tonnes)\", \"GDP pc (EU27=100)\"),\n    digits = 1,\n    caption = \"Top 5 emitters in 2022\"\n  )\n\n\n\nTop 5 emitters in 2022\n\n\nCountry\nGHG pc (tonnes)\nGDP pc (EU27=100)\n\n\n\n\nLuxembourg\n14.5\n256\n\n\nIreland\n13.0\n235\n\n\nCzechia\n11.4\n90\n\n\nEstonia\n10.7\n85\n\n\nCyprus\n10.2\n94\n\n\n\n\n\n\n\n\nkable() arguments:\n\ncol.names – rename columns in the output\ndigits – round numbers\ncaption – table caption (cross-referenceable with tbl- label)\nformat = \"latex\" / \"html\" – rarely needed, Quarto detects format automatically\n\nFor more control: the kableExtra package adds column alignment, row grouping, and color highlighting."
+  },
+  {
+    "objectID": "slides/week5.html#stringr-quick-reference",
+    "href": "slides/week5.html#stringr-quick-reference",
+    "title": "QMIR 2026",
+    "section": "stringr Quick Reference",
+    "text": "stringr Quick Reference\nstringr is the tidyverse package for working with text. All functions start with str_.\n\n\nDetect & filter:\nstr_detect(x, \"pattern\")   # TRUE/FALSE -- use in filter()\nstr_starts(x, \"A\")         # starts with \"A\"\nstr_ends(x, \"ia\")          # ends with \"ia\"\nstr_count(x, \"pattern\")    # count occurrences\nExtract & split:\nstr_sub(x, 1, 3)            # characters 1–3\nstr_extract(x, \"[0-9]+\")    # first regex match\nstr_split(x, \"_\")           # split on delimiter\n\nReplace & clean:\nstr_replace(x, \"old\", \"new\")   # replace first match\nstr_replace_all(x, \"old\",\"new\")# replace all matches\nstr_remove(x, \"^x\")            # remove first match\nstr_remove_all(x, \" \")         # remove all spaces\nstr_to_lower(x)                # lowercase\nstr_to_upper(x)                # uppercase\nstr_to_title(x)                # Title Case\nstr_trim(x)                    # remove leading/trailing spaces\nstr_pad(x, width = 5,          # pad to fixed width\n        side = \"left\", pad=\"0\")\n\n\n\n\n\n\n\n\nNote\n\n\nYou already used str_remove(year, \"^x\") in this session. The ^ is a regular expression anchor meaning “start of string”. Regular expressions are a powerful pattern language – we will return to them later, but str_detect() and str_remove() will cover most of your immediate needs."
+  },
+  {
+    "objectID": "slides/week5.html#dplyr-select-helpers",
+    "href": "slides/week5.html#dplyr-select-helpers",
+    "title": "QMIR 2026",
+    "section": "dplyr Select Helpers",
+    "text": "dplyr Select Helpers\nselect() accepts helper functions that match columns by name pattern – far more powerful than listing columns one by one.\n\n\n# Columns that start with a prefix\ndata |&gt; select(starts_with(\"ghg\"))\n\n# Columns that end with a suffix\ndata |&gt; select(ends_with(\"_pc\"))\n\n# Columns containing a substring\ndata |&gt; select(contains(\"year\"))\n\n# Columns matching a regex\ndata |&gt; select(matches(\"^x[0-9]{4}$\"))\n\n# A range of consecutive columns\ndata |&gt; select(country:gdp_pc)\n\n# Everything except named columns\ndata |&gt; select(-country, -year)\n\n# Reorder: put country first, keep rest\ndata |&gt; select(country, everything())\n\nThese helpers also work inside mutate(across(...)) and summarise(across(...)):\n# Round all numeric columns ending in _pc\ndata |&gt;\n  mutate(across(ends_with(\"_pc\"), round, 1))\n\n# Mean of all columns starting with ghg\ndata |&gt;\n  summarise(across(starts_with(\"ghg\"), mean,\n                   na.rm = TRUE))\n\n\n\n\n\n\nTip\n\n\nwhere() is another powerful helper – it selects columns by type:\ndata |&gt; select(where(is.numeric))\ndata |&gt; select(where(is.character))"
+  },
+  {
+    "objectID": "slides/week5.html#exercise-overview",
+    "href": "slides/week5.html#exercise-overview",
+    "title": "QMIR 2026",
+    "section": "Exercise Overview",
+    "text": "Exercise Overview\n\nClone the Week 5 exercise repo from GitHub\nOpen exercise_week05.qmd in Positron\nYou will work with the Eurostat GHG and GDP datasets\nTasks follow the arc of today’s session: import → reshape → join → visualise\nFast finishers: optional extension tasks at the bottom\n\n\nShow import live: load one file, demonstrate the skip argument, show what happens without skip. Then pivot, then join. Let them work on the rest. Reserve 10 min for homework preview."
+  },
+  {
+    "objectID": "slides/week5.html#homework",
+    "href": "slides/week5.html#homework",
+    "title": "QMIR 2026",
+    "section": "Homework",
+    "text": "Homework\n\nDistributed via GitHub (same workflow as previous weeks)\nSubmit a rendered Quarto document (.qmd + rendered PDF)\nThe PDF should show only plots and prose – no code\nDue: one week from today\n\nYou will work with the same Eurostat datasets to produce five publication-quality plots. The homework will ask you to combine everything from today: import with readxl, reshape with pivot_longer, join with left_join, and visualise with ggplot2."
+  },
+  {
+    "objectID": "slides/week5.html#homework-preview-what-you-will-produce",
+    "href": "slides/week5.html#homework-preview-what-you-will-produce",
+    "title": "QMIR 2026",
+    "section": "Homework Preview: What You Will Produce",
+    "text": "Homework Preview: What You Will Produce\n\nBoxplot – distribution of GHG emissions per capita across years (excluding EU27)\nBar chart – GHG emissions in 2022, countries ordered by emissions, EU27 highlighted\nScatterplot – GDP vs. GHG, colored by EU membership era (pre/post 2000 accession), with regression line\nLabelled scatterplot – country ISO codes as labels instead of points, faceted by membership era\nLabelled scatterplot with free scales – same as above, but each panel scales independently\n\n\nFor each plot: clear labels, titles, captions, and 1–3 sentences of interpretation.\nFinal question: Why might free scales in Plot 5 be problematic?"
   }
 ]
