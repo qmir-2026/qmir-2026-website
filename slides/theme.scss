@@ -6,41 +6,41 @@ $footnote-background: #003056;
 $presentation-heading-color: #003056;
 
 /*-- scss:rules --*/
-/*.reveal .slides > section > h1, .reveal .slides > section > section > h2 {
-    background-color: $caption-background;
-    color: $main-background;
-} */
+
+/* ── Global text color: everything is dark blue ─────────────────────────── */
+/* This catches the incremental ". . ." fragments that default to black      */
+.reveal,
+.reveal .slides,
+.reveal .slides section,
+.reveal .slides section p,
+.reveal .slides section li,
+.reveal .slides section span,
+.reveal .slides section div,
+.reveal .fragment,
+.reveal .fragment.visible,
+.reveal .slides section .fragment,
+.reveal .slides section .fragment.visible {
+  color: $main-text;
+}
 
 #title-slide {
   .title {
-    color: #003056; /* This is the fill color for the inside of the text */
-  /*  -webkit-text-stroke: 1px #DE7E50; /* This adds the border color */
-  /*  text-stroke: 1px #DE7E50; /* For non-WebKit browsers */
+    color: #003056;
   }
-
   .subtitle {
     color: #003056;
-  /*  -webkit-text-stroke: 1px #DE7E50;
-  /*  text-stroke: 1px #DE7E50; */
   }
-
   .quarto-title-author {
     color: #003056;
-  /*  -webkit-text-stroke: 1px #DE7E50;
-    text-stroke: 1px #DE7E50; */
   }
-
   .quarto-title-date {
     color: #003056;
-   /* -webkit-text-stroke: 1px #DE7E50;
-    text-stroke: 1px #DE7E50; */
   }
 }
 
 .reveal .slides > section > p, .reveal .slides > section > section > p {
     color: $main-text;
 }
-
 
 .reveal table {
   color: $main-text;
@@ -67,7 +67,7 @@ $presentation-heading-color: #003056;
 
 /* Custom color for author and date */
 .quarto-author, .quarto-date {
-  color: #003056; /* Change to your desired color */
+  color: #003056;
 }
 
 /* Custom link and list styles */
@@ -80,10 +80,10 @@ $presentation-heading-color: #003056;
 
 /* Adjust the logo size */
 .reveal .slide-logo {
-        max-height: 4em !important;
-        top: 0;
-        right: 12px
-      }
+    max-height: 4em !important;
+    top: 0;
+    right: 12px;
+}
 
 .reveal {
   .slides {
@@ -95,11 +95,9 @@ $presentation-heading-color: #003056;
   }
 }
 
-
 .reveal details > summary {
   font-size: 0.5em;
   padding: 0;
   background: none;
   border: none;
 }
-
