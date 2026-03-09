@@ -34,14 +34,15 @@ execute:
 #| label: setup
 #| include: false
 #| eval: true
-#| warning: false
 
 # Load all packages used in this deck
 library(tidyverse)
 library(readxl)
 library(janitor)
 library(knitr)
+library(patchwork)
 library(here)
+library(gapminder)
 
 # ── Small demo tibbles for join slides ──────────────────────────────────────
 x <- tibble(country = c("Germany", "France", "Poland"), ghg = c(9.3, 5.7, 9.4))
@@ -98,17 +99,23 @@ eu_data <- left_join(ghg, gdp, by = c("country", "year")) |>
 
 Knowing these will make your workflow noticeably faster.
 
-| Action | Windows/Linux | Mac |
+::: {style="font-size: 0.7em;"}
+| Action | Windows / Linux | Mac |
 |---|---|---|
 | **Run current line / selection** | `Ctrl + Enter` | `Cmd + Enter` |
-| **Run entire cell** | `Ctrl + Shift + Enter` | `Cmd + Shift + Enter` |
-| **Comment / uncomment code** | `Ctrl + /` | `Cmd + /` |
-| **Duplicate line** | `Shift + Alt + ↓` | `Shift + Option + ↓` |
-| **Select current word** | `Ctrl + D` | `Cmd + D` |
-| **Open/close Explorer panel** | `Ctrl + Shift + E` | `Cmd + Shift + E` |
-| **Open/close Terminal** | `` Ctrl + ` `` | `` Cmd + ` `` |
-| **Restart R session** | `Ctrl + Shift + F10` | `Cmd + Shift + F10` |
-| **Insert code cell** | `Ctrl + Alt + I` | `Cmd + Option + I` |
+| **Run current code cell (Quarto)** | `Ctrl + Shift + Enter` | `Cmd + Shift + Enter` |
+| **Comment / uncomment** | `Ctrl + /` | `Cmd + /` |
+| **Duplicate line** | `Shift + Alt + Down` | `Shift + Option + Down` |
+| **Move line up / down** | `Alt + Up / Down` | `Option + Up / Down` |
+| **Select all occurrences** | `Ctrl + Shift + L` | `Cmd + Shift + L` |
+| **Restart R session** | `Ctrl + Shift + 0` | `Cmd + Shift + 0` |
+| **Insert Quarto code cell** | `Ctrl + Shift + I` | `Cmd + Shift + I` |
+:::
+
+
+::: {.callout-note}
+All shortcuts are **fully customizable** via *File → Preferences → Keyboard Shortcuts*. If a shortcut here does not work for you, it may already be assigned to something else — check and remap as needed. [Visit this page for RStudio shortcuts in Positron.](https://positron.posit.co/migrate-rstudio-keybindings.html)
+:::
 
 ::: {.callout-tip}
 **Restart R frequently.** A fresh session catches hidden dependencies between code chunks that can break rendering.
@@ -135,11 +142,13 @@ filter(gapminder, year == 2007)
 
 . . .
 
+::: {style="font-size: 0.7em;"}
 **When to use it:**
 
 - When two packages export a function with the **same name** (e.g., `dplyr::filter` vs `stats::filter`)
 - In scripts you share with others, to make dependencies explicit
 - When you only need **one function** from a package and don't want to load the whole thing
+:::
 
 . . .
 
@@ -174,7 +183,7 @@ help(pivot_longer)
 
 - Tidyverse functions have excellent reference pages with worked examples: [tidyverse.org](https://www.tidyverse.org/)
 - [R for Data Science (2e)](https://r4ds.hadley.nz/) is free online and is the textbook behind this course
-- Stack Overflow for specific errors
+- Stack Overflow / AI for specific errors
 
 :::
 ::::::
@@ -183,6 +192,7 @@ help(pivot_longer)
 
 ::: {.callout-tip}
 **Habit to build:** Before Googling, try `?function_name` first. The Examples section at the bottom of every help file is often the fastest way to understand how something works.
+**When consulting AI, always force it to return a web source, so you can verify the output yourself!**
 :::
 
 ---
@@ -191,7 +201,8 @@ help(pivot_longer)
 
 The pipe `|>` works because tidyverse functions share one convention: **the data frame is always the first argument**.
 
-```r
+```{r}
+#| eval: false
 gapminder |> filter(year == 2007)
 # is the same as:
 filter(gapminder, year == 2007)
@@ -207,9 +218,9 @@ This means piping works for most tidyverse functions — and many others — but
 ::: {.column width="50%"}
 
 **This works:**
-```r
+```{r}
 gapminder |>
-  pull(lifeExp) |>   # extracts a vector
+  pull(lifeExp) |> # extracts a vector
   mean()
 ```
 
@@ -218,9 +229,10 @@ gapminder |>
 ::: {.column width="50%"}
 
 **This does not:**
-```r
+```{r}
+#| error: true
 # mean() expects a vector, not a tibble
-gapminder |> mean()  # Error
+gapminder |> mean() # Error
 ```
 
 :::
@@ -313,21 +325,25 @@ Recall from last week: tidy data means one variable per column, one observation 
 
 **Wide format** (common in spreadsheets, Excel exports, Eurostat downloads):
 
+::: {style="font-size: 0.7em;"}
 | country | ghg_2020 | ghg_2021 | ghg_2022 |
 |---|---|---|---|
 | Germany | 9.0 | 9.4 | 9.3 |
 | France | 5.6 | 5.9 | 5.7 |
+:::
 
 . . .
 
 **Long (tidy) format** (what the tidyverse expects):
 
+::: {style="font-size: 0.7em;"}
 | country | year | ghg |
 |---|---|---|
 | Germany | 2020 | 9.0 |
 | Germany | 2021 | 9.4 |
 | France | 2020 | 5.6 |
 | France | 2021 | 5.9 |
+:::
 
 . . .
 
@@ -364,13 +380,16 @@ Key arguments:
 
 **Before:**
 
+::: {style="font-size: 0.7em;"}
 | country | 2020 | 2021 | 2022 |
 |---|---|---|---|
 | Germany | 9.0 | 9.4 | 9.3 |
 | France | 5.6 | 5.9 | 5.7 |
+:::
 
 **After:**
 
+::: {style="font-size: 0.7em;"}
 | country | year | ghg |
 |---|---|---|
 | Germany | 2020 | 9.0 |
@@ -379,6 +398,7 @@ Key arguments:
 | France | 2020 | 5.6 |
 | France | 2021 | 5.9 |
 | France | 2022 | 5.7 |
+:::
 
 :::
 ::::::
@@ -396,8 +416,8 @@ The reverse: sometimes you need wide format for a table or for a specific model.
 #| eval: false
 ghg_long |>
   pivot_wider(
-    names_from = year, # column whose values become headers
-    values_from = ghg # column whose values fill the cells
+    names_from = "year", # column whose values become headers
+    values_from = "ghg" # column whose values fill the cells
   )
 ```
 
@@ -407,18 +427,22 @@ ghg_long |>
 
 **Before:**
 
+::: {style="font-size: 0.7em;"}
 | country | year | ghg |
 |---|---|---|
 | Germany | 2020 | 9.0 |
 | Germany | 2021 | 9.4 |
 | France | 2020 | 5.6 |
+:::
 
 **After:**
 
+::: {style="font-size: 0.7em;"}
 | country | 2020 | 2021 |
 |---|---|---|
 | Germany | 9.0 | 9.4 |
 | France | 5.6 | NA |
+:::
 
 :::
 ::::::
@@ -426,7 +450,7 @@ ghg_long |>
 . . .
 
 ::: {.callout-note}
-`pivot_longer()` is far more common in practice. Most raw data arrives wide; tidy analysis requires long.
+`pivot_longer()` is far more common in practice. Most raw data arrives wide -- tidy analysis requires long.
 :::
 
 ---
@@ -447,7 +471,7 @@ ghg_raw <- read_excel(
   sheet = "Sheet 1"
 )
 
-names(ghg_raw)
+ghg_raw |> print(n = 5)
 ```
 
 :::
@@ -481,7 +505,7 @@ ghg_raw <- read_excel(
   skip = 9 # rows 1–9 are metadata
 )
 
-ghg_raw
+ghg_raw |> print(n = 5)
 ```
 
 :::
@@ -527,9 +551,11 @@ names(ghg_raw)
 
 ::: {.column width="45%"}
 
+::: {style="font-size: 0.7em;"}
 `clean_names()` converts `2019` → `x2019`, `2020` → `x2020`, etc. — adding an `x` prefix to columns that would otherwise start with a number.
 
 This removes the backtick problem entirely. `x2019` is a legal R column name that needs no special quoting.
+:::
 
 ::: {.callout-note}
 `clean_names()` also handles spaces, dashes, parentheses, and accented characters. Make it a habit to call it immediately after every `read_excel()` or `read_csv()`.
@@ -556,7 +582,7 @@ ghg_clean <- ghg_raw |>
   ) |>
   mutate(year = as.integer(str_remove(year, "^x"))) # "x2020" → 2020
 
-ghg_clean
+ghg_clean |> head(4)
 ```
 
 . . .
@@ -567,12 +593,52 @@ ghg_clean
 
 ---
 
+## Alternative: `janitor::row_to_names()` {.smaller}
+
+Sometimes you cannot easily count the number of skip rows, or the header row is somewhere in the middle of the sheet. `janitor::row_to_names()` handles this differently: load everything, then promote a specific row to become the column names.
+
+:::::: columns
+::: {.column width="55%"}
+
+```{r}
+#| eval: false
+# Load without skipping anything
+ghg_raw <- read_excel(
+  "data/Eurostat_GHGpc.xlsx",
+  sheet = "Sheet 1",
+  col_names = FALSE # don't treat row 1 as headers
+)
+
+# Promote row 10 to column names, drop rows above it
+ghg_raw <- ghg_raw |>
+  row_to_names(row_number = 10, remove_rows_above = TRUE) |>
+  clean_names()
+```
+
+:::
+
+::: {.column width="45%"}
+
+::: {style="font-size: 0.7em;"}
+`row_to_names()` arguments:
+
+- `row_number` — which row contains the real headers
+- `remove_rows_above = TRUE` — drops all metadata rows above it automatically
+:::
+
+::: {.callout-note}
+Both approaches (`skip =` and `row_to_names()`) achieve the same result. Use whichever is clearer for the file you are working with. `skip =` is simpler when the header row is fixed and predictable. `row_to_names()` is more robust when the file structure is irregular or when you are not sure how many rows to skip.
+:::
+
+:::
+::::::
+
+---
+
 ## Why This Matters for Pivoting {.smaller}
 
 :::::: columns
 ::: {.column width="50%"}
-
-**Before (wide, after clean_names):**
 
 | country | x2020 | x2021 | x2022 |
 |---|---|---|---|
@@ -652,17 +718,15 @@ All joins take two tables and a **key** (the column(s) to match on).
 # with matching columns: country + year
 
 eu_data <- ghg |>
-  left_join(gdp, by = c("country", "year"))
+  left_join(gdp, by = join_by(country, year))
 ```
 
 The `by` argument names the **key columns** — the columns that must match for two rows to be joined.
 
-. . .
-
 If the key column has different names in the two tables:
 
 ```r
-left_join(x, y, by = c("country" = "nation"))
+left_join(x, y, by = join_by(country == nation))
 ```
 
 :::
@@ -682,8 +746,15 @@ eu_data |>
   distinct(country, year)
 ```
 
-::: {.callout-tip}
-NAs after a `left_join` usually mean one of two things: the key didn't match (e.g. a country name is spelled differently across datasets), or the right-hand dataset simply has no data for that row. Always investigate before proceeding.
+::: {.callout-important}
+**Always compare row counts before and after joining.**
+
+```r
+nrow(ghg)      # rows before
+nrow(eu_data)  # rows after left_join
+```
+
+In a `left_join`, the row count of the result must equal the row count of the **left** table. If it is larger, your key has duplicates on the right side. If it is smaller, something went wrong. Check immediately — silent row loss is one of the most common data errors.
 :::
 
 :::
@@ -863,6 +934,8 @@ summary(my_data)
 
 ## End-to-End: Import, Clean, Reshape, Join {.smaller}
 
+::: {style="font-size: 0.7em;"}
+
 The complete pipeline — this is what your homework setup code will look like:
 
 ```{r}
@@ -898,6 +971,8 @@ eu_data <- left_join(ghg, gdp, by = c("country", "year"))
 #| echo: false
 glimpse(eu_data)
 ```
+
+:::
 
 ---
 
@@ -946,6 +1021,8 @@ ggplot(data, aes(x = ..., y = ..., color = ...)) +
 
 . . .
 
+::: {style="font-size: 0.7em;"}
+
 | Layer | Purpose |
 |---|---|
 | `ggplot()` + `aes()` | Canvas: data and variable-to-visual mappings |
@@ -954,11 +1031,15 @@ ggplot(data, aes(x = ..., y = ..., color = ...)) +
 | `labs()` | Text: title, subtitle, axis labels, captions, legend title |
 | `theme_*()` | Appearance: fonts, gridlines, background, ... |
 
+:::
+
 ---
 
 ## The Main Aesthetics {.smaller}
 
 `aes()` maps **variables** to **visual properties**. The main ones:
+
+::: {style="font-size: 0.7em;"}
 
 | Aesthetic | What it controls |
 |---|---|
@@ -972,11 +1053,15 @@ ggplot(data, aes(x = ..., y = ..., color = ...)) +
 | `label` | Text label (used with `geom_text()`) |
 | `group` | Grouping without visual distinction |
 
+:::
+
 . . .
 
 ::: {.callout-note}
 **Inside `aes()` = mapped to data. Outside `aes()` = fixed constant.**
+
 `geom_point(color = "red")` makes all points red.  
+
 `geom_point(aes(color = continent))` colors by the `continent` variable.
 :::
 
@@ -987,6 +1072,7 @@ ggplot(data, aes(x = ..., y = ..., color = ...)) +
 :::::: columns
 ::: {.column width="50%"}
 
+::: {style="font-size: 0.7em;"}
 | Geom | Use case |
 |---|---|
 | `geom_point()` | Scatterplot |
@@ -999,6 +1085,7 @@ ggplot(data, aes(x = ..., y = ..., color = ...)) +
 | `geom_smooth()` | Trend / regression line |
 | `geom_text()` | Text labels at data positions |
 | `geom_hline()` / `geom_vline()` | Reference lines |
+:::
 
 :::
 
@@ -1055,11 +1142,13 @@ scale_fill_viridis_d()  # colorblind-friendly
 
 ::: {.column width="50%"}
 
+::: {style="font-size: 0.7em;"}
 **Why scales matter:**
 
 - A log scale compresses a skewed distribution, revealing patterns hidden on a linear scale
 - Color choice affects readability and accessibility — colorblind viewers cannot distinguish red and green
 - `viridis` palettes are colorblind-safe and print well in grayscale
+:::
 
 ::: {.callout-tip}
 For color-coded plots, always ask: *would this still be readable printed in black and white, or by someone with red-green color blindness?*
@@ -1118,10 +1207,11 @@ theme_void()     # blank canvas (for maps, diagrams)
 ```r
 theme_bw() +
 theme(
-  plot.title    = element_text(size = 14, face = "bold"),
-  axis.title    = element_text(size = 11),
+  plot.title      = element_text(size = 14, face = "bold"),
+  axis.title      = element_text(size = 11),
   legend.position = "bottom",
-  panel.grid.minor = element_blank()  # remove minor gridlines
+  panel.grid.minor = element_blank(),  # remove minor gridlines
+  aspect.ratio    = 0.618              # golden ratio height/width
 )
 ```
 
@@ -1132,6 +1222,38 @@ theme(
 
 ::: {.callout-tip}
 For academic work, `theme_bw()` or `theme_minimal()` are good defaults. Avoid dark backgrounds for documents that will be printed. Set `legend.position = "bottom"` for plots with many categories — it preserves horizontal space.
+:::
+
+---
+
+## Aspect Ratio — Does It Matter? {.smaller}
+
+Which of these two plots do you prefer? *(They show identical data.)*
+
+```{r}
+#| echo: false
+#| eval: true
+#| fig-height: 3.5
+library(patchwork)
+
+base_plot <- eu_data |>
+  filter(year == 2022, country != "EU27", !is.na(gdp_pc)) |>
+  ggplot(aes(x = gdp_pc, y = ghg_pc)) +
+  geom_point(alpha = 0.7, size = 2, color = "steelblue") +
+  geom_smooth(method = "lm", se = FALSE, color = "firebrick", linewidth = 0.8) +
+  theme_bw() +
+  labs(x = "GDP per Capita (EU27 = 100)", y = "GHG per Capita (tonnes)")
+
+p1 <- base_plot + labs(title = "Plot A")
+p2 <- base_plot + theme(aspect.ratio = 0.618) + labs(title = "Plot B")
+
+p1 + p2
+```
+
+. . .
+
+::: {.callout-note}
+**Plot B** uses `aspect.ratio = 0.618` — the golden ratio (~1:1.618 width to height). Many designers and scientists find this proportion visually pleasing and it is a good default for scatter plots. For time series, a wider aspect ratio often reads better. There is no universal rule — but being deliberate about it matters.
 :::
 
 ---
@@ -1158,13 +1280,15 @@ eu_data |>
     y = "GHG Emissions per Capita (tonnes)",
     title = "Wealth and Emissions in the EU, 2022",
     caption = "Source: Eurostat"
-  )
+  ) +
+  theme(aspect.ratio = 0.618)
 ```
 
 :::
 
 ::: {.column width="45%"}
 
+::: {style="font-size: 0.7em;"}
 Key elements:
 
 - `geom_smooth(method = "lm")` adds a linear regression line with a confidence band (`se = TRUE`)
@@ -1173,6 +1297,7 @@ Key elements:
 - `country != "EU27"` excludes the aggregate from the point cloud
 
 The positive slope suggests richer EU member states tend to emit more GHG per capita — though with substantial variation.
+:::
 
 :::
 ::::::
@@ -1191,7 +1316,7 @@ The positive slope suggests richer EU member states tend to emit more GHG per ca
 #| fig-height: 5
 
 eu_data |>
-  filter(year == 2022) |>
+  filter(year == 2022, !is.na(ghg_pc), ghg_pc > 0) |>
   mutate(
     is_eu27 = country == "EU27",
     country = fct_reorder(country, ghg_pc)
@@ -1222,7 +1347,7 @@ Key elements:
 - `fct_reorder(country, ghg_pc)` sorts countries by emission value
 - `fill = is_eu27` maps a logical variable to color
 - `scale_fill_manual()` assigns specific colors and renames the legend
-- `coord_flip()` rotates the chart — always do this for many categories on the x-axis
+- `coord_flip()` rotates axes — equivalent to swapping `x` and `y` in `aes()`, but keeps your code readable when you are building a horizontal bar chart from a vertical one
 
 :::
 ::::::
@@ -1329,17 +1454,20 @@ When you face a data analysis task, **divide and conquer**.
 
 Break this into sub-problems:
 
+::: {style="font-size: 0.7em;"}
 1. How do I load the GHG and GDP data into R? *(import)*
 2. The data is wide — how do I reshape it? *(pivot)*
 3. The country names differ slightly — how do I merge? *(join)*
 4. I need a new column for membership status *(mutate)*
 5. How do I visualise the relationship? *(ggplot)*
 6. Each of these can be broken down further...
+:::
 
 . . .
 
 ::: {.callout-tip}
 After each sub-problem:
+
 - **Test in the console** — does the intermediate result look right?
 - **Render your document** — does it still compile?
 - **Commit to Git** — you have a working checkpoint to fall back to
@@ -1377,42 +1505,42 @@ After each sub-problem:
 
 ## Inline Code in Quarto {.smaller}
 
-You can embed R results directly in prose using backtick notation:
-
-```markdown
-The dataset contains `r nrow(eu_data)` observations across
-`r n_distinct(eu_data$country)` countries.
-The mean GHG per capita in 2022 was
-`r eu_data |> filter(year == 2022) |> pull(ghg_pc) |> mean(na.rm = TRUE) |> round(1)` tonnes.
-```
+You can embed R results directly in prose using the `` `{{r}} expression` `` syntax. Quarto evaluates the expression and inserts the result as text:
 
 . . .
 
-Renders as:
+The dataset contains ``{r} nrow(eu_data)`` observations across
+``{r} n_distinct(eu_data$country)`` countries.
 
-> The dataset contains **84** observations across **28** countries. The mean GHG per capita in 2022 was **7.9** tonnes.
+The mean GHG per capita in 2022 was
+`{{r}} eu_data |> filter(year == 2022) |> pull(ghg_pc) |> mean(na.rm = TRUE) |> round(1)` tonnes.
+
+
+. . .
+
+The above renders as:
+
+> The dataset contains `{r} nrow(eu_data)` observations across `{r} n_distinct(eu_data$country)` countries. The mean GHG per capita in 2022 was `{r} eu_data |> filter(year == 2022) |> pull(ghg_pc) |> mean(na.rm = TRUE) |> round(1)` tonnes.
 
 . . .
 
 ::: {.callout-tip}
-Inline code means your text and your numbers **never get out of sync**. When the data changes, the prose updates automatically on the next render. Use this for all specific numbers you report.
+Inline code means your text and your numbers **never get out of sync**. When the data changes, the prose updates automatically on the next render. Use this for all specific numbers you report — never type a number by hand that R could compute for you.
 :::
 
 ---
 
 ## `janitor`: Beyond `clean_names()` {.smaller}
 
-You already used `clean_names()` in the import pipeline. The `janitor` package has more useful tools:
-
 :::::: columns
 ::: {.column width="50%"}
 
-**`tabyl()` — a tidy cross-tabulation:**
+**`tabyl()` — a tidy frequency table:**
 
 ```{r}
 #| eval: true
-# Frequency table for one variable
 eu_data |>
+  filter(!is.na(ghg_pc)) |>
   tabyl(year)
 ```
 
@@ -1420,23 +1548,48 @@ eu_data |>
 
 ::: {.column width="50%"}
 
-**`tabyl()` with two variables:**
+**`adorn_totals()` adds a totals row (or column):**
 
 ```{r}
-#| eval: false
-# Cross-tab: country × year
+#| eval: true
 eu_data |>
-  tabyl(country, year)
+  filter(!is.na(ghg_pc)) |>
+  tabyl(year) |>
+  adorn_totals("row")
 ```
-
-`tabyl()` returns a tibble — unlike base R's `table()`, the result can be piped further and works cleanly in Quarto documents.
-
-::: {.callout-tip}
-Use `tabyl()` whenever you want a quick count or cross-tabulation in a rendered document. It is cleaner than `count()` for two-way tables and integrates with `kable()` directly.
-:::
 
 :::
 ::::::
+
+---
+
+## `tabyl` → `adorn_totals()` → `kable()` {.smaller}
+
+One pipeline, publication-ready output:
+
+::: {style="font-size: 0.7em;"}
+
+```{r}
+#| eval: true
+#| echo: true
+eu_data |>
+  filter(!is.na(ghg_pc), country != "EU27") |>
+  mutate(high_emitter = ghg_pc > median(ghg_pc, na.rm = TRUE)) |>
+  tabyl(year, high_emitter) |>
+  adorn_totals(c("row", "col")) |>
+  kable(
+    col.names = c("Year", "Below Median", "Above Median", "Total"),
+    caption = "EU member states by emission level relative to median"
+  )
+```
+
+:::
+
+. . .
+
+::: {.callout-tip}
+`tabyl()` → `adorn_totals()` → `kable()` is one of the fastest ways to produce a clean, publication-ready summary table. `adorn_totals(c("row", "col"))` adds totals to both margins at once.
+:::
 
 ---
 
@@ -1447,6 +1600,7 @@ For tables in rendered documents, `knitr::kable()` produces clean output in both
 :::::: columns
 ::: {.column width="55%"}
 
+::: {style="font-size: 0.7em;"}
 ```{r}
 #| eval: true
 #| echo: true
@@ -1460,10 +1614,13 @@ eu_data |>
     caption = "Top 5 emitters in 2022"
   )
 ```
+:::
 
 :::
 
 ::: {.column width="45%"}
+
+::: {style="font-size: 0.7em;"}
 
 `kable()` arguments:
 
@@ -1473,6 +1630,120 @@ eu_data |>
 - `format = "latex"` / `"html"` — rarely needed, Quarto detects format automatically
 
 For more control: the `kableExtra` package adds column alignment, row grouping, and color highlighting.
+
+:::
+
+:::
+::::::
+
+---
+
+## `stringr` Quick Reference {.smaller}
+
+`stringr` is the tidyverse package for working with text. All functions start with `str_`.
+
+:::::: columns
+::: {.column width="50%"}
+
+**Detect & filter:**
+```r
+str_detect(x, "pattern")   # TRUE/FALSE — use in filter()
+str_starts(x, "A")         # starts with "A"
+str_ends(x, "ia")          # ends with "ia"
+str_count(x, "pattern")    # count occurrences
+```
+
+**Extract & split:**
+```r
+str_sub(x, 1, 3)            # characters 1–3
+str_extract(x, "[0-9]+")    # first regex match
+str_split(x, "_")           # split on delimiter
+```
+
+:::
+
+::: {.column width="50%"}
+
+**Replace & clean:**
+```r
+str_replace(x, "old", "new")   # replace first match
+str_replace_all(x, "old","new")# replace all matches
+str_remove(x, "^x")            # remove first match
+str_remove_all(x, " ")         # remove all spaces
+str_to_lower(x)                # lowercase
+str_to_upper(x)                # uppercase
+str_to_title(x)                # Title Case
+str_trim(x)                    # remove leading/trailing spaces
+str_pad(x, width = 5,          # pad to fixed width
+        side = "left", pad="0")
+```
+
+:::
+::::::
+
+. . .
+
+::: {.callout-note}
+You already used `str_remove(year, "^x")` in this session. The `^` is a **regular expression** anchor meaning "start of string". Regular expressions are a powerful pattern language — we will return to them later, but `str_detect()` and `str_remove()` will cover most of your immediate needs.
+:::
+
+---
+
+## `dplyr` Select Helpers {.smaller}
+
+`select()` accepts helper functions that match columns by name pattern — far more powerful than listing columns one by one.
+
+:::::: columns
+::: {.column width="50%"}
+
+```r
+# Columns that start with a prefix
+data |> select(starts_with("ghg"))
+
+# Columns that end with a suffix
+data |> select(ends_with("_pc"))
+
+# Columns containing a substring
+data |> select(contains("year"))
+
+# Columns matching a regex
+data |> select(matches("^x[0-9]{4}$"))
+
+# A range of consecutive columns
+data |> select(country:gdp_pc)
+
+# Everything except named columns
+data |> select(-country, -year)
+
+# Reorder: put country first, keep rest
+data |> select(country, everything())
+```
+
+:::
+
+::: {.column width="50%"}
+
+These helpers also work inside **`mutate(across(...))`** and **`summarise(across(...))`**:
+
+```r
+# Round all numeric columns ending in _pc
+data |>
+  mutate(across(ends_with("_pc"), round, 1))
+
+# Mean of all columns starting with ghg
+data |>
+  summarise(across(starts_with("ghg"), mean,
+                   na.rm = TRUE))
+```
+
+::: {.callout-tip}
+`where()` is another powerful helper — it selects columns by type:
+
+```r
+data |> select(where(is.numeric))
+data |> select(where(is.character))
+```
+:::
 
 :::
 ::::::
