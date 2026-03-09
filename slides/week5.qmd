@@ -18,7 +18,6 @@ format:
     theme: theme.scss
 editor: source
 execute:
-  eval: true
   echo: true
   message: false
   warning: false
@@ -30,6 +29,66 @@ execute:
 ### Week 5: Reshaping, Merging & Data Visualization
 
 ![](./images/uma_palace.png){width="100%"} {{< meta author >}} <a href="https://github.com/dertristan" target="_blank" style="text-decoration: none; margin-left: 10px;"> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16"> <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/> </svg> </a> <a href="mailto:tristan.muno@uni-mannheim.de" style="text-decoration: none; margin-left: 5px;"> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16"> <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"/> </svg> </a> <br> {{< meta date >}}
+
+```{r}
+#| label: setup
+#| include: false
+#| eval: true
+#| warning: false
+
+# Load all packages used in this deck
+library(tidyverse)
+library(readxl)
+library(janitor)
+library(knitr)
+library(here)
+
+# ── Small demo tibbles for join slides ──────────────────────────────────────
+x <- tibble(country = c("Germany", "France", "Poland"), ghg = c(9.3, 5.7, 9.4))
+y <- tibble(country = c("Germany", "France", "Spain"), gdp = c(117, 103, 86))
+
+# ── Eurostat data (full pipeline) ────────────────────────────────────────────
+ghg <- read_excel(
+  here(
+    "slides",
+    "data",
+    "Eurostat_GHGpc.xlsx"
+  ),
+  sheet = "Sheet 1",
+  skip = 9
+) |>
+  clean_names() |>
+  rename(country = time) |>
+  filter(!is.na(country), !country %in% c("Special value", ":")) |>
+  select(-x2019) |>
+  pivot_longer(-country, names_to = "year", values_to = "ghg_pc") |>
+  mutate(year = as.integer(str_remove(year, "^x")))
+
+gdp <- read_excel(
+  here(
+    "slides",
+    "data",
+    "Eurostat_GDPpc.xlsx"
+  ),
+  sheet = "Sheet 1",
+  skip = 8
+) |>
+  clean_names() |>
+  rename(country = time) |>
+  filter(!is.na(country)) |>
+  mutate(x2020 = as.numeric(x2020)) |>
+  pivot_longer(-country, names_to = "year", values_to = "gdp_pc") |>
+  mutate(year = as.integer(str_remove(year, "^x")))
+
+eu_data <- left_join(ghg, gdp, by = c("country", "year")) |>
+  mutate(
+    country = fct(country),
+    country = fct_recode(
+      country,
+      "EU27" = "European Union - 27 countries (from 2020)"
+    )
+  )
+```
 
 # Housekeeping & Workflow Tips
 
@@ -85,7 +144,7 @@ filter(gapminder, year == 2007)
 . . .
 
 ::: {.callout-note}
-If you load the tidyverse with `library(tidyverse)`, you rarely need `::` notation within that ecosystem. But you will encounter it -- and write it -- more as your code grows.
+If you load the tidyverse with `library(tidyverse)`, you rarely need `::` notation within that ecosystem. But you will encounter it — and write it — more as your code grows.
 :::
 
 ---
@@ -140,7 +199,7 @@ filter(gapminder, year == 2007)
 
 . . .
 
-This means piping works for most tidyverse functions -- and many others -- but **not universally**. You will encounter base R functions that expect a vector, not a data frame, as their first argument.
+This means piping works for most tidyverse functions — and many others — but **not universally**. You will encounter base R functions that expect a vector, not a data frame, as their first argument.
 
 . . .
 
@@ -372,31 +431,23 @@ ghg_long |>
 
 ---
 
-## Practical Example: Loading Eurostat Data {.smaller}
+## Practical Example: What Happens When You Load Eurostat Data {.smaller}
 
-Real-world data files rarely load cleanly. The Eurostat GHG file has metadata rows at the top:
+Let's see what actually happens when we naively load the GHG file:
 
 :::::: columns
 ::: {.column width="55%"}
 
 ```{r}
-#| eval: false
-library(readxl)
-
+#| eval: true
+#| echo: true
+# First attempt — no skip
 ghg_raw <- read_excel(
   "data/Eurostat_GHGpc.xlsx",
-  sheet = "Sheet 1",
-  skip = 7 # skip the metadata rows
+  sheet = "Sheet 1"
 )
 
-# The first column has no name -- rename it
-ghg_raw <- ghg_raw |>
-  rename(country = 1) # rename by position
-
-# Remove the 2019 column
-# Note: "2019" is a column name -- backticks needed
-ghg_raw <- ghg_raw |>
-  select(-`2019`)
+names(ghg_raw)
 ```
 
 :::
@@ -404,14 +455,9 @@ ghg_raw <- ghg_raw |>
 ::: {.column width="45%"}
 
 ::: {.callout-warning}
-**Backtick trap:** When column names start with a number (e.g. `2019`, `2020`), R requires backticks to reference them:
+**What went wrong?** The file has 9 rows of metadata before the actual data begins. `read_excel()` read the first row as column headers — giving us nonsense names like `...2`, `...4`, `Tonnes per capita`.
 
-```r
-select(-`2019`)
-mutate(`2020` = ...)
-```
-
-This is one reason wide data with year-as-column-name is awkward to work with. After pivoting to long format, `year` becomes a proper variable name and the problem disappears.
+This is extremely common with official statistical releases (Eurostat, World Bank, UN). **Always inspect your file before loading.**
 :::
 
 :::
@@ -419,36 +465,127 @@ This is one reason wide data with year-as-column-name is awkward to work with. A
 
 ---
 
-## Pivoting the Eurostat Data {.smaller}
+## Step 1: Skip the Metadata Rows {.smaller}
+
+We know from inspecting the file that the real column headers (`TIME`, `2019`, ...) are on row 10. So we skip 9 rows:
+
+:::::: columns
+::: {.column width="55%"}
 
 ```{r}
-#| eval: false
-ghg_long <- ghg_raw |>
+#| eval: true
+#| echo: true
+ghg_raw <- read_excel(
+  "data/Eurostat_GHGpc.xlsx",
+  sheet = "Sheet 1",
+  skip = 9 # rows 1–9 are metadata
+)
+
+ghg_raw
+```
+
+:::
+
+::: {.column width="45%"}
+
+Better — but notice:
+
+- The first column is named `TIME` (we want `country`)
+- Column names `2019`, `2020`, ... start with a number
+- There are stray footer rows at the bottom (`Special value`, `:`)
+
+::: {.callout-tip}
+**How to find the right `skip` value:** Open the file in Excel and count how many rows appear before the header row. Subtract 1 — that is your `skip` value.
+:::
+
+:::
+::::::
+
+---
+
+## Step 2: `janitor::clean_names()` to the Rescue {.smaller}
+
+The `janitor` package's `clean_names()` function converts all column names to safe, consistent snake_case automatically:
+
+:::::: columns
+::: {.column width="55%"}
+
+```{r}
+#| eval: true
+#| echo: true
+ghg_raw <- read_excel(
+  "data/Eurostat_GHGpc.xlsx",
+  sheet = "Sheet 1",
+  skip = 9
+) |>
+  clean_names()
+
+names(ghg_raw)
+```
+
+:::
+
+::: {.column width="45%"}
+
+`clean_names()` converts `2019` → `x2019`, `2020` → `x2020`, etc. — adding an `x` prefix to columns that would otherwise start with a number.
+
+This removes the backtick problem entirely. `x2019` is a legal R column name that needs no special quoting.
+
+::: {.callout-note}
+`clean_names()` also handles spaces, dashes, parentheses, and accented characters. Make it a habit to call it immediately after every `read_excel()` or `read_csv()`.
+:::
+
+:::
+::::::
+
+---
+
+## Step 3: Rename, Filter, Drop, Pivot {.smaller}
+
+```{r}
+#| eval: true
+#| echo: true
+ghg_clean <- ghg_raw |>
+  rename(country = time) |> # TIME → country
+  filter(!is.na(country), !country %in% c("Special value", ":")) |> # remove footer rows
+  select(-x2019) |> # drop 2019 (not in GDP data)
   pivot_longer(
     cols = -country,
     names_to = "year",
     values_to = "ghg_pc"
   ) |>
-  mutate(year = as.integer(year)) # convert year from character to integer
+  mutate(year = as.integer(str_remove(year, "^x"))) # "x2020" → 2020
+
+ghg_clean
 ```
 
 . . .
 
+::: {.callout-tip}
+`str_remove(year, "^x")` strips the leading `x` that `clean_names()` added, then `as.integer()` converts the result to a number. The `^` means "start of string" — a small taste of regular expressions, which we will return to later.
+:::
+
+---
+
+## Why This Matters for Pivoting {.smaller}
+
 :::::: columns
 ::: {.column width="50%"}
 
-**Before (wide):**
+**Before (wide, after clean_names):**
 
-| country | 2020 | 2021 | 2022 |
+| country | x2020 | x2021 | x2022 |
 |---|---|---|---|
 | Germany | 9.0 | 9.4 | 9.3 |
 | France | 5.6 | 5.9 | 5.7 |
+
+Without `clean_names()`, the year columns would be named `2020`, `2021` — requiring backticks everywhere. With `clean_names()`, they become `x2020`, `x2021`, which R handles without complaint.
 
 :::
 
 ::: {.column width="50%"}
 
-**After (long):**
+**After (long / tidy):**
 
 | country | year | ghg_pc |
 |---|---|---|
@@ -456,6 +593,12 @@ ghg_long <- ghg_raw |>
 | Germany | 2021 | 9.4 |
 | Germany | 2022 | 9.3 |
 | France | 2020 | 5.6 |
+
+Once pivoted, `year` is just a regular variable column. No backticks, no special treatment needed.
+
+::: {.callout-note}
+**The backtick trap** still exists in R — column names starting with numbers or containing spaces must be wrapped in backticks. `clean_names()` is the easiest way to avoid it entirely.
+:::
 
 :::
 ::::::
@@ -505,31 +648,12 @@ All joins take two tables and a **key** (the column(s) to match on).
 
 ```{r}
 #| eval: false
-# Two long datasets, both with country + year
-ghg_long <- ghg_raw |>
-  pivot_longer(
-    cols = -country,
-    names_to = "year",
-    values_to = "ghg_pc"
-  ) |>
-  mutate(year = as.integer(year))
+# Both datasets are now tidy long format
+# with matching columns: country + year
 
-gdp_long <- gdp_raw |>
-  pivot_longer(
-    cols = -country,
-    names_to = "year",
-    values_to = "gdp_pc"
-  ) |>
-  mutate(year = as.integer(year))
-
-# Join: keep all GHG rows, add GDP where available
-eu_data <- ghg_long |>
-  left_join(gdp_long, by = c("country", "year"))
+eu_data <- ghg |>
+  left_join(gdp, by = c("country", "year"))
 ```
-
-:::
-
-::: {.column width="50%"}
 
 The `by` argument names the **key columns** — the columns that must match for two rows to be joined.
 
@@ -541,15 +665,26 @@ If the key column has different names in the two tables:
 left_join(x, y, by = c("country" = "nation"))
 ```
 
-. . .
+:::
 
-After joining, check for unexpected `NA`s:
+::: {.column width="50%"}
+
+After joining, always verify the result:
 
 ```r
+# Check dimensions make sense
+nrow(eu_data)
+glimpse(eu_data)
+
+# Check for unexpected NAs introduced by the join
 eu_data |>
   filter(is.na(gdp_pc)) |>
-  distinct(country)
+  distinct(country, year)
 ```
+
+::: {.callout-tip}
+NAs after a `left_join` usually mean one of two things: the key didn't match (e.g. a country name is spelled differently across datasets), or the right-hand dataset simply has no data for that row. Always investigate before proceeding.
+:::
 
 :::
 ::::::
@@ -561,11 +696,7 @@ eu_data |>
 ```{r}
 #| echo: false
 #| eval: true
-
-library(tidyverse)
-
-x <- tibble(country = c("Germany", "France", "Poland"), ghg = c(9.3, 5.7, 9.4))
-y <- tibble(country = c("Germany", "France", "Spain"), gdp = c(117, 103, 86))
+# x and y are created in the setup chunk
 ```
 
 :::::: columns
@@ -574,12 +705,14 @@ y <- tibble(country = c("Germany", "France", "Spain"), gdp = c(117, 103, 86))
 **`x` (GHG data):**
 ```{r}
 #| echo: false
+#| eval: true
 x
 ```
 
 **`y` (GDP data):**
 ```{r}
 #| echo: false
+#| eval: true
 y
 ```
 
@@ -590,12 +723,14 @@ y
 **`left_join(x, y)`** -- keeps all of `x`:
 ```{r}
 #| echo: false
+#| eval: true
 left_join(x, y, by = "country")
 ```
 
 **`inner_join(x, y)`** -- only matches:
 ```{r}
 #| echo: false
+#| eval: true
 inner_join(x, y, by = "country")
 ```
 
@@ -728,38 +863,39 @@ summary(my_data)
 
 ## End-to-End: Import, Clean, Reshape, Join {.smaller}
 
+The complete pipeline — this is what your homework setup code will look like:
+
 ```{r}
-#| eval: true
+#| eval: false
 #| echo: true
 library(tidyverse)
 library(readxl)
+library(janitor)
 
-# --- GHG ---
-ghg <- read_excel(
-  "slides/data/Eurostat_GHGpc.xlsx",
-  sheet = "Sheet 1",
-  skip = 7
-) |>
-  rename(country = 1) |>
+# --- GHG: skip 9 metadata rows, clean names, pivot ---
+ghg <- read_excel("data/Eurostat_GHGpc.xlsx", sheet = "Sheet 1", skip = 9) |>
+  clean_names() |>
+  rename(country = time) |>
   filter(!is.na(country), !country %in% c("Special value", ":")) |>
-  select(-`2019`) |>
+  select(-x2019) |>
   pivot_longer(-country, names_to = "year", values_to = "ghg_pc") |>
-  mutate(year = as.integer(year))
+  mutate(year = as.integer(str_remove(year, "^x")))
 
-# --- GDP ---
-gdp <- read_excel(
-  "slides/data/Eurostat_GDPpc.xlsx",
-  sheet = "Sheet 1",
-  skip = 6
-) |>
-  rename(country = 1) |>
+# --- GDP: skip 8 metadata rows, clean names, pivot ---
+gdp <- read_excel("data/Eurostat_GDPpc.xlsx", sheet = "Sheet 1", skip = 8) |>
+  clean_names() |>
+  rename(country = time) |>
   filter(!is.na(country)) |>
   pivot_longer(-country, names_to = "year", values_to = "gdp_pc") |>
-  mutate(year = as.integer(year))
+  mutate(year = as.integer(str_remove(year, "^x")))
 
-# --- Join ---
+# --- Join on country + year ---
 eu_data <- left_join(ghg, gdp, by = c("country", "year"))
+```
 
+```{r}
+#| eval: true
+#| echo: false
 glimpse(eu_data)
 ```
 
@@ -768,7 +904,8 @@ glimpse(eu_data)
 ## Cleaning Country Names & Factors {.smaller}
 
 ```{r}
-#| eval: true
+#| eval: false
+#| echo: true
 eu_data <- eu_data |>
   mutate(
     country = fct(country),
@@ -777,7 +914,11 @@ eu_data <- eu_data |>
       "EU27" = "European Union - 27 countries (from 2020)"
     )
   )
+```
 
+```{r}
+#| eval: true
+#| echo: false
 eu_data |>
   count(country) |>
   print(n = 5)
@@ -1199,9 +1340,9 @@ Break this into sub-problems:
 
 ::: {.callout-tip}
 After each sub-problem:
-- **Test in the console** -- does the intermediate result look right?
-- **Render your document** -- does it still compile?
-- **Commit to Git** -- you have a working checkpoint to fall back to
+- **Test in the console** — does the intermediate result look right?
+- **Render your document** — does it still compile?
+- **Commit to Git** — you have a working checkpoint to fall back to
 :::
 
 ---
@@ -1259,40 +1400,40 @@ Inline code means your text and your numbers **never get out of sync**. When the
 
 ---
 
-## `janitor` and Clean Column Names {.smaller}
+## `janitor`: Beyond `clean_names()` {.smaller}
 
-The `janitor` package is a small but essential addition to any data cleaning workflow.
+You already used `clean_names()` in the import pipeline. The `janitor` package has more useful tools:
 
 :::::: columns
 ::: {.column width="50%"}
 
+**`tabyl()` — a tidy cross-tabulation:**
+
 ```{r}
-#| eval: false
-library(janitor)
-
-# Messy column names from Excel
-# "Country Name", "GDP Per Capita (USD)", "Year 2022"
-
-my_data |>
-  clean_names()
-# Becomes: country_name, gdp_per_capita_usd, year_2022
-
-# Cross-tabulation -- a tidy alternative to table()
-my_data |>
-  tabyl(membership, year)
+#| eval: true
+# Frequency table for one variable
+eu_data |>
+  tabyl(year)
 ```
 
 :::
 
 ::: {.column width="50%"}
 
-`clean_names()` converts column names to snake_case automatically:
+**`tabyl()` with two variables:**
 
-- Removes special characters
-- Lowercases everything
-- Replaces spaces and dashes with underscores
+```{r}
+#| eval: false
+# Cross-tab: country × year
+eu_data |>
+  tabyl(country, year)
+```
 
-This is especially useful after loading Excel files, which often have human-readable headers that R cannot handle without backticks.
+`tabyl()` returns a tibble — unlike base R's `table()`, the result can be piped further and works cleanly in Quarto documents.
+
+::: {.callout-tip}
+Use `tabyl()` whenever you want a quick count or cross-tabulation in a rendered document. It is cleaner than `count()` for two-way tables and integrates with `kable()` directly.
+:::
 
 :::
 ::::::
@@ -1309,8 +1450,6 @@ For tables in rendered documents, `knitr::kable()` produces clean output in both
 ```{r}
 #| eval: true
 #| echo: true
-library(knitr)
-
 eu_data |>
   filter(year == 2022, country != "EU27") |>
   slice_max(ghg_pc, n = 5) |>
@@ -1328,10 +1467,10 @@ eu_data |>
 
 `kable()` arguments:
 
-- `col.names` -- rename columns in the output
-- `digits` -- round numbers
-- `caption` -- table caption (cross-referenceable with `tbl-` label)
-- `format = "latex"` / `"html"` -- rarely needed, Quarto detects format automatically
+- `col.names` — rename columns in the output
+- `digits` — round numbers
+- `caption` — table caption (cross-referenceable with `tbl-` label)
+- `format = "latex"` / `"html"` — rarely needed, Quarto detects format automatically
 
 For more control: the `kableExtra` package adds column alignment, row grouping, and color highlighting.
 
@@ -1360,7 +1499,7 @@ Show import live: load one file, demonstrate the skip argument, show what happen
 
 - Distributed via GitHub (same workflow as previous weeks)
 - Submit a **rendered Quarto document** (`.qmd` + rendered PDF)
-- The PDF should show **only plots and prose** -- no code
+- The PDF should show **only plots and prose** — no code
 - **Due:** one week from today
 
 You will work with the same Eurostat datasets to produce five publication-quality plots. The homework will ask you to combine everything from today: import with `readxl`, reshape with `pivot_longer`, join with `left_join`, and visualise with `ggplot2`.
@@ -1369,11 +1508,11 @@ You will work with the same Eurostat datasets to produce five publication-qualit
 
 ## Homework Preview: What You Will Produce {.smaller}
 
-1. **Boxplot** -- distribution of GHG emissions per capita across years (excluding EU27)
-2. **Bar chart** -- GHG emissions in 2022, countries ordered by emissions, EU27 highlighted
-3. **Scatterplot** -- GDP vs. GHG, colored by EU membership era (pre/post 2000 accession), with regression line
-4. **Labelled scatterplot** -- country ISO codes as labels instead of points, faceted by membership era
-5. **Labelled scatterplot with free scales** -- same as above, but each panel scales independently
+1. **Boxplot** — distribution of GHG emissions per capita across years (excluding EU27)
+2. **Bar chart** — GHG emissions in 2022, countries ordered by emissions, EU27 highlighted
+3. **Scatterplot** — GDP vs. GHG, colored by EU membership era (pre/post 2000 accession), with regression line
+4. **Labelled scatterplot** — country ISO codes as labels instead of points, faceted by membership era
+5. **Labelled scatterplot with free scales** — same as above, but each panel scales independently
 
 . . .
 
