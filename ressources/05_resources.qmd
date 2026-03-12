@@ -1,7 +1,16 @@
 ---
 title: Week 5 Resources
 nocite: |
-  @mcelreath2020statistical
+  @wickham2023ggplot2
+  @datacamp-intro-ggplot2
+  @datacamp-intermediate-ggplot2
+  @data-visualization-cheatsheet
+  @tidyr-cheatsheet
+  @data-import-cheatsheet
+  @data-transformation-cheatsheet
+  @strings-cheatsheet
+  @factors-cheatsheet
+  @lubridate-cheatsheet
 ---
 
 ::: {#refs}
