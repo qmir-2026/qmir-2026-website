@@ -481,31 +481,38 @@ Key points to hammer home:
 
 # Part IV: The Normalizing Constant
 
-## The Role of $P(\text{data})$ {.smaller}
+## The Role of $P(\text{data})$
 
-$$P(\theta \mid \text{data}) = \frac{P(\text{data} \mid \theta) \cdot P(\theta)}{P(\text{data})}$$
-
+::: {style="font-size: 0.65em"}
+$$
+P(\theta \mid \text{data}) = \frac{P(\text{data} \mid \theta) \cdot P(\theta)}{P(\text{data})}
+$$
+:::
 . . .
 
+::: {style="font-size: 0.55em"}
 **What is $P(\text{data})$?**
 
 The *marginal likelihood* -- the overall probability of the observed data, averaged over all possible parameter values:
 
-$$P(\text{data}) = \int_{\Theta} P(\text{data} \mid \theta) \cdot P(\theta) \, d\theta$$
+$$
+P(\text{data}) = \int_{\Theta} P(\text{data} \mid \theta) \cdot P(\theta) \, d\theta
+$$
 
 In the discrete case:
 
 $$P(\text{data}) = \sum_{\theta \in \Theta} P(\text{data} \mid \theta) \cdot P(\theta)$$
-
+:::
 . . .
 
+::: {style="font-size: 0.55em"}
 **What does it do?**
 
 It ensures the posterior is a proper probability distribution: $\int P(\theta \mid \text{data}) \, d\theta = 1$.
-
+:::
 . . .
 
-::: {.callout-important}
+::: {.callout-important style="font-size: 0.65em"}
 $P(\text{data})$ does **not** depend on $\theta$. It is a normalizing constant -- the same number for every value of $\theta$. This is why, in practice, we often write: $P(\theta \mid \text{data}) \propto P(\text{data} \mid \theta) \cdot P(\theta)$.
 
 But the full equation is always the correct starting point.
@@ -523,7 +530,7 @@ Note for the mathematically inclined: the full Bayesian theorem with the denomin
 
 ---
 
-## Why the Denominator Is Hard
+## Why the Denominator Is Hard {.smaller}
 
 :::::: columns
 ::: {.column width="55%"}
@@ -533,8 +540,6 @@ Note for the mathematically inclined: the full Bayesian theorem with the denomin
 $$P(\text{data}) = \sum_{k=0}^{10} P(W, N \mid \theta_k) \cdot P(\theta_k)$$
 
 We sum over 11 values -- trivial.
-
-. . .
 
 **For a regression model with 2 parameters:**
 
@@ -546,15 +551,11 @@ A two-dimensional integral -- manageable.
 
 ::: {.column width="45%"}
 
-. . .
-
 **For a multilevel model with $k$ parameters:**
 
 $$P(\text{data}) = \int_{\mathbb{R}^k} P(\text{data} \mid \boldsymbol{\theta}) \cdot P(\boldsymbol{\theta}) \, d\boldsymbol{\theta}$$
 
 A $k$-dimensional integral. **Often has no analytical solution.**
-
-. . .
 
 ::: {.callout-note}
 This is precisely the problem that **MCMC** (next week) solves -- not by computing $P(\text{data})$, but by sampling from the posterior *without needing to evaluate the denominator at all*.
@@ -573,9 +574,7 @@ For the discrete 10-sided globe: the denominator is a sum over 11 terms, computa
 
 # Part V: The 10-Sided Globe
 
----
-
-## A Tractable Model: The 10-Sided Globe
+## A Tractable Model: The 10-Sided Globe {.smaller}
 
 ::: {style="font-size: 0.9em;"}
 
@@ -583,7 +582,9 @@ Imagine the Earth as a **10-sided polyhedron**. Each face is either Land (L) or 
 
 The unknown parameter $\theta$ = proportion of water faces.
 
-$$\theta \in \left\{\frac{0}{10}, \frac{1}{10}, \frac{2}{10}, \ldots, \frac{10}{10}\right\}$$
+$$
+\theta \in \left\{\frac{0}{10}, \frac{1}{10}, \frac{2}{10}, \ldots, \frac{10}{10}\right\}
+$$
 
 There are exactly **11 hypotheses** -- one for each possible number of water faces.
 
@@ -609,7 +610,9 @@ $$\text{data} = (W = 6, N = 9)$$
 :::
 ::::::
 
-. . .
+---
+
+## A Tractable Model: The 10-Sided Globe {.smaller}
 
 ::: {.callout-note}
 The 10-sided model is a **simplification** -- the real globe has a continuous parameter space. But the discrete version makes every step of Bayes' theorem computable by hand, and the logic is identical. Once you understand it here, the continuous case follows directly.
@@ -625,7 +628,7 @@ The connection to the continuous case: as the number of faces increases to infin
 
 ---
 
-## Computing the Likelihood
+## Computing the Likelihood {.smaller}
 
 For each hypothesis $\theta_k = k/10$, compute how probable the observed data $(W=6, N=9)$ would be:
 
@@ -633,7 +636,7 @@ $$P(W = 6, N = 9 \mid \theta_k) = \binom{9}{6} \theta_k^6 (1 - \theta_k)^3$$
 
 . . .
 
-::: {style="font-size: 0.75em;"}
+::: {style="font-size: 0.65em;"}
 
 | $k$ | $\theta_k$ | $P(W{=}6, N{=}9 \mid \theta_k)$ |
 |:---:|:---:|:---:|
@@ -644,7 +647,7 @@ $$P(W = 6, N = 9 \mid \theta_k) = \binom{9}{6} \theta_k^6 (1 - \theta_k)^3$$
 | 4 | 0.4 | 0.074 |
 | 5 | 0.5 | 0.164 |
 | 6 | 0.6 | 0.251 |
-| **7** | **0.7** | **0.267** |
+| ***7*** | ***0.7*** | ***0.267*** |
 | 8 | 0.8 | 0.176 |
 | 9 | 0.9 | 0.045 |
 | 10 | 1.0 | 0.000 |
@@ -669,21 +672,27 @@ The 0.000 entries are not exactly zero in general (except for theta=0 and theta=
 
 ---
 
-## Computing the Full Posterior
+## Computing the Full Posterior {.smaller}
 
-$$P(\theta_k \mid \text{data}) = \frac{P(\text{data} \mid \theta_k) \cdot P(\theta_k)}{P(\text{data})} = \frac{P(\text{data} \mid \theta_k) \cdot \frac{1}{11}}{\sum_{j=0}^{10} P(\text{data} \mid \theta_j) \cdot \frac{1}{11}}$$
+$$
+P(\theta_k \mid \text{data}) = \frac{P(\text{data} \mid \theta_k) \cdot P(\theta_k)}{P(\text{data})} = \frac{P(\text{data} \mid \theta_k) \cdot \frac{1}{11}}{\sum_{j=0}^{10} P(\text{data} \mid \theta_j) \cdot \frac{1}{11}}
+$$
 
 . . .
 
 Since $P(\theta_k) = 1/11$ is the same for all $k$, the $1/11$ cancels:
 
-$$P(\theta_k \mid \text{data}) = \frac{P(\text{data} \mid \theta_k)}{\sum_{j=0}^{10} P(\text{data} \mid \theta_j)}$$
+$$P
+(\theta_k \mid \text{data}) = \frac{P(\text{data} \mid \theta_k)}{\sum_{j=0}^{10} P(\text{data} \mid \theta_j)}
+$$
 
 . . .
 
 The normalizing constant is simply:
 
-$$P(\text{data}) = \sum_{j=0}^{10} P(\text{data} \mid \theta_j) \cdot \frac{1}{11} = \frac{1}{11} \sum_{j=0}^{10} P(\text{data} \mid \theta_j) \approx \frac{1}{11} \times 1.001 \approx 0.091$$
+$$
+P(\text{data}) = \sum_{j=0}^{10} P(\text{data} \mid \theta_j) \cdot \frac{1}{11} = \frac{1}{11} \sum_{j=0}^{10} P(\text{data} \mid \theta_j) \approx \frac{1}{11} \times 1.001 \approx 0.091
+$$
 
 ::: notes
 This is the payoff of using a discrete model: students can literally see the sum in the denominator being computed. The sum of all the likelihood values in the previous table (scaled by 1/11) gives the marginal likelihood.
@@ -737,6 +746,8 @@ tibble(
     caption = "Flat prior; Binomial likelihood; W = 6, N = 9"
   )
 ```
+
+Under flat (uninformative) priors, the Posterior takes the form of the likelihood.
 
 ::: notes
 This plot shows the three ingredients side by side for all 11 hypotheses. With a flat prior, the posterior is simply the normalized likelihood -- the shape is driven entirely by the data.
