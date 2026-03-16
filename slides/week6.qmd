@@ -339,7 +339,7 @@ For questions like:
 ::: {.callout-note style="font-size: 0.72em"}
 A 95% frequentist **confidence interval** means: if we repeated this sampling procedure many times, 95% of the resulting intervals would contain the true value. The parameter is fixed -- only the interval varies across hypothetical repetitions.
 
-A 95% Bayesian **credible interval** means: given the data and the prior, we assign 95% probability to the true parameter lying in this range. This is the interpretation most researchers intuitively want -- and only the Bayesian framework directly supports it.
+A 95% Bayesian **credible interval** means: given the data and the prior, we assign 95% probability to the true parameter lying in this range. This is the interpretation most researchers intuitively want [@hoekstra2014robust] -- and only the Bayesian framework directly supports it.
 :::
 
 ::: notes
@@ -479,7 +479,7 @@ The maximum likelihood estimate (MLE) -- the value of theta that maximises the l
 
 ## Ingredient 3: The Posterior $P(\theta \mid \text{data})$ {.smaller}
 
-**The posterior is the updated distribution of $\theta$ after observing data. It is the answer.**
+**The posterior is the updated distribution of $\theta$ after observing data.**
 
 . . .
 
@@ -491,7 +491,7 @@ $$ {#eq-posterior}
 
 - Always a **full probability distribution** over $\theta$ -- not a point estimate, not a $p$-value
 - Expresses *remaining uncertainty* after combining prior knowledge with evidence
-- More concentrated than the prior -- data reduces uncertainty
+- More concentrated than the prior -- data (usually) reduces uncertainty
 - **Today's posterior is tomorrow's prior** -- updating is sequential and coherent
 
 . . .
@@ -565,13 +565,13 @@ $$ {#eq-pdata-6}
 
 7 terms. Arithmetic on a napkin.
 
-. . .
-
 **Simple linear regression** -- three parameters: $\alpha$, $\beta$, $\sigma$:
 
+::: {style="font-size: 0.68em"}
 $$
 P(\text{data}) = \iiint P(\text{data} \mid \alpha, \beta, \sigma) \cdot P(\alpha, \beta, \sigma) \, d\alpha\, d\beta\, d\sigma
 $$ {#eq-pdata-lm}
+:::
 
 A three-dimensional integral. Rarely has a closed form.
 
@@ -579,7 +579,6 @@ A three-dimensional integral. Rarely has a closed form.
 
 ::: {.column width="48%"}
 
-. . .
 
 **Multilevel model with $k$ parameters:**
 
@@ -589,7 +588,6 @@ $$ {#eq-pdata-k}
 
 $k$-dimensional integral. **No analytical solution** for most realistic models.
 
-. . .
 
 ::: {.callout-note style="font-size: 0.7em"}
 This is exactly the problem **MCMC** (next week) solves -- not by computing $P(\text{data})$, but by sampling from the posterior *without ever evaluating the denominator*.
@@ -716,15 +714,15 @@ $$ {#eq-lik-6}
 
 ::: {style="font-size: 0.72em;"}
 
-| $k$ | $\theta_k$ | $\theta_k^4$ | $(1-\theta_k)^2$ | $\times 15$ | $P(W{=}4 \mid \theta_k)$ |
-|:---:|:---:|:---:|:---:|:---:|:---:|
-| 0 | 0/6 = 0.000 | 0.000 | 1.000 | 15 | **0.000** |
-| 1 | 1/6 ≈ 0.167 | 0.001 | 0.694 | 15 | **0.008** |
-| 2 | 2/6 ≈ 0.333 | 0.012 | 0.444 | 15 | **0.082** |
-| 3 | 3/6 = 0.500 | 0.063 | 0.250 | 15 | **0.234** |
-| **4** | **4/6 ≈ 0.667** | **0.198** | **0.111** | **15** | **0.329 ←** |
-| 5 | 5/6 ≈ 0.833 | 0.482 | 0.028 | 15 | **0.201** |
-| 6 | 6/6 = 1.000 | 1.000 | 0.000 | 15 | **0.000** |
+| $k$ | $\theta_k$ | $\theta_k^4$ | $(1-\theta_k)^2$ | $P(W{=}4 \mid \theta_k)$ |
+|:---:|:---:|:---:|:---:|:---:|
+| 0 | 0/6 = 0.000 | 0.000 | 1.000 | **0.000** |
+| 1 | 1/6 ≈ 0.167 | 0.001 | 0.694 | **0.008** |
+| 2 | 2/6 ≈ 0.333 | 0.012 | 0.444 | **0.082** |
+| 3 | 3/6 = 0.500 | 0.063 | 0.250 | **0.234** |
+| **4** | **4/6 ≈ 0.667** | **0.198** | **0.111** | **0.329 ←** |
+| 5 | 5/6 ≈ 0.833 | 0.482 | 0.028 | **0.201** |
+| 6 | 6/6 = 1.000 | 1.000 | 0.000 | **0.000** |
 
 :::
 
@@ -808,7 +806,7 @@ tibble(
 
 . . .
 
-With an uninformative prior, **the data alone determines the posterior shape**. All three columns are proportional to one another.
+With an uninformative prior, **the data alone determines the posterior shape**. All five columns are proportional to one another.
 
 ::: notes
 Visual observations to narrate:
