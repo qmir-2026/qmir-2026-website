@@ -150,9 +150,9 @@ By the end of today, you should be able to:
 2. Explain why parameters are treated as uncertain quantities with distributions in the Bayesian framework
 3. Name and interpret the three core ingredients of Bayesian inference: prior, likelihood, and posterior
 4. State Bayes' theorem in full, identify each term, and explain the role of the normalizing constant $P(\text{data})$
-5. Implement Bayesian updating using a discrete 6-sided globe model
+5. Understand Bayesian updating using a discrete 6-sided globe model
 6. Describe qualitatively how the posterior changes as the prior changes and as data accumulates
-7. Apply grid approximation in R to compute and visualize a posterior distribution
+7. Understand and apply grid approximation in R to compute and visualize a posterior distribution
 
 ::: notes
 These are the seven learning goals for the session. The verbs are intentionally testable: articulate, explain, name, state, implement, describe, apply. The take-home exam will engage with several of these directly.
@@ -164,20 +164,10 @@ Remind students at the start: today is a pivot. Block I was about tools. Block I
 
 ## The Globe Toss {.smaller}
 
-::: {style="text-align: center; padding: 0.6em 0;"}
-*[Placeholder: photograph of inflatable globe ball being tossed in a lecture room]*
-:::
-
-::: {style="text-align: center; font-size: 1.05em;"}
+::: {style="text-align: center; font-size: 1.05em; padding: 0.4em 0"}
 **Catch the ball. Look at your right index finger.**
 
 **Call out: Land or Water.**
-:::
-
-. . .
-
-::: {style="font-size: 0.75em; text-align: center; padding-top: 0.4em;"}
-*(Record the running tally on the board: W = water, L = land)*
 :::
 
 ::: notes
@@ -233,7 +223,7 @@ Keep this slide brief. The conceptual elaboration follows. The goal is to create
 
 ---
 
-## The Central Insight {.smaller}
+## The Central Insight {.smaller #sec-central-insight}
 
 ::: {style="font-size: 1.15em; text-align: center; padding: 0.6em 0;"}
 **Everything uncertain gets a distribution.**
@@ -266,9 +256,7 @@ McElreath (Statistical Rethinking, ch. 1) makes this point clearly: the Bayesian
 
 # Part II: What Is Probability?
 
----
-
-## Two Interpretations of Probability {.smaller}
+## Two Interpretations of Probability {.smaller #sec-probabilities}
 
 :::::: columns
 ::: {.column width="50%"}
@@ -350,9 +338,9 @@ The pragmatic framing for the course: we adopt a Bayesian approach because the q
 At the same time, we should not be dismissive of frequentist methods. Students will encounter them throughout their careers in published work. Understanding both frameworks makes for a better-equipped researcher.
 :::
 
-# Part III: The Three Ingredients
+# Part III: The Three Ingredients {#sec-ingredients}
 
-## Bayes' Theorem {.smaller}
+## Bayes' Theorem {.smaller #sec-bayes}
 
 ::: {style="font-size: 1.0em; text-align: center; padding: 0.4em 0;"}
 
@@ -391,7 +379,7 @@ The key conceptual point: the formula divides the prior-weighted likelihood by a
 
 ---
 
-## Ingredient 1: The Prior $P(\theta)$ {.smaller}
+## Ingredient 1: The Prior $P(\theta)$ {.smaller #sec-prior}
 
 **The prior encodes what we believe about $\theta$ before observing data.**
 
@@ -447,7 +435,7 @@ On the significance threshold: choosing alpha = 0.05 is itself a prior-like deci
 
 ---
 
-## Ingredient 2: The Likelihood $P(\text{data} \mid \theta)$ {.smaller}
+## Ingredient 2: The Likelihood $P(\text{data} \mid \theta)$ {.smaller #sec-likelihood}
 
 **The likelihood scores each value of $\theta$ by how well it explains the observed data.**
 
@@ -477,7 +465,7 @@ The maximum likelihood estimate (MLE) -- the value of theta that maximises the l
 
 ---
 
-## Ingredient 3: The Posterior $P(\theta \mid \text{data})$ {.smaller}
+## Ingredient 3: The Posterior $P(\theta \mid \text{data})$ {.smaller #sec-posterior}
 
 **The posterior is the updated distribution of $\theta$ after observing data.**
 
@@ -510,9 +498,7 @@ Three things to emphasise here:
 3. The MAP estimate (mode of the posterior) equals the MLE when the prior is flat. OLS regression is a special case of MAP estimation with a flat prior and Gaussian likelihood. This connects Bayesian and frequentist frameworks.
 :::
 
-# Part IV: The Normalizing Constant
-
----
+# Part IV: The Normalizing Constant {#sec-normalizing-constant}
 
 ## What Is $P(\text{data})$? {.smaller}
 
@@ -567,18 +553,15 @@ $$ {#eq-pdata-6}
 
 **Simple linear regression** -- three parameters: $\alpha$, $\beta$, $\sigma$:
 
-::: {style="font-size: 0.68em"}
 $$
 P(\text{data}) = \iiint P(\text{data} \mid \alpha, \beta, \sigma) \cdot P(\alpha, \beta, \sigma) \, d\alpha\, d\beta\, d\sigma
 $$ {#eq-pdata-lm}
-:::
 
 A three-dimensional integral. Rarely has a closed form.
 
 :::
 
 ::: {.column width="48%"}
-
 
 **Multilevel model with $k$ parameters:**
 
@@ -646,9 +629,7 @@ The three-ingredients framing: prior, likelihood, posterior. Four components in 
 The connection to MCMC: the Metropolis algorithm (week 7) proposes a step from theta_current to theta_proposed, and accepts or rejects based on the ratio P(theta_proposed|data) / P(theta_current|data). Since P(data) appears in both numerator and denominator of that ratio, it cancels out. MCMC never needs to evaluate the integral. This is the elegant technical insight that makes Bayesian inference computationally feasible for realistic models.
 :::
 
-# Part V: The 6-Sided Globe
-
----
+# Part V: The 6-Sided Globe {#sec-globe-example}
 
 ## A Tractable Model: The 6-Sided Globe {.smaller}
 
@@ -671,8 +652,8 @@ Exactly **7 hypotheses** -- one for each possible number of water faces.
 
 **Prior:** We start flat -- every hypothesis equally plausible.
 
-$$P
-(\theta_k) = \frac{1}{7} \quad \text{for } k \in \{0,\ldots,6\}
+$$
+P(\theta_k) = \frac{1}{7} \quad \text{for } k \in \{0,\ldots,6\}
 $$ {#eq-prior-6}
 
 :::
@@ -681,7 +662,9 @@ $$ {#eq-prior-6}
 
 **Observed data:** $N = 6$ tosses, $W = 4$ waters.
 
-$$\text{data} = (W = 4,\; N = 6)$$
+$$
+\text{data} = (W = 4,\; N = 6)
+$$
 
 :::
 ::::::
@@ -689,7 +672,7 @@ $$\text{data} = (W = 4,\; N = 6)$$
 . . .
 
 ::: {.callout-note style="font-size: 0.68em"}
-This is a deliberate simplification of the real continuous problem. The discrete 6-sided version makes every step of Bayes' theorem computable by arithmetic. The logic is identical to the continuous case -- only the number of hypotheses differs.
+This is a deliberate simplification of the real continuous problem. The discrete 6-sided version makes every step of Bayes' theorem computable by arithmetic. The logic is identical to the continuous case -- only the number of hypotheses differs. The globe toss as a teaching device is adapted from @mcelreath2020rethinking-ch2.
 :::
 
 ::: notes
@@ -819,6 +802,45 @@ Ask students: "Does this feel right as a starting point?" Provoke them to think 
 
 ---
 
+## The Three Priors at a Glance {.smaller}
+
+All three priors cover the same 7 hypotheses -- they differ only in where they place belief.
+
+::: {style="font-size: 0.65em;"}
+
+| $k$ | $\theta_k$ | Water faces | Flat $P(\theta_k)$ | Weak $P(\theta_k)$ | Supercertain $P(\theta_k)$ |
+|:---:|:---:|:---:|:---:|:---:|:---:|
+| 0 | 0/6 | 0 of 6 | 0.143 | 0.100 | 0.010 |
+| 1 | 1/6 | 1 of 6 | 0.143 | 0.100 | 0.010 |
+| 2 | 2/6 | 2 of 6 | 0.143 | 0.100 | 0.010 |
+| 3 | 3/6 | 3 of 6 | 0.143 | 0.100 | **0.940** |
+| 4 | 4/6 | 4 of 6 | 0.143 | **0.200** | 0.010 |
+| 5 | 5/6 | 5 of 6 | 0.143 | **0.200** | 0.010 |
+| 6 | 6/6 | 6 of 6 | 0.143 | **0.200** | 0.010 |
+| | | **Sum** | **1.000** | **1.000** | **1.000** |
+
+:::
+
+. . .
+
+::: {style="font-size: 0.72em;"}
+- **Flat:** completely agnostic -- equal weight to every hypothesis
+- **Weak:** modest scientific prior -- $\theta > 0.5$ is twice as plausible as $\theta \leq 0.5$ (raw weights 2:1, sum = 10, normalised)
+- **Supercertain:** near-dogmatic conviction that $\theta = 0.5$ -- almost no mass elsewhere
+:::
+
+::: notes
+This table is the reference slide for the three priors. Students can refer back to it throughout the session and in the homework.
+
+The weak prior uses raw weights c(1,1,1,1,2,2,2): four hypotheses at weight 1 (theta ≤ 0.5) and three at weight 2 (theta > 0.5). Sum = 4 + 6 = 10. After normalising: 1/10 = 0.100 for the low-weight hypotheses and 2/10 = 0.200 for the high-weight ones.
+
+The supercertain prior: 0.94 at theta=0.5, 0.01 at all others. Sum = 0.94 + 6×0.01 = 1.00. Already normalised.
+
+Point out to students: all three are valid probability distributions -- they all sum to 1. They differ only in *where* probability mass is concentrated. The question is always whether the prior's placement of mass can be scientifically justified.
+:::
+
+---
+
 ## Weakly Informative Prior: Adding Scientific Knowledge {.smaller}
 
 We believe -- on scientific grounds -- that it is *more likely* the globe is more than half covered in water. We encode this modestly: hypotheses with $\theta > 0.5$ get **double the prior weight**.
@@ -832,10 +854,10 @@ $$
 P(\theta_k) \propto \begin{cases} 1 & \text{if } \theta_k \leq 0.5 \\ 2 & \text{if } \theta_k > 0.5 \end{cases}
 $$ {#eq-prior-weak}
 
-Raw weights: $\boldsymbol{w} = (1,1,1,1,2,2,2)$, sum $= 11$
+Raw weights: $\boldsymbol{w} = (1,1,1,1,2,2,2)$, sum $= 10$
 
 $$
-\Rightarrow P(\theta_k) = \left(\tfrac{1}{11},\tfrac{1}{11},\tfrac{1}{11},\tfrac{1}{11},\tfrac{2}{11},\tfrac{2}{11},\tfrac{2}{11}\right)
+\Rightarrow P(\theta_k) = \left(\tfrac{1}{10},\tfrac{1}{10},\tfrac{1}{10},\tfrac{1}{10},\tfrac{2}{10},\tfrac{2}{10},\tfrac{2}{10}\right)
 $$ {#eq-prior-weak-norm}
 
 :::
@@ -856,20 +878,9 @@ This is what "weakly informative" means in practice: the prior has a preferred d
 ::: notes
 The 2:1 weight ratio is arbitrary but simple and illustrative. In practice, a researcher would justify the prior based on domain knowledge, previous studies, or physical theory.
 
-Normalisation: raw weights 1,1,1,1,2,2,2 sum to 11. Each weight-1 hypothesis gets 1/11 ≈ 0.091; each weight-2 hypothesis gets 2/11 ≈ 0.182. Together they sum to 4×(1/11) + 3×(2/11) = 4/11 + 6/11 = 10/11... 
-
-Wait -- let me recheck. The theta values at or below 0.5 are: 0/6, 1/6, 2/6, 3/6 (four values). The theta values above 0.5 are: 4/6, 5/6, 6/6 (three values). So weights: four 1s and three 2s = 4 + 6 = 10. Hmm. Let me recheck in the code...
-
-Actually in the code: prior_weak_raw <- c(1, 1, 1, 1, 2, 2, 2) corresponds to theta = 0/6, 1/6, 2/6, 3/6 (weight 1 each, theta ≤ 0.5) and theta = 4/6, 5/6, 6/6 (weight 2 each, theta > 0.5). Sum = 4+6 = 10. So each weight-1 gets 1/10 and each weight-2 gets 2/10 = 1/5.
-
-But the slide says sum = 11. This is an error in the slide content vs the code. Let me fix: in the code prior_weak_raw = c(1,1,1,1,2,2,2) → sum = 10 (not 11). 
-
-Actually I need to re-examine: theta_6 = seq(0, 1, by = 1/6) gives 0, 1/6, 2/6, 3/6, 4/6, 5/6, 6/6 = 7 values. Values ≤ 0.5: 0, 1/6, 2/6, 3/6 = 4 values (indices 1–4). Values > 0.5: 4/6, 5/6, 6/6 = 3 values (indices 5–7). Raw weights c(1,1,1,1,2,2,2): sum = 4+6 = 10. Correct answer: sum = 10, not 11.
-
-I need to fix this discrepancy. Either fix the code or fix the slide. In the note I should correct this.
-
-For the speaker notes version, note: the slide has a typo -- sum should be 10, not 11. Update accordingly in the final version. This is a calculation to double-check before teaching.
+Normalisation: raw weights c(1,1,1,1,2,2,2). There are 4 hypotheses at weight 1 (theta = 0/6, 1/6, 2/6, 3/6) and 3 hypotheses at weight 2 (theta = 4/6, 5/6, 6/6). Sum = 4×1 + 3×2 = 4 + 6 = 10. Each weight-1 hypothesis gets 1/10 = 0.1; each weight-2 hypothesis gets 2/10 = 0.2. Together: 4×0.1 + 3×0.2 = 0.4 + 0.6 = 1.0. ✓
 :::
+
 
 ---
 
@@ -959,7 +970,7 @@ The supercertain prior is deliberately extreme to make the effect visible in 7 b
 
 ---
 
-## The Self-Correcting Property: More Data Wins {.smaller}
+## The Self-Correcting Property: More Data Wins {.smaller #sec-self-correcting}
 
 What happens with 10 times more data -- but the same observed proportion $W/N = 4/6$?
 
@@ -988,7 +999,7 @@ tibble(
 
 . . .
 
-With 60 tosses, even the supercertain prior is overridden. **The data wins. All posteriors converge.**
+With 60 tosses, even the supercertain prior is starts to move toward the data-driven likelihood. **The data wins. All posteriors converge.**
 
 ::: notes
 This is the self-correcting property of Bayesian inference: under regularity conditions, the posterior converges to a spike at the true parameter value as N → ∞, regardless of the (non-degenerate) prior.
@@ -1002,9 +1013,9 @@ For students who worry about prior subjectivity: this is the empirical answer. P
 
 ---
 
-## Sequential Updating: Learning Toss by Toss {.smaller}
+## Sequential Updating: Learning Toss by Toss {.smaller #sec-updating}
 
-Bayes' theorem can be applied **one observation at a time**. Today's posterior is tomorrow's prior.
+Bayes' theorem can be applied **one observation at a time**. Today's posterior is tomorrow's prior [@mcelreath2020rethinking-ch2].
 
 ```{r}
 #| label: fig-sequential
@@ -1080,11 +1091,15 @@ Practical implications:
 If a student asks: "What if I have a bad prior at the start?" The self-correcting property from the previous slides answers this: with enough data, the prior is overwhelmed. Sequential updating with bad priors corrects itself over time.
 :::
 
-# Part VI: Grid Approximation in R
+# Part VI: Grid Approximation in R {#sec-grid}
 
 ## From 7 Hypotheses to 1000 Grid Points {.smaller}
 
 The same logic -- prior, likelihood family, posterior -- works with a finer grid over continuous $\theta \in [0, 1]$.
+
+::: {.callout-note style="font-size: 0.68em"}
+In the earlier example, we simplified the problem by treating $\theta$ as if it could only take 7 possible values—like approximating the Earth with a 6-sided cube instead of a smooth sphere. Grid approximation works by increasing the number of possible values for $\theta$. In code, this is done with length.out in theta_grid. Setting length.out = 7 reproduces the simplified example, while length.out = 1000 effectively “slices” the parameter space into many small pieces—like approximating the globe with many tiny flat panels. As the number of grid points increases, the approximation becomes closer to a smooth continuous parameter.
+:::
 
 ```{r}
 #| label: grid-approx-code
@@ -1145,16 +1160,17 @@ Encourage students to try all combinations of W, N, and prior_type. The key patt
 
 ## Playground: Explore the Posterior {.smaller}
 
+You can copy the code below into an empty Quarto code cell and play around to get an intuition for how the posterior changes for different types of priors and numbers of observations. 
+
 ```{r}
 #| label: grid-approx-plot
 #| echo: true
 #| eval: true
-#| fig-height: 3.2
 
 # ── Change these ──────────────────────────────────────────────────────────────
-W <- 4
-N <- 6
-prior_type <- "flat" # try: prior="weak", "supercertain"; W=40
+W <- 4 # try 40, 400, 4000
+N <- 6 # try 60, 600, 6000
+prior_type <- "supercertain" # try: prior="weak", "supercertain"; W=40
 
 theta_grid <- seq(0, 1, length.out = 1000)
 prior <- switch(
@@ -1178,11 +1194,15 @@ tibble(
   mutate(dist = factor(dist, levels = c("Prior", "Likelihood", "Posterior"))) |>
   ggplot(aes(x = theta, y = val, color = dist, linetype = dist)) +
   geom_line(linewidth = 0.9) +
-  scale_color_manual(values = c(col_flat, col_lik, "firebrick"), name = NULL) +
+  scale_color_manual(
+    values = c("steelblue", "goldenrod3", "firebrick"),
+    name = NULL
+  ) +
   scale_linetype_manual(
     values = c("solid", "dashed", "twodash"),
     name = NULL
   ) +
+
   theme_bw() +
   theme(
     legend.position = "bottom",
@@ -1259,13 +1279,17 @@ Consider the simplest regression model with three parameters: $\alpha$, $\beta$,
 
 Grid approximation with 1000 points per parameter:
 
-$$1000^3 = 10^9 \text{ grid cells}$$
+$$
+1000^3 = 10^9 \text{ grid cells}
+$$
 
 . . .
 
 A multilevel model with 50 parameters:
 
-$$1000^{50} = 10^{150} \text{ grid cells}$$
+$$
+1000^{50} = 10^{150} \text{ grid cells}
+$$
 
 The observable universe contains approximately $10^{80}$ atoms.
 
@@ -1274,7 +1298,7 @@ The observable universe contains approximately $10^{80}$ atoms.
 ::: {.callout-important style="font-size: 0.72em"}
 **Grid approximation is computationally infeasible for any realistic model.** We need a fundamentally different approach -- one that *explores* the posterior rather than *evaluating it everywhere*.
 
-That approach is **Markov Chain Monte Carlo (MCMC)** simulation. The way to understand it involves a king, a chain of islands, and a surprisingly simple rule about when to move and when to stay. Crucially: MCMC never needs to compute $P(\text{data})$ at all -- which is exactly why it can scale to realistic models.
+That approach is **Markov Chain Monte Carlo (MCMC)**. The way to understand it involves a king, a chain of islands, and a surprisingly simple rule about when to move and when to stay. Crucially: MCMC never needs to compute $P(\text{data})$ at all -- which is exactly why it can scale to realistic models.
 :::
 
 ::: notes
@@ -1289,88 +1313,244 @@ Do not resolve this mystery now. The cliffhanger should create genuine curiosity
 
 ---
 
-## Preview: Week 7
+## Session Summary {.smaller}
 
-. . .
+::: {style="font-size: 0.68em;"}
 
-- The **Metropolis algorithm**: a random walk that recovers the posterior
-- **What a chain is** and what the samples it produces *represent*
-- **Trace plots**, warmup/burn-in, convergence, $\hat{R}$, effective sample size -- conceptual understanding, not diagnostic recipes
-- **brms as the engine** -- the king's journey, made practical
+| # | Learning goal | Answer in brief | Slide |
+|:-:|:---|:----------|:-|
+| 1 | Frequentist vs. Bayesian probability | Frequentist = long-run frequency; Bayesian = degree of rational belief. Bayesian is more natural for parameter inference. | @sec-probabilities |
+| 2 | Parameters as uncertain distributions | The parameter $\theta$ is unknown -- we represent that uncertainty with a probability distribution. The data is fixed and the parameter is what we infer. | @sec-central-insight |
+| 3 | Three ingredients: prior, likelihood, posterior | **Prior** $P(\theta)$: beliefs before data. **Likelihood** $P(\text{data}\mid\theta)$: how well data fit each $\theta$. **Posterior** $P(\theta\mid\text{data})$: updated beliefs after data. | @sec-ingredients |
+| 4 | Full Bayes' theorem + normalizing constant | $P(\theta\mid\text{data}) = \frac{P(\text{data}\mid\theta)\cdot P(\theta)}{P(\text{data})}$. $P(\text{data})$ rescales the numerator so the posterior sums to 1. | @sec-bayes |
+| 5 | 6-sided globe: Bayesian updating | Each observation updates the prior into a posterior and that posterior becomes the next prior. Repeating toss-by-toss yields the same result as fitting all data at once. | @sec-updating |
+| 6 | Posterior changes with prior and data | Informative prior shifts posterior and more data overwhelms any reasonable prior (self-correcting property). | @sec-self-correcting |
+| 7 | Grid approximation in R | Define grid → compute prior and likelihood → multiply → divide by sum (= $P(\text{data})$) → posterior. Breaks down at scale → motivates MCMC (next week). | @sec-grid |
 
-. . .
-
-::: {style="text-align: center; padding: 0.8em; font-size: 0.95em;"}
-*After next week, the engine will no longer be a black box.*
 :::
 
 ::: notes
-Keep this brief. Do not explain MCMC here.
+This summary slide maps directly onto the seven learning goals announced at the start of the session. Use it as a rapid-fire recap in the final 3–4 minutes.
 
-The one sentence to leave them with: "When brms prints 'Chains: 4, Iterations: 2000, Warmup: 1000', after next week you will know exactly what each of those numbers means, why there are multiple chains, and what the warmup period is for."
-:::
+The slide references (Part II, Part III, etc.) correspond to the section headers in the deck. Students can navigate back to any section if they want to review before the homework.
 
-# Time to Practice!
-
----
-
-## Exercise Overview {.smaller}
-
-- Clone the Week 6 exercise repo from GitHub
-- Open `exercise_week06.qmd` in Positron
-- Work through three parts:
-  1. **Discrete model:** Implement the 6-sided globe in R -- compute likelihood, $P(\text{data})$, posterior. Reproduce and extend the plots from the slides.
-  2. **Prior sensitivity:** Apply all three priors to the class toss data. Plot and compare posteriors. Write 2–3 sentences per prior.
-  3. **Grid approximation playground:** Use the playground code to explore how $W$, $N$, and prior type affect the posterior shape.
-- **Fast finishers:** optional extension on posterior sampling and credible intervals
-
-::: notes
-Part 1: forces students to reproduce the likelihood table and Bayes' theorem calculation numerically. This is the most important part for consolidating the formalism.
-
-Part 2: prior sensitivity with writing required. Students should not just run the code -- they should write 2–3 sentences per prior: what does it encode scientifically, and is it defensible?
-
-Part 3: the playground. Encourage all combinations of W, N, and prior_type. No wrong answers -- the goal is intuition building.
-
-Fast finishers: show them a 90% credible interval computed from posterior samples using quantile(), ask for a verbal interpretation, and hint that the homework asks them to contrast this with a confidence interval. This plants the seed.
-
-Reserve ~10 minutes for a homework preview.
+After this slide, move to the homework overview. There is no in-class exercise this week -- the homework replaces it.
 :::
 
 ---
-
-## Homework {.smaller}
-
-- Distributed via GitHub Classroom (same workflow as previous weeks)
-- Submit a **rendered Quarto document** (`.qmd` + rendered PDF)
-- **Due:** one week from today (Mon → next Mon 13:30; Thu → next Thu 18:45)
-
-. . .
-
-**What you will produce:**
-
-1. **Core:** Re-implement the 6-sided globe using the actual class toss data. Plot prior, likelihood, posterior. Compute and report $P(\text{data})$ explicitly.
-
-2. **Core:** Apply all three priors to the class data. For each, write 2–3 sentences: what belief does it encode, and is it scientifically defensible?
-
-3. **Stretch:** Using grid approximation, draw 10,000 posterior samples: `sample(theta_grid, 1e4, replace=TRUE, prob=posterior)`. Compute mean, median, and 90% credible interval (`quantile()`). Plot as histogram.
-
-4. **Stretch:** Write one sentence interpreting the credible interval. Then write a paragraph: what does a frequentist 90% confidence interval mean, and why is the interpretation different?
-
-5. **Optional:** Apply grid approximation to a political science scenario of your choice (survey proportion, election result, treaty ratification rate, ...). Choose and justify a prior. Interpret the posterior.
-
-::: notes
-Tiered structure:
-- Core 1: operationalises Bayes' theorem in full -- P(data) must be computed explicitly.
-- Core 2: prior as scientific assumption -- writing required, not just code.
-- Stretch 3: posterior sampling, which bridges the conceptual posterior to the computational samples that MCMC produces. Key forward-priming for week 7.
-- Stretch 4: the credible vs. confidence interval distinction in the student's own words. No right wording -- only honest engagement.
-- Optional: connects the abstract to the student's own research interests.
-
-Grade pass/fail as per syllabus. Serious and complete engagement with Core and Stretch passes.
-
-Remind students: Stretch 3 and 4 are part of the standard submission. "Optional" applies only to item 5.
-:::
 
 # Thank you for your attention and see you next week!
 
 <a href="https://github.com/dertristan" target="_blank" style="text-decoration: none; margin-left: 10px;"> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16"> <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/> </svg> </a> <a href="mailto:tristan.muno@uni-mannheim.de" style="text-decoration: none; margin-left: 5px;"> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16"> <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"/> </svg> </a>
+
+::: {#refs}
+:::
+
+# Appendix
+
+## Appendix A: Bayes' Theorem from First Principles
+
+::: {style="font-size: 0.62em;"}
+Bayes' theorem is a direct consequence of the **product rule of probability** -- no special assumptions required.
+:::
+. . .
+
+::: {style="font-size: 0.62em;"}
+For any two events $A$ and $B$:
+
+$$
+P(A \cap B) = P(A \mid B) \cdot P(B) = P(B \mid A) \cdot P(A)
+$$ {#eq-product-rule}
+
+:::
+
+. . .
+
+::: {style="font-size: 0.62em;"}
+Setting the two expressions equal and dividing by $P(B) > 0$:
+
+$$
+P(A \mid B) = \frac{P(B \mid A) \cdot P(A)}{P(B)}
+$$ {#eq-bayes-abstract}
+
+:::
+
+. . .
+
+::: {style="font-size: 0.62em;"}
+**This is Bayes' theorem in its most general form** -- with no reference to parameters, data, or inference.
+:::
+
+. . .
+
+::: {style="font-size: 0.62em;"}
+Replacing $A$ with $\theta$ (parameter) and $B$ with $\text{data}$ (observations) gives the inferential form:
+
+$$
+P(\theta \mid \text{data}) = \frac{P(\text{data} \mid \theta) \cdot P(\theta)}{P(\text{data})}
+$$ {#eq-bayes-inf}
+
+:::
+
+
+::: notes
+This slide makes explicit that Bayes' theorem is not a statistical assumption or a modelling choice -- it is a mathematical theorem derived from the axioms of probability theory.
+
+The product rule P(A ∩ B) = P(A|B)·P(B) is one of the core axioms of conditional probability. Applying it symmetrically to P(A ∩ B) = P(B|A)·P(A) and equating the two expressions gives Bayes' theorem directly.
+
+The substitution A → theta, B → data is purely notational. It maps the abstract result onto the inferential setting: theta is the unknown quantity we want to learn about; data is the information we condition on.
+
+The denominator P(B) = P(data) is the probability of the conditioning event -- it ensures the conditional probability P(A|B) sums to 1 over all A. In the inferential setting, this is the normalizing constant we have discussed throughout the session.
+
+This derivation is due to Thomas Bayes (published posthumously, 1763) and was independently developed and extended by Pierre-Simon Laplace (1812). The framework as a general epistemology for scientific inference is associated with Harold Jeffreys, Leonard Savage, Bruno de Finetti, and more recently E.T. Jaynes (Probability Theory: The Logic of Science, 2003).
+:::
+
+---
+
+## Appendix B: Common Likelihood Families {.smaller}
+
+The likelihood family encodes the data-generating assumption. Different outcome types call for different families.
+
+```{r}
+#| label: fig-distributions
+#| echo: false
+#| fig-height: 4.0
+#| fig-cap: "Shape of five common likelihood families. Parameters chosen for visual clarity."
+
+set.seed(42)
+
+p_normal <- tibble(x = seq(-4, 4, length.out = 300), y = dnorm(x, 0, 1)) |>
+  ggplot(aes(x, y)) +
+  geom_line(color = "steelblue", linewidth = 1) +
+  theme_bw() +
+  theme(panel.grid.minor = element_blank(), aspect.ratio = 0.9) +
+  labs(
+    title = "Gaussian",
+    subtitle = "μ = 0, σ = 1\nContinuous outcomes\nLinear regression",
+    x = "y",
+    y = "Density"
+  )
+
+p_binom <- tibble(x = 0:10, y = dbinom(0:10, 10, 0.4)) |>
+  ggplot(aes(x, y)) +
+  geom_col(fill = "steelblue", width = 0.7) +
+  theme_bw() +
+  theme(panel.grid.minor = element_blank(), aspect.ratio = 0.9) +
+  labs(
+    title = "Binomial",
+    subtitle = "N=10, θ=0.4\nCount of successes\nGlobe toss model",
+    x = "W (successes)",
+    y = "P(W)"
+  )
+
+p_bern <- tibble(x = c(0, 1), y = c(0.6, 0.4), lab = c("Land", "Water")) |>
+  ggplot(aes(x, y)) +
+  geom_col(fill = "#E07B39", width = 0.5) +
+  scale_x_continuous(breaks = c(0, 1), labels = c("L (0)", "W (1)")) +
+  theme_bw() +
+  theme(panel.grid.minor = element_blank(), aspect.ratio = 0.9) +
+  labs(
+    title = "Bernoulli",
+    subtitle = "θ = 0.4\nSingle binary trial\nLogistic regression",
+    x = "Outcome",
+    y = "P(outcome)"
+  )
+
+p_pois <- tibble(x = 0:12, y = dpois(0:12, lambda = 3)) |>
+  ggplot(aes(x, y)) +
+  geom_col(fill = "#7B3F9E", width = 0.7) +
+  theme_bw() +
+  theme(panel.grid.minor = element_blank(), aspect.ratio = 0.9) +
+  labs(
+    title = "Poisson",
+    subtitle = "λ = 3\nCount data (unbounded)\nEvent counts",
+    x = "Count",
+    y = "P(count)"
+  )
+
+p_beta <- tibble(
+  x = seq(0.01, 0.99, length.out = 300),
+  `α=2, β=5` = dbeta(x, 2, 5),
+  `α=5, β=2` = dbeta(x, 5, 2),
+  `α=2, β=2` = dbeta(x, 2, 2)
+) |>
+  pivot_longer(-x, names_to = "params", values_to = "y") |>
+  ggplot(aes(x, y, color = params)) +
+  geom_line(linewidth = 0.9) +
+  scale_color_manual(
+    values = c("steelblue", "firebrick", "goldenrod3"),
+    name = NULL
+  ) +
+  theme_bw() +
+  theme(
+    panel.grid.minor = element_blank(),
+    aspect.ratio = 0.9,
+    legend.position = "bottom",
+    legend.text = element_text(size = 7)
+  ) +
+  labs(
+    title = "Beta",
+    subtitle = "Parameters α, β\nPrior for proportions\n[0, 1] support",
+    x = "θ",
+    y = "Density"
+  )
+
+library(patchwork)
+(p_normal | p_binom | p_bern | p_pois | p_beta) +
+  plot_layout(nrow = 1)
+```
+
+::: notes
+This slide is a reference for students encountering these distributions in the homework, future sessions, or external reading.
+
+Gaussian (Normal): the bell curve. Two parameters: mean mu (location) and standard deviation sigma (spread). Used for continuous outcomes with unbounded support. The likelihood family for standard linear regression.
+
+Binomial(N, theta): the number of successes in N independent Bernoulli trials. Parameters: number of trials N and success probability theta. The likelihood family for the globe toss and any count-of-successes outcome.
+
+Bernoulli(theta): a single binary trial -- the special case Binomial(1, theta). Parameters: success probability theta. The likelihood family for logistic regression with binary outcomes (0/1).
+
+Poisson(lambda): the number of events occurring in a fixed interval, with events independent and occurring at a constant rate lambda. Used for count data that is unbounded above. The likelihood family for event counts, rare events, and time-series of discrete occurrences.
+
+Beta(alpha, beta): a flexible distribution defined on [0, 1]. Parameters alpha and beta control shape: alpha=beta gives symmetric distributions (uniform when both=1, peaked at 0.5 when both>1); alpha>beta gives right-skewed (mass near 1); alpha<beta gives left-skewed (mass near 0). The natural prior distribution for a proportion parameter theta -- and the conjugate prior for the Binomial likelihood (the posterior is also Beta, making the update analytically tractable).
+
+The conjugate Beta-Binomial relationship is worth mentioning: prior Beta(a,b) + data W successes in N trials → posterior Beta(a+W, b+N-W). This is the only case in our course where the posterior has a closed form. For everything else (Gaussian regression, multilevel models), we will need MCMC.
+:::
+
+---
+
+## Appendix B: Likelihood Functions -- Reference {.smaller}
+
+::: {style="font-size: 0.62em;"}
+
+| Family | Parameters | Support | Likelihood $P(\text{data} \mid \boldsymbol{\theta})$ | Typical use |
+|:---|:---:|:---:|:-----|:-----|
+| **Gaussian** | $\mu, \sigma$ | $\mathbb{R}$ | $\displaystyle\frac{1}{\sigma\sqrt{2\pi}}\exp\!\left(-\frac{(y-\mu)^2}{2\sigma^2}\right)$ | Continuous outcomes; linear regression |
+| **Binomial** | $N, \theta$ | $\{0,\ldots,N\}$ | $\displaystyle\binom{N}{W}\theta^W(1-\theta)^{N-W}$ | Count of successes; globe toss |
+| **Bernoulli** | $\theta$ | $\{0,1\}$ | $\theta^y(1-\theta)^{1-y}$ | Single binary trial; logistic regression |
+| **Poisson** | $\lambda$ | $\{0,1,2,\ldots\}$ | $\displaystyle\frac{\lambda^k e^{-\lambda}}{k!}$ | Event counts; rare events |
+| **Beta** | $\alpha,\beta$ | $[0,1]$ | $\displaystyle\frac{\theta^{\alpha-1}(1-\theta)^{\beta-1}}{B(\alpha,\beta)}$ | Prior for proportions; conjugate to Binomial |
+
+:::
+
+. . .
+
+::: {.callout-note style="font-size: 0.7em"}
+The **Bernoulli** is the Binomial with $N = 1$. The **Beta** is most commonly used as a *prior* distribution rather than a likelihood. All these families appear in the proportional form of Bayes' theorem (@eq-prop): the likelihood function changes, but the update logic -- prior × likelihood, normalise -- is always the same.
+:::
+
+::: notes
+This table is a compact reference for the five distributions students will encounter most often in this course and in their reading.
+
+The Gaussian likelihood: the standard normal density. Parameters mu and sigma are the mean and standard deviation of the outcome. In linear regression, mu is modelled as a linear function of predictors (mu = alpha + beta*x), and sigma is estimated as a free parameter.
+
+The Binomial likelihood: already encountered in the globe toss. W is the observed count of successes; N is the fixed number of trials; theta is the success probability.
+
+The Bernoulli likelihood: P(y|theta) = theta^y * (1-theta)^(1-y). For y=1 (success): P = theta. For y=0 (failure): P = 1-theta. This is the link to logistic regression, where theta is modelled as a logistic function of predictors.
+
+The Poisson likelihood: P(k|lambda) = lambda^k * e^{-lambda} / k!. Lambda is the expected count per unit time or space. Used when outcomes are non-negative integers with no fixed upper bound.
+
+The Beta distribution: technically a distribution over [0,1] with a flexible shape. More commonly used as a prior for proportion parameters than as a likelihood. B(alpha, beta) in the denominator is the beta function -- a normalizing constant.
+
+For the take-home exam: students will primarily use Gaussian (linear regression, weeks 8–9), Bernoulli/Binomial (binary outcomes, week 10), and Gaussian with group structure (fixed effects, multilevel, weeks 11–12). The Poisson is introduced for completeness. The Beta is most relevant as a prior distribution.
+:::
+
