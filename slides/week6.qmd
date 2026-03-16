@@ -157,7 +157,7 @@ By the end of today, you should be able to:
 ::: notes
 These are the seven learning goals for the session. The verbs are intentionally testable: articulate, explain, name, state, implement, describe, apply. The take-home exam will engage with several of these directly.
 
-Remind students at the start: today is a pivot. Block I was about tools. Block II is about reasoning under uncertainty. These are different cognitive demands. The programming will be simpler than weeks 3–5 — the challenge today is conceptual. The goal is not to memorize formulas but to understand what the formulas represent scientifically.
+Remind students at the start: today is a pivot. Block I was about tools. Block II is about reasoning under uncertainty. These are different cognitive demands. The programming will be simpler than weeks 3–5 -- the challenge today is conceptual. The goal is not to memorize formulas but to understand what the formulas represent scientifically.
 :::
 
 # Part I: The Opening Question
@@ -181,20 +181,20 @@ Remind students at the start: today is a pivot. Block I was about tools. Block I
 :::
 
 ::: notes
-This is the live activity. Do NOT show slides during this segment — put slides on blank and work at the whiteboard.
+This is the live activity. Do NOT show slides during this segment -- put slides on blank and work at the whiteboard.
 
 Toss the globe ball to students one at a time. Every student who catches it looks at their right index finger and calls out "Water" or "Land." Record the result on the whiteboard as a simple tally. Aim for 15–20 tosses. Keep the pace brisk and the mood light.
 
 After the tosses, let the tally sit on the board and turn to the room. Begin the question sequence slowly with deliberate pauses:
 
-"Based on what we just observed — what proportion of the Earth's surface is water?"
+"Based on what we just observed -- what proportion of the Earth's surface is water?"
 
 Take a few responses without validating or correcting them. Then:
 "How confident are you in that answer?"
 "Would your answer change if we had done only 3 tosses? What about 300?"
 "And here is the most important question: what did you already believe before the first toss?"
 
-That last question is the hinge of the session. Students will realize they walked in with a belief — they just never called it that. Let the discomfort sit briefly.
+That last question is the hinge of the session. Students will realize they walked in with a belief -- they just never called it that. Let the discomfort sit briefly.
 :::
 
 ---
@@ -211,7 +211,7 @@ Before the first toss, you already believed:
 
 . . .
 
-That belief — the one you held *before seeing any data* — is a **prior**.
+That belief -- the one you held *before seeing any data* -- is a **prior**.
 
 . . .
 
@@ -220,13 +220,13 @@ And then you updated it, toss by toss.
 . . .
 
 ::: {.callout-note}
-That process — combining a prior belief with new evidence — **is** Bayesian inference. Today we give it a formal mathematical structure.
+That process -- combining a prior belief with new evidence -- **is** Bayesian inference. Today we give it a formal mathematical structure.
 :::
 
 ::: notes
 The key pedagogical move: making the implicit explicit. Students have been performing informal Bayesian reasoning all their lives. The goal of today is to formalise that intuition, not introduce something alien.
 
-Worth noting: even a "flat" prior is not truly uninformative. A uniform prior over [0, 1] assigns equal probability to "0% water" and "70% water" — which is arguably not what anyone actually believes walking in. This observation plants a seed for the discussion of prior choice later.
+Worth noting: even a "flat" prior is not truly uninformative. A uniform prior over [0, 1] assigns equal probability to "0% water" and "70% water" -- which is arguably not what anyone actually believes walking in. This observation plants a seed for the discussion of prior choice later.
 
 Keep this slide brief. The conceptual elaboration follows. The goal is to create a felt sense of the problem.
 :::
@@ -245,8 +245,8 @@ Keep this slide brief. The conceptual elaboration follows. The goal is to create
 
 In the Bayesian framework:
 
-- The **parameter** $\theta$ — the true proportion of water — is uncertain. It gets a probability distribution.
-- The **data** — the actual tosses — are observed facts. They happened. They are not uncertain.
+- The **parameter** $\theta$ -- the true proportion of water -- is uncertain. It gets a probability distribution.
+- The **data** -- the actual tosses -- are observed facts. They happened. They are not uncertain.
 
 . . .
 
@@ -259,9 +259,9 @@ This is the most important conceptual slide of the entire week. Take time here a
 
 A common student reaction: "But isn't there a true value of theta? The Earth exists. It has a surface. Some fixed fraction of it is water."
 
-The response: Yes, of course there is a true value. But we don't know it. Our uncertainty about it is real, and it has structure. We can say some values are more plausible than others before observing any data. Probability is the language we use to express that structured uncertainty. The randomness is not in the world — it is in our state of knowledge. Philosophers call this the distinction between ontic randomness (the world is random) and epistemic uncertainty (we are uncertain). Bayesian probability is the latter.
+The response: Yes, of course there is a true value. But we don't know it. Our uncertainty about it is real, and it has structure. We can say some values are more plausible than others before observing any data. Probability is the language we use to express that structured uncertainty. The randomness is not in the world -- it is in our state of knowledge. Philosophers call this the distinction between ontic randomness (the world is random) and epistemic uncertainty (we are uncertain). Bayesian probability is the latter.
 
-McElreath (Statistical Rethinking, ch. 1) makes this point clearly: the Bayesian framework treats everything unknown as having a probability distribution — not because the world is random, but because we are uncertain.
+McElreath (Statistical Rethinking, ch. 1) makes this point clearly: the Bayesian framework treats everything unknown as having a probability distribution -- not because the world is random, but because we are uncertain.
 :::
 
 # Part II: What Is Probability?
@@ -307,11 +307,11 @@ $$ {#eq-bayes-prob}
 ::: notes
 It is important not to set up a straw man here. Frequentist statistics is a rigorous framework that has underpinned enormous advances in empirical science. Both interpretations are internally coherent. The point is that different interpretations are suited to different types of scientific questions.
 
-The frequentist framework is particularly powerful for questions about repeatable processes: quality control, the long-run properties of estimators, large-scale randomised experiments. The concept of a p-value is a well-defined frequentist quantity — it describes the probability of observing data at least as extreme as observed, given the null hypothesis, in hypothetical repeated sampling.
+The frequentist framework is particularly powerful for questions about repeatable processes: quality control, the long-run properties of estimators, large-scale randomised experiments. The concept of a p-value is a well-defined frequentist quantity -- it describes the probability of observing data at least as extreme as observed, given the null hypothesis, in hypothetical repeated sampling.
 
-The Bayesian framework is more natural when we want to reason about one-off events, parameter values, or scientific hypotheses that cannot be repeated. The key advantage is that Bayesian probability statements are directly about the quantity of scientific interest — the parameter — rather than about hypothetical repeated experiments.
+The Bayesian framework is more natural when we want to reason about one-off events, parameter values, or scientific hypotheses that cannot be repeated. The key advantage is that Bayesian probability statements are directly about the quantity of scientific interest -- the parameter -- rather than about hypothetical repeated experiments.
 
-The framing "not directly applicable" is deliberate and more accurate than "cannot." Frequentist methods have workarounds for many situations — but they require indirect reasoning that Bayesian methods express directly.
+The framing "not directly applicable" is deliberate and more accurate than "cannot." Frequentist methods have workarounds for many situations -- but they require indirect reasoning that Bayesian methods express directly.
 :::
 
 ---
@@ -331,21 +331,21 @@ For questions like:
 . . .
 
 ::: {style="font-size: 0.8em"}
-... the frequentist framework is **not designed** to provide a direct probability answer. A parameter either has a given value or it does not — it does not have a frequency distribution in a sampling sense.
+... the frequentist framework is **not designed** to provide a direct probability answer. A parameter either has a given value or it does not -- it does not have a frequency distribution in a sampling sense.
 :::
 
 . . .
 
 ::: {.callout-note style="font-size: 0.72em"}
-A 95% frequentist **confidence interval** means: if we repeated this sampling procedure many times, 95% of the resulting intervals would contain the true value. The parameter is fixed — only the interval varies across hypothetical repetitions.
+A 95% frequentist **confidence interval** means: if we repeated this sampling procedure many times, 95% of the resulting intervals would contain the true value. The parameter is fixed -- only the interval varies across hypothetical repetitions.
 
-A 95% Bayesian **credible interval** means: given the data and the prior, we assign 95% probability to the true parameter lying in this range. This is the interpretation most researchers intuitively want — and only the Bayesian framework directly supports it.
+A 95% Bayesian **credible interval** means: given the data and the prior, we assign 95% probability to the true parameter lying in this range. This is the interpretation most researchers intuitively want -- and only the Bayesian framework directly supports it.
 :::
 
 ::: notes
-The confidence interval point is worth elaborating. Hoekstra et al. (2014, Psychonomic Bulletin & Review) surveyed researchers across disciplines and found systematic misinterpretation — the majority read confidence intervals as probability statements about the parameter, which is the Bayesian reading. This is not a failure of researchers; it reflects that the intuitive meaning people want is Bayesian.
+The confidence interval point is worth elaborating. Hoekstra et al. (2014, Psychonomic Bulletin & Review) surveyed researchers across disciplines and found systematic misinterpretation -- the majority read confidence intervals as probability statements about the parameter, which is the Bayesian reading. This is not a failure of researchers; it reflects that the intuitive meaning people want is Bayesian.
 
-The pragmatic framing for the course: we adopt a Bayesian approach because the questions we ask in political science — about parameters, causal effects, and uncertain quantities — are most naturally expressed in a framework where probability measures belief rather than frequency. As the syllabus emphasises: tools should serve the science, not the other way around.
+The pragmatic framing for the course: we adopt a Bayesian approach because the questions we ask in political science -- about parameters, causal effects, and uncertain quantities -- are most naturally expressed in a framework where probability measures belief rather than frequency. As the syllabus emphasises: tools should serve the science, not the other way around.
 
 At the same time, we should not be dismissive of frequentist methods. Students will encounter them throughout their careers in published work. Understanding both frameworks makes for a better-equipped researcher.
 :::
@@ -378,7 +378,7 @@ $$ {#eq-bayes}
 ::: notes
 Present the full formula first, then the table. Give students 10–15 seconds of silence to absorb the structure before speaking.
 
-The decision to call P(data) the "normalizing constant" rather than "marginal likelihood" is deliberate. "Normalizing constant" is both accurate and intuitive: it is a constant that normalises (rescales) the numerator so the result is a proper probability distribution that sums to 1. The "marginal likelihood" terminology is technically precise but carries connotations — model comparison, integration over parameters — that have not been built up yet and would cause confusion at this stage.
+The decision to call P(data) the "normalizing constant" rather than "marginal likelihood" is deliberate. "Normalizing constant" is both accurate and intuitive: it is a constant that normalises (rescales) the numerator so the result is a proper probability distribution that sums to 1. The "marginal likelihood" terminology is technically precise but carries connotations -- model comparison, integration over parameters -- that have not been built up yet and would cause confusion at this stage.
 
 Walk through each term:
 - P(theta): beliefs before the data. A distribution over parameter space.
@@ -411,14 +411,14 @@ P(\theta) = \text{Uniform}(0, 1)
 $$ {#eq-prior-flat}
 
 **Weakly informative prior:**
-More mass on $\theta > 0.5$ — we believe it is more likely than not that more than half the globe is water.
+More mass on $\theta > 0.5$ -- we believe it is more likely than not that more than half the globe is water.
 
 :::
 
 ::: {.column width="50%"}
 
 **Supercertain prior:**
-Almost all mass at $\theta = 0.5$ — we are nearly convinced the globe is exactly half water.
+Almost all mass at $\theta = 0.5$ -- we are nearly convinced the globe is exactly half water.
 
 :::
 ::::::
@@ -426,23 +426,23 @@ Almost all mass at $\theta = 0.5$ — we are nearly convinced the globe is exact
 . . .
 
 ::: {.callout-important style="font-size: 0.7em"}
-**Priors are scientific assumptions — they should be justified.** Every analysis makes prior assumptions. Bayesian analysis makes them *explicit and auditable*. A flat prior is still a prior: it asserts that "0% water" is exactly as plausible as "70% water."
+**Priors are scientific assumptions -- they should be justified.** Every analysis makes prior assumptions. Bayesian analysis makes them *explicit and auditable*. A flat prior is still a prior: it asserts that "0% water" is exactly as plausible as "70% water."
 :::
 
 ::: notes
 The common criticism: "isn't choosing a prior subjective?" Several responses:
 
-First: every analysis makes prior assumptions — about which variables to include, what functional form to assume, what significance threshold to use. Bayesian analysis simply makes those assumptions visible and forces the analyst to defend them.
+First: every analysis makes prior assumptions -- about which variables to include, what functional form to assume, what significance threshold to use. Bayesian analysis simply makes those assumptions visible and forces the analyst to defend them.
 
 Second: a flat prior is itself a substantive assumption. For many parameters (regression coefficients, effect sizes), a completely flat prior is actually less defensible than a weakly informative one based on domain knowledge.
 
-Third: the prior's influence diminishes as data accumulates (demonstrated later in the session). With large samples, different reasonable priors lead to nearly identical posteriors — the data wins.
+Third: the prior's influence diminishes as data accumulates (demonstrated later in the session). With large samples, different reasonable priors lead to nearly identical posteriors -- the data wins.
 
 Fourth: prior sensitivity analysis is standard practice. If conclusions change dramatically with different priors, that is a scientific finding: the data are not very informative about the parameter. If conclusions are robust, you can report that with confidence.
 
 Reference: Gelman and Shalizi (2013, British Journal of Mathematical and Statistical Psychology) offer a careful philosophical discussion.
 
-On the significance threshold: choosing alpha = 0.05 is itself a prior-like decision — it is a threshold not derived from the data or the research question. It is arguably more arbitrary than a theoretically motivated prior.
+On the significance threshold: choosing alpha = 0.05 is itself a prior-like decision -- it is a threshold not derived from the data or the research question. It is arguably more arbitrary than a theoretically motivated prior.
 :::
 
 ---
@@ -464,15 +464,15 @@ where $W$ = water observations, $N$ = total tosses.
 . . .
 
 ::: {.callout-note style="font-size: 0.7em"}
-**Likelihood family.** The specific distributional formula — the Binomial — is our *likelihood family*. It formalises our assumption about the data-generating process: each toss is an independent binary trial with probability $\theta$ of water. Different research contexts call for different likelihood families: the **Bernoulli** for single binary outcomes (the Binomial is a sum of Bernoulli trials), the **Gaussian** for continuous outcomes, the **Poisson** for count data. In the coming weeks we will work with several of these. The prior–likelihood–posterior logic of Bayes' theorem (@eq-bayes) remains *exactly the same* regardless of which likelihood family we choose — only the formula inside changes.
+**Likelihood family.** The specific distributional formula -- the Binomial -- is our *likelihood family*. It formalises our assumption about the data-generating process: each toss is an independent binary trial with probability $\theta$ of water. Different research contexts call for different likelihood families: the **Bernoulli** for single binary outcomes (the Binomial is a sum of Bernoulli trials), the **Gaussian** for continuous outcomes, the **Poisson** for count data. In the coming weeks we will work with several of these. The prior–likelihood–posterior logic of Bayes' theorem (@eq-bayes) remains *exactly the same* regardless of which likelihood family we choose -- only the formula inside changes.
 :::
 
 ::: notes
-The introduction of "likelihood family" is deliberate forward-priming. When we reach logistic regression (week 10), students will already have the concept: we are choosing a Bernoulli/Binomial likelihood family rather than a Gaussian one. The workflow — prior, likelihood, posterior — does not change. Only the family does.
+The introduction of "likelihood family" is deliberate forward-priming. When we reach logistic regression (week 10), students will already have the concept: we are choosing a Bernoulli/Binomial likelihood family rather than a Gaussian one. The workflow -- prior, likelihood, posterior -- does not change. Only the family does.
 
 An important technical note: P(data|theta) is NOT a probability distribution over theta. Integrating it over theta from 0 to 1 does not give 1 in general. It is a function of theta that gives the probability of the observed data under each possible parameter value. This is why we need the normalizing constant in the denominator of Bayes' theorem.
 
-The maximum likelihood estimate (MLE) — the value of theta that maximises the likelihood — is W/N. For W=4, N=6: MLE = 4/6 ≈ 0.667. Students who have seen frequentist regression know MLE estimation. This is a useful bridge.
+The maximum likelihood estimate (MLE) -- the value of theta that maximises the likelihood -- is W/N. For W=4, N=6: MLE = 4/6 ≈ 0.667. Students who have seen frequentist regression know MLE estimation. This is a useful bridge.
 :::
 
 ---
@@ -489,23 +489,23 @@ $$ {#eq-posterior}
 
 . . .
 
-- Always a **full probability distribution** over $\theta$ — not a point estimate, not a $p$-value
+- Always a **full probability distribution** over $\theta$ -- not a point estimate, not a $p$-value
 - Expresses *remaining uncertainty* after combining prior knowledge with evidence
-- More concentrated than the prior — data reduces uncertainty
-- **Today's posterior is tomorrow's prior** — updating is sequential and coherent
+- More concentrated than the prior -- data reduces uncertainty
+- **Today's posterior is tomorrow's prior** -- updating is sequential and coherent
 
 . . .
 
 ::: {.callout-tip style="font-size: 0.68em"}
-The posterior contains *everything* we know about $\theta$ after observing the data. Point summaries — mean, median, mode — can be extracted from it, but the full distribution is richer. In coming weeks, we will work routinely with full posteriors rather than just their summary statistics.
+The posterior contains *everything* we know about $\theta$ after observing the data. Point summaries -- mean, median, mode -- can be extracted from it, but the full distribution is richer. In coming weeks, we will work routinely with full posteriors rather than just their summary statistics.
 :::
 
 ::: notes
 Three things to emphasise here:
 
-1. "Full distribution" — the payoff of the framework. We do not get a single number, we get a distribution. This carries full uncertainty quantification. A point estimate discards all that information.
+1. "Full distribution" -- the payoff of the framework. We do not get a single number, we get a distribution. This carries full uncertainty quantification. A point estimate discards all that information.
 
-2. "Sequential coherence" — today's posterior is tomorrow's prior. If we see new data, we update from the current posterior. The result is identical to fitting the model to all data simultaneously (for exchangeable observations). We will demonstrate this graphically later.
+2. "Sequential coherence" -- today's posterior is tomorrow's prior. If we see new data, we update from the current posterior. The result is identical to fitting the model to all data simultaneously (for exchangeable observations). We will demonstrate this graphically later.
 
 3. The MAP estimate (mode of the posterior) equals the MLE when the prior is flat. OLS regression is a special case of MAP estimation with a flat prior and Gaussian likelihood. This connects Bayesian and frequentist frameworks.
 :::
@@ -536,7 +536,7 @@ $$ {#eq-pdata-disc}
 
 . . .
 
-Think of it as: *the total plausibility of the data across all possible ways it could have been generated* — in every possible world $\theta$, weighted by how plausible that world was to begin with.
+Think of it as: *the total plausibility of the data across all possible ways it could have been generated* -- in every possible world $\theta$, weighted by how plausible that world was to begin with.
 
 . . .
 
@@ -545,7 +545,7 @@ It ensures $\int P(\theta \mid \text{data}) \, d\theta = 1$: the posterior is a 
 ::: notes
 The "all possible ways the data could have been generated" framing is a useful intuition pump, related to McElreath's "garden of forking paths" metaphor. For the globe toss: imagine every possible world (every value of theta). In each world, the observed data (4 waters in 6 tosses) has some probability. P(data) averages those probabilities across all worlds, weighted by how plausible each world was a priori.
 
-For the discrete 6-sided globe: P(data) is a sum of 7 terms — trivially computable by hand. Students will do this in the exercise. With a flat prior (1/7 each), P(data) = (1/7) × sum of likelihoods ≈ 0.122. This single number ensures the 7 posterior probabilities sum to 1.
+For the discrete 6-sided globe: P(data) is a sum of 7 terms -- trivially computable by hand. Students will do this in the exercise. With a flat prior (1/7 each), P(data) = (1/7) × sum of likelihoods ≈ 0.122. This single number ensures the 7 posterior probabilities sum to 1.
 
 The conceptual message: P(data) is not mysterious. It is just a rescaling factor. Its only job is to ensure the posterior is a proper probability distribution.
 :::
@@ -567,7 +567,7 @@ $$ {#eq-pdata-6}
 
 . . .
 
-**Simple linear regression** — three parameters: $\alpha$, $\beta$, $\sigma$:
+**Simple linear regression** -- three parameters: $\alpha$, $\beta$, $\sigma$:
 
 $$
 P(\text{data}) = \iiint P(\text{data} \mid \alpha, \beta, \sigma) \cdot P(\alpha, \beta, \sigma) \, d\alpha\, d\beta\, d\sigma
@@ -592,14 +592,14 @@ $k$-dimensional integral. **No analytical solution** for most realistic models.
 . . .
 
 ::: {.callout-note style="font-size: 0.7em"}
-This is exactly the problem **MCMC** (next week) solves — not by computing $P(\text{data})$, but by sampling from the posterior *without ever evaluating the denominator*.
+This is exactly the problem **MCMC** (next week) solves -- not by computing $P(\text{data})$, but by sampling from the posterior *without ever evaluating the denominator*.
 :::
 
 :::
 ::::::
 
 ::: notes
-The triple integral in the linear regression example uses three integral signs — one for each parameter (alpha, beta, sigma). This is standard mathematical notation for a volume integral over three-dimensional parameter space.
+The triple integral in the linear regression example uses three integral signs -- one for each parameter (alpha, beta, sigma). This is standard mathematical notation for a volume integral over three-dimensional parameter space.
 
 The dimensional explosion makes the computational problem visceral:
 - 7 hypotheses: trivial sum
@@ -614,7 +614,7 @@ The point is not despair but motivation. MCMC is an elegant solution: instead of
 
 ## The Proportional Form {.smaller}
 
-$P(\text{data})$ is a constant — it does **not** depend on $\theta$.
+$P(\text{data})$ is a constant -- it does **not** depend on $\theta$.
 
 . . .
 
@@ -633,17 +633,17 @@ $$ {#eq-prop}
 . . .
 
 ::: {.callout-note style="font-size: 0.72em"}
-$P(\text{data})$ is simply a rescaling number — the accountant that makes the posterior sum to 1. It is conceptually required by the full theorem (@eq-bayes) and formally important, but its *shape* plays no role. The proportional form (@eq-prop) tells us everything about the posterior's shape.
+$P(\text{data})$ is simply a rescaling number -- the accountant that makes the posterior sum to 1. It is conceptually required by the full theorem (@eq-bayes) and formally important, but its *shape* plays no role. The proportional form (@eq-prop) tells us everything about the posterior's shape.
 
 This is why, although Bayes' theorem has **four components**, we speak of **three ingredients**: prior, likelihood, posterior. The normalizing constant is background bookkeeping, not a scientific ingredient.
 
-Next week: MCMC algorithms work exclusively with the proportional form — they compare ratios of posterior values, so $P(\text{data})$ cancels out. This is precisely why MCMC never needs to evaluate the integral in the denominator.
+Next week: MCMC algorithms work exclusively with the proportional form -- they compare ratios of posterior values, so $P(\text{data})$ cancels out. This is precisely why MCMC never needs to evaluate the integral in the denominator.
 :::
 
 ::: notes
 This slide provides the conceptual closure of Part IV. The proportional form is the version you will see most often in textbooks and code. But it is crucial that students understand it as a simplification of the full theorem, not a separate result.
 
-The three-ingredients framing: prior, likelihood, posterior. Four components in the formula, but three scientific ingredients. The normalizing constant is not a scientific choice — it is uniquely determined by the prior and likelihood. Once you choose the prior and the likelihood family, P(data) is fixed.
+The three-ingredients framing: prior, likelihood, posterior. Four components in the formula, but three scientific ingredients. The normalizing constant is not a scientific choice -- it is uniquely determined by the prior and likelihood. Once you choose the prior and the likelihood family, P(data) is fixed.
 
 The connection to MCMC: the Metropolis algorithm (week 7) proposes a step from theta_current to theta_proposed, and accepts or rejects based on the ratio P(theta_proposed|data) / P(theta_current|data). Since P(data) appears in both numerator and denominator of that ratio, it cancels out. MCMC never needs to evaluate the integral. This is the elegant technical insight that makes Bayesian inference computationally feasible for realistic models.
 :::
@@ -654,7 +654,7 @@ The connection to MCMC: the Metropolis algorithm (week 7) proposes a step from t
 
 ## A Tractable Model: The 6-Sided Globe {.smaller}
 
-Imagine the Earth as a **6-sided cube** — like a die. Each face is either Land (L) or Water (W).
+Imagine the Earth as a **6-sided cube** -- like a die. Each face is either Land (L) or Water (W).
 
 . . .
 
@@ -664,14 +664,14 @@ $$
 \theta \in \left\{\frac{0}{6},\;\frac{1}{6},\;\frac{2}{6},\;\frac{3}{6},\;\frac{4}{6},\;\frac{5}{6},\;\frac{6}{6}\right\}
 $$ {#eq-theta-6}
 
-Exactly **7 hypotheses** — one for each possible number of water faces.
+Exactly **7 hypotheses** -- one for each possible number of water faces.
 
 . . .
 
 :::::: columns
 ::: {.column width="50%"}
 
-**Prior:** We start flat — every hypothesis equally plausible.
+**Prior:** We start flat -- every hypothesis equally plausible.
 
 $$P
 (\theta_k) = \frac{1}{7} \quad \text{for } k \in \{0,\ldots,6\}
@@ -691,7 +691,7 @@ $$\text{data} = (W = 4,\; N = 6)$$
 . . .
 
 ::: {.callout-note style="font-size: 0.68em"}
-This is a deliberate simplification of the real continuous problem. The discrete 6-sided version makes every step of Bayes' theorem computable by arithmetic. The logic is identical to the continuous case — only the number of hypotheses differs.
+This is a deliberate simplification of the real continuous problem. The discrete 6-sided version makes every step of Bayes' theorem computable by arithmetic. The logic is identical to the continuous case -- only the number of hypotheses differs.
 :::
 
 ::: notes
@@ -699,14 +699,14 @@ The 6-sided globe is pedagogically preferable to a 10-sided version because 7 hy
 
 W=4, N=6 is chosen so the MLE = 4/6 ≈ 0.667 coincides exactly with one of the grid points (theta_4 = 4/6). This makes it easy to identify the posterior peak on the table and plot.
 
-The flat prior (1/7 each) is not truly uninformative in a technical sense — Jeffreys' prior would differ — but it is the natural pedagogical starting point.
+The flat prior (1/7 each) is not truly uninformative in a technical sense -- Jeffreys' prior would differ -- but it is the natural pedagogical starting point.
 :::
 
 ---
 
 ## The Likelihood: Scoring Each Hypothesis {.smaller}
 
-Our likelihood family is **Binomial** (@eq-binomial) — chosen because each toss is an independent binary trial (water or land). For each $\theta_k$:
+Our likelihood family is **Binomial** (@eq-binomial) -- chosen because each toss is an independent binary trial (water or land). For each $\theta_k$:
 
 $$
 P(W{=}4,\; N{=}6 \mid \theta_k) = \binom{6}{4} \theta_k^{4} (1 - \theta_k)^{2} = 15 \cdot \theta_k^{4} (1 - \theta_k)^{2}
@@ -733,7 +733,7 @@ $$ {#eq-lik-6}
 Peak at $\theta_4 = 4/6 \approx 0.667 = W/N$. This is the **Maximum Likelihood Estimate (MLE)**.
 
 ::: notes
-Walk through the table carefully. The binomial coefficient C(6,4) = 15 is constant across every row — it counts the number of distinct orderings of 4 waters and 2 lands in 6 tosses. What changes row by row is theta^4 * (1-theta)^2.
+Walk through the table carefully. The binomial coefficient C(6,4) = 15 is constant across every row -- it counts the number of distinct orderings of 4 waters and 2 lands in 6 tosses. What changes row by row is theta^4 * (1-theta)^2.
 
 At theta=0: any water observation is impossible, so the likelihood is exactly 0. At theta=1: any land observation is impossible, so also exactly 0.
 
@@ -741,7 +741,7 @@ Sum of all likelihoods: 0 + 0.008 + 0.082 + 0.234 + 0.329 + 0.201 + 0 = 0.854.
 
 With a flat prior of 1/7: P(data) = 0.854/7 ≈ 0.122. This is the normalizing constant.
 
-Connection to likelihood family: the formula in this table IS the Binomial likelihood from eq-binomial. The likelihood family determines the formula. In week 8, using a Gaussian likelihood family, the formula will look different — but the table logic (score each hypothesis, multiply by prior, normalize) will be exactly the same.
+Connection to likelihood family: the formula in this table IS the Binomial likelihood from eq-binomial. The likelihood family determines the formula. In week 8, using a Gaussian likelihood family, the formula will look different -- but the table logic (score each hypothesis, multiply by prior, normalize) will be exactly the same.
 
 The MLE connection: in frequentist maximum likelihood, 4/6 = 0.667 would be the estimate. In Bayesian analysis, we use the full likelihood column to update the prior, not just its maximum.
 :::
@@ -758,7 +758,7 @@ $$ {#eq-post-flat}
 
 . . .
 
-The $\frac{1}{7}$ cancels — the posterior is the **normalised likelihood**.
+The $\frac{1}{7}$ cancels -- the posterior is the **normalised likelihood**.
 
 . . .
 
@@ -769,15 +769,15 @@ $$ {#eq-pdata-example}
 . . .
 
 ::: {.callout-note style="font-size: 0.68em"}
-With a flat prior, the prior cancels from the calculation entirely. The posterior is driven solely by the data. This is the neutral starting point — no prior knowledge, just the evidence.
+With a flat prior, the prior cancels from the calculation entirely. The posterior is driven solely by the data. This is the neutral starting point -- no prior knowledge, just the evidence.
 :::
 
 ::: notes
 This is the full Bayes' theorem calculation made explicit. Every term corresponds to a row in the likelihood table.
 
-Key insight: with a flat prior, the posterior IS the normalised likelihood. The prior has no influence on shape — only the data matters. This will change when we introduce non-flat priors.
+Key insight: with a flat prior, the posterior IS the normalised likelihood. The prior has no influence on shape -- only the data matters. This will change when we introduce non-flat priors.
 
-The connection to frequentist MLE: under a flat prior, Bayesian MAP (the posterior mode) = frequentist MLE. The two approaches agree when the prior is uninformative. They diverge as the prior becomes more informative — and the extent of divergence diminishes as data accumulates.
+The connection to frequentist MLE: under a flat prior, Bayesian MAP (the posterior mode) = frequentist MLE. The two approaches agree when the prior is uninformative. They diverge as the prior becomes more informative -- and the extent of divergence diminishes as data accumulates.
 :::
 
 ---
@@ -812,7 +812,7 @@ With an uninformative prior, **the data alone determines the posterior shape**. 
 
 ::: notes
 Visual observations to narrate:
-- The prior (blue) is flat — all 7 bars identical height.
+- The prior (blue) is flat -- all 7 bars identical height.
 - The likelihood (gold) peaks at 4/6 and falls off symmetrically.
 - The posterior (red) is identical in shape to the likelihood, just differently scaled to sum to 1.
 
@@ -823,7 +823,7 @@ Ask students: "Does this feel right as a starting point?" Provoke them to think 
 
 ## Weakly Informative Prior: Adding Scientific Knowledge {.smaller}
 
-We believe — on scientific grounds — that it is *more likely* the globe is more than half covered in water. We encode this modestly: hypotheses with $\theta > 0.5$ get **double the prior weight**.
+We believe -- on scientific grounds -- that it is *more likely* the globe is more than half covered in water. We encode this modestly: hypotheses with $\theta > 0.5$ get **double the prior weight**.
 
 . . .
 
@@ -846,7 +846,7 @@ $$ {#eq-prior-weak-norm}
 
 . . .
 
-This prior does **not** rule anything out — every hypothesis remains possible. It merely encodes a moderate scientific belief that a water-majority globe is more plausible.
+This prior does **not** rule anything out -- every hypothesis remains possible. It merely encodes a moderate scientific belief that a water-majority globe is more plausible.
 
 ::: {.callout-note style="font-size: 0.68em"}
 This is what "weakly informative" means in practice: the prior has a preferred direction, but it does not concentrate belief strongly enough to override moderate evidence.
@@ -860,7 +860,7 @@ The 2:1 weight ratio is arbitrary but simple and illustrative. In practice, a re
 
 Normalisation: raw weights 1,1,1,1,2,2,2 sum to 11. Each weight-1 hypothesis gets 1/11 ≈ 0.091; each weight-2 hypothesis gets 2/11 ≈ 0.182. Together they sum to 4×(1/11) + 3×(2/11) = 4/11 + 6/11 = 10/11... 
 
-Wait — let me recheck. The theta values at or below 0.5 are: 0/6, 1/6, 2/6, 3/6 (four values). The theta values above 0.5 are: 4/6, 5/6, 6/6 (three values). So weights: four 1s and three 2s = 4 + 6 = 10. Hmm. Let me recheck in the code...
+Wait -- let me recheck. The theta values at or below 0.5 are: 0/6, 1/6, 2/6, 3/6 (four values). The theta values above 0.5 are: 4/6, 5/6, 6/6 (three values). So weights: four 1s and three 2s = 4 + 6 = 10. Hmm. Let me recheck in the code...
 
 Actually in the code: prior_weak_raw <- c(1, 1, 1, 1, 2, 2, 2) corresponds to theta = 0/6, 1/6, 2/6, 3/6 (weight 1 each, theta ≤ 0.5) and theta = 4/6, 5/6, 6/6 (weight 2 each, theta > 0.5). Sum = 4+6 = 10. So each weight-1 gets 1/10 and each weight-2 gets 2/10 = 1/5.
 
@@ -870,7 +870,7 @@ Actually I need to re-examine: theta_6 = seq(0, 1, by = 1/6) gives 0, 1/6, 2/6, 
 
 I need to fix this discrepancy. Either fix the code or fix the slide. In the note I should correct this.
 
-For the speaker notes version, note: the slide has a typo — sum should be 10, not 11. Update accordingly in the final version. This is a calculation to double-check before teaching.
+For the speaker notes version, note: the slide has a typo -- sum should be 10, not 11. Update accordingly in the final version. This is a calculation to double-check before teaching.
 :::
 
 ---
@@ -899,12 +899,12 @@ tibble(
 
 . . .
 
-The prior **pushes probability mass toward $\theta > 0.5$**, reducing posterior weight on land-majority hypotheses. With only $N = 6$ tosses, the data cannot fully override a prior — but it does constrain it.
+The prior **pushes probability mass toward $\theta > 0.5$**, reducing posterior weight on land-majority hypotheses. With only $N = 6$ tosses, the data cannot fully override a prior -- but it does constrain it.
 
 ::: notes
 Point out the shift visually: theta=4/6 and 5/6 gain posterior weight relative to the flat-prior case, while theta=1/6 and 2/6 lose some. The posterior has moved right.
 
-The shift is modest because the prior is only weakly informative (2:1 ratio), and the data (W=4/6, favouring theta ≈ 0.667) happens to be roughly consistent with the prior's preferred direction. If the data were pulling in a different direction — say, mostly land — the posterior would be a more visible compromise.
+The shift is modest because the prior is only weakly informative (2:1 ratio), and the data (W=4/6, favouring theta ≈ 0.667) happens to be roughly consistent with the prior's preferred direction. If the data were pulling in a different direction -- say, mostly land -- the posterior would be a more visible compromise.
 
 Ask: "With only 6 tosses, how much should the prior matter?" Answer: quite a bit. 6 observations is limited evidence. The next two slides demonstrate the self-correcting property: with more data, the prior influence diminishes.
 :::
@@ -951,7 +951,7 @@ A strong prior resists the data. 6 tosses is not sufficient evidence to override
 The supercertain prior (94% at theta=0.5) overwhelms 6 observations. The posterior stays concentrated near 0.5 despite the data suggesting 0.667.
 
 Ask students: "Is this a problem or a feature?" The answer depends on context:
-- If the prior is well-founded (strong theory or previous experiments with thousands of observations), a prior that resists weak data is scientifically appropriate — new evidence should need to be substantial to overturn established knowledge.
+- If the prior is well-founded (strong theory or previous experiments with thousands of observations), a prior that resists weak data is scientifically appropriate -- new evidence should need to be substantial to overturn established knowledge.
 - If the prior is poorly motivated or dogmatic, this is a liability.
 
 This is exactly why prior sensitivity analysis matters: report how much the conclusions change when you vary the prior. If conclusions are entirely prior-driven and unresponsive to data, that is a finding worth reporting.
@@ -963,7 +963,7 @@ The supercertain prior is deliberately extreme to make the effect visible in 7 b
 
 ## The Self-Correcting Property: More Data Wins {.smaller}
 
-What happens with 10 times more data — but the same observed proportion $W/N = 4/6$?
+What happens with 10 times more data -- but the same observed proportion $W/N = 4/6$?
 
 ```{r}
 #| label: fig-more-data
@@ -995,7 +995,7 @@ With 60 tosses, even the supercertain prior is overridden. **The data wins. All 
 ::: notes
 This is the self-correcting property of Bayesian inference: under regularity conditions, the posterior converges to a spike at the true parameter value as N → ∞, regardless of the (non-degenerate) prior.
 
-Practical implication: with large samples, prior choices do not matter much. Two researchers who started with very different priors will arrive at nearly identical posteriors. This is why Bayesian and frequentist analyses tend to agree with large samples — the prior becomes negligible relative to the likelihood.
+Practical implication: with large samples, prior choices do not matter much. Two researchers who started with very different priors will arrive at nearly identical posteriors. This is why Bayesian and frequentist analyses tend to agree with large samples -- the prior becomes negligible relative to the likelihood.
 
 Corollary: with small samples, priors matter more. The Bayesian framework scales the influence of the prior naturally with sample size, without requiring any arbitrary tuning parameter.
 
@@ -1057,7 +1057,7 @@ $$ {#eq-seq}
 
 . . .
 
-This follows directly from the product rule of probability — assuming tosses are independent given $\theta$:
+This follows directly from the product rule of probability -- assuming tosses are independent given $\theta$:
 
 $$
 P(\theta \mid \text{data}_{1:T}) \propto P(\theta) \cdot \prod_{t=1}^{T} P(\text{data}_t \mid \theta)
@@ -1066,7 +1066,7 @@ $$ {#eq-seq-final}
 . . .
 
 ::: {.callout-note style="font-size: 0.68em"}
-**Result:** Updating one observation at a time gives *exactly* the same posterior as fitting the model to all observations simultaneously. Bayesian updating is fully coherent — the path to the posterior does not matter, only the data (and the prior).
+**Result:** Updating one observation at a time gives *exactly* the same posterior as fitting the model to all observations simultaneously. Bayesian updating is fully coherent -- the path to the posterior does not matter, only the data (and the prior).
 :::
 
 ::: notes
@@ -1075,9 +1075,9 @@ This slide provides the formal justification for sequential updating. The key as
 The formal derivation: P(theta | data_1:T) ∝ P(data_1:T | theta) * P(theta) = P(theta) * prod_t P(data_t | theta) by independence. This is the same expression regardless of whether we compute it in one go or sequentially.
 
 Practical implications:
-1. Models can be updated incrementally as new data arrive — no need to refit from scratch.
+1. Models can be updated incrementally as new data arrive -- no need to refit from scratch.
 2. Meta-analysis has a natural Bayesian interpretation: each study is a sequential update.
-3. The result is always the same as a joint analysis — coherence is guaranteed by the probability calculus, not by convention.
+3. The result is always the same as a joint analysis -- coherence is guaranteed by the probability calculus, not by convention.
 
 If a student asks: "What if I have a bad prior at the start?" The self-correcting property from the previous slides answers this: with enough data, the prior is overwhelmed. Sequential updating with bad priors corrects itself over time.
 :::
@@ -1086,7 +1086,7 @@ If a student asks: "What if I have a bad prior at the start?" The self-correctin
 
 ## From 7 Hypotheses to 1000 Grid Points {.smaller}
 
-The same logic — prior, likelihood family, posterior — works with a finer grid over continuous $\theta \in [0, 1]$.
+The same logic -- prior, likelihood family, posterior -- works with a finer grid over continuous $\theta \in [0, 1]$.
 
 ```{r}
 #| label: grid-approx-code
@@ -1123,17 +1123,17 @@ cat("sum(posterior) =", round(sum(posterior), 6), "\n") # should be ≈ 1
 ```
 
 ::: notes
-Walk through each block of the code — each corresponds to a term in Bayes' theorem.
+Walk through each block of the code -- each corresponds to a term in Bayes' theorem.
 
 prior: P(theta), one of three shapes matching exactly the three priors students have seen on the discrete slides. The continuous version of "weak" uses a step function at 0.5; "supercertain" uses a narrow Normal distribution with sd=0.02.
 
 likelihood: P(data|theta) at every grid point. The dbinom() function IS our Binomial likelihood family (eq-binomial). The family choice determines the function used here.
 
-numerator: P(data|theta) * P(theta) — the numerator of Bayes' theorem.
+numerator: P(data|theta) * P(theta) -- the numerator of Bayes' theorem.
 
-normalizing_const: sum(numerator) — the discrete approximation of P(data), the normalizing constant. This IS the integral in eq-pdata-cont, approximated by a sum over 1000 points.
+normalizing_const: sum(numerator) -- the discrete approximation of P(data), the normalizing constant. This IS the integral in eq-pdata-cont, approximated by a sum over 1000 points.
 
-posterior: numerator / normalizing_const — the full posterior, verified to sum to 1 by the cat() line.
+posterior: numerator / normalizing_const -- the full posterior, verified to sum to 1 by the cat() line.
 
 Encourage students to try all combinations of W, N, and prior_type. The key patterns to find:
 - W=4, N=6, flat → posterior = normalised likelihood (matches the discrete figure)
@@ -1199,7 +1199,7 @@ tibble(
 ```
 
 ::: notes
-The three curves are each scaled by their own maximum (divided by max()) so they are visually comparable on the same y-axis regardless of absolute scale. This is for display purposes only — the posterior values are correctly normalised.
+The three curves are each scaled by their own maximum (divided by max()) so they are visually comparable on the same y-axis regardless of absolute scale. This is for display purposes only -- the posterior values are correctly normalised.
 
 Patterns to discuss:
 1. flat prior, any W/N: posterior = likelihood shape
@@ -1222,13 +1222,13 @@ Students should run this code themselves in the exercise and homework, varying t
 
 **1. Probability as degree of belief**
 
-Probability quantifies graded beliefs about uncertain quantities. This makes it applicable to parameters and hypotheses — not just to repeatable experiments.
+Probability quantifies graded beliefs about uncertain quantities. This makes it applicable to parameters and hypotheses -- not just to repeatable experiments.
 
 . . .
 
 **2. Everything uncertain gets a distribution**
 
-Parameters are uncertain; we represent that uncertainty with probability distributions. The data is fixed — we observed it. The parameter is what we infer. Today's posterior is tomorrow's prior.
+Parameters are uncertain; we represent that uncertainty with probability distributions. The data is fixed -- we observed it. The parameter is what we infer. Today's posterior is tomorrow's prior.
 
 . . .
 
@@ -1274,9 +1274,9 @@ The observable universe contains approximately $10^{80}$ atoms.
 . . .
 
 ::: {.callout-important style="font-size: 0.72em"}
-**Grid approximation is computationally infeasible for any realistic model.** We need a fundamentally different approach — one that *explores* the posterior rather than *evaluating it everywhere*.
+**Grid approximation is computationally infeasible for any realistic model.** We need a fundamentally different approach -- one that *explores* the posterior rather than *evaluating it everywhere*.
 
-That approach is **Markov Chain Monte Carlo (MCMC)**. The way to understand it involves a king, a chain of islands, and a surprisingly simple rule about when to move and when to stay. Crucially: MCMC never needs to compute $P(\text{data})$ at all — which is exactly why it can scale to realistic models.
+That approach is **Markov Chain Monte Carlo (MCMC)** simulation. The way to understand it involves a king, a chain of islands, and a surprisingly simple rule about when to move and when to stay. Crucially: MCMC never needs to compute $P(\text{data})$ at all -- which is exactly why it can scale to realistic models.
 :::
 
 ::: notes
@@ -1297,8 +1297,8 @@ Do not resolve this mystery now. The cliffhanger should create genuine curiosity
 
 - The **Metropolis algorithm**: a random walk that recovers the posterior
 - **What a chain is** and what the samples it produces *represent*
-- **Trace plots**, warmup/burn-in, convergence, $\hat{R}$, effective sample size — conceptual understanding, not diagnostic recipes
-- **brms as the engine** — the king's journey, made practical
+- **Trace plots**, warmup/burn-in, convergence, $\hat{R}$, effective sample size -- conceptual understanding, not diagnostic recipes
+- **brms as the engine** -- the king's journey, made practical
 
 . . .
 
@@ -1321,7 +1321,7 @@ The one sentence to leave them with: "When brms prints 'Chains: 4, Iterations: 2
 - Clone the Week 6 exercise repo from GitHub
 - Open `exercise_week06.qmd` in Positron
 - Work through three parts:
-  1. **Discrete model:** Implement the 6-sided globe in R — compute likelihood, $P(\text{data})$, posterior. Reproduce and extend the plots from the slides.
+  1. **Discrete model:** Implement the 6-sided globe in R -- compute likelihood, $P(\text{data})$, posterior. Reproduce and extend the plots from the slides.
   2. **Prior sensitivity:** Apply all three priors to the class toss data. Plot and compare posteriors. Write 2–3 sentences per prior.
   3. **Grid approximation playground:** Use the playground code to explore how $W$, $N$, and prior type affect the posterior shape.
 - **Fast finishers:** optional extension on posterior sampling and credible intervals
@@ -1329,9 +1329,9 @@ The one sentence to leave them with: "When brms prints 'Chains: 4, Iterations: 2
 ::: notes
 Part 1: forces students to reproduce the likelihood table and Bayes' theorem calculation numerically. This is the most important part for consolidating the formalism.
 
-Part 2: prior sensitivity with writing required. Students should not just run the code — they should write 2–3 sentences per prior: what does it encode scientifically, and is it defensible?
+Part 2: prior sensitivity with writing required. Students should not just run the code -- they should write 2–3 sentences per prior: what does it encode scientifically, and is it defensible?
 
-Part 3: the playground. Encourage all combinations of W, N, and prior_type. No wrong answers — the goal is intuition building.
+Part 3: the playground. Encourage all combinations of W, N, and prior_type. No wrong answers -- the goal is intuition building.
 
 Fast finishers: show them a 90% credible interval computed from posterior samples using quantile(), ask for a verbal interpretation, and hint that the homework asks them to contrast this with a confidence interval. This plants the seed.
 
@@ -1362,10 +1362,10 @@ Reserve ~10 minutes for a homework preview.
 
 ::: notes
 Tiered structure:
-- Core 1: operationalises Bayes' theorem in full — P(data) must be computed explicitly.
-- Core 2: prior as scientific assumption — writing required, not just code.
+- Core 1: operationalises Bayes' theorem in full -- P(data) must be computed explicitly.
+- Core 2: prior as scientific assumption -- writing required, not just code.
 - Stretch 3: posterior sampling, which bridges the conceptual posterior to the computational samples that MCMC produces. Key forward-priming for week 7.
-- Stretch 4: the credible vs. confidence interval distinction in the student's own words. No right wording — only honest engagement.
+- Stretch 4: the credible vs. confidence interval distinction in the student's own words. No right wording -- only honest engagement.
 - Optional: connects the abstract to the student's own research interests.
 
 Grade pass/fail as per syllabus. Serious and complete engagement with Core and Stretch passes.
