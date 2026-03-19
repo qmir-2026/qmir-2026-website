@@ -9,5 +9,6 @@ week1.qmd
 **/*.quarto_ipynb
 
 *cache
+*files
 
 fig-demo-1.png

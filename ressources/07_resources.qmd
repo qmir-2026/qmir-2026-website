@@ -15,6 +15,7 @@ nocite: |
   @mcelreath2026rethinking-A08
   @mcelreath2026rethinking-B01
   @montecarlo2021simulation
+  @carpenter2017stan
 ---
 
 ::: {#refs}

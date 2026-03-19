@@ -470,31 +470,23 @@ Historical note: the name "Monte Carlo" comes from the casino in Monaco — chos
 ## Origins I: Los Alamos, 1946 {.smaller}
 
 :::::: columns
-::: {.column width="55%"}
+::: {.column width="75%"}
 
 **Stanisław Ulam**, recovering from illness, plays solitaire.
-
-. . .
 
 He wonders: *what is the probability of a successful deal?*
 
 Analytical calculation: intractable. Simulate many games and count: natural.
 
-. . .
-
 The insight: **random simulation can replace analytical integration**. The law of large numbers guarantees convergence.
-
-. . .
 
 Ulam shares the idea with **John von Neumann** and **Nicholas Metropolis** at Los Alamos National Laboratory. The method is applied to neutron diffusion calculations for nuclear weapons design.
 
-. . .
-
-The name *"Monte Carlo"* — after the casino in Monaco — is coined by Metropolis as a code name for classified work [@metropolis1949monte].
+The name *"Monte Carlo"* — after the [casino in Monaco](https://en.wikipedia.org/wiki/Monte_Carlo_Casino) — is coined by Metropolis as a code name for classified work [@metropolis1949monte].
 
 :::
 
-::: {.column width="45%"}
+::: {.column width="25%"}
 
 ::: {.callout-note style="font-size: 0.68em"}
 
@@ -532,8 +524,6 @@ Metropolis, Rosenbluth, Rosenbluth, Teller & Teller publish the first MCMC algor
 
 The acceptance rule — accept moves probabilistically in proportion to relative density — is the key innovation. We will see it today.
 
-. . .
-
 **Three decades of dormancy**
 
 The method was essentially unknown to statisticians. The connection to Bayesian inference was not made.
@@ -542,17 +532,13 @@ The method was essentially unknown to statisticians. The connection to Bayesian 
 
 ::: {.column width="50%"}
 
-. . .
-
 **1990 — The Bayesian Revolution**
 
 @gelfand1990sampling introduce Gibbs sampling to statisticians, demonstrating that MCMC can compute marginal posterior distributions for realistic Bayesian models. The paper ignites a transformation of applied statistics.
 
-. . .
-
 **2012–present — Stan and brms**
 
-Stan (Carpenter et al.) implements **Hamiltonian Monte Carlo / NUTS** — a dramatically more efficient algorithm. `brms` [@burkner2017brms] provides a formula interface accessible to applied researchers. This is what we use.
+Stan [@carpenter2017stan] implements **Hamiltonian Monte Carlo / NUTS** — a dramatically more efficient algorithm. `brms` [@burkner2017brms] provides a formula interface accessible to applied researchers. This is what we use.
 
 :::
 ::::::
@@ -612,7 +598,7 @@ Monte Carlo can approximate the value of $\pi$ — a deterministic constant — 
 . . .
 
 :::::: columns
-::: {.column width="55%"}
+::: {.column width="75%"}
 
 **Geometry:** A quarter-circle of radius 1 is inscribed in the unit square.
 
@@ -634,9 +620,7 @@ $$
 
 :::
 
-::: {.column width="45%"}
-
-. . .
+::: {.column width="25%"}
 
 ::: {.callout-note style="font-size: 0.7em"}
 **We never computed $\pi/4$ analytically.** We counted. This is Monte Carlo integration: approximate the area of a region by the fraction of random points that fall inside it.
@@ -866,7 +850,9 @@ tibble(
 
 . . .
 
+::: {style="font-size: 0.8em"}
 **The analogy:** population plays the role of *posterior probability*; the king's position plays the role of the *current parameter value*.
+:::
 
 ::: notes
 Introduce the story before showing the bar chart. Let students visualize it before the data appears. "There are 10 islands in a ring. Each has a different population — some small, some large. The king wants to serve all his people equally in proportion to their numbers. But there's no census, no total count. He can only ask about the island he's on and a neighbor."
@@ -878,13 +864,15 @@ The analogy line at the bottom is the pedagogical key. State it clearly: "Every 
 
 ---
 
-## The Island King: The Rule {.smaller}
+## The Island King: The Rule
 
+::: {style="font-size: 0.7em"}
 The king follows a single, simple decision rule at each step:
+:::
 
 . . .
 
-::: {style="font-size: 0.9em; border-left: 3px solid steelblue; padding-left: 1em"}
+::: {style="font-size: 0.5em; border-left: 3px solid steelblue; padding-left: 1em"}
 1. Propose a random step to an adjacent island (flip a coin: left or right)
 2. If the proposed island is **more populated** than the current: *always go*
 3. If the proposed island is **less populated**: *go with probability equal to the population ratio*; otherwise stay
@@ -892,15 +880,18 @@ The king follows a single, simple decision rule at each step:
 
 . . .
 
+::: {style="font-size: 0.7em"}
 Formally, accept the proposed move with probability:
 
 $$
 p(\text{accept}) = \min\!\left(1,\; \frac{\text{pop}_{\text{proposed}}}{\text{pop}_{\text{current}}}\right)
 = \min\!\left(1,\; \frac{P(\theta^* \mid \text{data})}{P(\theta^{(t)} \mid \text{data})}\right)
 $$ {#eq-metropolis}
+:::
 
 . . .
 
+::: {style="font-size: 0.7em"}
 Now substitute the full Bayes' theorem and watch what happens:
 
 $$
@@ -908,10 +899,11 @@ $$
 = \frac{P(\text{data} \mid \theta^*) \cdot P(\theta^*) \,/\, P(\text{data})}{P(\text{data} \mid \theta^{(t)}) \cdot P(\theta^{(t)}) \,/\, P(\text{data})}
 = \frac{P(\text{data} \mid \theta^*) \cdot P(\theta^*)}{P(\text{data} \mid \theta^{(t)}) \cdot P(\theta^{(t)})}
 $$ {#eq-pdata-cancels}
+:::
 
 . . .
 
-::: {.callout-important style="font-size: 0.72em"}
+::: {.callout-important style="font-size: 0.5em"}
 $P(\text{data})$ **cancels exactly** in the ratio. The acceptance rule only ever needs the *proportional form* of the posterior — likelihood $\times$ prior. The intractable integral is never evaluated.
 :::
 
@@ -1402,12 +1394,16 @@ Why does it handle correlation? HMC uses the gradient of the log-posterior, whic
 
 ---
 
-## Log-Probability: A Technical Note {.smaller}
+## Log-Probability: A Technical Note
+
+::: {style="font-size: 0.6em"}
 
 Stan (and therefore `brms`) works **entirely in log-probability space**. Three reasons:
+:::
 
 . . .
 
+::: {style="font-size: 0.6em"}
 **1. Numerical stability**
 
 Likelihoods of large datasets involve products of many small probabilities:
@@ -1416,18 +1412,23 @@ P(\text{data} \mid \theta) = \prod_{i=1}^{N} P(y_i \mid \theta)
 $$
 
 For $N = 200$ and each factor $\approx 0.3$, the product $\approx 10^{-105}$ — underflows to zero in floating point. The log-likelihood is $\sum_i \log P(y_i \mid \theta)$ — numerically well-behaved.
+:::
 
 . . .
 
+::: {style="font-size: 0.6em"}
 **2. Gradient computation**
 
 HMC requires the gradient $\nabla_\theta \log P(\theta \mid \text{data})$ at every leapfrog step. This is tractable for standard likelihood families; the product form becomes a sum in log space.
+:::
 
 . . .
 
+::: {style="font-size: 0.6em"}
 **3. The sign convention**
 
 Stan minimizes $U(\theta) = -\log P(\theta \mid \text{data})$ (the negative log-posterior). High-probability regions are **valleys**; the ball rolls *toward* high-probability regions. This is **not** gradient descent — the ball keeps rolling and exploring the full landscape. It does not converge to a single point.
+:::
 
 ::: notes
 This slide addresses a common source of confusion: the relationship between log-probability, the sign convention, and gradient descent.
