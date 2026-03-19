@@ -22,6 +22,7 @@ execute:
   message: false
   warning: false
   freeze: true
+  cache: true
 ---
 
 ```{r}
@@ -1108,7 +1109,7 @@ With **two parameters**, the posterior becomes a **surface** — a 2D landscape.
 p_contour <- land2d |>
   ggplot(aes(x = x, y = y, z = density)) +
   geom_contour_filled(bins = 11) +
-  scale_fill_brewer(palette = "Blues", direction = 1) +
+  # scale_fill_brewer(palette = "Blues", direction = 1) +
   coord_equal() +
   theme_bw() +
   theme(
@@ -1127,7 +1128,7 @@ p_neglog2d <- land2d |>
   mutate(neg_log = -log(density + 1e-12)) |>
   ggplot(aes(x = x, y = y, z = neg_log)) +
   geom_contour_filled(bins = 11) +
-  scale_fill_brewer(palette = "Greys", direction = 1) +
+  # scale_fill_brewer(palette = "Greys", direction = 1) +
   coord_equal() +
   theme_bw() +
   theme(
@@ -1413,6 +1414,7 @@ Likelihoods of large datasets involve products of many small probabilities:
 $$
 P(\text{data} \mid \theta) = \prod_{i=1}^{N} P(y_i \mid \theta)
 $$
+
 For $N = 200$ and each factor $\approx 0.3$, the product $\approx 10^{-105}$ — underflows to zero in floating point. The log-likelihood is $\sum_i \log P(y_i \mid \theta)$ — numerically well-behaved.
 
 . . .
