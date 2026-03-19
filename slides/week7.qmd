@@ -1104,7 +1104,7 @@ With **two parameters**, the posterior becomes a **surface** — a 2D landscape.
 #| label: fig-land2d
 #| echo: false
 #| fig-height: 3.5
-#| fig-cap: "Left: posterior surface for two correlated parameters (top-down view; darker blue = higher probability). Right: the same surface as a negative log-posterior bowl."
+#| fig-cap: "Left: posterior surface for two correlated parameters (top-down view; lighter/yellow = higher probability). Right: the same surface as a negative log-posterior — lighter/yellow = high U(θ) = low probability; darker = deep valley = high probability."
 
 p_contour <- land2d |>
   ggplot(aes(x = x, y = y, z = density)) +
@@ -1121,7 +1121,7 @@ p_contour <- land2d |>
     x = expression(theta[1]),
     y = expression(theta[2]),
     title = "2D posterior (top-down contour map)",
-    subtitle = "Darker = higher probability"
+    subtitle = "Lighter = higher probability"
   )
 
 p_neglog2d <- land2d |>
