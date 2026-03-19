@@ -1168,9 +1168,9 @@ You can copy the code below into an empty Quarto code cell and play around to ge
 #| eval: true
 
 # ── Change these ──────────────────────────────────────────────────────────────
-W <- 4 # try 40, 400, 4000
-N <- 6 # try 60, 600, 6000
-prior_type <- "supercertain" # try: prior="weak", "supercertain"; W=40
+W <- 40000 # try 40, 400, 4000
+N <- 60000 # try 60, 600, 6000
+prior_type <- "weak" # try: prior="weak", "supercertain"; W=40
 
 theta_grid <- seq(0, 1, length.out = 1000)
 prior <- switch(
