@@ -1,0 +1,2225 @@
+---
+author: Tristan Muno
+date: last-modified
+date-format: MMMM D, YYYY
+bibliography: ../references.bib
+biblio-style: apsr
+format:
+  revealjs:
+    embed-resources: true
+    preview-links: false
+    slideNumber: true
+    incremental: true
+    code-fold: show
+    code-summary: "View source"
+    pdfSeparateFragments: false
+    footer: QMIR -- {{< meta date >}} -- Week 7
+    logo: ./images/uma_ss.png
+    theme: theme.scss
+editor: source
+execute:
+  echo: true
+  message: false
+  warning: false
+  freeze: true
+---
+
+```{r}
+#| label: setup
+#| include: false
+#| eval: true
+
+library(tidyverse)
+library(brms)
+library(bayesplot)
+library(patchwork)
+
+set.seed(2026)
+
+# ─────────────────────────────────────────────────────────────────────────────
+# SHARED COLOURS (consistent with week 6)
+# ─────────────────────────────────────────────────────────────────────────────
+col_1 <- "steelblue"
+col_2 <- "#E07B39"
+col_3 <- "#7B3F9E"
+col_4 <- "goldenrod3"
+
+chain_cols <- c(col_1, col_2, col_3, col_4)
+
+base_theme <- list(
+  theme_bw(),
+  theme(
+    panel.grid.minor = element_blank(),
+    legend.position = "bottom",
+    legend.title = element_blank()
+  )
+)
+
+# ─────────────────────────────────────────────────────────────────────────────
+# PART III: MONTE CARLO — PI APPROXIMATION
+# ─────────────────────────────────────────────────────────────────────────────
+n_pi <- 5000
+pi_pts <- tibble(
+  x = runif(n_pi),
+  y = runif(n_pi)
+) |>
+  mutate(inside = (x^2 + y^2) <= 1)
+
+pi_conv <- tibble(
+  n = seq_len(n_pi),
+  pi_est = cumsum(pi_pts$inside) / seq_len(n_pi) * 4
+)
+
+# ─────────────────────────────────────────────────────────────────────────────
+# PART IV: ISLAND KING — METROPOLIS SIMULATION
+# ─────────────────────────────────────────────────────────────────────────────
+island_pop <- c(1, 2, 3, 4, 5, 3, 2, 1, 2, 3)
+n_islands <- length(island_pop)
+n_steps <- 10000
+
+king_pos <- integer(n_steps)
+king_pos[1] <- 1L
+
+for (t in 2:n_steps) {
+  cur <- king_pos[t - 1L]
+  prop <- cur + sample(c(-1L, 1L), 1L)
+  if (prop < 1L) {
+    prop <- n_islands
+  }
+  if (prop > n_islands) {
+    prop <- 1L
+  }
+  r <- island_pop[prop] / island_pop[cur]
+  king_pos[t] <- if (runif(1) < r) prop else cur
+}
+
+king_df <- tibble(step = seq_len(n_steps), island = king_pos)
+
+king_hist <- tibble(
+  island = seq_len(n_islands),
+  sampled = tabulate(king_pos, nbins = n_islands) / n_steps,
+  true_prop = island_pop / sum(island_pop)
+)
+
+# ─────────────────────────────────────────────────────────────────────────────
+# PART V: PROBABILITY LANDSCAPE
+# ─────────────────────────────────────────────────────────────────────────────
+
+# -- 1D landscape -----------------------------------------------------------
+mu_tgt <- 1.0
+sd_tgt <- 1.2
+
+land1d <- tibble(
+  theta = seq(-3.5, 5.5, length.out = 400),
+  density = dnorm(theta, mu_tgt, sd_tgt),
+  neg_log = -dnorm(theta, mu_tgt, sd_tgt, log = TRUE)
+)
+
+# -- 2D landscape (correlated bivariate normal) ------------------------------
+bvn_density <- function(x, y, sx = 1, sy = 1.5, rho = 0.7) {
+  z <- ((x / sx)^2 - 2 * rho * (x / sx) * (y / sy) + (y / sy)^2)
+  exp(-z / (2 * (1 - rho^2))) / (2 * pi * sx * sy * sqrt(1 - rho^2))
+}
+
+land2d <- expand_grid(
+  x = seq(-3.5, 3.5, length.out = 150),
+  y = seq(-4.5, 4.5, length.out = 150)
+) |>
+  mutate(density = bvn_density(x, y))
+
+# ─────────────────────────────────────────────────────────────────────────────
+# PART V: 1D HMC TRAJECTORIES (leapfrog on neg-log-posterior)
+# ─────────────────────────────────────────────────────────────────────────────
+U_1d <- function(theta) (theta - mu_tgt)^2 / (2 * sd_tgt^2)
+dU_1d <- function(theta) (theta - mu_tgt) / sd_tgt^2
+
+leapfrog_1d <- function(theta0, p0, eps = 0.18, L = 28) {
+  theta <- theta0
+  p <- p0
+  out <- tibble(theta = theta, potential = U_1d(theta), step = 0L)
+  p <- p - eps / 2 * dU_1d(theta)
+  for (i in seq_len(L)) {
+    theta <- theta + eps * p
+    if (i < L) {
+      p <- p - eps * dU_1d(theta)
+    }
+    out <- add_row(out, theta = theta, potential = U_1d(theta), step = i)
+  }
+  out
+}
+
+set.seed(77)
+hmc_trajs <- bind_rows(
+  leapfrog_1d(-2.8, 0.9, L = 28) |> mutate(traj = "Trajectory A"),
+  leapfrog_1d(3.2, -0.7, L = 28) |> mutate(traj = "Trajectory B"),
+  leapfrog_1d(0.2, 1.6, L = 28) |> mutate(traj = "Trajectory C")
+)
+
+# ─────────────────────────────────────────────────────────────────────────────
+# PART V: 2D RANDOM-WALK METROPOLIS vs. HMC (for efficiency comparison)
+# ─────────────────────────────────────────────────────────────────────────────
+Sigma_2d <- matrix(c(1, 0.7 * 1 * 1.5, 0.7 * 1 * 1.5, 1.5^2), 2, 2)
+Sigma_2d_inv <- solve(Sigma_2d)
+
+log_post_2d <- function(q) {
+  q <- as.numeric(q)
+  -0.5 * as.numeric(t(q) %*% Sigma_2d_inv %*% q)
+}
+
+# Random-walk Metropolis (very small step → slow mixing, for illustration)
+n_samp <- 3000
+rw_chain <- matrix(NA_real_, n_samp, 2)
+rw_chain[1, ] <- c(-3, 3)
+
+set.seed(42)
+for (t in 2:n_samp) {
+  prop <- rw_chain[t - 1, ] + rnorm(2, 0, 0.12)
+  log_alpha <- log_post_2d(prop) - log_post_2d(rw_chain[t - 1, ])
+  rw_chain[t, ] <- if (log(runif(1)) < log_alpha) prop else rw_chain[t - 1, ]
+}
+rw_df <- as_tibble(rw_chain, .name_repair = "minimal") |>
+  setNames(c("x", "y")) |>
+  mutate(step = row_number())
+
+# Simple HMC (leapfrog) on same target
+leapfrog_2d <- function(q, p, eps = 0.22, L = 12) {
+  q <- as.numeric(q)
+  p <- as.numeric(p)
+  p <- p - eps / 2 * as.numeric(Sigma_2d_inv %*% q)
+  for (i in seq_len(L)) {
+    q <- q + eps * p
+    if (i < L) p <- p - eps * as.numeric(Sigma_2d_inv %*% q)
+  }
+  p <- p - eps / 2 * as.numeric(Sigma_2d_inv %*% q)
+  list(q = q, p = p)
+}
+
+hmc_chain <- matrix(NA_real_, n_samp, 2)
+hmc_chain[1, ] <- c(-3, 3)
+
+set.seed(42)
+for (t in 2:n_samp) {
+  q_cur <- hmc_chain[t - 1, ]
+  p_cur <- rnorm(2)
+  lf <- leapfrog_2d(q_cur, p_cur)
+  q_prop <- lf$q
+  p_prop <- lf$p
+  U_cur <- -log_post_2d(q_cur)
+  U_prop <- -log_post_2d(q_prop)
+  K_cur <- sum(p_cur^2) / 2
+  K_prop <- sum(p_prop^2) / 2
+  hmc_chain[t, ] <- if (log(runif(1)) < -(U_prop + K_prop) + (U_cur + K_cur)) {
+    q_prop
+  } else {
+    q_cur
+  }
+}
+hmc_df <- as_tibble(hmc_chain, .name_repair = "minimal") |>
+  setNames(c("x", "y")) |>
+  mutate(step = row_number())
+
+# ─────────────────────────────────────────────────────────────────────────────
+# PART VI: GOOD vs. BAD TRACE PLOTS (manual Metropolis on Normal(0,1))
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Good: generous step size, overdispersed starts → chains mix quickly
+set.seed(99)
+good_chains <- map_dfr(1:4, function(id) {
+  x <- numeric(1000)
+  x[1] <- c(-3, -1, 1, 3)[id]
+  for (t in 2:1000) {
+    prop <- x[t - 1] + rnorm(1, 0, 0.9)
+    log_alp <- dnorm(prop, log = TRUE) - dnorm(x[t - 1], log = TRUE)
+    x[t] <- if (log(runif(1)) < log_alp) prop else x[t - 1]
+  }
+  tibble(iteration = 1:1000, value = x, chain = factor(id))
+})
+
+# Bad: tiny step size, extreme dispersed starts → chains cannot mix
+set.seed(99)
+bad_chains <- map_dfr(1:4, function(id) {
+  start_pts <- c(-9, -5, 5, 9)
+  x <- numeric(1000)
+  x[1] <- start_pts[id]
+  for (t in 2:1000) {
+    prop <- x[t - 1] + rnorm(1, 0, 0.04)
+    log_alp <- dnorm(prop, log = TRUE) - dnorm(x[t - 1], log = TRUE)
+    x[t] <- if (log(runif(1)) < log_alp) prop else x[t - 1]
+  }
+  tibble(iteration = 1:1000, value = x, chain = factor(id))
+})
+
+# ─────────────────────────────────────────────────────────────────────────────
+# PART VIII: SYNTHETIC DATA AND BRMS FIT
+# ─────────────────────────────────────────────────────────────────────────────
+n_obs <- 200
+x_obs <- rnorm(n_obs, 0, 1)
+y_obs <- 2 + 0.7 * x_obs + rnorm(n_obs, 0, 1)
+df_synth <- tibble(x = x_obs, y = y_obs)
+
+fit_synth <- brm(
+  formula = y ~ x,
+  data = df_synth,
+  prior = c(
+    prior(normal(0, 5), class = Intercept),
+    prior(normal(0, 2), class = b),
+    prior(exponential(1), class = sigma)
+  ),
+  chains = 4,
+  iter = 2000,
+  warmup = 1000,
+  seed = 2026,
+  silent = 2
+)
+```
+
+## QMIR 2026
+
+### Week 7: Markov Chain Monte Carlo
+
+![](./images/uma_palace.png){width="100%"} {{< meta author >}} <a href="https://github.com/dertristan" target="_blank" style="text-decoration: none; margin-left: 10px;"> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16"> <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/> </svg> </a> <a href="mailto:tristan.muno@uni-mannheim.de" style="text-decoration: none; margin-left: 5px;"> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16"> <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"/> </svg> </a> <br> {{< meta date >}}
+
+::: notes
+Welcome back. Last week we built the conceptual and formal foundations of Bayesian inference: probability as degree of belief, the prior–likelihood–posterior logic, Bayes' theorem, and grid approximation. We ended with a deliberate cliffhanger — grid approximation breaks the moment models become even modestly realistic. Today we solve that problem. By the end of this session, students will understand what MCMC is, why it works, and how to use brms to fit and diagnose a Bayesian model. The session is conceptual-first: the Island King story and the ball-on-a-landscape intuition do the heavy lifting; the mathematics confirms and formalizes what the intuition already conveys.
+
+Logistics: this session is more lecture-heavy than usual. The hands-on component arrives in week 8, where the workflow introduced today becomes the standard tool. Today is about building the mental model that makes everything downstream legible.
+:::
+
+---
+
+## Week 7 Learning Goals {.smaller}
+
+By the end of today, you should be able to:
+
+1. Articulate why grid approximation is computationally intractable for realistic models, and why an alternative is necessary
+2. Explain the **Monte Carlo idea**: approximating integrals by random sampling and counting, and describe its convergence properties
+3. Define a **Markov Chain** and explain what a *stationary distribution* is
+4. State the **Metropolis acceptance rule**, explain why it produces the correct stationary distribution, and show why $P(\text{data})$ cancels
+5. Explain qualitatively how **Hamiltonian Monte Carlo (HMC)** differs from random-walk Metropolis and why it is more efficient
+6. Interpret `brms` output: trace plots, $\hat{R}$, ESS, and posterior distributions
+7. Understand that **MCMC convergence cannot be proven**, only falsified — and recognize what non-convergence looks like
+
+::: notes
+These seven goals mirror the format of week 6 and are intentionally testable. Read them out at the start and return to this slide at the end of Part VII (the conceptual summary) to show which goal each section addressed. Goals 1–2 are covered in Parts I–III; Goals 3–4 in Part IV; Goal 5 in Part V; Goals 6–7 in Parts VI and VIII. The take-home exam will engage directly with Goals 4, 6, and 7.
+
+Notice the verb choice: "articulate," "explain," "define," "state," "interpret," "understand." These signal the expected depth. Students do not need to derive the acceptance criterion from scratch; they do need to explain in plain language why P(data) cancels.
+:::
+
+# Part I: Where We Left Off
+
+## Statistics Is (Still) Counting {.smaller}
+
+Before we move forward, a brief ritual re-activation.
+
+. . .
+
+Last week's core claim:
+
+::: {.callout-note style="font-size: 0.8em"}
+**Statistics, at its heart, is counting.**
+
+- *What happened* — the data we actually observed
+- *What did not happen* — alternative outcomes that were possible
+- *What could have happened* — the full space of hypotheses about the data-generating process
+- *How much we have counted* — the precision and remaining uncertainty of our inferences
+:::
+
+. . .
+
+And the **key conceptual move** of Bayesian inference:
+
+> Probability is a **degree of rational belief** — not a long-run frequency. Parameters are uncertain; they get probability distributions. The data is fixed; it is observed.
+
+::: notes
+This is the activation slide. Speak it rather than read it — students should recognize it immediately from last week. The goal is to wake up the relevant neural pathways before introducing today's material. Do not spend more than 2 minutes here.
+
+The "statistics is counting" framing is borrowed from McElreath's Statistical Rethinking. Its value is that it grounds everything in a single, almost trivially simple idea, from which the entire machinery of Bayesian inference follows.
+
+If students look uncertain during this slide, the notes for week 6 are stored in the materials. You can briefly ask: "Someone remind me — what is the difference between a frequentist confidence interval and a Bayesian credible interval?" This activates memory retrieval and surfaces any remaining confusion before the new material begins.
+:::
+
+---
+
+## Bayes' Theorem: The Proportional Form {.smaller}
+
+The three ingredients of Bayesian inference:
+
+$$
+\underbrace{P(\theta \mid \text{data})}_{\text{Posterior}}
+= \frac{\underbrace{P(\text{data} \mid \theta)}_{\text{Likelihood}} \cdot \underbrace{P(\theta)}_{\text{Prior}}}{\underbrace{P(\text{data})}_{\text{Normalizing constant}}}
+\propto P(\text{data} \mid \theta) \cdot P(\theta)
+$$
+
+. . .
+
+The **proportional form** captures everything about the posterior's *shape*. The normalizing constant $P(\text{data})$ merely rescales the numerator so the posterior is a valid probability distribution.
+
+. . .
+
+::: {.callout-important style="font-size: 0.72em"}
+**Last week's problem.** $P(\text{data})$ is an integral over the entire parameter space:
+$$
+P(\text{data}) = \int_{\Theta} P(\text{data} \mid \theta) \cdot P(\theta) \, d\theta
+$$
+We approximated it on a discrete grid. With 7 hypotheses: trivial. With realistic models: **computationally impossible**. Today we fix this.
+:::
+
+::: notes
+The purpose of this slide is to re-state the mathematical objects clearly before showing why the denominator becomes a problem. Emphasize: the proportional form is the scientific content; the denominator is merely bookkeeping — but bookkeeping we cannot do analytically for most models.
+
+The callout should feel like returning to an unresolved tension from last week, not like new material. Students who attended week 6 should recognize the integral formulation from the "why the denominator gets hard" slides.
+
+Transition: "So — if we cannot compute this integral, how do we learn the shape of the posterior?" Pause. "The answer is MCMC. And it's genuinely clever."
+:::
+
+---
+
+## The Dimensional Explosion {.smaller}
+
+Grid approximation: evaluate the posterior at every point on a grid.
+
+. . .
+
+| Parameters | Grid points per dim. | Total grid cells | Feasible? |
+|:---:|:---:|:---:|:---:|
+| 1 | 1,000 | $10^3$ | ✓ |
+| 3 | 1,000 | $10^9$ | Barely |
+| 10 | 1,000 | $10^{30}$ | No |
+| 50 | 1,000 | $10^{150}$ | Never |
+
+. . .
+
+The observable universe contains approximately $10^{80}$ atoms.
+
+. . .
+
+::: {.callout-note style="font-size: 0.72em"}
+A simple bivariate linear regression model has **three continuous parameters** ($\alpha$, $\beta$, $\sigma$). A multilevel model with 50 groups might easily have 50+ parameters. Grid approximation is not merely slow at scale — it is **categorically impossible** regardless of hardware.
+:::
+
+. . .
+
+::: {style="font-size: 0.9em; text-align: center; padding: 0.4em"}
+**The key insight:** we do not need to visit every point in parameter space.  
+We need to *spend time* where the posterior mass actually is.
+:::
+
+::: notes
+The table does the heavy lifting here. Present it row by row, letting the numbers land. The comparison to the number of atoms in the universe is not hyperbole — 10^150 is genuinely unimaginable relative to any physical scale we have.
+
+The insight in the final callout is the conceptual pivot for the entire session. Drive it home: "Imagine you want to know which floor of a building is most occupied. You do not need to count every room. You can find out by following the crowd. MCMC is the mathematical version of following the crowd."
+
+This transition from "grid fails" to "explore instead" motivates the Monte Carlo idea without yet introducing Markov Chains.
+:::
+
+# Part II: MCMC — Name and Origins
+
+## Unpacking the Acronym {.smaller}
+
+**MCMC = Markov Chain Monte Carlo**
+
+. . .
+
+Two ideas, combined:
+
+:::::: columns
+::: {.column width="50%"}
+
+**Monte Carlo**
+
+Using *random sampling* to approximate quantities that are hard to compute analytically.
+
+→ Taught first in **Part III**
+
+The philosophical engine: approximate integrals by counting random draws.
+
+:::
+
+::: {.column width="50%"}
+
+**Markov Chain**
+
+A sequence of states where the *next state depends only on the current state*.
+
+→ Taught second in **Part IV**
+
+The structural mechanism: construct a random walk whose long-run behavior is the target distribution.
+
+:::
+::::::
+
+. . .
+
+::: {.callout-note style="font-size: 0.72em"}
+**MCMC combines both:** we design a Markov Chain whose random wandering — when run long enough — produces samples from the target posterior. Crucially, this never requires computing $P(\text{data})$.
+
+We teach Monte Carlo first, Markov Chains second, then show how they combine. The order of teaching is the reverse of the acronym.
+:::
+
+::: notes
+This slide maps the session structure explicitly. Students who see the roadmap upfront tend to integrate the pieces better. Point to each column as you introduce it, and make clear that both halves will be taught separately before being combined.
+
+The last point — that MCMC never requires computing P(data) — should be announced as a promissory note. "By the end of Part IV, you will see exactly why." Do not explain it yet; let the anticipation build through the Island King story.
+
+Historical note: the name "Monte Carlo" comes from the casino in Monaco — chosen by Nicholas Metropolis as a code name during classified work at Los Alamos, because Stanisław Ulam's uncle reportedly borrowed money from relatives to gamble there.
+:::
+
+---
+
+## Origins I: Los Alamos, 1946 {.smaller}
+
+:::::: columns
+::: {.column width="55%"}
+
+**Stanisław Ulam**, recovering from illness, plays solitaire.
+
+. . .
+
+He wonders: *what is the probability of a successful deal?*
+
+Analytical calculation: intractable. Simulate many games and count: natural.
+
+. . .
+
+The insight: **random simulation can replace analytical integration**. The law of large numbers guarantees convergence.
+
+. . .
+
+Ulam shares the idea with **John von Neumann** and **Nicholas Metropolis** at Los Alamos National Laboratory. The method is applied to neutron diffusion calculations for nuclear weapons design.
+
+. . .
+
+The name *"Monte Carlo"* — after the casino in Monaco — is coined by Metropolis as a code name for classified work [@metropolis1949monte].
+
+:::
+
+::: {.column width="45%"}
+
+::: {.callout-note style="font-size: 0.68em"}
+
+**The physical problem:** how do neutrons travel through fissile material? The collision events are random. Tracking individual particles analytically is impossible. Simulating millions of random neutron paths and averaging outcomes: feasible.
+
+The same logic that models nuclear reactors will, fifty years later, power Bayesian inference in political science.
+
+:::
+
+:::
+::::::
+
+::: notes
+This is the narrative slide. Tell it as a story — do not read bullets. The key beats are:
+1. Ulam playing solitaire, 1946 — a mundane, relatable origin
+2. The insight: simulation beats closed-form integration
+3. The Los Alamos context: classified, wartime, high stakes — this signals the method's power
+4. The casino name: makes the story memorable
+
+The connection to our course: "The same mathematical idea Ulam used to simulate neutron collisions in 1946 is what Stan uses to compute your posterior distributions in 2026. The tools your bachelor's thesis will use share a direct intellectual lineage with the Manhattan Project." This lands every time.
+
+Do not get drawn into discussion of the Manhattan Project itself. One sentence of context, then move on.
+:::
+
+---
+
+## Origins II: From Physics to Statistics {.smaller}
+
+:::::: columns
+::: {.column width="50%"}
+
+**1953 — The Metropolis Algorithm**
+
+Metropolis, Rosenbluth, Rosenbluth, Teller & Teller publish the first MCMC algorithm [@metropolis1953equation]. Written by physicists, for physics. The method computes equilibrium properties of particle systems.
+
+The acceptance rule — accept moves probabilistically in proportion to relative density — is the key innovation. We will see it today.
+
+. . .
+
+**Three decades of dormancy**
+
+The method was essentially unknown to statisticians. The connection to Bayesian inference was not made.
+
+:::
+
+::: {.column width="50%"}
+
+. . .
+
+**1990 — The Bayesian Revolution**
+
+@gelfand1990sampling introduce Gibbs sampling to statisticians, demonstrating that MCMC can compute marginal posterior distributions for realistic Bayesian models. The paper ignites a transformation of applied statistics.
+
+. . .
+
+**2012–present — Stan and brms**
+
+Stan (Carpenter et al.) implements **Hamiltonian Monte Carlo / NUTS** — a dramatically more efficient algorithm. `brms` [@burkner2017brms] provides a formula interface accessible to applied researchers. This is what we use.
+
+:::
+::::::
+
+::: notes
+The historical arc tells the story of cross-disciplinary fertilization: physicists invent the method, statisticians ignore it for 37 years, then it revolutionizes Bayesian computation. The lesson for students: methodological innovations often travel slowly across disciplines.
+
+Gelfand and Smith (1990) is one of the most cited papers in all of statistics. It demonstrated, via examples, that problems which were analytically intractable could be solved by sampling. The "Bayesian revolution" of the 1990s — the explosion of Bayesian methods in ecology, epidemiology, political science, economics — was made possible by that paper and the computational infrastructure that followed.
+
+Stan (2012): the Stan Development Team at Columbia, led by Andrew Gelman and Bob Carpenter. Stan compiles statistical models to C++ and runs HMC/NUTS. brms translates R formula syntax to Stan code, making the full power of Stan accessible without writing Stan directly. This is the intellectual and technical genealogy of the tools students are using.
+:::
+
+# Part III: Monte Carlo — Random Sampling as Integration
+
+## The Core Idea {.smaller}
+
+**Monte Carlo integration:** replace an intractable integral with an average over random samples.
+
+. . .
+
+If $\theta^{(1)}, \theta^{(2)}, \ldots, \theta^{(S)} \overset{\text{iid}}{\sim} p(\theta)$, then by the law of large numbers:
+
+$$
+\mathbb{E}_{p}[f(\theta)] = \int f(\theta)\, p(\theta)\, d\theta \approx \frac{1}{S} \sum_{s=1}^{S} f\!\left(\theta^{(s)}\right)
+\quad \text{as } S \to \infty
+$$ {#eq-mc-estimator}
+
+. . .
+
+The approximation error decreases at rate $1/\!\sqrt{S}$: doubling the samples halves the standard error.
+
+. . .
+
+::: {.callout-note style="font-size: 0.72em"}
+**Why does this help us?** We want to summarize the posterior — compute its mean, credible intervals, tail probabilities. If we could draw *samples* from the posterior, we could compute any such quantity by averaging (@eq-mc-estimator). The samples replace the integral.
+
+The posterior *itself* is the hard object; its *summaries* become easy once we have samples. The challenge is to generate those samples without being able to evaluate the posterior at every point.
+:::
+
+::: notes
+This slide introduces the Monte Carlo estimator formally. The key components:
+1. The theorem: law of large numbers + integration → Monte Carlo estimator
+2. The rate: 1/√S — this is independent of the dimension of θ, which is the crucial advantage over grid approximation (where cost is exponential in dimension)
+3. The practical payoff: once we have samples, everything is easy
+
+Walk through the notation: f(θ) is any function of the parameter — the posterior mean (f(θ) = θ), the posterior standard deviation, a tail probability, a derived quantity. The Monte Carlo estimate is always just an average over samples.
+
+The key conceptual gap to flag: we do not yet know how to draw samples from the posterior without computing P(data). That gap is closed by the Markov Chain.
+:::
+
+---
+
+## The $\pi$ Example: Setup {.smaller}
+
+Monte Carlo can approximate the value of $\pi$ — a deterministic constant — using random sampling.
+
+. . .
+
+:::::: columns
+::: {.column width="55%"}
+
+**Geometry:** A quarter-circle of radius 1 is inscribed in the unit square.
+
+$$
+\text{Area of quarter-circle} = \frac{\pi}{4}
+\quad
+\text{Area of square} = 1
+$$
+
+**Strategy:**
+
+1. Draw points $(x, y)$ uniformly at random in $[0, 1]^2$
+2. A point falls *inside* the quarter-circle if $x^2 + y^2 \leq 1$
+3. The fraction of points inside converges to $\pi/4$:
+
+$$
+\hat{\pi} \approx 4 \cdot \frac{\text{points inside}}{S}
+$$
+
+:::
+
+::: {.column width="45%"}
+
+. . .
+
+::: {.callout-note style="font-size: 0.7em"}
+**We never computed $\pi/4$ analytically.** We counted. This is Monte Carlo integration: approximate the area of a region by the fraction of random points that fall inside it.
+
+The same logic applied to Bayesian posteriors: approximate the posterior by counting where random samples land — once we know how to generate those samples.
+:::
+
+:::
+::::::
+
+::: notes
+The π example is the canonical Monte Carlo teaching device. Present the geometry visually before the formula. Draw the quarter-circle on the board if helpful.
+
+The connection to integration: the fraction of points inside the circle is a Monte Carlo estimate of the integral ∫∫_{x²+y²≤1} 1 dx dy = π/4. No analytical calculus required — just random sampling and counting.
+
+Emphasize: the value of π is fixed and known. Monte Carlo can approximate it because the problem can be formulated as "what fraction of a simple region does a geometric shape occupy?" The randomness is in the samples, not in π itself. The same principle applies to Bayesian posteriors: the posterior is a fixed mathematical object; Monte Carlo approximates it by sampling.
+:::
+
+---
+
+## The $\pi$ Example: Simulation {.smaller}
+
+```{r}
+#| label: fig-pi-sim
+#| echo: false
+#| fig-height: 3.6
+#| fig-cap: "Left: 1,000 random points in the unit square, colored by location relative to the quarter-circle. Right: the Monte Carlo estimate of π converges toward the true value as sample size grows."
+
+p_scatter <- pi_pts[1:1000, ] |>
+  ggplot(aes(x = x, y = y, color = inside)) +
+  annotate(
+    "path",
+    x = cos(seq(0, pi / 2, length.out = 300)),
+    y = sin(seq(0, pi / 2, length.out = 300)),
+    color = "gray20",
+    linewidth = 1
+  ) +
+  geom_point(alpha = 0.65, size = 0.85) +
+  scale_color_manual(
+    values = c(col_2, col_1),
+    labels = c("Outside", "Inside")
+  ) +
+  coord_equal(xlim = c(0, 1), ylim = c(0, 1)) +
+  theme_bw() +
+  theme(
+    panel.grid.minor = element_blank(),
+    legend.position = "right",
+    aspect.ratio = 1
+  ) +
+  labs(
+    x = "x",
+    y = "y",
+    color = NULL,
+    title = "Random draws in the unit square",
+    subtitle = "1,000 of 5,000 total draws"
+  )
+
+p_conv <- pi_conv |>
+  ggplot(aes(x = n, y = pi_est)) +
+  geom_line(color = col_1, linewidth = 0.7) +
+  geom_hline(
+    yintercept = pi,
+    color = col_2,
+    linetype = "dashed",
+    linewidth = 1
+  ) +
+  annotate(
+    "text",
+    x = 4200,
+    y = pi + 0.12,
+    label = "True π ≈ 3.14159",
+    color = col_2,
+    size = 3.2
+  ) +
+  scale_x_continuous(labels = scales::comma) +
+  theme_bw() +
+  theme(panel.grid.minor = element_blank(), aspect.ratio = 0.9) +
+  labs(
+    x = "Sample size (S)",
+    y = expression(hat(pi)),
+    title = "Convergence of MC estimate",
+    subtitle = "Error decreases as ~ 1/√S"
+  )
+
+p_scatter | p_conv
+```
+
+. . .
+
+::: {style="font-size: 0.78em"}
+Approximation error ∝ $1/\!\sqrt{S}$: independent of dimension. This is the crucial advantage over grid approximation (cost ∝ $k^d$, exponential in $d$).
+:::
+
+::: notes
+Walk through the figure carefully. Left panel: points scatter randomly across the square. Blue points fall inside the arc (x²+y² ≤ 1); orange points fall outside. The fraction of blue points converges to π/4 as S grows.
+
+Right panel: the estimated π (blue line) starts noisy for small S and stabilizes near the true value (orange dashed) as S increases. Notice: the estimate is never exact — there is always some residual error — but it converges reliably.
+
+The 1/√S convergence rate is crucial: to halve the error, quadruple the samples. To gain one more decimal place of accuracy, multiply samples by 100. This sounds slow, but it is dimension-free — the same rate applies whether θ is 1-dimensional or 50-dimensional. Grid approximation's cost grows as 1000^50; Monte Carlo's grows as 1/√S, independent of dimension. This is why Monte Carlo wins at scale.
+
+Ask students: "Does this remind you of anything from last week?" — The grid approximation was deterministic; this is random. But both are approximation strategies. Monte Carlo has better scaling properties.
+:::
+
+---
+
+## Bridge: From $\pi$ to the Posterior {.smaller}
+
+:::::: columns
+::: {.column width="50%"}
+
+**The $\pi$ problem**
+
+- Sample uniformly in the unit square
+- Count the fraction inside the quarter-circle
+- The fraction approximates $\pi/4$
+- We counted; we never integrated analytically
+
+:::
+
+::: {.column width="50%"}
+
+**The posterior problem**
+
+- We want to summarize $P(\theta \mid \text{data})$
+- If we had samples $\theta^{(s)} \sim P(\theta \mid \text{data})$, we could compute any posterior quantity by averaging
+- We cannot sample uniformly — the posterior is not uniform
+- **We need a smart sampler that concentrates on high-posterior regions**
+
+:::
+::::::
+
+. . .
+
+::: {.callout-important style="font-size: 0.72em"}
+**The gap:** we know that random samples from the posterior would let us approximate any quantity of interest. But *how do we generate samples from a distribution we cannot evaluate everywhere?*
+
+The Markov Chain answers this question. It constructs a random process that, over many steps, *spends time in regions in proportion to their posterior probability* — without ever needing to compute $P(\text{data})$.
+:::
+
+::: notes
+This bridge slide is the conceptual hinge between Parts III and IV. Drive the parallel home:
+- π problem: we know the target (the quarter-circle's area), we sample randomly, we count
+- Posterior problem: we know the target (the posterior), but we cannot sample from it directly
+
+The crucial difference: for π, we could sample uniformly in the square and then check which points fall inside. For the posterior, "sampling uniformly in parameter space" would waste almost all effort in low-probability regions (exactly the grid approximation problem). We need a sampler that is intelligent about where to look.
+
+Transition: "The Markov Chain is a random walk that is designed to be intelligent. It moves around parameter space in a way that naturally concentrates on high-probability regions, without ever needing a map of the entire landscape."
+:::
+
+# Part IV: Markov Chains & the Metropolis Algorithm
+
+## What Is a Markov Chain? {.smaller}
+
+**Definition:** A Markov Chain is a sequence of random variables $\theta^{(1)}, \theta^{(2)}, \theta^{(3)}, \ldots$ satisfying the **Markov property:**
+
+$$
+P\!\left(\theta^{(t+1)} \mid \theta^{(t)},\, \theta^{(t-1)},\, \ldots,\, \theta^{(1)}\right) = P\!\left(\theta^{(t+1)} \mid \theta^{(t)}\right)
+$$ {#eq-markov}
+
+The next state depends *only* on the current state. The chain has no long-term memory.
+
+. . .
+
+**Stationary distribution:** For a well-constructed chain, after sufficiently many steps, the probability of being in any state $\theta$ stabilizes and no longer depends on the starting point. This limiting distribution is called the **stationary distribution** $\pi(\theta)$.
+
+. . .
+
+::: {.callout-tip style="font-size: 0.72em"}
+**The key insight we will exploit:**  
+We can design a Markov Chain whose stationary distribution is *exactly* our posterior $P(\theta \mid \text{data})$.
+
+After enough steps, samples from this chain are draws from the posterior — even though we never computed $P(\text{data})$.
+:::
+
+::: notes
+The Markov property is the formal heart of this section. Equation (1) says: conditional on the present, the future is independent of the past. This is a memoryless property — where the chain goes next depends only on where it is now, not on its history.
+
+Weather example: "Today's weather depends on yesterday's, but not directly on the weather two weeks ago (given yesterday)." This is a Markov Chain in discrete time over discrete states (sunny, cloudy, rainy). For our purposes, the states are parameter values θ — a continuous space.
+
+Stationary distribution: if a chain has been running long enough that the distribution of its current position has stopped changing, it has reached its stationary distribution. Every step from then on is a draw from that distribution. The stationarity condition is equivalent to a mathematical condition called "detailed balance" (see Appendix), which the Metropolis algorithm is designed to satisfy.
+
+The promissory note: "I will now show you a concrete example of how to design such a chain. It turns out to be surprisingly simple."
+:::
+
+---
+
+## The Island King: Setup {.smaller}
+
+*Adapted from @mcelreath2020rethinking-ch9.*
+
+. . .
+
+A king governs a **ring of 10 islands**, each with a different population. He wants to visit each island in proportion to its population — spending more time on larger islands.
+
+. . .
+
+**The constraint:** he cannot see the full population list. He can only ask about his *current* island and one *proposed neighboring* island at a time.
+
+```{r}
+#| label: fig-king-setup
+#| echo: false
+#| fig-height: 2.4
+#| fig-cap: "Island populations. The king does not know the total; he can only compare adjacent islands."
+
+tibble(
+  island = factor(1:n_islands),
+  pop = island_pop
+) |>
+  ggplot(aes(x = island, y = pop, fill = island)) +
+  geom_col(width = 0.7, show.legend = FALSE) +
+  geom_text(aes(label = pop), vjust = -0.4, size = 3.5) +
+  scale_fill_manual(
+    values = colorRampPalette(c("steelblue", "#7B3F9E"))(n_islands)
+  ) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.15))) +
+  theme_bw() +
+  theme(
+    panel.grid.minor = element_blank(),
+    panel.grid.major.x = element_blank()
+  ) +
+  labs(
+    x = "Island",
+    y = "Population",
+    subtitle = "The king's goal: visit island k with probability ∝ population(k)"
+  )
+```
+
+. . .
+
+**The analogy:** population plays the role of *posterior probability*; the king's position plays the role of the *current parameter value*.
+
+::: notes
+Introduce the story before showing the bar chart. Let students visualize it before the data appears. "There are 10 islands in a ring. Each has a different population — some small, some large. The king wants to serve all his people equally in proportion to their numbers. But there's no census, no total count. He can only ask about the island he's on and a neighbor."
+
+The asymmetric populations ({1,2,3,4,5,3,2,1,2,3}) are more interesting than a simple ramp because they have a non-obvious maximum and are not monotone. This prevents students from thinking the rule simply "follows the gradient."
+
+The analogy line at the bottom is the pedagogical key. State it clearly: "Every piece of this story maps onto Bayesian inference. The island populations are the posterior probabilities. The king's visits are the MCMC samples." Return to this mapping explicitly after the demonstration.
+:::
+
+---
+
+## The Island King: The Rule {.smaller}
+
+The king follows a single, simple decision rule at each step:
+
+. . .
+
+::: {style="font-size: 0.9em; border-left: 3px solid steelblue; padding-left: 1em"}
+1. Propose a random step to an adjacent island (flip a coin: left or right)
+2. If the proposed island is **more populated** than the current: *always go*
+3. If the proposed island is **less populated**: *go with probability equal to the population ratio*; otherwise stay
+:::
+
+. . .
+
+Formally, accept the proposed move with probability:
+
+$$
+p(\text{accept}) = \min\!\left(1,\; \frac{\text{pop}_{\text{proposed}}}{\text{pop}_{\text{current}}}\right)
+= \min\!\left(1,\; \frac{P(\theta^* \mid \text{data})}{P(\theta^{(t)} \mid \text{data})}\right)
+$$ {#eq-metropolis}
+
+. . .
+
+Now substitute the full Bayes' theorem and watch what happens:
+
+$$
+\frac{P(\theta^* \mid \text{data})}{P(\theta^{(t)} \mid \text{data})}
+= \frac{P(\text{data} \mid \theta^*) \cdot P(\theta^*) \,/\, P(\text{data})}{P(\text{data} \mid \theta^{(t)}) \cdot P(\theta^{(t)}) \,/\, P(\text{data})}
+= \frac{P(\text{data} \mid \theta^*) \cdot P(\theta^*)}{P(\text{data} \mid \theta^{(t)}) \cdot P(\theta^{(t)})}
+$$ {#eq-pdata-cancels}
+
+. . .
+
+::: {.callout-important style="font-size: 0.72em"}
+$P(\text{data})$ **cancels exactly** in the ratio. The acceptance rule only ever needs the *proportional form* of the posterior — likelihood $\times$ prior. The intractable integral is never evaluated.
+:::
+
+::: notes
+This is the most important slide of the session. Walk through it slowly.
+
+Step 1: introduce the rule in plain language. It has three cases: always go uphill, go probabilistically downhill, stay otherwise.
+
+Step 2: write the formal acceptance probability (eq-metropolis). Point out: this uses the posterior ratio — two posteriors, one for the proposed state and one for the current state.
+
+Step 3: expand the posteriors using Bayes' theorem. Show that P(data) appears in both numerator and denominator with the same value (it is a constant with respect to θ). It cancels exactly. What remains is the ratio of (likelihood × prior) at two parameter values.
+
+The result: the Metropolis algorithm only needs P(data|θ) and P(θ) — both of which we can compute easily. It never needs P(data). This is why MCMC is computationally feasible.
+
+Ask students: "So what happens when the proposed island is less populated by a factor of 2?" Answer: we go with probability 1/2. We sometimes stay, sometimes go. Over many steps, this produces the right long-run behavior.
+
+The mathematical guarantee that this rule produces the correct stationary distribution is called the detailed balance condition. It is proven in the Appendix slide. Students should know the name and that the proof exists; they do not need to reproduce it.
+:::
+
+---
+
+## The Island King: Demonstration {.smaller}
+
+```{r}
+#| label: fig-king-demo
+#| echo: false
+#| fig-height: 3.6
+#| fig-cap: "Left: king's position during the first 300 steps. Right: fraction of time spent on each island after 10,000 steps vs. true target proportions."
+
+p_trace <- king_df |>
+  filter(step <= 300) |>
+  ggplot(aes(x = step, y = island)) +
+  geom_line(color = col_1, linewidth = 0.5, alpha = 0.8) +
+  geom_point(color = col_1, size = 0.7, alpha = 0.7) +
+  scale_y_continuous(breaks = 1:n_islands) +
+  theme_bw() +
+  theme(panel.grid.minor = element_blank(), aspect.ratio = 0.8) +
+  labs(
+    x = "Step",
+    y = "Island",
+    title = "King's position: first 300 steps",
+    subtitle = "A random walk — not a systematic tour"
+  )
+
+p_hist <- king_hist |>
+  pivot_longer(
+    c(sampled, true_prop),
+    names_to = "type",
+    values_to = "proportion"
+  ) |>
+  mutate(
+    type = factor(
+      type,
+      levels = c("true_prop", "sampled"),
+      labels = c("Target (pop / total)", "MCMC (fraction of visits)")
+    )
+  ) |>
+  ggplot(aes(x = factor(island), y = proportion, fill = type)) +
+  geom_col(position = "dodge", width = 0.7) +
+  scale_fill_manual(values = c(col_2, col_1)) +
+  theme_bw() +
+  theme(
+    panel.grid.minor = element_blank(),
+    legend.position = "right",
+    aspect.ratio = 0.8
+  ) +
+  labs(
+    x = "Island",
+    y = "Proportion",
+    fill = NULL,
+    title = "MCMC samples vs. target (10,000 steps)",
+    subtitle = "The chain visits each island ~ proportional to its population"
+  )
+
+p_trace | p_hist
+```
+
+::: notes
+The two panels tell the story sequentially.
+
+Left panel: the king's path is a random walk — irregular, backtracking, but never too far from the high-population islands for long. Point out that the king frequently visits island 5 (the highest) and rarely lingers at island 1 or 8 (the lowest). Even 300 steps show a tendency toward the right regions.
+
+Right panel: after 10,000 steps, the MCMC distribution (blue) closely matches the target proportions (orange). The more densely populated islands accumulate more visits. The match is not perfect — Monte Carlo has sampling variability — but it is close.
+
+Critical observation: "The king never knew the total population. He only compared his current island to a proposed neighbor at each step. Yet the long-run behavior is exactly right." This is the miracle of MCMC.
+
+Ask: "What would happen if we ran the chain for 100,000 steps?" The MCMC bars would converge even closer to the target. This is the law of large numbers operating on the Markov Chain.
+:::
+
+---
+
+## From Islands to Parameters {.smaller}
+
+The translation is exact and complete:
+
+::: {style="font-size: 0.72em"}
+
+| Island world | Bayesian inference |
+|:---|:---|
+| Ring of 10 islands | Parameter space $\Theta$ (the range of plausible $\theta$ values) |
+| Population of island $k$ | Posterior probability $P(\theta_k \mid \text{data})$ |
+| King's current position | Current parameter sample $\theta^{(t)}$ |
+| Proposed neighboring island | Proposed new parameter value $\theta^*$ |
+| Population ratio (accept. rule) | Posterior ratio: $P(\theta^*\mid\text{data}) \,/\, P(\theta^{(t)}\mid\text{data})$ |
+| Fraction of time on island $k$ | Posterior probability of $\theta_k$ |
+| **Total population (unknown)** | **$P(\text{data})$ — never needed, always cancels** |
+
+:::
+
+. . .
+
+::: {.callout-note style="font-size: 0.72em"}
+**Result:** The Metropolis algorithm constructs a Markov Chain over parameter space whose **stationary distribution is the posterior** $P(\theta \mid \text{data})$. After warm-up, its samples are draws from the posterior — without ever computing $P(\text{data})$.
+
+The samples can then be used as Monte Carlo estimates (@eq-mc-estimator) of any posterior quantity: means, credible intervals, tail probabilities, derived quantities.
+:::
+
+::: notes
+Walk through each row of the table carefully. This is the formal translation from the teaching story to the mathematical framework. Take your time — students need to see that every element of the story has a precise Bayesian counterpart.
+
+The last row is the punchline. Bold font is deliberate. The king's ignorance of the total population is not a limitation — it is precisely what makes the algorithm computationally tractable. P(data) cancels in the ratio. The algorithm only needs pairwise comparisons.
+
+Synthesis: "When brms runs your model next week, this is what is happening. For each parameter in your model, the algorithm is playing the role of the king — proposing random moves, accepting or rejecting them based on the posterior ratio, and accumulating a sample path that collectively represents the posterior distribution. You will see this as the trace plot."
+:::
+
+# Part V: The Posterior as a Landscape & HMC
+
+## The Posterior as a Landscape (1D) {.smaller}
+
+The posterior distribution has a **spatial interpretation**: think of probability as height.
+
+```{r}
+#| label: fig-land1d
+#| echo: false
+#| fig-height: 3.0
+#| fig-cap: "The same posterior, two framings. Left: the standard distribution curve — height = probability density. Right: the negative log-posterior — high-probability regions become valleys."
+
+p_density <- land1d |>
+  ggplot(aes(x = theta, y = density)) +
+  geom_line(color = col_1, linewidth = 1.1) +
+  geom_area(fill = col_1, alpha = 0.18) +
+  theme_bw() +
+  theme(panel.grid.minor = element_blank(), aspect.ratio = 0.65) +
+  labs(
+    x = expression(theta),
+    y = expression(p(theta ~ "|" ~ data)),
+    title = "Posterior distribution",
+    subtitle = "Height = probability density"
+  )
+
+p_neglog <- land1d |>
+  ggplot(aes(x = theta, y = neg_log)) +
+  geom_line(color = "gray25", linewidth = 1.1) +
+  geom_area(fill = "gray25", alpha = 0.12) +
+  theme_bw() +
+  theme(panel.grid.minor = element_blank(), aspect.ratio = 0.65) +
+  labs(
+    x = expression(theta),
+    y = expression(U(theta) == -log ~ p(theta ~ "|" ~ data)),
+    title = "Negative log-posterior",
+    subtitle = "High probability → low valley"
+  )
+
+p_density | p_neglog
+```
+
+. . .
+
+The **negative log-posterior** $U(\theta) = -\log P(\theta \mid \text{data})$ is the *potential energy* landscape. High-probability regions become valleys; low-probability regions become peaks. **Stan works entirely in log-probability space** for numerical stability.
+
+::: notes
+This slide introduces the spatial metaphor that underpins the HMC intuition. Present the two panels as two framings of the same object:
+- Left: the familiar posterior distribution. Students have seen this since week 6.
+- Right: a mathematical transformation — negate and log — that flips the orientation. Peaks become valleys.
+
+Why log? Products of probabilities (many likelihoods multiplied together) quickly underflow to numerical zero in floating-point arithmetic. Logs convert products to sums: log(a·b) = log(a) + log(b). Stan works entirely in log-probability space for this reason.
+
+Why negate? By convention, optimization algorithms minimize. The negative log-posterior is minimized at the same point where the posterior is maximized (the MAP estimate). Stan's HMC algorithm uses gradients of this landscape to move the sampler efficiently. The negative log-posterior plays the role of potential energy in the physical analogy we develop in the next two slides.
+
+The key visual insight: a valley in the U(θ) landscape is a peak in the p(θ|data) landscape. The lowest point of the bowl is the posterior mode.
+:::
+
+---
+
+## The Posterior as a Landscape (2D) {.smaller}
+
+With **two parameters**, the posterior becomes a **surface** — a 2D landscape.
+
+```{r}
+#| label: fig-land2d
+#| echo: false
+#| fig-height: 3.5
+#| fig-cap: "Left: posterior surface for two correlated parameters (top-down view; darker blue = higher probability). Right: the same surface as a negative log-posterior bowl."
+
+p_contour <- land2d |>
+  ggplot(aes(x = x, y = y, z = density)) +
+  geom_contour_filled(bins = 11) +
+  scale_fill_brewer(palette = "Blues", direction = 1) +
+  coord_equal() +
+  theme_bw() +
+  theme(
+    panel.grid.minor = element_blank(),
+    legend.position = "none",
+    aspect.ratio = 1
+  ) +
+  labs(
+    x = expression(theta[1]),
+    y = expression(theta[2]),
+    title = "2D posterior (top-down contour map)",
+    subtitle = "Darker = higher probability"
+  )
+
+p_neglog2d <- land2d |>
+  mutate(neg_log = -log(density + 1e-12)) |>
+  ggplot(aes(x = x, y = y, z = neg_log)) +
+  geom_contour_filled(bins = 11) +
+  scale_fill_brewer(palette = "Greys", direction = 1) +
+  coord_equal() +
+  theme_bw() +
+  theme(
+    panel.grid.minor = element_blank(),
+    legend.position = "none",
+    aspect.ratio = 1
+  ) +
+  labs(
+    x = expression(theta[1]),
+    y = expression(theta[2]),
+    title = expression("Negative log-posterior U(" * theta * ")"),
+    subtitle = "Darker = deeper valley = higher probability"
+  )
+
+p_contour | p_neglog2d
+```
+
+. . .
+
+For $k$ parameters: a $k$-dimensional landscape. We cannot visualize it, but the metaphor holds in any dimension. MCMC **explores** this landscape rather than evaluating it everywhere.
+
+::: notes
+The 2D case extends the metaphor naturally. Left: a top-down contour map. The oval shape reflects the correlation between parameters. Center of the oval = highest posterior probability. Right: the same landscape, but negated and logged. The oval becomes a bowl — a valley. The center of the bowl is the MAP estimate.
+
+For models with many parameters (e.g., a multilevel model with 50 parameters), the landscape is 50-dimensional. We cannot visualize it, but the physics analogy still works: a frictionless ball rolls around in this high-dimensional bowl, spending time in proportion to local density.
+
+Key point: the correlation between parameters creates an elongated bowl rather than a circular one. This matters for sampling efficiency — a sampler that ignores correlation will move inefficiently, making small steps perpendicular to the principal axes of the bowl. HMC handles correlation through its mass matrix, as we will see.
+
+Ask students to notice the shape: the longer axis of the ellipse corresponds to the direction of correlation. A chain that only moves along one axis at a time (as in coordinate-wise Gibbs sampling) would be inefficient for correlated posteriors.
+:::
+
+---
+
+## Why Random-Walk Metropolis Struggles {.smaller}
+
+The basic Metropolis algorithm proposes *small, random steps* in parameter space.
+
+```{r}
+#| label: fig-rw-struggle
+#| echo: false
+#| fig-height: 3.2
+#| fig-cap: "Random-walk Metropolis on the 2D correlated posterior. Left: the first 200 steps as a path. Right: all 3,000 samples. The chain moves slowly and struggles to explore the correlated, elongated posterior."
+
+p_rw_path <- ggplot() +
+  geom_contour(
+    data = land2d,
+    aes(x = x, y = y, z = density),
+    color = "gray70",
+    bins = 8
+  ) +
+  geom_path(
+    data = rw_df[1:200, ],
+    aes(x = x, y = y),
+    color = col_2,
+    alpha = 0.7,
+    linewidth = 0.5
+  ) +
+  geom_point(
+    data = rw_df[1, ],
+    aes(x = x, y = y),
+    color = col_2,
+    size = 2.5,
+    shape = 16
+  ) +
+  coord_cartesian(xlim = c(-3.5, 3.5), ylim = c(-4.5, 4.5)) +
+  theme_bw() +
+  theme(panel.grid.minor = element_blank(), aspect.ratio = 1) +
+  labs(
+    x = expression(theta[1]),
+    y = expression(theta[2]),
+    title = "Random walk: first 200 steps",
+    subtitle = "Slow, meandering, low acceptance"
+  )
+
+p_rw_all <- ggplot() +
+  geom_contour(
+    data = land2d,
+    aes(x = x, y = y, z = density),
+    color = "gray70",
+    bins = 8
+  ) +
+  geom_point(
+    data = rw_df,
+    aes(x = x, y = y),
+    color = col_2,
+    alpha = 0.15,
+    size = 0.5
+  ) +
+  coord_cartesian(xlim = c(-3.5, 3.5), ylim = c(-4.5, 4.5)) +
+  theme_bw() +
+  theme(panel.grid.minor = element_blank(), aspect.ratio = 1) +
+  labs(
+    x = expression(theta[1]),
+    y = expression(theta[2]),
+    title = "Random walk: all 3,000 samples",
+    subtitle = "High autocorrelation; poor coverage"
+  )
+
+p_rw_path | p_rw_all
+```
+
+. . .
+
+Problems: many proposals rejected; chain moves slowly; high autocorrelation between successive samples; effective sample size is low relative to raw sample count.
+
+::: notes
+This slide motivates HMC by showing what goes wrong with the basic Metropolis algorithm on a correlated posterior.
+
+Left panel: the path is jagged and mostly stays in a small neighborhood. The chain has not yet explored the full posterior after 200 steps. Compare to how many steps were needed for the island king to explore all 10 islands.
+
+Right panel: after 3,000 steps, the coverage is poor. The chain has not explored the extreme regions of the posterior (the tails of the ellipse). The density of points is roughly right in the center but sparse elsewhere.
+
+The root cause: random-walk proposals are blind. They do not use any information about the shape of the posterior. Most proposals in the wrong direction are rejected; proposals in the right direction are accepted but take tiny steps. With correlated parameters, the right direction is not aligned with the coordinate axes, making coordinate-wise proposals especially inefficient.
+
+Technical note: autocorrelation is the key cost. If successive samples are highly correlated, 1000 raw samples might be equivalent to only 50 independent samples (an ESS of 50). HMC, by taking long trajectories, produces samples that are much less correlated, giving higher ESS per computation.
+:::
+
+---
+
+## HMC: The Ball on the Landscape {.smaller}
+
+**Hamiltonian Monte Carlo** introduces *momentum* into the sampler — a frictionless ball rolling on the potential energy landscape [@hoffman2014no].
+
+```{r}
+#| label: fig-hmc-ball
+#| echo: false
+#| fig-height: 3.1
+#| fig-cap: "Three HMC trajectories on the 1D negative log-posterior U(θ). Open circles = trajectory start (given random momentum kick); triangles = trajectory end (proposed sample). The ball rolls according to Newtonian physics, traversing long distances efficiently."
+
+landscape_curve <- land1d
+
+ggplot() +
+  geom_line(
+    data = landscape_curve,
+    aes(x = theta, y = neg_log),
+    color = "gray25",
+    linewidth = 1.1
+  ) +
+  geom_path(
+    data = hmc_trajs,
+    aes(x = theta, y = potential, color = traj),
+    linewidth = 0.75,
+    alpha = 0.9
+  ) +
+  geom_point(
+    data = hmc_trajs |> filter(step == 0),
+    aes(x = theta, y = potential, color = traj),
+    size = 3,
+    shape = 21,
+    fill = "white",
+    stroke = 1.8
+  ) +
+  geom_point(
+    data = hmc_trajs |> group_by(traj) |> filter(step == max(step)),
+    aes(x = theta, y = potential, color = traj),
+    size = 3,
+    shape = 17
+  ) +
+  scale_color_manual(values = c(col_1, col_2, col_3), name = NULL) +
+  theme_bw() +
+  theme(
+    panel.grid.minor = element_blank(),
+    aspect.ratio = 0.52,
+    legend.position = "right"
+  ) +
+  labs(
+    x = expression(theta),
+    y = expression(U(theta) == -log ~ p(theta ~ "|" ~ data)),
+    title = "HMC trajectories: the ball rolls on the potential energy landscape",
+    subtitle = "Open circle = start; triangle = proposed sample"
+  )
+```
+
+. . .
+
+Each trajectory: a **random momentum kick** launches the ball; leapfrog integration simulates Newtonian physics; the trajectory endpoint is proposed as the next sample.
+
+::: notes
+This is the key conceptual slide for HMC. Walk through the figure:
+- The gray curve is U(θ) = -log p(θ|data). The minimum (deepest valley) corresponds to the posterior mode at θ ≈ 1.
+- Each colored trajectory shows a different ball path, starting at the open circle and ending at the filled triangle.
+- The ball rolls downhill (toward lower U), gaining speed (kinetic energy). It rolls uphill, slowing down. It traces a smooth arc through the landscape.
+- The starting and ending points are both plausible parameter values — and they can be far apart, unlike Metropolis's small random steps.
+
+Physics analogy: the landscape is the potential energy surface. Each step, the sampler assigns the ball a random momentum (kinetic energy). Total energy = kinetic + potential = conserved (Hamiltonian conservation). The ball rolls according to Hamilton's equations of motion, simulated by the leapfrog integrator.
+
+Why better than random walk? The trajectory is informed by the gradient of U(θ) — the slope of the landscape — at every step. The ball doesn't wander randomly; it follows the physics of the landscape. This produces long, efficient jumps that explore the posterior much more effectively.
+
+NUTS (No-U-Turn Sampler, Hoffman & Gelman 2014): automatically determines when to stop the trajectory — when the ball starts doubling back (making a U-turn), further simulation is wasteful. NUTS detects this and stops. This removes the need to manually tune trajectory length.
+:::
+
+---
+
+## HMC vs. Random-Walk on the 2D Posterior {.smaller}
+
+```{r}
+#| label: fig-hmc-rw-compare
+#| echo: false
+#| fig-height: 3.4
+#| fig-cap: "Same target distribution; same number of samples (3,000); same starting point. HMC explores the posterior much more efficiently than random-walk Metropolis."
+
+p_hmc_path <- ggplot() +
+  geom_contour(
+    data = land2d,
+    aes(x = x, y = y, z = density),
+    color = "gray70",
+    bins = 8
+  ) +
+  geom_path(
+    data = hmc_df[1:200, ],
+    aes(x = x, y = y),
+    color = col_1,
+    alpha = 0.7,
+    linewidth = 0.5
+  ) +
+  geom_point(
+    data = hmc_df[1, ],
+    aes(x = x, y = y),
+    color = col_1,
+    size = 2.5,
+    shape = 16
+  ) +
+  coord_cartesian(xlim = c(-3.5, 3.5), ylim = c(-4.5, 4.5)) +
+  theme_bw() +
+  theme(panel.grid.minor = element_blank(), aspect.ratio = 1) +
+  labs(
+    x = expression(theta[1]),
+    y = expression(theta[2]),
+    title = "HMC: first 200 steps",
+    subtitle = "Long trajectories, fast exploration"
+  )
+
+p_hmc_all <- ggplot() +
+  geom_contour(
+    data = land2d,
+    aes(x = x, y = y, z = density),
+    color = "gray70",
+    bins = 8
+  ) +
+  geom_point(
+    data = hmc_df,
+    aes(x = x, y = y),
+    color = col_1,
+    alpha = 0.15,
+    size = 0.5
+  ) +
+  coord_cartesian(xlim = c(-3.5, 3.5), ylim = c(-4.5, 4.5)) +
+  theme_bw() +
+  theme(panel.grid.minor = element_blank(), aspect.ratio = 1) +
+  labs(
+    x = expression(theta[1]),
+    y = expression(theta[2]),
+    title = "HMC: all 3,000 samples",
+    subtitle = "Good coverage; low autocorrelation"
+  )
+
+p_hmc_path | p_hmc_all
+```
+
+::: notes
+The contrast with the previous slide (random-walk Metropolis) should be stark.
+
+Left panel: HMC's path covers more of the posterior in the first 200 steps than the random walk did in 200 steps. The trajectories are longer and more directed.
+
+Right panel: all 3,000 samples are much better distributed across the posterior than the random-walk samples. The coverage matches the shape of the posterior ellipse well — both the center and the tails are adequately sampled.
+
+Technical insight on efficiency: HMC's higher ESS per raw sample means that the effective information content of 3,000 HMC samples may be equivalent to 10,000+ random-walk Metropolis samples on a correlated posterior. For the same computational budget, HMC produces better inference.
+
+Why does it handle correlation? HMC uses the gradient of the log-posterior, which automatically accounts for the direction of the correlation. The ball's trajectory naturally aligns with the principal axes of the posterior — following the "slope" of the landscape, which is steepest perpendicular to the ellipse's major axis.
+:::
+
+---
+
+## Log-Probability: A Technical Note {.smaller}
+
+Stan (and therefore `brms`) works **entirely in log-probability space**. Three reasons:
+
+. . .
+
+**1. Numerical stability**
+
+Likelihoods of large datasets involve products of many small probabilities:
+$$
+P(\text{data} \mid \theta) = \prod_{i=1}^{N} P(y_i \mid \theta)
+$$
+For $N = 200$ and each factor $\approx 0.3$, the product $\approx 10^{-105}$ — underflows to zero in floating point. The log-likelihood is $\sum_i \log P(y_i \mid \theta)$ — numerically well-behaved.
+
+. . .
+
+**2. Gradient computation**
+
+HMC requires the gradient $\nabla_\theta \log P(\theta \mid \text{data})$ at every leapfrog step. This is tractable for standard likelihood families; the product form becomes a sum in log space.
+
+. . .
+
+**3. The sign convention**
+
+Stan minimizes $U(\theta) = -\log P(\theta \mid \text{data})$ (the negative log-posterior). High-probability regions are **valleys**; the ball rolls *toward* high-probability regions. This is **not** gradient descent — the ball keeps rolling and exploring the full landscape. It does not converge to a single point.
+
+::: notes
+This slide addresses a common source of confusion: the relationship between log-probability, the sign convention, and gradient descent.
+
+Point 1 (numerical stability): demonstrate with numbers if helpful. 0.3^200 ≈ 3.7 × 10^{-105}. This is below the minimum representable double-precision float (approximately 10^{-308}), but barely. For larger datasets or more complex likelihoods, underflow is essentially guaranteed without log transformation. Working in log space converts the product to a sum, which never underflows.
+
+Point 2 (gradient): Stan uses automatic differentiation to compute ∂/∂θ log p(θ|data) exactly (up to floating-point precision). This gradient is used at every leapfrog step to simulate the ball's trajectory.
+
+Point 3 (critical distinction): a student will often confuse HMC with gradient descent. Gradient descent always moves downhill — it converges to a minimum. HMC uses the gradient to propose trajectories, but the ball has momentum and can move uphill. It explores the full landscape in proportion to the posterior. The result is a sample from the posterior distribution, not a single point estimate. The MAP estimate (mode of the posterior) is what you would get from gradient descent — it is a point estimate that discards all uncertainty information. HMC gives you the full posterior.
+
+For students familiar with neural network training: gradient descent finds the minimum of a loss function. HMC is more like Langevin dynamics — it explores the loss landscape's curvature.
+:::
+
+# Part VI: Multiple Chains, Warm-Up & Convergence
+
+## Why One Chain Is Not Enough {.smaller}
+
+Running a single MCMC chain has three fundamental problems:
+
+. . .
+
+**1. Starting-point sensitivity**
+
+Every chain must begin somewhere. Early samples reflect the starting point, not the posterior. These samples are misleading and must be discarded. But how many? One chain alone cannot tell you when it has "found" the posterior.
+
+. . .
+
+**2. Invisible local trapping**
+
+A single chain might explore only a subset of the posterior — a local neighborhood or one mode of a multimodal distribution — without visiting other high-probability regions. With only one chain, this failure is completely invisible.
+
+. . .
+
+**3. No internal benchmark for convergence**
+
+Whether a chain has converged can only be assessed by comparing *multiple* chains started from *different*, overdispersed starting points. If all chains agree after warm-up, that is evidence of convergence. If they disagree, non-convergence is visible.
+
+. . .
+
+::: {.callout-note style="font-size: 0.72em"}
+**Standard practice in `brms`:** 4 chains, 2,000 iterations each (1,000 warm-up, 1,000 post-warm-up), for a total of 4,000 posterior draws. The 4 chains start from different dispersed points and must converge to the same distribution.
+:::
+
+::: notes
+This slide motivates the standard multi-chain setup before introducing the specific diagnostics.
+
+Point 1: imagine dropping the island king onto a remote island far from the high-population islands. His first 100 steps will reflect where he started, not the population-proportional distribution we want. We discard those steps (warm-up). But if we only ran one chain, we would not know how long to wait.
+
+Point 2: if the posterior has two well-separated modes (e.g., two plausible regions of the parameter space), a single chain might find one and never discover the other. The chain would look perfectly converged — stationary, well-mixed — but it would be representing only half the posterior. Only a chain starting from the other mode would reveal the problem.
+
+Point 3: the solution is multiple chains from dispersed starting points. If they all converge to the same stationary distribution, that is strong (though not conclusive) evidence of convergence. If they remain separated, non-convergence is immediately visible.
+
+The 4-chain default in brms reflects current best practice. Some models may need more chains or longer runs — especially when posteriors are high-dimensional or poorly conditioned.
+:::
+
+---
+
+## Warm-Up and Adaptation {.smaller}
+
+Each chain goes through two distinct phases:
+
+```{r}
+#| label: fig-warmup
+#| echo: false
+#| fig-height: 1.5
+#| fig-cap: "Default brms run: 4 chains × 2,000 iterations. The first 1,000 iterations of each chain are warm-up (discarded). The final 4 × 1,000 = 4,000 samples constitute the posterior."
+
+tibble(
+  phase = factor(
+    c(
+      "Warm-up: burn-in + adaptation (discarded)",
+      "Sampling: posterior draws (kept)"
+    ),
+    levels = c(
+      "Warm-up: burn-in + adaptation (discarded)",
+      "Sampling: posterior draws (kept)"
+    )
+  ),
+  x_start = c(1, 1001),
+  x_end = c(1000, 2000),
+  x_label = c(500, 1500)
+) |>
+  ggplot() +
+  geom_rect(
+    aes(xmin = x_start, xmax = x_end, ymin = 0, ymax = 1, fill = phase),
+    color = "white",
+    linewidth = 1.5
+  ) +
+  geom_text(
+    aes(x = x_label, y = 0.5, label = phase),
+    color = "white",
+    fontface = "bold",
+    size = 3.6
+  ) +
+  scale_fill_manual(values = c("gray55", col_1)) +
+  scale_x_continuous(breaks = c(1, 500, 1000, 1500, 2000)) +
+  theme_bw() +
+  theme(
+    panel.grid = element_blank(),
+    axis.text.y = element_blank(),
+    axis.ticks.y = element_blank(),
+    legend.position = "none",
+    aspect.ratio = 0.12
+  ) +
+  labs(x = "Iteration", y = NULL)
+```
+
+. . .
+
+**Burn-in / warm-up:** early samples discarded because the chain has not yet found the posterior. The chain is "traveling" from its starting point to the high-probability region.
+
+. . .
+
+**Adaptation** (specific to HMC/NUTS): during warm-up, Stan automatically tunes two algorithmic parameters:
+
+- **Step size** $\varepsilon$: how far the ball moves per leapfrog step
+- **Mass matrix** $M$: rescales parameter space to make the posterior more spherical, improving efficiency on correlated posteriors
+
+After warm-up, adaptation **freezes** and sampling begins. The tuned parameters remain fixed for the post-warm-up phase.
+
+::: notes
+The two-phase structure is important to distinguish. Burn-in is about the chain finding the posterior (a common property of all MCMC algorithms). Adaptation is HMC/NUTS-specific — using warm-up to tune algorithmic hyperparameters that improve sampling efficiency.
+
+Step size ε: too small → many steps needed to traverse the landscape, expensive. Too large → high rejection rate (the leapfrog approximation diverges from the true trajectory). NUTS adapts ε to target a specific acceptance rate (typically 0.8 in Stan's default).
+
+Mass matrix M: in a correlated posterior, the parameter space has a non-spherical geometry. The mass matrix rescales the space to make it more spherical, which reduces the number of leapfrog steps needed to traverse a trajectory. In practice, Stan estimates M from warm-up samples as an approximation to the posterior covariance.
+
+After warm-up: adaptation freezes completely. The post-warm-up chains use fixed ε and M. If you ran the model again with a different seed, the warm-up would adapt to similar values (because the target posterior is fixed), and the post-warm-up samples would represent the same posterior.
+:::
+
+---
+
+## Convergence: What We Can and Cannot Know {.smaller}
+
+::: {.callout-important style="font-size: 0.78em"}
+**A fundamental epistemological limit:**
+
+**Convergence cannot be proven. It can only be falsified.**
+
+A chain that looks converged *might not be* — it may not have discovered a distant mode, or may be stuck in a correlated region invisible to our diagnostics. No finite set of statistics certifies convergence; they can only fail to detect non-convergence.
+:::
+
+. . .
+
+This mirrors Karl Popper's falsificationism: we cannot confirm "the chain has converged," we can only fail to detect evidence of non-convergence.
+
+. . .
+
+**What diagnostics do:**
+
+> They are **tests for non-convergence**, not certificates of convergence. A model that passes all diagnostics has not been proven to have converged — it has simply not been caught failing.
+
+. . .
+
+::: {style="font-size: 0.82em"}
+The practical implication: run diagnostics systematically, report them, and treat them as minimum requirements — not as guarantees. Use multiple chains, long runs, and prior sensitivity analysis as additional safeguards.
+:::
+
+::: notes
+This slide should be delivered with emphasis — it is a point that students consistently underestimate, and that the literature consistently overstates in the direction of overconfidence.
+
+The Popper analogy is pedagogically apt: just as science cannot verify a theory (only falsify it), MCMC diagnostics cannot verify convergence (only detect non-convergence). A model that passes R-hat and ESS checks is like a scientific theory that has not yet been falsified — it may still be wrong.
+
+Practical consequences:
+1. Always run multiple chains from dispersed starting points. A single chain cannot self-diagnose.
+2. Prefer longer runs over shorter ones. More samples are more sensitive to slow mixing.
+3. Interpret diagnostics as necessary but not sufficient conditions for reliable inference.
+4. When in doubt, refit with more iterations, different starting points, or a reparameterized model.
+
+This epistemological humility is part of the Bayesian spirit of the course: we acknowledge uncertainty about our parameters, and we should also acknowledge uncertainty about our sampling procedure.
+:::
+
+---
+
+## Convergence Diagnostics {.smaller}
+
+Four key diagnostics — **all reported automatically by `brms`:**
+
+. . .
+
+**Trace plot** — plot of sampled values over iterations, one line per chain.
+A converged chain looks like a *stationary, noisy signal* — the "hairy caterpillar." All chains overlap and interleave. Non-convergence looks like separated, trending, or stuck chains.
+
+. . .
+
+**$\hat{R}$ (R-hat, Gelman-Rubin)** — ratio of between-chain to within-chain variance [@vehtari2021rank]:
+$$\hat{R} = \sqrt{\frac{\widehat{\text{Var}}^+(\theta \mid y)}{W}}$$
+If chains have converged to the same distribution, between-chain ≈ within-chain variance → $\hat{R} \approx 1$.
+**Rule:** $\hat{R} < 1.01$ (improved split-$\hat{R}$, Vehtari et al. 2021). Values above this indicate non-convergence.
+
+. . .
+
+**Effective Sample Size (ESS)** — MCMC samples are *autocorrelated*: each depends on the previous. ESS estimates the equivalent number of independent samples.
+`brms` reports **Bulk-ESS** (central summaries) and **Tail-ESS** (extreme quantiles). **Rule:** ESS > 400 per parameter.
+
+. . .
+
+**Divergent transitions** — HMC-specific: the ball trajectory became numerically unstable. Even a handful of divergences indicates a problem with the posterior geometry or model specification. `brms` highlights them prominently.
+
+::: notes
+Walk through each diagnostic in order. Students will see all four in `summary(fit)` output and in the trace plot.
+
+R-hat: the formula is from Vehtari et al. (2021), which introduced the improved "rank-normalized, folded" R-hat. The 1990 Gelman-Rubin paper used a simpler version; the improved version is more sensitive to chains that have converged to different locations in the tails. R-hat = 1.00 does not prove convergence; R-hat > 1.01 proves non-convergence. The diagnostic is asymmetric.
+
+ESS: the autocorrelation penalty. If successive samples are correlated with correlation ρ, the effective sample size is approximately S × (1 - ρ) / (1 + ρ). For ρ = 0.5, 4000 raw samples ≈ 1333 effective samples. For ρ = 0.9, 4000 raw samples ≈ 211 effective samples. Bulk-ESS is most relevant for estimates of the posterior mean and median; Tail-ESS is most relevant for credible interval endpoints.
+
+Divergences: a divergent transition occurs when the leapfrog integrator loses numerical stability — the ball "falls off" the landscape. This typically happens when the posterior has regions of very high curvature or sharp transitions (e.g., a funnel shape in a hierarchical model). The fix is usually reparameterization, not more iterations. Even 1–2 divergences per chain warrants investigation.
+:::
+
+---
+
+## What Convergence Looks Like {.smaller}
+
+```{r}
+#| label: fig-trace-compare
+#| echo: false
+#| fig-height: 3.8
+#| fig-cap: "Top: four well-mixed chains on a Normal(0,1) target — the 'hairy caterpillar.' Chains overlap and are stationary. Bottom: four non-converged chains — same target, tiny step size, extreme starting points. Chains remain separated."
+
+p_good <- good_chains |>
+  ggplot(aes(x = iteration, y = value, color = chain)) +
+  geom_line(alpha = 0.75, linewidth = 0.45) +
+  scale_color_manual(values = chain_cols) +
+  theme_bw() +
+  theme(
+    panel.grid.minor = element_blank(),
+    legend.position = "none",
+    aspect.ratio = 0.28
+  ) +
+  labs(
+    x = "Iteration",
+    y = expression(theta),
+    title = "Converged chains: stationary, overlapping — the 'hairy caterpillar'",
+    subtitle = expression(
+      Normal(0, 1) ~ " target | 4 chains | sensible step size"
+    )
+  )
+
+p_bad <- bad_chains |>
+  ggplot(aes(x = iteration, y = value, color = chain)) +
+  geom_line(alpha = 0.75, linewidth = 0.45) +
+  scale_color_manual(values = chain_cols) +
+  theme_bw() +
+  theme(
+    panel.grid.minor = element_blank(),
+    legend.position = "none",
+    aspect.ratio = 0.28
+  ) +
+  labs(
+    x = "Iteration",
+    y = expression(theta),
+    title = "Non-converged chains: separated, trending — clear diagnostic failure",
+    subtitle = "Same target | extreme starts | tiny step size → chains cannot mix"
+  )
+
+p_good / p_bad
+```
+
+::: notes
+The visual contrast is the teaching device here. Walk students through each panel:
+
+Top (good): four chains of different colors that interleave densely — you cannot distinguish them from each other by visual inspection. The distribution of values looks the same across all iterations (stationarity). The "hairy caterpillar" description is apt — furry, dense, going nowhere in particular. This is what convergence looks like.
+
+Bottom (bad): four chains separated at very different locations, barely moving. The chains have not found each other because the step size is too small to traverse the parameter space between their starting points. R-hat would be large (chains have very different means). ESS would be low (within-chain autocorrelation is extreme). This would be immediately visible.
+
+Intermediate cases: in practice, non-convergence often looks less extreme than the bottom panel — chains that are mostly overlapping but have occasional "drift" or that have slightly different distributions. The R-hat statistic is designed to catch these subtler cases where visual inspection might be ambiguous.
+
+After this slide: "In the next part, you will see actual trace plots from a brms model fit to synthetic data. They should look like the top panel — that is the target."
+:::
+
+# Part VII: The Three Moves of MCMC
+
+## Synthesis {.smaller}
+
+::: {style="font-size: 0.85em"}
+
+**1. Monte Carlo:** approximate intractable integrals by drawing random samples and averaging. The law of large numbers guarantees convergence at rate $1/\!\sqrt{S}$, independent of dimension.
+
+. . .
+
+**2. Markov Chain:** design a sequence of states — each depending only on the previous — whose **stationary distribution** is the target posterior. After warm-up, the chain provides samples from the posterior.
+
+. . .
+
+**3. Metropolis / HMC:** a specific acceptance rule that ensures the stationary distribution is correct. The rule uses only the **ratio** of posterior values at two parameter values. $P(\text{data})$ **cancels** in this ratio and is never computed. HMC uses gradient information to propose efficient trajectories, rather than small random steps.
+
+:::
+
+. . .
+
+::: {.callout-note style="font-size: 0.72em"}
+**In practice:** specify a prior and a likelihood family. `brms` translates this to a log-posterior function. Stan simulates a frictionless ball rolling on the negative log-posterior landscape — across **4 chains**, for **2,000 iterations** each (1,000 warm-up, 1,000 post-warm-up). After checking $\hat{R}$, ESS, and trace plots, the 4,000 post-warm-up samples are your posterior. No $P(\text{data})$ was computed. 
+
+This workflow runs identically regardless of model complexity — from a simple linear regression to a multilevel model with 50 parameters. Only the log-posterior function changes.
+:::
+
+::: notes
+This summary slide should be fast — 2–3 minutes maximum. It is a consolidation, not new material.
+
+The three bullets map directly onto the three learning goals from the session start (Goals 2, 3, 4). Read them aloud and connect them back to the session's narrative arc.
+
+The callout box provides the practical recipe that students will use every week from here on. Point to each element: brms = the interface; Stan = the sampler; 4 chains = convergence checking; 1000 warm-up = finding the posterior; 4000 samples = your posterior. Check R-hat, ESS, trace plots = three diagnostics. Done.
+
+The final sentence is the course philosophy: "The machinery doesn't change. The science does. Starting next week, we focus on the science."
+:::
+
+# Part VIII: `brms` in Practice
+
+## The Synthetic Dataset {.smaller}
+
+We generate data from a **known** data-generating process so we can verify that brms recovers the truth.
+
+```{r}
+#| label: fig-synth-data
+#| echo: true
+#| fig-height: 2.8
+#| code-fold: true
+#| fig-cap: "Synthetic data: 200 observations drawn from the true model. Dashed line = the true data-generating line. Our goal: recover α ≈ 2, β ≈ 0.7, σ ≈ 1 from the data alone."
+
+set.seed(2026)
+n_obs <- 200
+x_obs <- rnorm(n_obs, 0, 1)
+y_obs <- 2 + 0.7 * x_obs + rnorm(n_obs, 0, 1)
+df_synth <- tibble(x = x_obs, y = y_obs)
+
+df_synth |>
+  ggplot(aes(x = x, y = y)) +
+  geom_point(color = col_1, alpha = 0.55, size = 1.4) +
+  geom_abline(
+    intercept = 2,
+    slope = 0.7,
+    color = col_2,
+    linewidth = 1.1,
+    linetype = "dashed"
+  ) +
+  annotate(
+    "text",
+    x = 1.8,
+    y = 0.5,
+    label = "True line: y = 2 + 0.7 x",
+    color = col_2,
+    size = 3.2,
+    hjust = 0
+  ) +
+  theme_bw() +
+  theme(panel.grid.minor = element_blank(), aspect.ratio = 0.55) +
+  labs(
+    x = "x",
+    y = "y",
+    title = "Synthetic dataset (n = 200)",
+    subtitle = "True parameters: α = 2,  β = 0.7,  σ = 1"
+  )
+```
+
+$$
+y_i = \underbrace{2}_{\alpha} + \underbrace{0.7}_{\beta} \cdot x_i + \varepsilon_i, \quad \varepsilon_i \sim \text{Normal}(0,\, 1), \quad i = 1, \ldots, 200
+$$
+
+::: notes
+The synthetic data strategy is pedagogically important: because we generated the data ourselves, we know the true parameter values. If brms recovers α ≈ 2, β ≈ 0.7, σ ≈ 1, we have evidence that the sampler is working correctly. If it does not, either the model is misspecified or the chain has not converged.
+
+This is also a preview of the workflow students will use when verifying their own models: generate data from a model with known parameters, fit the model, check recovery. This is sometimes called a "simulation study" or "parameter recovery check."
+
+The data-generating model shown here is a Gaussian linear regression — the same model we will study in depth in week 8. The `brms` formula `y ~ x` encodes exactly this model: a Gaussian likelihood with a linear mean function. The σ parameter is the standard deviation of the residuals.
+
+Point out the scatter of points around the dashed line: the spread reflects σ = 1. Some points are far from the line (noise); the overall trend is clear (signal).
+:::
+
+---
+
+## The `brms` Model Call {.smaller}
+
+```{r}
+#| label: brms-code-display
+#| echo: true
+#| eval: false
+
+fit_synth <- brm(
+  formula = y ~ x, # model structure: linear predictor
+  data = df_synth, # the data
+  prior = c(
+    prior(normal(0, 5), class = Intercept), # P(α): weakly informative
+    prior(normal(0, 2), class = b), # P(β): weakly informative
+    prior(exponential(1), class = sigma) # P(σ): positive-valued
+  ),
+  chains = 4, # 4 independent chains
+  iter = 2000, # 2000 total iterations per chain
+  warmup = 1000, # first 1000 are warm-up (discarded)
+  seed = 2026 # reproducibility
+)
+```
+
+. . .
+
+::: {style="font-size: 0.78em"}
+- `formula`: the likelihood family (Gaussian by default) and the mean structure ($\mu_i = \alpha + \beta x_i$)
+- `prior`: our prior beliefs — $P(\theta)$ — stated explicitly. Weakly informative: allows a wide range of plausible values without ruling anything out
+- `chains = 4, iter = 2000, warmup = 1000`: four chains × 1,000 post-warmup steps = **4,000 posterior draws**
+- `seed`: locks the random number generator for reproducibility (Week 2 principle!)
+:::
+
+. . .
+
+brms translates this to Stan code, compiles to C++, and runs NUTS across all 4 chains.
+
+::: notes
+Walk through each argument carefully. This is the code students will write every week from now on.
+
+formula: the tilde syntax encodes the linear predictor. `y ~ x` means "model y as a function of x." brms assumes a Gaussian likelihood by default (this will change in week 10 when we use binary outcomes). The intercept is included automatically.
+
+prior: this is where we specify P(θ). The three priors here are weakly informative:
+- Normal(0, 5) for the intercept: allows values from roughly -10 to +10 — broad but not flat
+- Normal(0, 2) for the slope: allows effects from roughly -4 to +4 — reasonable for standardized predictors
+- Exponential(1) for sigma: positive, with prior mass concentrated below 5 but allowing larger values
+
+chains, iter, warmup: the computational setup. Four chains, 2000 iterations each, first 1000 discarded. Total posterior draws = 4 × 1000 = 4000.
+
+seed: critical for reproducibility. When we say "the analysis was run with seed 2026," anyone can reproduce the exact same chain paths and therefore the exact same posterior samples. This connects back to the reproducible research theme from week 2.
+
+brms → Stan → C++: the compilation takes a few seconds (or up to a minute for complex models). After compilation, sampling is fast. The compilation happens once; subsequent fits with the same model structure use a cached version.
+:::
+
+---
+
+## Prior Specification {.smaller}
+
+Always verify the priors brms is using:
+
+```{r}
+#| label: prior-summary
+#| echo: true
+#| eval: true
+
+get_prior(formula = y ~ x, data = df_synth)
+```
+
+. . .
+
+```{r}
+#| label: prior-summary-fit
+#| echo: true
+#| eval: true
+
+prior_summary(fit_synth)
+```
+
+. . .
+
+::: {.callout-note style="font-size: 0.72em"}
+`get_prior()` shows what priors are available to set. `prior_summary()` shows what was actually used. Always check both: brms fills in defaults for any unspecified parameter. Understanding your priors is part of understanding your model.
+:::
+
+::: notes
+Prior transparency is a key Bayesian principle: every analysis makes prior assumptions. Bayesian analysis makes them explicit and auditable. These two commands make the priors visible before and after fitting.
+
+get_prior(): shows all parameters in the model and which prior classes they belong to. The "class" column distinguishes: Intercept (the α parameter), b (regression slopes like β), and sigma (the residual standard deviation).
+
+prior_summary(): shows the actual priors used in the fitted model. If the student specified priors, these appear here. If brms filled in defaults (e.g., a flat prior or a weakly informative prior), those appear too.
+
+The pedagogical point: you should always be able to answer "what did I assume before seeing the data?" for every parameter in your model. Prior specification is a scientific decision that should be justified in your write-up.
+
+Note for students: if you fit a model and forget to check, you might be using flat priors (which are often inadvisable) or brms defaults that don't match your scientific understanding. check_prior() = check your assumptions.
+:::
+
+---
+
+## The `summary()` Output {.smaller}
+
+```{r}
+#| label: brms-summary
+#| echo: true
+#| eval: true
+
+summary(fit_synth)
+```
+
+::: notes
+Walk through the output line by line. This is the most important thing to be able to read and interpret.
+
+The header: model formula, number of observations, number of families (likelihood families), links (identity = Gaussian with no transformation), chains (4), iterations (2000), warmup (1000).
+
+The Population-Level Effects table (the fixed effects): one row per parameter.
+- Estimate: posterior mean (the "best single guess")
+- Est.Error: posterior standard deviation (uncertainty)
+- l-95% CI and u-95% CI: 95% credible interval — there is 95% posterior probability that the true parameter lies in this range, given data and prior
+- Rhat: should be 1.00 for all parameters
+- Bulk_ESS and Tail_ESS: should be well above 400
+
+Check recovery: Intercept ≈ 2? b_x ≈ 0.7? sigma ≈ 1? The posterior means should be close to the true values, with credible intervals that contain the true values.
+
+Family Specific Parameters: sigma (the residual standard deviation) — this should be ≈ 1.
+
+This is a beautiful example of Bayesian inference working: the posterior means approximately recover the true data-generating parameters, with uncertainty captured by the credible intervals. The Rhat of 1.00 and high ESS indicate the chains converged well.
+:::
+
+---
+
+## Trace Plots: Diagnosing Convergence {.smaller}
+
+```{r}
+#| label: fig-brms-trace
+#| echo: true
+#| eval: true
+#| fig-height: 3.5
+#| fig-cap: "Trace plots for the three model parameters. Four chains in different colours. All chains are stationary and overlapping — the hairy caterpillar."
+
+mcmc_plot(
+  fit_synth,
+  type = "trace",
+  variable = c("b_Intercept", "b_x", "sigma")
+)
+```
+
+::: notes
+Walk through the trace plots. There are three panels, one per parameter.
+
+Each panel: x-axis = iteration number (1 to 1000, post-warm-up only), y-axis = parameter value. Four colored lines correspond to the four chains.
+
+What to look for:
+1. Stationarity: the mean and spread of each chain should not trend over time. Each chain looks like white noise around a stable level.
+2. Mixing: the four chains should be interleaved — you should not be able to visually identify which chain is which by color (they should all overlap). 
+3. Consistent levels: all four chains should be exploring the same region of parameter space.
+
+This looks like the "hairy caterpillar" from the conceptual section. The chains for b_Intercept are centered around ≈ 2, b_x around ≈ 0.7, sigma around ≈ 1 — matching the true data-generating values.
+
+Compare to the bad trace plot from Part VI: no separation, no trending, no stickiness. This is what we want.
+
+R-hat values from summary(): all 1.00. This is consistent with what we see visually. Remember: the visual check and the numerical check are complementary — both should be performed.
+:::
+
+---
+
+## Posterior Distributions {.smaller}
+
+```{r}
+#| label: fig-brms-posterior
+#| echo: true
+#| eval: true
+#| fig-height: 3.2
+#| fig-cap: "Posterior distributions for the three model parameters. Shaded region = 95% credible interval. Vertical line = posterior median. True values (α=2, β=0.7, σ=1) lie well within the posteriors."
+
+mcmc_plot(
+  fit_synth,
+  type = "areas",
+  variable = c("b_Intercept", "b_x", "sigma"),
+  prob = 0.95
+) +
+  geom_vline(
+    xintercept = c(2, 0.7, 1),
+    linetype = "dashed",
+    color = col_2,
+    linewidth = 0.9
+  ) +
+  labs(subtitle = "Dashed lines = true data-generating parameter values")
+```
+
+::: notes
+The posterior area plots are the core deliverable of Bayesian inference. Each panel shows the full posterior distribution for one parameter.
+
+What each element means:
+- The curve: the full posterior density p(θ|data). This is what Bayes' theorem produces.
+- The shaded region: the 95% credible interval. There is 95% posterior probability that the true parameter value lies in this range.
+- The vertical line: the posterior median (approximately equal to the posterior mean for symmetric posteriors).
+- The orange dashed lines: true parameter values (added by us, possible only because we generated the data).
+
+Interpretation for each parameter:
+- b_Intercept: centered around ≈ 2, with 95% CI containing 2.0. Recovery successful.
+- b_x: centered around ≈ 0.7, with 95% CI containing 0.7. Recovery successful.
+- sigma: centered around ≈ 1, with 95% CI containing 1.0. Recovery successful.
+
+Key point: the posteriors are full distributions, not point estimates. We could compute any posterior quantity from these samples: the probability that β > 0, the probability that β is between 0.5 and 1.0, the expected value of y for a new x value. All are available from the samples without additional computation.
+
+This is the payoff of the Bayesian workflow: not just a coefficient and a p-value, but a full probability distribution representing our updated beliefs about each parameter.
+:::
+
+---
+
+## Posterior Predictive Check {.smaller}
+
+```{r}
+#| label: fig-pp-check
+#| echo: true
+#| eval: true
+#| fig-height: 3.0
+#| fig-cap: "Posterior predictive check: 50 datasets simulated from posterior draws (light blue) versus the observed data (dark blue). The observed data distribution is well within the range of simulated datasets — the model fits."
+
+pp_check(fit_synth, ndraws = 50)
+```
+
+. . .
+
+::: {style="font-size: 0.78em"}
+**Logic:** draw parameter values $\theta^{(s)}$ from the posterior → simulate a new dataset $y^{\text{rep}}$ from $P(y \mid \theta^{(s)})$ → compare simulated datasets to the observed data $y$.
+
+If the model is well-specified, observed data should look like a *typical draw* from the posterior predictive distribution. A systematic discrepancy indicates model misspecification.
+:::
+
+::: notes
+The posterior predictive check is a model fit assessment tool. It uses the full generative power of the Bayesian model: once we have posterior samples, we can simulate new datasets by plugging the samples into the data-generating model.
+
+Interpretation: the light blue lines are distributions of 50 simulated datasets. The dark blue line is the observed data. If the model fits well, the dark blue line should be similar to the light blue lines — the observed data should look like a typical draw from the model.
+
+Here: the observed distribution (a roughly bell-shaped distribution of y values) is well within the range of simulated distributions. The model captures the central tendency, spread, and shape of the data. This is a successful posterior predictive check.
+
+What a failed pp_check looks like: a systematic discrepancy between the observed and simulated distributions. For example, if the observed data is bimodal but all simulated distributions are unimodal, the Gaussian likelihood is misspecified.
+
+This is a preview of model checking tools — we will develop more sophisticated checks in weeks 8–13. The key takeaway: the posterior is not just for reading parameters; it is generative and can be used to simulate new data for model validation.
+:::
+
+---
+
+## Reading the Output: What Just Happened {.smaller}
+
+Connecting the `brms` output to the MCMC machinery:
+
+. . .
+
+- The **4,000 rows** in the posterior are samples from **4 chains × 1,000 post-warm-up steps**
+- Each step used the **NUTS algorithm** — a frictionless ball rolling on the negative log-posterior surface — to propose an accepted move
+- **Convergence** was assessed by $\hat{R}$ (≈ 1.00 for all parameters) and visually by trace plots (stationary, mixed chains)
+- The **posterior distributions** directly encode our updated beliefs about $\alpha$, $\beta$, and $\sigma$ after combining the prior and the likelihood
+- $P(\text{data})$ **was never computed**. It cancelled in every acceptance ratio
+
+. . .
+
+::: {.callout-note style="font-size: 0.72em"}
+When `brms` prints `Compiling Stan program...` and `Chain 1: Iteration 1/2000`, you now know exactly what is happening and why. Next week, the model structure becomes more interesting. The MCMC machinery runs identically underneath.
+:::
+
+::: notes
+This closing slide for the brms section connects the abstract machinery to the concrete output. Walk through each bullet and explicitly trace it back to a section of the session:
+
+"4,000 rows" → Part VI: multiple chains, warm-up, standard setup
+"Each step used NUTS" → Part V: the ball on the landscape, HMC
+"Convergence assessed by R-hat" → Part VI: diagnostics, falsificationism
+"Posterior distributions" → Part IV/V: the stationary distribution of the Markov Chain, the Monte Carlo estimator
+"P(data) was never computed" → Part IV: the key algebraic insight from the Island King
+
+The callout box closes the loop: students who have seen this session will understand what brms is doing when it runs. They are no longer users of a black box — they are users of a machine whose internal logic they understand.
+
+This understanding matters for:
+1. Diagnosing problems (divergences, low ESS, high R-hat)
+2. Making sensible modeling decisions (prior choice, model structure)
+3. Interpreting output correctly (posterior means and intervals as probability statements)
+4. Communicating results to nontechnical audiences
+:::
+
+# Bridge to Week 8
+
+## From Infrastructure to Science {.smaller}
+
+Today was about the **plumbing**. From next week onward, the plumbing runs invisibly.
+
+. . .
+
+The MCMC machinery is **model-agnostic**: the same sampling algorithm runs regardless of the model. What changes is the log-posterior function — determined by your prior and likelihood choices.
+
+. . .
+
+The `brms` workflow is now fixed:
+
+::: {style="font-size: 0.82em"}
+1. Specify the likelihood family and model structure via `formula`
+2. Specify priors via `prior` — and justify them
+3. Run 4 chains, check $\hat{R}$, ESS, and trace plots
+4. Interpret the posterior distributions as probability statements about parameters
+5. Use posterior predictive checks to assess model fit
+:::
+
+. . .
+
+**Coming weeks:**
+
+- **Week 8:** Bivariate linear regression — one predictor, one outcome, causal and descriptive interpretation
+- **Week 9:** Multivariate regression and interactions — controlling for confounders, moderation effects
+- **Week 10:** Binary outcomes — **Bernoulli** likelihood replaces Gaussian; everything else stays identical
+
+. . .
+
+::: {.callout-note style="font-size: 0.72em"}
+The prior–likelihood–posterior logic does not change. The formula inside the likelihood family does.
+:::
+
+::: notes
+This slide explicitly names what was learned today (infrastructure) and what comes next (science). The transition is important: students who understood today have the conceptual tools to engage with every model in the course.
+
+The five-step workflow should be committed to memory — it is the standard operating procedure for every empirical analysis in the remainder of the course.
+
+The forward preview: week 10 is the key conceptual test of the Bayesian framework's coherence. The Bernoulli likelihood for binary outcomes has a completely different functional form from the Gaussian, but the prior–posterior update logic is identical. Students who understand MCMC and the three-ingredient structure will find the extension natural. Students who are treating brms as a black box will find it confusing.
+
+Final thought to share: "You now have the tools to understand a Bayesian research paper from a methods perspective. The language of priors, likelihoods, posteriors, R-hat, ESS, and posterior predictive checks is standard in quantitative political science. After today, that language belongs to you."
+:::
+
+---
+
+# Thank you for your attention and see you next week!
+
+<a href="https://github.com/dertristan" target="_blank" style="text-decoration: none; margin-left: 10px;"> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16"> <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/> </svg> </a> <a href="mailto:tristan.muno@uni-mannheim.de" style="text-decoration: none; margin-left: 5px;"> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16"> <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"/> </svg> </a>
+
+::: {#refs}
+:::
+
+# Appendix
+
+## Appendix A: Metropolis Algorithm — Full Pseudocode {.smaller}
+
+The complete Metropolis algorithm for Bayesian inference:
+
+::: {style="font-size: 0.7em;"}
+
+**Input:** unnormalized posterior $\tilde{p}(\theta) = P(\text{data} \mid \theta) \cdot P(\theta)$, proposal distribution $q(\theta^* \mid \theta^{(t)})$, starting point $\theta^{(1)}$, number of iterations $T$.
+
+**For** $t = 1, 2, \ldots, T$:
+
+1. **Propose:** draw $\theta^*$ from the proposal distribution $q(\theta^* \mid \theta^{(t)})$
+
+2. **Compute acceptance ratio:**
+$$
+r = \min\!\left(1,\; \frac{\tilde{p}(\theta^*)}{\tilde{p}(\theta^{(t)})}\right) = \min\!\left(1,\; \frac{P(\text{data} \mid \theta^*) \cdot P(\theta^*)}{P(\text{data} \mid \theta^{(t)}) \cdot P(\theta^{(t)})}\right)
+$$
+
+3. **Accept or reject:** draw $u \sim \text{Uniform}(0, 1)$
+   - If $u \leq r$: set $\theta^{(t+1)} = \theta^*$ (accept)
+   - If $u > r$: set $\theta^{(t+1)} = \theta^{(t)}$ (reject, stay)
+
+**Output:** sequence $\theta^{(1)}, \theta^{(2)}, \ldots, \theta^{(T)}$ — samples from the stationary distribution $P(\theta \mid \text{data})$ (after warm-up).
+
+:::
+
+. . .
+
+::: {.callout-note style="font-size: 0.68em"}
+**Why does this work?** The acceptance rule satisfies **detailed balance**: for any two states $\theta$ and $\theta'$, the probability of being in state $\theta$ and moving to $\theta'$ equals the probability of being in $\theta'$ and moving back to $\theta$:
+$$
+\pi(\theta) \cdot P(\theta \to \theta') = \pi(\theta') \cdot P(\theta' \to \theta)
+$$
+Detailed balance implies that $\pi(\theta) = P(\theta \mid \text{data})$ is the stationary distribution. This is the mathematical guarantee that the Metropolis algorithm produces posterior samples.
+:::
+
+::: notes
+This appendix slide is for students who want the formal underpinning. Present it briefly if time permits, or point students to it as a reference.
+
+The key formal result: detailed balance is a sufficient condition for a Markov Chain to have a given stationary distribution. The Metropolis acceptance rule is constructed precisely to satisfy detailed balance for the target posterior.
+
+Verification of detailed balance for the Metropolis rule: consider two states θ and θ'. Without loss of generality, assume p(θ') > p(θ) (so θ' is more probable).
+
+P(θ → θ') = q(θ'|θ) × min(1, p(θ')/p(θ)) = q(θ'|θ) × 1 = q(θ'|θ) [since p(θ') > p(θ)]
+P(θ' → θ) = q(θ|θ') × min(1, p(θ)/p(θ')) = q(θ|θ') × p(θ)/p(θ') [since p(θ) < p(θ')]
+
+For symmetric proposal (q(θ'|θ) = q(θ|θ')):
+π(θ) × P(θ → θ') = p(θ) × q(θ'|θ) [since π = p]
+π(θ') × P(θ' → θ) = p(θ') × q(θ|θ') × p(θ)/p(θ') = p(θ) × q(θ|θ') = p(θ) × q(θ'|θ) ✓
+
+So detailed balance holds, and the stationary distribution is p(θ|data). QED.
+
+HMC satisfies a more general version of detailed balance via the volume-preserving and reversible Hamiltonian dynamics. The proof is more involved and uses symplectic geometry.
+:::
+
+---
+
+## Appendix B: MCMC Algorithm Comparison {.smaller}
+
+::: {style="font-size: 0.65em;"}
+
+| Algorithm | Year | Proposal | Key innovation | Limitation | Used in |
+|:---|:---:|:---|:---|:---|:---|
+| **Metropolis** | 1953 | Symmetric random walk | First MCMC algorithm; simple acceptance rule | Slow mixing; requires tuning of step size | Historical; rarely used in practice today |
+| **Metropolis-Hastings** | 1970 | Asymmetric proposals allowed | Generalises Metropolis to arbitrary proposals | Still requires manual tuning | Textbooks; simple models |
+| **Gibbs Sampler** | 1984/1990 | Conditional distributions | Acceptance rate = 1; dimension-by-dimension | Requires tractable conditionals; slow on correlated posteriors | BUGS, JAGS |
+| **HMC** | 1987/2011 | Leapfrog trajectory (gradient-guided) | Uses gradient information; large, efficient jumps | Requires differentiable posterior; trajectory length must be tuned | Stan (basic HMC) |
+| **NUTS** | 2014 | Adaptive leapfrog (no U-turn) | Eliminates trajectory length tuning; full automation | Computationally expensive per step vs. random walk | **Stan (default) → `brms`** |
+
+:::
+
+. . .
+
+::: {.callout-note style="font-size: 0.68em"}
+`brms` uses **NUTS** via Stan for all models. The progression from Metropolis to NUTS represents 60 years of algorithmic development: each generation solved the main limitation of the previous one. NUTS is currently the state of the art for general-purpose Bayesian computation with continuous parameters.
+
+References: @metropolis1953equation; @gelfand1990sampling; @hoffman2014no; @burkner2017brms.
+:::
+
+::: notes
+This reference table is for students who want to situate today's content in the broader MCMC literature.
+
+Metropolis (1953): the original. Symmetric random-walk proposal. The island king story with equal-probability left/right proposals.
+
+Metropolis-Hastings (1970, Hastings): generalized to asymmetric proposals q(θ'|θ) ≠ q(θ|θ'). The acceptance ratio includes a correction factor for the proposal asymmetry. Nearly all MCMC algorithms today are Metropolis-Hastings variants.
+
+Gibbs Sampler (Geman & Geman 1984 for images; Gelfand & Smith 1990 for statistics): update each parameter one at a time by sampling from its full conditional distribution p(θ_j | θ_{-j}, data). Always accepts (no rejection). Efficient when conditionals are tractable; slow for correlated parameters (the chain must make many small moves to traverse the joint posterior).
+
+HMC (Duane et al. 1987 for physics; Neal 2011 for statistics): introduced gradient information. The leapfrog integrator simulates Hamiltonian dynamics. Requires manual tuning of step size ε and number of leapfrog steps L.
+
+NUTS (Hoffman & Gelman 2014): automated HMC. Uses the "no U-turn" criterion to adaptively choose trajectory length. During warm-up, also adapts step size and mass matrix. Full automation makes it suitable for general-purpose use without domain expertise in MCMC tuning. This is what Stan implements.
+
+For students interested in the history: the BUGS and JAGS software packages (popular before Stan) used Gibbs sampling and were the dominant tools for Bayesian computation from about 1990 to 2012. Stan's NUTS represented a generational change in computational efficiency.
+:::
