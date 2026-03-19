@@ -1444,31 +1444,37 @@ For students familiar with neural network training: gradient descent finds the m
 
 # Part VI: Multiple Chains, Warm-Up & Convergence
 
-## Why One Chain Is Not Enough {.smaller}
+## Why One Chain Is Not Enough
 
+::: {style="font-size: 0.6em"}
 Running a single MCMC chain has three fundamental problems:
-
+:::
 . . .
 
+::: {style="font-size: 0.6em"}
 **1. Starting-point sensitivity**
 
 Every chain must begin somewhere. Early samples reflect the starting point, not the posterior. These samples are misleading and must be discarded. But how many? One chain alone cannot tell you when it has "found" the posterior.
-
+:::
 . . .
 
+::: {style="font-size: 0.6em"}
 **2. Invisible local trapping**
 
 A single chain might explore only a subset of the posterior — a local neighborhood or one mode of a multimodal distribution — without visiting other high-probability regions. With only one chain, this failure is completely invisible.
+:::
 
 . . .
 
+::: {style="font-size: 0.6em"}
 **3. No internal benchmark for convergence**
 
 Whether a chain has converged can only be assessed by comparing *multiple* chains started from *different*, overdispersed starting points. If all chains agree after warm-up, that is evidence of convergence. If they disagree, non-convergence is visible.
+:::
 
 . . .
 
-::: {.callout-note style="font-size: 0.72em"}
+::: {.callout-note style="font-size: 0.6em"}
 **Standard practice in `brms`:** 4 chains, 2,000 iterations each (1,000 warm-up, 1,000 post-warm-up), for a total of 4,000 posterior draws. The 4 chains start from different dispersed points and must converge to the same distribution.
 :::
 
@@ -1561,9 +1567,9 @@ After warm-up: adaptation freezes completely. The post-warm-up chains use fixed 
 
 ---
 
-## Convergence: What We Can and Cannot Know {.smaller}
+## Convergence: What We Can and Cannot Know
 
-::: {.callout-important style="font-size: 0.78em"}
+::: {.callout-important style="font-size: 0.6em"}
 **A fundamental epistemological limit:**
 
 **Convergence cannot be proven. It can only be falsified.**
@@ -1573,17 +1579,21 @@ A chain that looks converged *might not be* — it may not have discovered a dis
 
 . . .
 
+::: {style="font-size: 0.6em"}
 This mirrors Karl Popper's falsificationism: we cannot confirm "the chain has converged," we can only fail to detect evidence of non-convergence.
+:::
 
 . . .
 
+::: {style="font-size: 0.6em"}
 **What diagnostics do:**
 
 > They are **tests for non-convergence**, not certificates of convergence. A model that passes all diagnostics has not been proven to have converged — it has simply not been caught failing.
+:::
 
 . . .
 
-::: {style="font-size: 0.82em"}
+::: {style="font-size: 0.6em"}
 The practical implication: run diagnostics systematically, report them, and treat them as minimum requirements — not as guarantees. Use multiple chains, long runs, and prior sensitivity analysis as additional safeguards.
 :::
 
@@ -1603,30 +1613,42 @@ This epistemological humility is part of the Bayesian spirit of the course: we a
 
 ---
 
-## Convergence Diagnostics {.smaller}
+## Convergence Diagnostics
 
+::: {style="font-size: 0.6em"}
 Four key diagnostics — **all reported automatically by `brms`:**
-
+:::
 . . .
 
+::: {style="font-size: 0.6em"}
 **Trace plot** — plot of sampled values over iterations, one line per chain.
 A converged chain looks like a *stationary, noisy signal* — the "hairy caterpillar." All chains overlap and interleave. Non-convergence looks like separated, trending, or stuck chains.
+:::
 
 . . .
 
+::: {style="font-size: 0.6em"}
 **$\hat{R}$ (R-hat, Gelman-Rubin)** — ratio of between-chain to within-chain variance [@vehtari2021rank]:
-$$\hat{R} = \sqrt{\frac{\widehat{\text{Var}}^+(\theta \mid y)}{W}}$$
+$$
+\hat{R} = \sqrt{\frac{\widehat{\text{Var}}^+(\theta \mid y)}{W}}
+$$
+
 If chains have converged to the same distribution, between-chain ≈ within-chain variance → $\hat{R} \approx 1$.
 **Rule:** $\hat{R} < 1.01$ (improved split-$\hat{R}$, Vehtari et al. 2021). Values above this indicate non-convergence.
+:::
 
 . . .
 
+::: {style="font-size: 0.6em"}
 **Effective Sample Size (ESS)** — MCMC samples are *autocorrelated*: each depends on the previous. ESS estimates the equivalent number of independent samples.
 `brms` reports **Bulk-ESS** (central summaries) and **Tail-ESS** (extreme quantiles). **Rule:** ESS > 400 per parameter.
+:::
 
 . . .
 
+::: {style="font-size: 0.6em"}
 **Divergent transitions** — HMC-specific: the ball trajectory became numerically unstable. Even a handful of divergences indicates a problem with the posterior geometry or model specification. `brms` highlights them prominently.
+:::
 
 ::: notes
 Walk through each diagnostic in order. Students will see all four in `summary(fit)` output and in the trace plot.
@@ -1703,8 +1725,6 @@ After this slide: "In the next part, you will see actual trace plots from a brms
 
 ## Synthesis {.smaller}
 
-::: {style="font-size: 0.85em"}
-
 **1. Monte Carlo:** approximate intractable integrals by drawing random samples and averaging. The law of large numbers guarantees convergence at rate $1/\!\sqrt{S}$, independent of dimension.
 
 . . .
@@ -1714,8 +1734,6 @@ After this slide: "In the next part, you will see actual trace plots from a brms
 . . .
 
 **3. Metropolis / HMC:** a specific acceptance rule that ensures the stationary distribution is correct. The rule uses only the **ratio** of posterior values at two parameter values. $P(\text{data})$ **cancels** in this ratio and is never computed. HMC uses gradient information to propose efficient trajectories, rather than small random steps.
-
-:::
 
 . . .
 
@@ -1853,8 +1871,9 @@ brms → Stan → C++: the compilation takes a few seconds (or up to a minute fo
 
 ---
 
-## Prior Specification {.smaller}
+## Prior Specification
 
+::: {style="font-size: 0.6em"}
 Always verify the priors brms is using:
 
 ```{r}
@@ -1864,9 +1883,11 @@ Always verify the priors brms is using:
 
 get_prior(formula = y ~ x, data = df_synth)
 ```
+:::
 
 . . .
 
+::: {style="font-size: 0.6em"}
 ```{r}
 #| label: prior-summary-fit
 #| echo: true
@@ -1874,6 +1895,8 @@ get_prior(formula = y ~ x, data = df_synth)
 
 prior_summary(fit_synth)
 ```
+
+:::
 
 . . .
 
@@ -2048,7 +2071,7 @@ Connecting the `brms` output to the MCMC machinery:
 
 - The **4,000 rows** in the posterior are samples from **4 chains × 1,000 post-warm-up steps**
 - Each step used the **NUTS algorithm** — a frictionless ball rolling on the negative log-posterior surface — to propose an accepted move
-- **Convergence** was assessed by $\hat{R}$ (≈ 1.00 for all parameters) and visually by trace plots (stationary, mixed chains)
+- **Convergence** was assessed by $\hat{R}$ (≈ 1.00 for all parameters), $ESS$ (>400 for all parameters) and visually by trace plots (stationary, mixed chains)
 - The **posterior distributions** directly encode our updated beliefs about $\alpha$, $\beta$, and $\sigma$ after combining the prior and the likelihood
 - $P(\text{data})$ **was never computed**. It cancelled in every acceptance ratio
 
@@ -2080,31 +2103,38 @@ This understanding matters for:
 
 ## From Infrastructure to Science {.smaller}
 
+::: {style="font-size: 0.75em"}
 Today was about the **plumbing**. From next week onward, the plumbing runs invisibly.
-
-. . .
-
-The MCMC machinery is **model-agnostic**: the same sampling algorithm runs regardless of the model. What changes is the log-posterior function — determined by your prior and likelihood choices.
-
-. . .
-
-The `brms` workflow is now fixed:
-
-::: {style="font-size: 0.82em"}
-1. Specify the likelihood family and model structure via `formula`
-2. Specify priors via `prior` — and justify them
-3. Run 4 chains, check $\hat{R}$, ESS, and trace plots
-4. Interpret the posterior distributions as probability statements about parameters
-5. Use posterior predictive checks to assess model fit
 :::
 
 . . .
 
+::: {style="font-size: 0.75em"}
+The MCMC machinery is **model-agnostic**: the same sampling algorithm runs regardless of the model. What changes is the log-posterior function — determined by your prior and likelihood choices.
+:::
+
+. . .
+
+::: {style="font-size: 0.75em"}
+The `brms` workflow is now fixed:
+
+
+1. Specify the likelihood family and model structure via `formula`
+2. Specify priors via `prior` — and justify them
+3. Run 4 chains, check $\hat{R}$, ESS, and trace plots
+4. Use posterior predictive checks to assess model fit
+5. Interpret the posterior distributions as probability statements about parameters
+:::
+
+. . .
+
+::: {style="font-size: 0.75em"}
 **Coming weeks:**
 
 - **Week 8:** Bivariate linear regression — one predictor, one outcome, causal and descriptive interpretation
 - **Week 9:** Multivariate regression and interactions — controlling for confounders, moderation effects
 - **Week 10:** Binary outcomes — **Bernoulli** likelihood replaces Gaussian; everything else stays identical
+:::
 
 . . .
 
@@ -2122,8 +2152,6 @@ The forward preview: week 10 is the key conceptual test of the Bayesian framewor
 Final thought to share: "You now have the tools to understand a Bayesian research paper from a methods perspective. The language of priors, likelihoods, posteriors, R-hat, ESS, and posterior predictive checks is standard in quantitative political science. After today, that language belongs to you."
 :::
 
----
-
 # Thank you for your attention and see you next week!
 
 <a href="https://github.com/dertristan" target="_blank" style="text-decoration: none; margin-left: 10px;"> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16"> <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/> </svg> </a> <a href="mailto:tristan.muno@uni-mannheim.de" style="text-decoration: none; margin-left: 5px;"> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16"> <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"/> </svg> </a>
@@ -2133,11 +2161,13 @@ Final thought to share: "You now have the tools to understand a Bayesian researc
 
 # Appendix
 
-## Appendix A: Metropolis Algorithm — Full Pseudocode {.smaller}
+## Appendix A: Metropolis Algorithm — Full Pseudocode
 
+:::: columns
+::: {.column width="75%"}
+
+::: {style="font-size: 0.5em;"}
 The complete Metropolis algorithm for Bayesian inference:
-
-::: {style="font-size: 0.7em;"}
 
 **Input:** unnormalized posterior $\tilde{p}(\theta) = P(\text{data} \mid \theta) \cdot P(\theta)$, proposal distribution $q(\theta^* \mid \theta^{(t)})$, starting point $\theta^{(1)}$, number of iterations $T$.
 
@@ -2158,15 +2188,21 @@ $$
 
 :::
 
-. . .
+:::
 
-::: {.callout-note style="font-size: 0.68em"}
+::: {.column width="25%"}
+
+::: {.callout-note style="font-size: 0.5em"}
 **Why does this work?** The acceptance rule satisfies **detailed balance**: for any two states $\theta$ and $\theta'$, the probability of being in state $\theta$ and moving to $\theta'$ equals the probability of being in $\theta'$ and moving back to $\theta$:
 $$
-\pi(\theta) \cdot P(\theta \to \theta') = \pi(\theta') \cdot P(\theta' \to \theta)
+\pi(\theta) \cdot P(\theta \to \theta') \\ = \pi(\theta') \cdot P(\theta' \to \theta)
 $$
 Detailed balance implies that $\pi(\theta) = P(\theta \mid \text{data})$ is the stationary distribution. This is the mathematical guarantee that the Metropolis algorithm produces posterior samples.
 :::
+
+:::
+
+::::
 
 ::: notes
 This appendix slide is for students who want the formal underpinning. Present it briefly if time permits, or point students to it as a reference.
@@ -2187,14 +2223,16 @@ So detailed balance holds, and the stationary distribution is p(θ|data). QED.
 HMC satisfies a more general version of detailed balance via the volume-preserving and reversible Hamiltonian dynamics. The proof is more involved and uses symplectic geometry.
 :::
 
+
 ---
+
 
 ## Appendix B: MCMC Algorithm Comparison {.smaller}
 
 ::: {style="font-size: 0.65em;"}
 
 | Algorithm | Year | Proposal | Key innovation | Limitation | Used in |
-|:---|:---:|:---|:---|:---|:---|
+|:---|:---:|:----|:------|:------|:---|
 | **Metropolis** | 1953 | Symmetric random walk | First MCMC algorithm; simple acceptance rule | Slow mixing; requires tuning of step size | Historical; rarely used in practice today |
 | **Metropolis-Hastings** | 1970 | Asymmetric proposals allowed | Generalises Metropolis to arbitrary proposals | Still requires manual tuning | Textbooks; simple models |
 | **Gibbs Sampler** | 1984/1990 | Conditional distributions | Acceptance rate = 1; dimension-by-dimension | Requires tractable conditionals; slow on correlated posteriors | BUGS, JAGS |
