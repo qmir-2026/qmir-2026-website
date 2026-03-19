@@ -36,7 +36,7 @@ Here's your roadmap for the semester!
 | Week | Topic | Monday | Thursday | Slides | Exercise | Homework | Ressources |
 |:----:|:-----|:------|:--------|:------:|:----:|:------:|:------:|
 | 6    | Probability, Simulation & Bayes’ Theorem | Mar 16 | Mar 19 | [<i class="fa fa-chalkboard" style="color: black; font-weight: bold;"></i>](slides/week6.qmd) | [{{< fa code >}}]{style="color: lightgray"}  | <span class="hw-visible"> Mon [<i class="fa fa-laptop-code" style="color: black; font-weight: bold;"></i>](https://classroom.github.com/a/o5ie5qMP) | [<i class="fa fa-book" style="color: black; font-weight: bold;"></i>](ressources/06_resources.qmd) |
-| 7    | Bayesian Inference & MCMC | Mar 23 | Mar 26 | [{{< fa chalkboard >}}]{style="color: lightgray"} | [{{< fa code >}}]{style="color: lightgray"}  | [{{< fa laptop-code >}}]{style="color: lightgray"} | <i class="fa fa-book" style="color: lightgray; font-weight: bold;"></i> |
+| 7    | Bayesian Inference & MCMC | Mar 23 | Mar 26 | [{{< fa chalkboard >}}]{style="color: lightgray"} | [{{< fa code >}}]{style="color: lightgray"}  | [{{< fa laptop-code >}}]{style="color: lightgray"} | [<i class="fa fa-book" style="color: black; font-weight: bold;"></i>](ressources/07_resources.qmd) |
 
 #### Block III: Applied Data Analysis
 
