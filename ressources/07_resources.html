@@ -94,6 +94,35 @@ div.csl-indent {
 }</script>
 <meta name="robots" content="noindex">
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -332,8 +361,50 @@ div.csl-indent {
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-mcelreath2020statistical" class="csl-entry" role="listitem">
-McElreath, Richard. 2020. <em>Statistical Rethinking: A Bayesian Course with Examples in r and STAN</em>. 2nd ed. Chapman; Hall/CRC. <a href="https://doi.org/10.1201/9780429029608">https://doi.org/10.1201/9780429029608</a>.
+<div id="ref-burkner2017brms" class="csl-entry" role="listitem">
+Bürkner, Paul-Christian. 2017. <span>“Brms: An <span>R</span> Package for Bayesian Multilevel Models Using Stan.”</span> <em>Journal of Statistical Software</em> 80: 1–28.
+</div>
+<div id="ref-carpenter2017stan" class="csl-entry" role="listitem">
+Carpenter, Bob, Andrew Gelman, Matthew D. Hoffman, Daniel Lee, Ben Goodrich, Michael Betancourt, Marcus Brubaker, Jiqiang Guo, Peter Li, and Allen Riddell. 2017. <span>“Stan: A Probabilistic Programming Language.”</span> <em>Journal of Statistical Software</em> 76: 1–32. <a href="https://doi.org/10.18637/jss.v076.i01">https://doi.org/10.18637/jss.v076.i01</a>.
+</div>
+<div id="ref-gelfand1990illustration" class="csl-entry" role="listitem">
+Gelfand, Alan E., Susan E. Hills, Amy Racine-Poon, and Adrian FM Smith. 1990. <span>“Illustration of Bayesian Inference in Normal Data Models Using Gibbs Sampling.”</span> <em>Journal of the American Statistical Association</em> 85 (412): 972–85. <a href="https://doi.org/10.1080/01621459.1990.10474968">https://doi.org/10.1080/01621459.1990.10474968</a>.
+</div>
+<div id="ref-gelfand1990sampling" class="csl-entry" role="listitem">
+Gelfand, Alan E., and Adrian FM Smith. 1990. <span>“Sampling-Based Approaches to Calculating Marginal Densities.”</span> <em>Journal of the American Statistical Association</em> 85 (410): 398–409. <a href="https://doi.org/10.1080/01621459.1990.10476213">https://doi.org/10.1080/01621459.1990.10476213</a>.
+</div>
+<div id="ref-gelman2013bda-ch11" class="csl-entry" role="listitem">
+Gelman, Andrew, John B. Carlin, Hal S. Stern, David B. Dunson, Aki Vehtari, and Donald B. Rubin. 2013a. <span>“Basics of Markov Chain Simulation.”</span> In <em>Bayesian Data Analysis</em>, 3rd ed. Chapman; Hall/CRC. <a href="https://sites.stat.columbia.edu/gelman/book/BDA3.pdf">https://sites.stat.columbia.edu/gelman/book/BDA3.pdf</a>.
+</div>
+<div id="ref-gelman2013bda-ch12" class="csl-entry" role="listitem">
+———. 2013b. <span>“Computationally Efficient Markov Chain Simulation.”</span> In <em>Bayesian Data Analysis</em>, 3rd ed. Chapman; Hall/CRC. <a href="https://sites.stat.columbia.edu/gelman/book/BDA3.pdf">https://sites.stat.columbia.edu/gelman/book/BDA3.pdf</a>.
+</div>
+<div id="ref-gelman2013bda-ch10" class="csl-entry" role="listitem">
+———. 2013c. <span>“Introduction to Bayesian Computation.”</span> In <em>Bayesian Data Analysis</em>, 3rd ed. Chapman; Hall/CRC. <a href="https://sites.stat.columbia.edu/gelman/book/BDA3.pdf">https://sites.stat.columbia.edu/gelman/book/BDA3.pdf</a>.
+</div>
+<div id="ref-hoffman2014no" class="csl-entry" role="listitem">
+Hoffman, Matthew D., and Andrew Gelman. 2014. <span>“The No-u-Turn Sampler: Adaptively Setting Path Lengths in Hamiltonian Monte Carlo.”</span> <em>Journal of Machine Learning Research</em> 15 (47): 1593–623. <a href="http://jmlr.org/papers/v15/hoffman14a.html">http://jmlr.org/papers/v15/hoffman14a.html</a>.
+</div>
+<div id="ref-montecarlo2021simulation" class="csl-entry" role="listitem">
+MarbleScience. 2021. <span>“Monte Carlo Simulation.”</span> YouTube. 2021. <a href="https://www.youtube.com/watch?v=7ESK5SaP-bc">https://www.youtube.com/watch?v=7ESK5SaP-bc</a>.
+</div>
+<div id="ref-mcelreath2020rethinking-ch9" class="csl-entry" role="listitem">
+McElreath, Richard. 2020. <span>“Markov Chain Monte Carlo.”</span> In <em>Statistical Rethinking: A Bayesian Course with Examples in r and STAN</em>, 2nd ed. Chapman; Hall/CRC. <a href="https://doi.org/10.1201/9780429029608">https://doi.org/10.1201/9780429029608</a>.
+</div>
+<div id="ref-mcelreath2026rethinking-A08" class="csl-entry" role="listitem">
+———. 2026a. <span>“Statistical Rethinking 2026 Lecture A08: MCMC and Item Response Models.”</span> YouTube. 2026. <a href="https://www.youtube.com/watch?v=N_LRQUrdHag">https://www.youtube.com/watch?v=N_LRQUrdHag</a>.
+</div>
+<div id="ref-mcelreath2026rethinking-B01" class="csl-entry" role="listitem">
+———. 2026b. <span>“Statistical Rethinking 2026 Lecture B01: Hamiltonian Monte Carlo.”</span> YouTube. 2026. <a href="https://www.youtube.com/watch?v=7JHkq0l9p2M">https://www.youtube.com/watch?v=7JHkq0l9p2M</a>.
+</div>
+<div id="ref-metropolis1953equation" class="csl-entry" role="listitem">
+Metropolis, Nicholas, Arianna W. Rosenbluth, Marshall N. Rosenbluth, Augusta H. Teller, and Edward Teller. 1953. <span>“Equation of State Calculations by Fast Computing Machines.”</span> <em>The Journal of Chemical Physics</em> 21 (6): 1087–92. <a href="https://doi.org/10.1063/1.1699114">https://doi.org/10.1063/1.1699114</a>.
+</div>
+<div id="ref-metropolis1949monte" class="csl-entry" role="listitem">
+Metropolis, Nicholas, and Stanislaw Ulam. 1949. <span>“The Monte Carlo Method.”</span> <em>Journal of the American Statistical Association</em> 44 (247): 335–41. <a href="https://doi.org/10.1080/01621459.1949.10483310">https://doi.org/10.1080/01621459.1949.10483310</a>.
+</div>
+<div id="ref-vehtari2021rank" class="csl-entry" role="listitem">
+Vehtari, Aki, Andrew Gelman, Daniel Simpson, Bob Carpenter, and Paul-Christian Bürkner. 2021. <span>“Rank-Normalization, Folding, and Localization: An Improved <span class="math inline">\(\hat{R}\)</span> for Assessing Convergence of MCMC (with Discussion).”</span> <em>Bayesian Analysis</em> 16 (2): 667–718. <a href="https://doi.org/10.1214/20-BA1221">https://doi.org/10.1214/20-BA1221</a>.
 </div>
 </div>
 
