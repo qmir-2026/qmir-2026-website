@@ -22,7 +22,7 @@ execute:
   message: false
   warning: false
   freeze: true
-  cache: true
+  cache: refresh
 ---
 
 ```{r}
@@ -263,9 +263,9 @@ fit_synth <- brm(
   formula = y ~ x,
   data = df_synth,
   prior = c(
-    prior(normal(2, 1), class = Intercept),
-    prior(normal(0.7, 0.5), class = b),
-    prior(exponential(1), class = sigma)
+    prior(normal(0, 100), class = Intercept),
+    prior(normal(0, 100), class = b),
+    prior(exponential(0.5), class = sigma)
   ),
   chains = 4,
   iter = 2000,
@@ -536,7 +536,7 @@ The method was essentially unknown to statisticians. The connection to Bayesian 
 
 **2012--present -- Stan and brms**
 
-Stan [@carpenter2017stan] implements **Hamiltonian Monte Carlo / NUTS** -- a dramatically more efficient algorithm. `brms` [@burkner2017brms] provides a formula interface accessible to applied researchers.
+Stan [@carpenter2017stan] implements **Hamiltonian Monte Carlo / NUTS** -- a dramatically more efficient algorithm. `brms` [@burkner2017brms] provides a formula interface accessible to applied researchers. This is what we use.
 
 :::
 ::::::
@@ -1156,8 +1156,7 @@ ggplot() +
     aes(x = theta, y = potential),
     color = col_1,
     linewidth = 1.0,
-    alpha = 0.9,
-    arrow = arrow(length = unit(0.25, "cm"), ends = "last", type = "closed")
+    alpha = 0.9
   ) +
   geom_point(
     data = hmc_traj_A |> filter(step == 0),
@@ -1188,7 +1187,7 @@ ggplot() +
     x = expression(theta),
     y = expression(U(theta) == -log ~ p(theta ~ "|" ~ data)),
     title = "Trajectory A only",
-    subtitle = "Ball rolls from left, crosses the valley, arrives on the right side"
+    subtitle = "Ball rolls from left, crosses the valley bottom, and returns partway up the right side"
   )
 ```
 
@@ -1242,8 +1241,7 @@ ggplot() +
     aes(x = theta, y = potential),
     color = col_2,
     linewidth = 1.0,
-    alpha = 0.9,
-    arrow = arrow(length = unit(0.25, "cm"), ends = "last", type = "closed")
+    alpha = 0.9
   ) +
   geom_point(
     data = hmc_traj_B |> filter(step == 0),
@@ -1255,14 +1253,14 @@ ggplot() +
     aes(x = theta, y = potential),
     color = col_2, size = 4, shape = 17
   ) +
-  annotate("text", x = 2.5, y = 5.0, label = "Traj. B: right → left", color = col_2, size = 3.2) +
+  annotate("text", x = 2.5, y = 5.0, label = "Traj. B: starts right", color = col_2, size = 3.2) +
   theme_bw() +
   theme(panel.grid.minor = element_blank(), aspect.ratio = 0.45, legend.position = "none") +
   labs(
     x = expression(theta),
     y = expression(U(theta)),
     title = "Trajectories A (blue) and B (orange)",
-    subtitle = "B starts right, rolls left; arrows show direction of travel"
+    subtitle = "Open circle = start; filled triangle = proposed sample"
   )
 ```
 
@@ -1325,8 +1323,7 @@ ggplot() +
     aes(x = theta, y = potential),
     color = col_3,
     linewidth = 1.0,
-    alpha = 0.9,
-    arrow = arrow(length = unit(0.25, "cm"), ends = "last", type = "closed")
+    alpha = 0.9
   ) +
   geom_point(
     data = hmc_traj_C |> filter(step == 0),
@@ -1347,7 +1344,7 @@ ggplot() +
     x = expression(theta),
     y = expression(U(theta)),
     title = "All three trajectories: A (blue), B (orange), C (purple)",
-    subtitle = "Open circle = start; triangle = proposed sample; arrow = direction of Trajectory C"
+    subtitle = "Open circle = start; filled triangle = proposed sample"
   )
 ```
 
@@ -1610,6 +1607,96 @@ Whether a chain has converged can only be assessed by comparing *multiple* chain
 - Island king analogy for point 1: "Imagine dropping the king onto a remote island far from the high-population islands. His first 100 steps will reflect where he started, not the population-proportional distribution. We discard those steps. But with only one chain, how long do we wait?"
 - For point 2: "If the posterior has two well-separated modes, a single chain might find one and never discover the other. The chain looks perfectly converged -- stationary, well-mixed -- but it represents only half the posterior. Only a chain starting from the other mode would reveal the problem."
 - The 4-chain default in brms reflects current best practice as described in @gelman2013bda-ch11. Some complex models may need more chains or longer runs.
+- The next slide illustrates problem 2 graphically.
+- Budget: ~2 minutes.
+:::
+
+---
+
+## Why One Chain Is Not Enough: Illustrated {.smaller}
+
+```{r}
+#| label: fig-local-trap
+#| echo: false
+#| fig-height: 3.6
+#| fig-cap: "A bimodal posterior with two separated modes. The orange chain starts near the left mode and never discovers the right mode. The blue chain starts near the right mode and never discovers the left. Each chain looks healthy in isolation — but each tells only half the story."
+
+set.seed(42)
+
+log_bimodal <- function(x) {
+  log(0.5 * dnorm(x, -2.5, 0.6) + 0.5 * dnorm(x, 2.5, 0.6))
+}
+
+metropolis_bimodal <- function(start, n = 1000, step = 0.3) {
+  x <- numeric(n)
+  x[1] <- start
+  for (t in 2:n) {
+    prop <- x[t - 1] + rnorm(1, 0, step)
+    log_alpha <- log_bimodal(prop) - log_bimodal(x[t - 1])
+    x[t] <- if (log(runif(1)) < log_alpha) prop else x[t - 1]
+  }
+  x
+}
+
+chain_left  <- metropolis_bimodal(start = -2.3, n = 1000)
+chain_right <- metropolis_bimodal(start =  2.3, n = 1000)
+
+chain_df <- bind_rows(
+  tibble(iteration = 1:1000, value = chain_left,  chain = "Chain A: starts near left mode"),
+  tibble(iteration = 1:1000, value = chain_right, chain = "Chain B: starts near right mode")
+)
+
+dens_df <- tibble(
+  x = seq(-5, 5, length.out = 400),
+  y = 0.5 * dnorm(x, -2.5, 0.6) + 0.5 * dnorm(x, 2.5, 0.6)
+)
+
+p_trace_local <- chain_df |>
+  ggplot(aes(x = iteration, y = value, color = chain)) +
+  geom_line(alpha = 0.8, linewidth = 0.5) +
+  scale_color_manual(values = c(col_2, col_1)) +
+  theme_bw() +
+  theme(
+    panel.grid.minor = element_blank(),
+    legend.position = "bottom",
+    legend.title = element_blank(),
+    aspect.ratio = 0.32
+  ) +
+  labs(
+    x = "Iteration", y = expression(theta),
+    title = "Trace plot: each chain is stationary — but trapped",
+    subtitle = "Neither chain crosses the low-density valley between the two modes"
+  )
+
+p_density_local <- ggplot() +
+  geom_line(data = dens_df, aes(x = x, y = y), color = "gray30", linewidth = 1.1) +
+  geom_area(data = dens_df, aes(x = x, y = y), fill = "gray30", alpha = 0.12) +
+  geom_rug(
+    data = tibble(v = chain_left),  aes(x = v),
+    color = col_2, alpha = 0.35, sides = "b", length = unit(0.07, "npc")
+  ) +
+  geom_rug(
+    data = tibble(v = chain_right), aes(x = v),
+    color = col_1, alpha = 0.35, sides = "t", length = unit(0.07, "npc")
+  ) +
+  annotate("text", x = -2.5, y = 0.58, label = "Left mode\n(Chain A only)", color = col_2, size = 2.9, hjust = 0.5) +
+  annotate("text", x =  2.5, y = 0.58, label = "Right mode\n(Chain B only)", color = col_1, size = 2.9, hjust = 0.5) +
+  theme_bw() +
+  theme(panel.grid.minor = element_blank(), aspect.ratio = 0.45) +
+  labs(
+    x = expression(theta), y = "Density",
+    title = "True bimodal posterior and samples from each chain",
+    subtitle = "Orange rug (bottom) = Chain A samples; blue rug (top) = Chain B samples"
+  )
+
+p_trace_local / p_density_local
+```
+
+::: notes
+- **Top panel:** both chains look perfectly stationary and well-mixed within their own neighborhood -- the "hairy caterpillar" shape is there. If you only ran Chain A (orange), you would diagnose convergence and be wrong.
+- **Bottom panel:** the true posterior has two equal-weight modes. Chain A (orange rug, bottom) covers only the left mode. Chain B (blue rug, top) covers only the right mode. Neither alone gives you the full posterior.
+- Key diagnostic implication: R-hat would be very large here. The two chains have means at $\approx -2.5$ and $\approx +2.5$ respectively, so between-chain variance >> within-chain variance. R-hat would flag this immediately -- which is exactly what it is designed for.
+- Real-world context: multimodal posteriors arise in mixture models, some nonlinear models, and occasionally in poorly identified models. Running 4 chains from dispersed starts and checking R-hat is your main safeguard.
 - Budget: ~3 minutes.
 :::
 
@@ -1940,8 +2027,8 @@ fit_synth <- brm(
   formula = y ~ x,             # model structure: linear predictor
   data = df_synth,              # the data
   prior = c(
-    prior(normal(2, 1),   class = Intercept),  # P(α): centered near 2
-    prior(normal(0.7, 0.5), class = b),        # P(β): centered near 0.7
+    prior(flat(),         class = Intercept),  # P(α): flat (no preference)
+    prior(flat(),         class = b),          # P(β): flat (no preference)
     prior(exponential(1), class = sigma)        # P(σ): positive-valued
   ),
   chains = 4,                   # 4 independent chains
@@ -1955,7 +2042,7 @@ fit_synth <- brm(
 
 ::: {style="font-size: 0.78em"}
 - `formula`: the likelihood family (Gaussian by default) and the mean structure ($\mu_i = \alpha + \beta x_i$)
-- `prior`: our prior beliefs -- $P(\theta)$ -- stated explicitly. Mildly informative priors centered on plausible values for the intercept and slope
+- `prior`: our prior beliefs -- $P(\theta)$ -- stated explicitly. Flat priors on $\alpha$ and $\beta$ express complete ignorance; the `exponential(1)` on $\sigma$ simply enforces positivity
 - `chains = 4, iter = 2000, warmup = 1000`: four chains $\times$ 1,000 post-warmup steps = **4,000 posterior draws**
 - `seed`: locks the random number generator for reproducibility (Week 2 principle!)
 :::
@@ -1967,7 +2054,7 @@ brms translates this to Stan code, compiles to C++, and runs NUTS across all 4 c
 ::: notes
 - Walk through each argument. Students will write this code every week from now on.
 - `formula`: the tilde syntax encodes the linear predictor. `y ~ x` means model y as a function of x. Intercept included automatically.
-- `prior`: three priors here. Note: these are mildly informative, centered near the true values. In practice you would center priors on theoretically justified values, not the known truth. The key principle is: priors should reflect scientific knowledge before seeing the data.
+- `prior`: three priors here. Flat priors on Intercept and b mean we place no prior preference on any particular value -- the posterior is driven entirely by the likelihood. The exponential(1) on sigma enforces positivity (sigma cannot be negative) while otherwise being weakly informative. This is a reasonable starting point for a teaching example; in practice you would use weakly informative priors to regularize, especially with smaller samples.
 - `chains`, `iter`, `warmup`: 4 chains $\times$ 1000 post-warmup = 4000 total posterior draws.
 - `seed`: critical for reproducibility. Anyone can reproduce the exact same chain paths with the same seed. This connects to week 2.
 - brms compilation: takes a few seconds to a minute. Compilation happens once; subsequent fits with the same model structure use a cached version.
