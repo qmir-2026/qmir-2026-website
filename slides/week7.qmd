@@ -1697,7 +1697,7 @@ p_density_local <- ggplot() +
     subtitle = "Orange rug (bottom) = Chain A samples; blue rug (top) = Chain B samples"
   )
 
-p_trace_local / p_density_local
+p_trace_local + p_density_local
 ```
 
 ::: notes
@@ -2292,8 +2292,9 @@ When `brms` prints `Compiling Stan program...` and `Chain 1: Iteration 1/2000`, 
 
 ## Learning Goals: Achieved? {.smaller}
 
+::: {style="font-size: 0.75em;"}
 | # | Learning Goal | Key Answer | Where |
-|:-:|:---|:---|:---:|
+|:-:|:-----|:---------|:---:|
 | 1 | Why is grid approximation intractable? | Cost grows as $k^d$ (exponential in parameters); 50 params = $10^{150}$ cells | [Part I](#part-i-where-we-left-off) |
 | 2 | What is the Monte Carlo idea? | Approximate integrals by averaging over random samples; error $\propto 1/\sqrt{S}$, dimension-free | [Part III](#part-iii-monte-carlo-random-sampling-as-integration) |
 | 3 | What is a Markov Chain and its stationary distribution? | A memoryless sequence of states; stationary = the long-run distribution the chain converges to | [Part IV](#part-iv-markov-chains-and-the-metropolis-algorithm) |
@@ -2301,6 +2302,8 @@ When `brms` prints `Compiling Stan program...` and `Chain 1: Iteration 1/2000`, 
 | 5 | How does HMC differ from Metropolis? | HMC uses gradient of the log-posterior to propose long, physics-guided trajectories; much lower autocorrelation | [Part V](#part-v-the-posterior-as-a-landscape-and-hmc) |
 | 6 | How do I interpret `brms` output? | Check $\hat{R} < 1.01$, ESS $> 400$, trace plots for mixing; read Estimate/CI as posterior mean and 95% credible interval | [Part VIII](#part-viii-brms-in-practice) |
 | 7 | Why can convergence not be proven? | Diagnostics are tests for non-convergence, not certificates; a chain may pass all checks yet miss a distant mode | [Part VI](#part-vi-multiple-chains-warm-up-and-convergence) |
+:::
+
 
 ::: notes
 - Return to this slide at the end to close the session loop.
