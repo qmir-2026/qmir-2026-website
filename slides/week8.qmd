@@ -84,6 +84,12 @@ df <- df |>
 
 ## Week 8 Learning Goals {.smaller}
 
+::: notes
+- Read aloud. These six goals structure the 90-minute arc.
+- Goal–section mapping: Goal 1 → Part I; Goal 2 → Part IV; Goal 3 → Part V; Goal 4 → Part VI; Goal 5 → Part VII; Goal 6 → Part VIII.
+- Homework will directly assess Goals 2, 4, and 6.
+:::
+
 By the end of today, you should be able to:
 
 1. Frame a regression problem using the research methodology scaffold: **estimand** (what we want to know), **estimator** (the procedure), and **estimate** (the number we get)
@@ -93,15 +99,16 @@ By the end of today, you should be able to:
 5. Understand MCMC/`brms` as **sampling from the posterior distribution** — the estimator that returns a full distribution, not one number
 6. Interpret `brms` output: posterior means, credible intervals, $\hat{R}$, ESS, and extract quantities of interest (predictions, marginal effects)
 
-::: notes
-- Read aloud. These six goals structure the 90-minute arc.
-- Goal–section mapping: Goal 1 → Part I; Goal 2 → Part IV; Goal 3 → Part V; Goal 4 → Part VI; Goal 5 → Part VII; Goal 6 → Part VIII.
-- Homework will directly assess Goals 2, 4, and 6.
-:::
-
 # Part I: Research Framework
 
 ## A Question Worth Answering {.smaller}
+
+::: notes
+- Spend ~2 minutes here. The substantive question grounds everything that follows.
+- Economic voting: Kramer (1971), Lewis-Beck (1988), Hibbs's "bread and peace" model. Students don't need these references — mention briefly as intellectual context.
+- The "synthetic data" note is pedagogically important. We control the true DGP, so we can check whether our estimators recover the true parameters.
+- Transition: "Before we fit any line, we need to be precise about what we're trying to estimate."
+:::
 
 > **Does economic growth affect how much of the vote an incumbent government receives?**
 
@@ -135,13 +142,6 @@ Synthetic data is intentional: it lets us *know* the true parameter values and d
 
 :::
 ::::::
-
-::: notes
-- Spend ~2 minutes here. The substantive question grounds everything that follows.
-- Economic voting: Kramer (1971), Lewis-Beck (1988), Hibbs's "bread and peace" model. Students don't need these references — mention briefly as intellectual context.
-- The "synthetic data" note is pedagogically important. We control the true DGP, so we can check whether our estimators recover the true parameters.
-- Transition: "Before we fit any line, we need to be precise about what we're trying to estimate."
-:::
 
 ---
 
@@ -1419,14 +1419,14 @@ df |>
   ggplot(aes(x = gdp_growth, y = incumbent_vote_share)) +
   geom_ribbon(
     data = pred_summary,
-    aes(y = mid, ymin = lo, ymax = hi),
+    aes(x = gdp_growth, y = mid, ymin = lo, ymax = hi),
     fill = col_1,
     alpha = 0.25,
     inherit.aes = FALSE
   ) +
   geom_line(
     data = pred_summary,
-    aes(y = mid),
+    aes(x = gdp_growth, y = mid),
     color = col_2,
     linewidth = 1.2,
     inherit.aes = FALSE
