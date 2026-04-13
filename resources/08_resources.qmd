@@ -1,0 +1,12 @@
+---
+title: Week 8 Resources
+nocite: |
+  @gelman2013bda-ch2
+  @gelman2013bda-ch14
+  @mcelreath2020rethinking-ch4
+  @mcelreath2026rethinking-A04
+  @burkner2017brms
+---
+
+::: {#refs}
+:::

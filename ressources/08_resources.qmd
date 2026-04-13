@@ -1,8 +1,0 @@
----
-title: Week 8 Resources
-nocite: |
-  @mcelreath2020statistical
----
-
-::: {#refs}
-:::
