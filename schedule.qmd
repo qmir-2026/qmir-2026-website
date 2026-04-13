@@ -42,7 +42,7 @@ Here's your roadmap for the semester!
 
 | Week | Topic | Monday | Thursday | Slides | Exercise | Homework | Ressources |
 |:----:|:-----|:------|:--------|:------:|:---:|:------:|:------:|
-| 8    | Bivariate Linear Regression    | Apr 13 | Apr 16 | [{{< fa chalkboard >}}]{style="color: lightgray"} | [{{< fa code >}}]{style="color: lightgray"}  | [{{< fa laptop-code >}}]{style="color: lightgray"} | <i class="fa fa-book" style="color: lightgray; font-weight: bold;"></i> |
+| 8    | Bivariate Linear Regression    | Apr 13 | Apr 16 | [<i class="fa fa-chalkboard" style="color: black; font-weight: bold;"></i>](slides/week8.qmd) | [{{< fa code >}}]{style="color: lightgray"}  | Mon [<i class="fa fa-laptop-code" style="color: black; font-weight: bold;"></i>](https://classroom.github.com/a/lw0Ewijh) | <i class="fa fa-book" style="color: lightgray; font-weight: bold;"></i> |
 | 9    | Multivariate Regression & Interactions | Apr 20 | Apr 23 | [{{< fa chalkboard >}}]{style="color: lightgray"} | [{{< fa code >}}]{style="color: lightgray"}  | [{{< fa laptop-code >}}]{style="color: lightgray"} | <i class="fa fa-book" style="color: lightgray; font-weight: bold;"></i> |
 | 10    | Modeling Binary Outcomes | Apr 27 | Apr 30 | [{{< fa chalkboard >}}]{style="color: lightgray"} | [{{< fa code >}}]{style="color: lightgray"}  | [{{< fa laptop-code >}}]{style="color: lightgray"} | <i class="fa fa-book" style="color: lightgray; font-weight: bold;"></i> |
 | 11    | Fixed Effects & Within-Unit Inference | May 04 | May 07 | [{{< fa chalkboard >}}]{style="color: lightgray"} | [{{< fa code >}}]{style="color: lightgray"}  | [{{< fa laptop-code >}}]{style="color: lightgray"} | <i class="fa fa-book" style="color: lightgray; font-weight: bold;"></i> |
