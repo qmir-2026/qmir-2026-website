@@ -69,16 +69,16 @@ df <- df |>
 
 ## QMIR 2026
 
-### Week 8: From OLS to Bayesian Linear Regression
-
-![](./images/uma_palace.png){width="100%"} {{< meta author >}} <a href="https://github.com/dertristan" target="_blank" style="text-decoration: none; margin-left: 10px;"> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16"> <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/> </svg> </a> <a href="mailto:tristan.muno@uni-mannheim.de" style="text-decoration: none; margin-left: 5px;"> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16"> <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"/> </svg> </a> <br> {{< meta date >}}
-
 ::: notes
 - Opening. Welcome to Week 8. The last two weeks gave you the Bayesian conceptual machinery. Today we apply it to linear regression — the workhorse model of applied social science.
 - Arc: substantive research question → estimand/estimator/estimate → OLS and Gauss-Markov → three bridges to Bayesian regression → brms workflow and interpretation.
 - Time estimate: Parts I–III (~25 min), Part IV (~20 min), Parts V–VII (~20 min), Part VIII (~15 min), Summary/Q&A (~10 min).
 - Emphasize: this does NOT repeat Weeks 6–7. It applies that machinery. Students who feel shaky on the Bayesian basics should review those slides.
 :::
+
+### Week 8: From OLS to Bayesian Linear Regression
+
+![](./images/uma_palace.png){width="100%"} {{< meta author >}} <a href="https://github.com/dertristan" target="_blank" style="text-decoration: none; margin-left: 10px;"> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16"> <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/> </svg> </a> <a href="mailto:tristan.muno@uni-mannheim.de" style="text-decoration: none; margin-left: 5px;"> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16"> <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"/> </svg> </a> <br> {{< meta date >}}
 
 ---
 
@@ -147,6 +147,13 @@ Synthetic data is intentional: it lets us *know* the true parameter values and d
 
 ## Three Formal Concepts {.smaller}
 
+::: notes
+- Walk through left to right. The key insight: all three words look similar but refer to very different things.
+- Estimand: Greek letters (α, β, σ). Unknown, fixed features of reality. We never observe them directly.
+- Estimator: a formula. It is a random variable — it would give different numbers with different data. We choose OLS because Gauss-Markov says it is optimal under certain conditions.
+- Estimate: the number we actually compute. It is one realization of the estimator. It is uncertain because it depended on our particular sample.
+:::
+
 :::::: columns
 ::: {.column width="33%"}
 
@@ -191,16 +198,16 @@ $$\hat{\beta} = 2.07$$
 **Mnemonic**: Estimand = what we **want** · Estimator = our **method** · Estimate = what we **get**
 :::
 
-::: notes
-- Walk through left to right. The key insight: all three words look similar but refer to very different things.
-- Estimand: Greek letters (α, β, σ). Unknown, fixed features of reality. We never observe them directly.
-- Estimator: a formula. It is a random variable — it would give different numbers with different data. We choose OLS because Gauss-Markov says it is optimal under certain conditions.
-- Estimate: the number we actually compute. It is one realization of the estimator. It is uncertain because it depended on our particular sample.
-:::
-
 ---
 
 ## The Estimand: The Data-Generating Process {.smaller}
+
+::: notes
+- Model specification slide. Make sure students understand each symbol before computing anything.
+- "Linear in parameters" means α and β appear linearly — not necessarily X. The model Y = α + β log(X) + ε is still linear.
+- The error term captures everything else: other causes of vote share, measurement error, random variation. In the Bayesian framework, we give ε a distribution (Normal), which becomes the likelihood.
+- Connect to Week 6: "Just like the coin-flip example, where the estimand was p. Here, the estimands are α, β, σ."
+:::
 
 We posit that election outcomes are generated by:
 
@@ -224,16 +231,15 @@ The **estimands** are $\alpha$, $\beta$, and $\sigma$ (the error standard deviat
 These are fixed, unobservable features of the world. Our entire exercise is to learn about them from data. In our synthetic dataset, we happen to know the truth: $\alpha = 48$, $\beta = 2.1$, $\sigma = 4$. In real research, we never know this.
 :::
 
-::: notes
-- Model specification slide. Make sure students understand each symbol before computing anything.
-- "Linear in parameters" means α and β appear linearly — not necessarily X. The model Y = α + β log(X) + ε is still linear.
-- The error term captures everything else: other causes of vote share, measurement error, random variation. In the Bayesian framework, we give ε a distribution (Normal), which becomes the likelihood.
-- Connect to Week 6: "Just like the coin-flip example, where the estimand was p. Here, the estimands are α, β, σ."
-:::
-
 ---
 
 ## The Estimator: OLS {.smaller}
+
+::: notes
+- The arg-min notation: "arg min means: find the argument (the α and β) that minimizes the expression."
+- The closed form: "This is a formula. You plug in your data, compute Cov(X,Y) and Var(X), divide, and you get the slope estimate."
+- Reason 3 for squaring: preview of Bridge 1. Gauss's intuition — errors are Normal — directly motivates minimizing SSR.
+:::
 
 OLS finds the values of $\alpha$ and $\beta$ that minimize the **sum of squared residuals (SSR)**:
 
@@ -251,15 +257,15 @@ $$\hat{\beta}_{\text{OLS}} = \frac{\sum_{i=1}^{n}(X_i - \bar{X})(Y_i - \bar{Y})}
 **Why squared residuals?** Three reasons: **(1)** Large deviations ($\text{residual} = 10$) are penalized far more than small ones ($10^2 = 100$ vs $1^2 = 1$). **(2)** It yields a clean closed-form solution via calculus. **(3)** Under Normally distributed errors, minimizing SSR is equivalent to maximizing the likelihood — we will prove this in Part V (Bridge 1).
 :::
 
-::: notes
-- The arg-min notation: "arg min means: find the argument (the α and β) that minimizes the expression."
-- The closed form: "This is a formula. You plug in your data, compute Cov(X,Y) and Var(X), divide, and you get the slope estimate."
-- Reason 3 for squaring: preview of Bridge 1. Gauss's intuition — errors are Normal — directly motivates minimizing SSR.
-:::
-
 ---
 
 ## The Estimate: What We Actually Get {.smaller}
+
+::: notes
+- The coef() output shows the two numbers from our synthetic data.
+- Compare to the true values: α = 48, β = 2.1. OLS recovers them well — this is what "unbiased" means.
+- Emphasize uncertainty: "We got 2.1. But with a different 100 elections, we might have gotten 1.8 or 2.4. The posterior distribution shows the full range of plausible values."
+:::
 
 Applying the OLS estimator to our synthetic dataset:
 
@@ -284,12 +290,6 @@ coef(fit_ols)
 These are **estimates** — numbers computed from one particular sample of 100 elections. A different sample of 100 elections would yield different estimates. The **posterior distribution** (Part VII) will quantify exactly how uncertain these point estimates are.
 :::
 
-::: notes
-- The coef() output shows the two numbers from our synthetic data.
-- Compare to the true values: α = 48, β = 2.1. OLS recovers them well — this is what "unbiased" means.
-- Emphasize uncertainty: "We got 2.1. But with a different 100 elections, we might have gotten 1.8 or 2.4. The posterior distribution shows the full range of plausible values."
-:::
-
 # Part II: Data and Visualization
 
 ```{r}
@@ -311,6 +311,12 @@ p_scatter_base <- df |>
 
 ## Look Before You Fit {.smaller}
 
+::: notes
+- Let the data speak. Ask students: "What do you see?"
+- Walk through: positive trend visible, spread looks roughly constant, no extreme outliers, approximately linear.
+- This visual check is the first diagnostic step of any regression analysis.
+:::
+
 ```{r}
 #| label: fig-scatter
 #| echo: false
@@ -326,15 +332,15 @@ p_scatter_base
 **Before fitting a model, ask**: Is there a visible trend? Is the relationship approximately linear? Are there outliers? Does the spread of $Y$ look roughly constant across $X$? These visual questions correspond exactly to the Gauss-Markov assumptions we formalize in Part IV.
 :::
 
-::: notes
-- Let the data speak. Ask students: "What do you see?"
-- Walk through: positive trend visible, spread looks roughly constant, no extreme outliers, approximately linear.
-- This visual check is the first diagnostic step of any regression analysis.
-:::
-
 ---
 
 ## Marginal Distributions {.smaller}
+
+::: notes
+- Orange line: Normal density with same mean and SD as data.
+- Both distributions track the Normal well — consistent with Assumption 6 (Normal errors) and a Normal likelihood.
+- "We are not assuming Normality blindly. We check empirically whether it is plausible."
+:::
 
 ```{r}
 #| label: fig-marginals
@@ -386,15 +392,14 @@ p_hist_y <- df |>
 p_hist_x | p_hist_y
 ```
 
-::: notes
-- Orange line: Normal density with same mean and SD as data.
-- Both distributions track the Normal well — consistent with Assumption 6 (Normal errors) and a Normal likelihood.
-- "We are not assuming Normality blindly. We check empirically whether it is plausible."
-:::
-
 ---
 
 ## Adding the Regression Line {.smaller}
+
+::: notes
+- "The orange line is our best guess for the linear relationship. But what makes it 'best'? That's what OLS formalizes."
+- Transition: "Let's see how OLS actually finds this line — and where the idea of minimizing squared distances comes from historically."
+:::
 
 ```{r}
 #| label: fig-scatter-line
@@ -420,14 +425,18 @@ p_scatter_base +
   )
 ```
 
-::: notes
-- "The orange line is our best guess for the linear relationship. But what makes it 'best'? That's what OLS formalizes."
-- Transition: "Let's see how OLS actually finds this line — and where the idea of minimizing squared distances comes from historically."
-:::
-
 # Part III: The OLS Estimator
 
 ## A Historical Detour: Ceres and Least Squares {.smaller}
+
+::: notes
+- Tell as a story, not as bullet points. Key narrative beats:
+  1. Piazzi discovers Ceres. It disappears. The community is stumped.
+  2. Gauss, 24, reframes the problem: "use all observations at once, find the orbit that best fits all of them simultaneously."
+  3. His method: minimize squared residuals.
+  4. The philosophical act of genius: assuming Normal errors. This assumption motivates everything.
+- "Gauss's 19th-century assumption — errors are Normally distributed — is the same assumption we formalize as the likelihood in brms today."
+:::
 
 :::::: columns
 ::: {.column width="62%"}
@@ -469,18 +478,14 @@ Gauss's 19th-century intuition connects directly to 21st-century Bayesian regres
 :::
 ::::::
 
-::: notes
-- Tell as a story, not as bullet points. Key narrative beats:
-  1. Piazzi discovers Ceres. It disappears. The community is stumped.
-  2. Gauss, 24, reframes the problem: "use all observations at once, find the orbit that best fits all of them simultaneously."
-  3. His method: minimize squared residuals.
-  4. The philosophical act of genius: assuming Normal errors. This assumption motivates everything.
-- "Gauss's 19th-century assumption — errors are Normally distributed — is the same assumption we formalize as the likelihood in brms today."
-:::
-
 ---
 
 ## Visualizing Residuals {.smaller}
+
+::: notes
+- The purple segments are the residuals — the quantities OLS minimizes (squared).
+- "OLS picks the line such that the sum of squared purple segment lengths is as small as possible. If you shifted the line up or changed its slope, the total squared length would increase."
+:::
 
 ```{r}
 #| label: fig-residuals
@@ -513,14 +518,14 @@ df |>
   )
 ```
 
-::: notes
-- The purple segments are the residuals — the quantities OLS minimizes (squared).
-- "OLS picks the line such that the sum of squared purple segment lengths is as small as possible. If you shifted the line up or changed its slope, the total squared length would increase."
-:::
-
 ---
 
 ## The SSR as a Function of $\beta$ {.smaller}
+
+::: notes
+- The bowl shape is guaranteed: SSR is a sum of squared (hence quadratic) terms in α and β. Quadratic functions are convex — they have a unique global minimum.
+- "OLS is not magic. It is literally finding the bottom of this bowl. The formula Cov(X,Y)/Var(X) gives you the bottom analytically, without searching."
+:::
 
 ```{r}
 #| label: fig-ssr-surface
@@ -563,14 +568,14 @@ tibble(beta = beta_seq, ssr = ssr_vals) |>
   )
 ```
 
-::: notes
-- The bowl shape is guaranteed: SSR is a sum of squared (hence quadratic) terms in α and β. Quadratic functions are convex — they have a unique global minimum.
-- "OLS is not magic. It is literally finding the bottom of this bowl. The formula Cov(X,Y)/Var(X) gives you the bottom analytically, without searching."
-:::
-
 # Part IV: Gauss-Markov Assumptions
 
 ## OLS Is BLUE — Under Conditions {.smaller}
+
+::: notes
+- "BLUE doesn't mean OLS is perfect. It means: among all estimators that are (a) linear functions of Y and (b) unbiased, OLS has the smallest variance under these conditions."
+- Transition: "Let's go through all six. I'll flag which ones Bayesian regression can relax, and which ones remain as hard constraints."
+:::
 
 The **Gauss-Markov Theorem** states that OLS is the **Best Linear Unbiased Estimator** (BLUE):
 
@@ -600,14 +605,16 @@ Knowing the assumptions tells you *when you can trust OLS* and when to use somet
 
 Six assumptions follow. For each: what it requires, what violation looks like, and how to detect it.
 
-::: notes
-- "BLUE doesn't mean OLS is perfect. It means: among all estimators that are (a) linear functions of Y and (b) unbiased, OLS has the smallest variance under these conditions."
-- Transition: "Let's go through all six. I'll flag which ones Bayesian regression can relax, and which ones remain as hard constraints."
-:::
-
 ---
 
 ## A1: Linearity in Parameters {.smaller}
+
+::: notes
+- Left: OLS line captures the relationship well.
+- Right: the true DGP is quadratic. A linear OLS line systematically over-predicts in the middle and under-predicts at the extremes.
+- Diagnostic: residuals vs. fitted plot — a curved pattern indicates linearity violation.
+- Bayesian fix: add polynomial terms or specify a non-linear likelihood. The MCMC machinery is unchanged.
+:::
 
 **Statement**: The outcome is a linear function of the parameters:
 
@@ -654,16 +661,15 @@ bind_rows(df_lin, df_quad) |>
 **Note**: "Linear in parameters" means $\alpha$ and $\beta$ appear linearly — not necessarily $X$. The model $Y = \alpha + \beta\log(X) + \epsilon$ is still linear in parameters.
 :::
 
-::: notes
-- Left: OLS line captures the relationship well.
-- Right: the true DGP is quadratic. A linear OLS line systematically over-predicts in the middle and under-predicts at the extremes.
-- Diagnostic: residuals vs. fitted plot — a curved pattern indicates linearity violation.
-- Bayesian fix: add polynomial terms or specify a non-linear likelihood. The MCMC machinery is unchanged.
-:::
-
 ---
 
 ## A2: Zero Conditional Mean (Exogeneity) {.smaller}
+
+::: notes
+- This is the most important assumption for causal inference.
+- "Adding a weakly informative prior does not compensate for an omitted variable. If the DGP violates A2, both OLS and MCMC produce biased estimates."
+- Mention instrumental variables, randomized experiments, and regression discontinuity as design-based solutions — not model-based ones.
+:::
 
 **Statement**: Errors have zero expectation conditional on the predictor:
 
@@ -687,15 +693,16 @@ If $Z$ correlates with $X$, it is absorbed into $\epsilon$ — making $\mathbb{E
 **For economic voting**: If we omit inflation (correlated with growth, independently affects vote share), $\hat{\beta}$ is biased. **No statistical method fixes this from within the model.** Bayesian regression cannot fix endogeneity. You need better data, better design, or an instrument. Assumption 2 is about *causality*, not computation.
 :::
 
-::: notes
-- This is the most important assumption for causal inference.
-- "Adding a weakly informative prior does not compensate for an omitted variable. If the DGP violates A2, both OLS and MCMC produce biased estimates."
-- Mention instrumental variables, randomized experiments, and regression discontinuity as design-based solutions — not model-based ones.
-:::
-
 ---
 
 ## A3: Homoscedasticity {.smaller}
+
+::: notes
+- Left: residuals scatter randomly around zero with constant spread — A3 satisfied.
+- Right: the classic funnel. Spread increases with fitted values — A3 violated (heteroscedasticity).
+- Consequence: OLS still unbiased, but inefficient; standard errors are wrong (typically understated), leading to overconfident credible intervals.
+- Bayesian fix: model the variance as a function of X, or use a t-distribution likelihood.
+:::
 
 **Statement**: The variance of errors is constant across all values of $X$:
 
@@ -732,16 +739,14 @@ make_resid_plot(df_homo, "A3 Satisfied (homoscedastic)") |
   make_resid_plot(df_hetero, "A3 Violated (heteroscedastic)")
 ```
 
-::: notes
-- Left: residuals scatter randomly around zero with constant spread — A3 satisfied.
-- Right: the classic funnel. Spread increases with fitted values — A3 violated (heteroscedasticity).
-- Consequence: OLS still unbiased, but inefficient; standard errors are wrong (typically understated), leading to overconfident credible intervals.
-- Bayesian fix: model the variance as a function of X, or use a t-distribution likelihood.
-:::
-
 ---
 
 ## A4: No Perfect Multicollinearity {.smaller}
+
+::: notes
+- For today's bivariate case: not a concern. Every election-year has different GDP growth values.
+- This becomes important next week with multiple predictors. Preview: "When you add predictors, make sure they're not redundant."
+:::
 
 **Statement**: No predictor is a perfect linear combination of other predictors.
 
@@ -761,14 +766,15 @@ make_resid_plot(df_homo, "A3 Satisfied (homoscedastic)") |
 **Bayesian bonus**: Weakly informative priors provide *some* regularization for near-collinear predictors — shrinking coefficients toward zero — but cannot recover from *perfect* collinearity. The design matrix is still singular.
 :::
 
-::: notes
-- For today's bivariate case: not a concern. Every election-year has different GDP growth values.
-- This becomes important next week with multiple predictors. Preview: "When you add predictors, make sure they're not redundant."
-:::
-
 ---
 
 ## A5: Independent Errors (No Autocorrelation) {.smaller}
+
+::: notes
+- For cross-sectional data: less of a concern.
+- For time-series panels (many countries over many years): critical.
+- Preview of Week 12: "Partial pooling in multilevel models is a direct consequence of the Bayesian hierarchical prior structure. We'll build this up carefully."
+:::
 
 **Statement**: Errors are uncorrelated across observations:
 
@@ -800,15 +806,16 @@ $$\text{Cov}(\epsilon_i,\, \epsilon_j \mid X_i, X_j) = 0 \quad \forall\, i \neq 
 **Bayesian fix**: Model the error structure explicitly: AR processes for time series, random effects for clustered data. The MCMC machinery is unchanged; only the likelihood changes.
 :::
 
-::: notes
-- For cross-sectional data: less of a concern.
-- For time-series panels (many countries over many years): critical.
-- Preview of Week 12: "Partial pooling in multilevel models is a direct consequence of the Bayesian hierarchical prior structure. We'll build this up carefully."
-:::
-
 ---
 
 ## A6: Normally Distributed Errors {.smaller}
+
+::: notes
+- Left: residuals track the Normal density (orange) well — A6 satisfied in our synthetic data (we generated it with Normal errors).
+- Right: Q-Q plot. Points on the diagonal = Normal. Systematic curvature = heavy tails or skewness.
+- Key connection: "The Normal distribution for errors is not just an assumption we check — it IS the likelihood we specify in brms. family = gaussian() is Assumption 6."
+- If errors are non-Normal: use a t-distribution likelihood (robust to outliers) or another appropriate family.
+:::
 
 **Statement**: Conditional on $X$, errors follow a Normal distribution:
 
@@ -858,16 +865,16 @@ p_hist_res | p_qq
 **Caveat**: Normality is *not* required for OLS to be unbiased. It *is* the **likelihood specification** we use in Bayesian regression — `family = gaussian()` in `brms` is this assumption.
 :::
 
-::: notes
-- Left: residuals track the Normal density (orange) well — A6 satisfied in our synthetic data (we generated it with Normal errors).
-- Right: Q-Q plot. Points on the diagonal = Normal. Systematic curvature = heavy tails or skewness.
-- Key connection: "The Normal distribution for errors is not just an assumption we check — it IS the likelihood we specify in brms. family = gaussian() is Assumption 6."
-- If errors are non-Normal: use a t-distribution likelihood (robust to outliers) or another appropriate family.
-:::
-
 ---
 
 ## Gauss-Markov: Summary {.smaller}
+
+::: notes
+- Summary table. Read row by row briefly — students have the details from the preceding slides.
+- Key takeaway: A2 (exogeneity) is the most consequential. Bayesian regression cannot fix it.
+- A3, A5, A6: Bayesian methods can handle these by specifying appropriate likelihoods and hierarchical structures.
+- Transition: "Now that we know when and why OLS works, let's build the three bridges to the Bayesian framework."
+:::
 
 | Assumption | Requirement | Key Violation | OLS Consequence | Bayesian Leverage |
 |---|---|---|---|---|
@@ -884,16 +891,16 @@ p_hist_res | p_qq
 **Bayesian regression relaxes A3, A5, A6** by modeling them explicitly in the likelihood. A1 and A2 remain hard constraints — they concern the DGP, not the computational method. No framework can fix endogeneity (A2) from within the model.
 :::
 
-::: notes
-- Summary table. Read row by row briefly — students have the details from the preceding slides.
-- Key takeaway: A2 (exogeneity) is the most consequential. Bayesian regression cannot fix it.
-- A3, A5, A6: Bayesian methods can handle these by specifying appropriate likelihoods and hierarchical structures.
-- Transition: "Now that we know when and why OLS works, let's build the three bridges to the Bayesian framework."
-:::
-
 # Part V: Bridge 1 — OLS Is Maximum Likelihood
 
 ## A Probability Model for the Data {.smaller}
+
+::: notes
+- Students have seen likelihoods in Week 6 (coin flip). Now we apply the same idea to a full regression model.
+- "The probability of observing Y_i, given the parameters, is a Normal density centered at mu_i = alpha + beta * X_i."
+- "The likelihood for the full dataset is the product of n Normal densities — assuming independence (A5)."
+- Log-likelihood: "Products become sums; sums are easier to optimize."
+:::
 
 OLS found the "best line" by minimizing SSR — a geometric criterion. Now we ask: **what probability model produces the same answer?**
 
@@ -915,16 +922,16 @@ Taking logarithms (log-likelihood — equivalent to optimize, easier to work wit
 
 $$\ell(\alpha, \beta, \sigma) = -\frac{n}{2}\log(2\pi\sigma^2) \;-\; \frac{1}{2\sigma^2}\sum_{i=1}^{n}(Y_i - \mu_i)^2$$
 
-::: notes
-- Students have seen likelihoods in Week 6 (coin flip). Now we apply the same idea to a full regression model.
-- "The probability of observing Y_i, given the parameters, is a Normal density centered at mu_i = alpha + beta * X_i."
-- "The likelihood for the full dataset is the product of n Normal densities — assuming independence (A5)."
-- Log-likelihood: "Products become sums; sums are easier to optimize."
-:::
-
 ---
 
 ## MLE = OLS: The Equivalence {.smaller}
+
+::: notes
+- Walk through the algebra slowly.
+- "The only term in the log-likelihood that depends on α and β is the sum of squared residuals. The sigma^2 is a positive constant. So maximizing ell is the same as minimizing SSR."
+- "This is why Gauss's intuition was so powerful. He didn't have probability theory as we know it, but he guessed correctly — and under Normality, it is provably optimal."
+- Transition: "We now have the likelihood. The Bayesian step is to multiply it by a prior."
+:::
 
 To find the MLE, we maximize $\ell(\alpha, \beta, \sigma)$ with respect to $\alpha$ and $\beta$.
 
@@ -946,16 +953,15 @@ Gauss's 1801 intuition — "minimize squared residuals" — is equivalent to max
 The two frameworks arrive at the **same estimator** from entirely different starting points: geometric optimization vs. probabilistic modeling.
 :::
 
-::: notes
-- Walk through the algebra slowly.
-- "The only term in the log-likelihood that depends on α and β is the sum of squared residuals. The sigma^2 is a positive constant. So maximizing ell is the same as minimizing SSR."
-- "This is why Gauss's intuition was so powerful. He didn't have probability theory as we know it, but he guessed correctly — and under Normality, it is provably optimal."
-- Transition: "We now have the likelihood. The Bayesian step is to multiply it by a prior."
-:::
-
 ---
 
 ## The Likelihood Surface {.smaller}
+
+::: notes
+- The heat map shows the log-likelihood surface. Brighter = higher likelihood.
+- The maximum (red ×) is at the OLS estimates — confirmed visually.
+- "The Bayesian posterior will look similar to this surface, but modified by the prior: slightly shifted toward the prior mean for small samples, anchored by the data for large samples."
+:::
 
 ```{r}
 #| label: fig-likelihood
@@ -1006,15 +1012,17 @@ ll_surface |>
   )
 ```
 
-::: notes
-- The heat map shows the log-likelihood surface. Brighter = higher likelihood.
-- The maximum (red ×) is at the OLS estimates — confirmed visually.
-- "The Bayesian posterior will look similar to this surface, but modified by the prior: slightly shifted toward the prior mean for small samples, anchored by the data for large samples."
-:::
-
 # Part VI: Bridge 2 — Likelihood × Prior = Posterior
 
 ## Bayes' Theorem for Regression {.smaller}
+
+::: notes
+- "You've seen this proportional form. The posterior is proportional to likelihood times prior. The normalizing constant P(data) is handled by MCMC — we never compute it."
+- Prior choices:
+  - beta ~ Normal(0, 2): "I don't know the sign of the slope. I expect moderate effects. 99.7% of prior mass is in [-6, +6] — from 'nearly no effect' to 'very large but plausible'."
+  - alpha ~ Normal(48, 10): "Vote share near 50% in a competitive democracy when growth = 0. Uncertainty of ±20pp covers the plausible range."
+  - sigma ~ Exponential(0.5): "Error SD should be positive, probably below 10."
+:::
 
 From Weeks 6–7 — applied now to regression:
 
@@ -1034,17 +1042,16 @@ $$\alpha \;\sim\; \text{Normal}(48,\; 10) \qquad \text{"intercept in a competiti
 
 $$\sigma \;\sim\; \text{Exponential}(0.5) \qquad \text{"residual SD likely below 10"}$$
 
-::: notes
-- "You've seen this proportional form. The posterior is proportional to likelihood times prior. The normalizing constant P(data) is handled by MCMC — we never compute it."
-- Prior choices:
-  - beta ~ Normal(0, 2): "I don't know the sign of the slope. I expect moderate effects. 99.7% of prior mass is in [-6, +6] — from 'nearly no effect' to 'very large but plausible'."
-  - alpha ~ Normal(48, 10): "Vote share near 50% in a competitive democracy when growth = 0. Uncertainty of ±20pp covers the plausible range."
-  - sigma ~ Exponential(0.5): "Error SD should be positive, probably below 10."
-:::
-
 ---
 
 ## Prior Comparison: Why "Weakly Informative"? {.smaller}
+
+::: notes
+- Purple: Uniform(-10, 10). All values equally plausible from -10 to +10. "This says β = -9 is as plausible as β = 0.1. That is not what we believe."
+- Gold: Normal(0, 5). Better than uniform, but still assigns substantial density to β = ±8 — every percentage point of growth adds 8pp of vote share. Implausibly large.
+- Orange: Normal(0, 2). Our chosen prior. Most mass between -6 and +6. Values beyond ±10 are essentially impossible a priori.
+- "The prior is honest. Normal(0, 2) says: 'I don't know the direction, but extreme effects are less plausible.' It does not pre-determine the answer — with n = 100, the likelihood dominates."
+:::
 
 ```{r}
 #| label: fig-prior-comparison
@@ -1097,16 +1104,15 @@ tibble(
   )
 ```
 
-::: notes
-- Purple: Uniform(-10, 10). All values equally plausible from -10 to +10. "This says β = -9 is as plausible as β = 0.1. That is not what we believe."
-- Gold: Normal(0, 5). Better than uniform, but still assigns substantial density to β = ±8 — every percentage point of growth adds 8pp of vote share. Implausibly large.
-- Orange: Normal(0, 2). Our chosen prior. Most mass between -6 and +6. Values beyond ±10 are essentially impossible a priori.
-- "The prior is honest. Normal(0, 2) says: 'I don't know the direction, but extreme effects are less plausible.' It does not pre-determine the answer — with n = 100, the likelihood dominates."
-:::
-
 ---
 
 ## Priors as Regularization {.smaller}
+
+::: notes
+- Small sample: prior matters more. Bayesian methods shine here — the prior prevents pathological estimates when data are sparse.
+- Large sample: Bernstein-von Mises theorem (don't name it, just convey the idea). Bayes and frequentist asymptotically agree.
+- Ridge connection: for students who have seen regularization in machine learning context, this bridges the frameworks.
+:::
 
 A weakly informative prior $\beta \sim \text{Normal}(0, 2)$ regularizes the posterior:
 
@@ -1140,15 +1146,15 @@ Posterior $\approx$ OLS — the **prior is washed out by data**.
 **Connection to ridge regression**: A Normal prior on $\beta$ is mathematically equivalent to $L_2$ regularization (ridge penalty) in frequentist regression. Both discourage extreme coefficient values. The Bayesian prior is more principled: it has a direct probability interpretation and can be updated coherently as more data arrive.
 :::
 
-::: notes
-- Small sample: prior matters more. Bayesian methods shine here — the prior prevents pathological estimates when data are sparse.
-- Large sample: Bernstein-von Mises theorem (don't name it, just convey the idea). Bayes and frequentist asymptotically agree.
-- Ridge connection: for students who have seen regularization in machine learning context, this bridges the frameworks.
-:::
-
 # Part VII: Bridge 3 — MCMC as the Estimator
 
 ## Recap: The Computational Problem {.smaller}
+
+::: notes
+- Brief recap. Students saw the dimensional explosion in Week 7. Don't re-teach; remind.
+- "OLS was the estimator that gave us one number. MCMC is the estimator that gives us a distribution."
+- The normalizing constant cancels: in the Metropolis acceptance ratio, P(data) appears in both numerator and denominator — it vanishes. This is the mathematical magic of MCMC.
+:::
 
 You learned in Week 7 why grid approximation fails:
 
@@ -1166,15 +1172,19 @@ The denominator is a **three-dimensional integral** with no closed form. On a 1,
 **Bridge 3**: MCMC is not a computational hack. **MCMC is the estimator for the posterior distribution itself.** It produces thousands of plausible parameter values by sampling in proportion to likelihood × prior — without ever computing the normalizing constant, because it cancels in the acceptance ratio.
 :::
 
-::: notes
-- Brief recap. Students saw the dimensional explosion in Week 7. Don't re-teach; remind.
-- "OLS was the estimator that gave us one number. MCMC is the estimator that gives us a distribution."
-- The normalizing constant cancels: in the Metropolis acceptance ratio, P(data) appears in both numerator and denominator — it vanishes. This is the mathematical magic of MCMC.
-:::
-
 ---
 
 ## The `brms` Workflow {.smaller}
+
+::: notes
+- Walk through each argument:
+  - Formula: Y ~ X — same syntax as lm()
+  - prior: three explicit priors — these are the philosophical commitments from Bridge 2
+  - chains = 4: four independent chains for convergence diagnostics (Rhat)
+  - iter = 2000, warmup = 1000: standard settings
+  - seed: reproducibility
+- "Notice we explicitly specify priors for every parameter. This is not optional in principled Bayesian regression."
+:::
 
 ```{r}
 #| label: fit-model
@@ -1205,23 +1215,22 @@ What `brms` does behind the scenes:
 3. Discards the first 1,000 (warmup — the chain is still finding the posterior)
 4. Returns **4,000 posterior samples** — plausible values of $(\alpha, \beta, \sigma)$
 
-::: notes
-- Walk through each argument:
-  - Formula: Y ~ X — same syntax as lm()
-  - prior: three explicit priors — these are the philosophical commitments from Bridge 2
-  - chains = 4: four independent chains for convergence diagnostics (Rhat)
-  - iter = 2000, warmup = 1000: standard settings
-  - seed: reproducibility
-- "Notice we explicitly specify priors for every parameter. This is not optional in principled Bayesian regression."
-:::
-
 ---
 
 ## OLS: One Line. MCMC: A Cloud of Lines. {.smaller}
 
+::: notes
+- This is the key visual for Bridge 3.
+- Each grey line = one (α, β) posterior sample = one plausible regression line consistent with data and priors.
+- "OLS gives you one line. MCMC gives you a cloud of lines — a more honest representation of what we know."
+- "The cloud is narrow in the middle of the data range (where we have most information) and widens at the extremes."
+- "In a sense, OLS is asking: 'what is the most likely line?' MCMC is asking: 'which lines are plausible?' These are different questions, and the Bayesian answer is richer."
+:::
+
 ```{r}
 #| label: fig-posterior-lines
-#| echo: false
+#| echo: true
+#| code-fold: true
 #| fig-height: 4.0
 #| fig-cap: "Each grey line is one posterior draw — one plausible regression line given the data and priors. The orange line is the OLS estimate. The cloud quantifies uncertainty; OLS gives a single answer."
 
@@ -1254,24 +1263,9 @@ df |>
   )
 ```
 
-::: notes
-- This is the key visual for Bridge 3.
-- Each grey line = one (α, β) posterior sample = one plausible regression line consistent with data and priors.
-- "OLS gives you one line. MCMC gives you a cloud of lines — a more honest representation of what we know."
-- "The cloud is narrow in the middle of the data range (where we have most information) and widens at the extremes."
-- "In a sense, OLS is asking: 'what is the most likely line?' MCMC is asking: 'which lines are plausible?' These are different questions, and the Bayesian answer is richer."
-:::
-
 # Part VIII: Interpretation
 
 ## Reading `brms` Output {.smaller}
-
-```{r}
-#| label: brms-summary
-#| echo: true
-
-summary(fit_bayes)
-```
 
 ::: notes
 - Walk through each section of the output:
@@ -1284,9 +1278,22 @@ summary(fit_bayes)
 - "OLS would give you two numbers — point estimates with standard errors. This gives you two full distributions."
 :::
 
+```{r}
+#| label: brms-summary
+#| echo: true
+
+summary(fit_bayes)
+```
+
 ---
 
 ## Credible Intervals: A Direct Probability Statement {.smaller}
+
+::: notes
+- Students will have encountered confidence intervals in other courses. Clarify the distinction carefully.
+- "The credible interval is what students always *wanted* the confidence interval to mean. It makes a direct probability statement about *this* parameter, given *this* data."
+- Don't spend too long here — the key contrast is stated. Students can dig deeper in the readings.
+:::
 
 From the `brms` summary, the **95% credible interval for** $\beta$ is approximately $[1.5,\; 2.7]$.
 
@@ -1308,19 +1315,20 @@ This is a **direct** probability statement about the parameter. It says what you
 The Bayesian credible interval answers the question you actually have. The frequentist confidence interval answers a different question.
 :::
 
-::: notes
-- Students will have encountered confidence intervals in other courses. Clarify the distinction carefully.
-- "The credible interval is what students always *wanted* the confidence interval to mean. It makes a direct probability statement about *this* parameter, given *this* data."
-- Don't spend too long here — the key contrast is stated. Students can dig deeper in the readings.
-:::
-
 ---
 
 ## Posterior Distributions of Parameters {.smaller}
 
+::: notes
+- Left: posterior for alpha. Solid orange line = posterior mean. Dashed blue lines = 95% CI boundaries.
+- Right: posterior for beta. Purple vertical line = posterior mean. Dotted gray line at 0 = "no effect" reference.
+- "The grey dotted line at zero is the 'no effect' reference. The posterior mass is almost entirely to the right of zero — strong evidence for a positive effect."
+:::
+
 ```{r}
 #| label: fig-posterior-dist
-#| echo: false
+#| echo: true
+#| code-fold: true
 #| fig-height: 3.6
 #| fig-cap: "Marginal posterior distributions for the intercept (left) and slope (right). Dashed lines mark the 95% credible interval boundaries. The posterior is not a point estimate — it is a full distribution over plausible parameter values."
 
@@ -1382,19 +1390,86 @@ p_post_beta <- post_df |>
 p_post_alpha | p_post_beta
 ```
 
+---
+
+## Three Types of Model Predictions {.smaller}
+
 ::: notes
-- Left: posterior for alpha. Solid orange line = posterior mean. Dashed blue lines = 95% CI boundaries.
-- Right: posterior for beta. Purple vertical line = posterior mean. Dotted gray line at 0 = "no effect" reference.
-- "The grey dotted line at zero is the 'no effect' reference. The posterior mass is almost entirely to the right of zero — strong evidence for a positive effect."
+- Students frequently conflate these three quantities. The distinctions are important and will recur in every subsequent week.
+- posterior_epred(): "expected prediction" — averages over MCMC draws of α and β, but does not add σ. Answers "where is the mean?" Use this to plot the regression line with its credible interval.
+- posterior_predict(): draws a new observation for each MCMC sample. Adds a Normal(0, σ) draw on top. Answers "where would a single new country's vote share fall?" Interval always wider.
+- Marginal effects: in the bivariate linear model, the marginal effect of X on Y is exactly β — you already have it from the posterior. In multivariate models with interactions, it depends on the values of other predictors. We will return to this in Week 9.
+- Practical rule: use posterior_epred() to understand the systematic part of the model; use posterior_predict() to generate realistic individual forecasts.
+:::
+
+Not all model predictions answer the same question. In the Bayesian/`brms` framework, three quantities are conceptually distinct:
+
+. . .
+
+:::::: columns
+::: {.column width="33%"}
+
+**Expected Value**
+
+`posterior_epred()`
+
+Uncertainty in the **conditional mean** — the regression line and its credible interval.
+
+$$\hat{\mu}_i = \alpha + \beta X_i$$
+
+*"Where is the average vote share for this growth rate?"*
+
+:::
+
+::: {.column width="33%"}
+
+**Marginal Effect**
+
+The first derivative of $\hat{\mu}$ with respect to a predictor, holding others constant.
+
+$$\frac{\partial \hat{\mu}}{\partial X} = \beta$$
+
+For a linear model, this is the slope posterior — the $\beta$ distribution from `brms`.
+
+*"How much does the mean shift per unit of growth?"*
+
+:::
+
+::: {.column width="33%"}
+
+**Predicted Value**
+
+`posterior_predict()`
+
+**Full** predictive uncertainty: parameter uncertainty **plus** residual variance $\sigma$.
+
+$$\tilde{Y} \sim \text{Normal}(\hat{\mu}_i,\; \sigma)$$
+
+*"Where will a single new observation fall?"*
+
+:::
+::::::
+
+. . .
+
+::: {.callout-note style="font-size: 0.72em"}
+`posterior_epred()` intervals are narrow — they reflect only uncertainty in $(\alpha, \beta)$. `posterior_predict()` intervals are wider — they add $\sigma$, the irreducible observation-level noise. Always report the one that matches your research question.
 :::
 
 ---
 
 ## Predictions with Uncertainty {.smaller}
 
+::: notes
+- posterior_epred() returns the expected value E[Y | X] — the conditional mean — for each draw and each newdata row.
+- The ribbon is narrower in the center of the data range (where we have most information) and widens at the edges (extrapolation).
+- Distinction: posterior_epred() gives uncertainty about the mean; posterior_predict() would give wider intervals including sigma (uncertainty about a single new observation).
+:::
+
 ```{r}
 #| label: fig-predictions
-#| echo: false
+#| echo: true
+#| code-fold: true
 #| fig-height: 3.8
 #| fig-cap: "Posterior predictive mean (line) and 95% credible interval (ribbon) for incumbent vote share across the range of GDP growth values."
 
@@ -1442,19 +1517,21 @@ df |>
   )
 ```
 
-::: notes
-- posterior_epred() returns the expected value E[Y | X] — the conditional mean — for each draw and each newdata row.
-- The ribbon is narrower in the center of the data range (where we have most information) and widens at the edges (extrapolation).
-- Distinction: posterior_epred() gives uncertainty about the mean; posterior_predict() would give wider intervals including sigma (uncertainty about a single new observation).
-:::
-
 ---
 
 ## Marginal Effect: How Much Does Growth Matter? {.smaller}
 
+::: notes
+- P(β > 0 | data, prior): count the fraction of posterior samples greater than zero. This is a direct probability statement — not a p-value.
+- "We can report: 'There is a ≈100% posterior probability that economic growth has a positive effect on incumbent vote share.'"
+- "The grey dotted line marks the true β = 2.1 — visible in real teaching because we generated the data. Our posterior is centered near the truth."
+- "OLS gives you the estimate and a standard error. The posterior gives you a full distribution over plausible effect sizes."
+:::
+
 ```{r}
 #| label: fig-marginal-effect
-#| echo: false
+#| echo: true
+#| code-fold: true
 #| fig-height: 3.4
 #| fig-cap: "Marginal posterior distribution of the slope β. Virtually all posterior mass lies above zero. The annotated probability is a direct statement: P(β > 0 | data, prior)."
 
@@ -1503,16 +1580,15 @@ post_df |>
   )
 ```
 
-::: notes
-- P(β > 0 | data, prior): count the fraction of posterior samples greater than zero. This is a direct probability statement — not a p-value.
-- "We can report: 'There is a ≈100% posterior probability that economic growth has a positive effect on incumbent vote share.'"
-- "The grey dotted line marks the true β = 2.1 — visible in real teaching because we generated the data. Our posterior is centered near the truth."
-- "OLS gives you the estimate and a standard error. The posterior gives you a full distribution over plausible effect sizes."
-:::
-
 # Summary
 
 ## Three Bridges: The Complete Arc {.smaller}
+
+::: notes
+- Closing slide. The three-column layout mirrors the three bridges from the session.
+- "Across all three bridges, the linear model stays the same. What changes is the inferential framework. OLS is one answer; Bayesian MCMC is a richer, more complete answer."
+- "Any questions before we look at the homework?"
+:::
 
 :::::: columns
 ::: {.column width="33%"}
@@ -1560,15 +1636,16 @@ MCMC samples from the posterior — thousands of plausible parameter values — 
 **What stays constant**: the linear model ($Y = \alpha + \beta X + \epsilon$) and the Gauss-Markov conditions that justify the linear specification. **What changes**: how we quantify uncertainty. OLS reports point estimates; MCMC reports posterior distributions.
 :::
 
-::: notes
-- Closing slide. The three-column layout mirrors the three bridges from the session.
-- "Across all three bridges, the linear model stays the same. What changes is the inferential framework. OLS is one answer; Bayesian MCMC is a richer, more complete answer."
-- "Any questions before we look at the homework?"
-:::
-
 ---
 
 ## Learning Goals: Check {.smaller}
+
+::: notes
+- Read through the goals quickly. This gives closure and connects back to the opening.
+- Homework: students will practice the full pipeline independently — their first real application of Bayesian linear regression.
+- Q&A: "What was the most confusing part of today? What would you like me to revisit?"
+- Remaining time: point students to the homework page.
+:::
 
 By the end of today, you should be able to:
 
@@ -1585,12 +1662,6 @@ By the end of today, you should be able to:
 **Homework (due before next session)**: Apply the full workflow to a new bivariate research question using the European Social Survey dataset. Instructions and GitHub Classroom link on the course website. Goals 2, 4, and 6 are directly assessed.
 :::
 
-::: notes
-- Read through the goals quickly. This gives closure and connects back to the opening.
-- Homework: students will practice the full pipeline independently — their first real application of Bayesian linear regression.
-- Q&A: "What was the most confusing part of today? What would you like me to revisit?"
-- Remaining time: point students to the homework page.
-:::
 
 ---
 
