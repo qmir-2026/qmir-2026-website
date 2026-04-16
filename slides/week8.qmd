@@ -29,7 +29,6 @@ execute:
 #| label: setup
 #| include: false
 #| eval: true
-
 library(tidyverse)
 library(brms)
 library(bayesplot)
@@ -173,7 +172,7 @@ $\beta$ — the true average change in vote share per 1pp of growth
 
 *How will we compute an answer from data?*
 
-A procedure/formula applied to sample data. **Defined before seeing data.** A random variable.
+A procedure/formula applied to data in order to *estimate* our *estimates*.
 
 $$\hat{\beta}_{\text{OLS}} = \frac{\text{Cov}(X,Y)}{\text{Var}(X)}$$
 
@@ -183,9 +182,9 @@ $$\hat{\beta}_{\text{OLS}} = \frac{\text{Cov}(X,Y)}{\text{Var}(X)}$$
 
 **Estimate**
 
-*What number do we actually get?*
+*What number(s) do we actually get?*
 
-The numerical result of applying the estimator to our specific sample. **Random**: different samples give different estimates.
+The numerical result(s) of applying the estimator to our data.
 
 $$\hat{\beta} = 2.07$$
 
@@ -275,7 +274,6 @@ Applying the OLS estimator to our synthetic dataset:
 ```{r}
 #| label: ols-estimate
 #| echo: true
-
 fit_ols <- lm(incumbent_vote_share ~ gdp_growth, data = df)
 coef(fit_ols)
 ```
@@ -298,7 +296,6 @@ These are **estimates** — numbers computed from one particular sample of 100 e
 ```{r}
 #| label: scatter-base-setup
 #| include: false
-
 p_scatter_base <- df |>
   ggplot(aes(x = gdp_growth, y = incumbent_vote_share)) +
   geom_point(color = col_1, alpha = 0.65, size = 2) +
@@ -325,7 +322,6 @@ p_scatter_base <- df |>
 #| echo: false
 #| fig-height: 4.2
 #| fig-cap: "Scatter plot of incumbent vote share against GDP growth. Each point is one election-year."
-
 p_scatter_base
 ```
 
@@ -350,7 +346,6 @@ p_scatter_base
 #| echo: false
 #| fig-height: 3.6
 #| fig-cap: "Marginal distributions of GDP growth (left) and incumbent vote share (right) with Normal density overlaid. Both are approximately Normal — consistent with our likelihood assumption."
-
 p_hist_x <- df |>
   ggplot(aes(x = gdp_growth)) +
   geom_histogram(
@@ -409,7 +404,6 @@ p_hist_x | p_hist_y
 #| echo: false
 #| fig-height: 4.0
 #| fig-cap: "OLS regression line overlaid on the scatter. The line minimizes the sum of squared vertical distances from each point."
-
 p_scatter_base +
   geom_smooth(
     method = "lm",
@@ -495,7 +489,6 @@ Gauss's 19th-century intuition connects directly to 21st-century Bayesian regres
 #| echo: false
 #| fig-height: 4.0
 #| fig-cap: "Each vertical segment shows one residual: the distance from an observed data point to the fitted line. OLS finds the line that minimizes the sum of squared segment lengths."
-
 df |>
   ggplot(aes(x = gdp_growth, y = incumbent_vote_share)) +
   geom_segment(
@@ -535,7 +528,6 @@ df |>
 #| echo: false
 #| fig-height: 3.8
 #| fig-cap: "Sum of squared residuals as a function of the slope β, with α fixed at its OLS value. The SSR is a quadratic (bowl-shaped) function of β — its unique minimum is the OLS estimate."
-
 beta_seq <- seq(0, 4, length.out = 300)
 alpha_hat <- coef(fit_ols)[1]
 
@@ -628,7 +620,6 @@ $$Y_i = \alpha + \beta X_i + \epsilon_i$$
 #| echo: false
 #| fig-height: 3.2
 #| fig-cap: "Left: linear relationship — OLS is well-specified. Right: true quadratic relationship fitted with a linear model — OLS is systematically wrong."
-
 set.seed(42)
 n_ex <- 80
 x_ex <- seq(-3, 3, length.out = n_ex)
@@ -716,7 +707,6 @@ $$\text{Var}(\epsilon_i \mid X_i) = \sigma^2 \quad \text{(constant)}$$
 #| echo: false
 #| fig-height: 3.0
 #| fig-cap: "Residual vs. fitted plots. Left: constant spread (A3 satisfied). Right: funnel pattern — spread increases with fitted values (A3 violated)."
-
 set.seed(77)
 n_ex <- 120
 x_ex2 <- runif(n_ex, 1, 10)
@@ -829,7 +819,6 @@ $$\epsilon_i \mid X_i \sim \text{Normal}(0,\, \sigma^2)$$
 #| echo: false
 #| fig-height: 3.0
 #| fig-cap: "Left: histogram of OLS residuals with Normal density overlay. Right: Q-Q plot — points close to the diagonal indicate approximate Normality. Both support the Normal likelihood assumption."
-
 p_hist_res <- df |>
   ggplot(aes(x = residual)) +
   geom_histogram(
@@ -973,7 +962,6 @@ The two frameworks arrive at the **same estimator** from entirely different star
 #| echo: false
 #| fig-height: 3.8
 #| fig-cap: "Log-likelihood surface as a function of α and β (σ fixed at OLS residual SE). The maximum (red ×) is at the OLS estimates — exactly as Bridge 1 predicts."
-
 alpha_seq <- seq(42, 54, length.out = 80)
 beta_seq2 <- seq(0.5, 3.8, length.out = 80)
 sigma_hat <- sigma(fit_ols)
@@ -1063,7 +1051,6 @@ $$\sigma \;\sim\; \text{Exponential}(0.5) \qquad \text{"residual SD likely below
 #| echo: false
 #| fig-height: 3.6
 #| fig-cap: "Three prior distributions for the slope β. A weakly informative Normal(0, 2) is the principled choice: it regularizes toward zero while permitting all substantively reasonable effect sizes."
-
 x_seq <- seq(-12, 12, length.out = 600)
 
 tibble(
@@ -1195,7 +1182,6 @@ The denominator is a **three-dimensional integral** with no closed form. On a 1,
 #| label: fit-model
 #| echo: true
 #| output: false
-
 fit_bayes <- brm(
   incumbent_vote_share ~ gdp_growth,
   data = df,
@@ -1238,7 +1224,6 @@ What `brms` does behind the scenes:
 #| code-fold: true
 #| fig-height: 4.0
 #| fig-cap: "Each grey line is one posterior draw — one plausible regression line given the data and priors. The orange line is the OLS estimate. The cloud quantifies uncertainty; OLS gives a single answer."
-
 post_draws <- as_draws_df(fit_bayes) |>
   slice_sample(n = 200)
 
@@ -1286,7 +1271,6 @@ df |>
 ```{r}
 #| label: brms-summary
 #| echo: true
-
 summary(fit_bayes)
 ```
 
@@ -1336,7 +1320,6 @@ The Bayesian credible interval answers the question you actually have. The frequ
 #| code-fold: true
 #| fig-height: 3.6
 #| fig-cap: "Marginal posterior distributions for the intercept (left) and slope (right). Dashed lines mark the 95% credible interval boundaries. The posterior is not a point estimate — it is a full distribution over plausible parameter values."
-
 post_df <- as_draws_df(fit_bayes)
 
 ci_alpha <- quantile(post_df$b_Intercept, probs = c(0.025, 0.975))
@@ -1479,7 +1462,6 @@ $$\tilde{Y} \sim \text{Normal}(\hat{\mu}_i,\; \sigma)$$
 #| code-fold: true
 #| fig-height: 3.8
 #| fig-cap: "Posterior predictive mean (line) and 95% credible interval (ribbon) for incumbent vote share across the range of GDP growth values."
-
 new_data <- tibble(
   gdp_growth = seq(
     min(df$gdp_growth) - 0.5,
@@ -1541,7 +1523,6 @@ df |>
 #| code-fold: true
 #| fig-height: 3.4
 #| fig-cap: "Marginal posterior distribution of the slope β. Virtually all posterior mass lies above zero. The annotated probability is a direct statement: P(β > 0 | data, prior)."
-
 prob_pos <- (sum(post_df$b_gdp_growth > 0) / nrow(post_df))
 
 post_df |>
