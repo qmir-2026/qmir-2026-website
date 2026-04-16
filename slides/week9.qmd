@@ -297,7 +297,7 @@ $$ {#eq-ovb-true}
 But we fit only the **bivariate model**, omitting $Z$. The bivariate OLS estimator converges to:
 
 $$
-\hat{\beta}_X^{\text{biv}} \;\xrightarrow{p}\; \beta_X + \beta_Z \cdot \underbrace{\frac{\text{Cov}(X, Z)}{\text{Var}(X)}}_{\text{auxiliary slope: } X \text{ on } Z}
+\hat{\beta}_X^{\text{biv}} \xrightarrow{p} \beta_X + \beta_Z \cdot \underbrace{\frac{\text{Cov}(X, Z)}{\text{Var}(X)}}_{\text{auxiliary slope: } X \text{ on } Z}
 $$ {#eq-ovb-formula}
 
 . . .
@@ -444,7 +444,7 @@ p_conf | p_med | p_coll
 Everything from Week 8 carries over. We simply extend the linear predictor:
 
 $$
-Y_i \;\sim\; \text{Normal}(\mu_i,\; \sigma)
+Y_i \sim \text{Normal}(\mu_i, \sigma)
 $$ {#eq-multi-likelihood}
 
 $$
@@ -474,7 +474,7 @@ $$ {#eq-partial-z}
 Posterior:
 
 $$
-p(\alpha, \beta_X, \beta_Z, \sigma \mid \mathbf{Y}, \mathbf{X}, \mathbf{Z}) \;\propto\; \mathcal{L}(\alpha, \beta_X, \beta_Z, \sigma) \;\cdot\; p(\alpha)\, p(\beta_X)\, p(\beta_Z)\, p(\sigma)
+p(\alpha, \beta_X, \beta_Z, \sigma \mid \mathbf{Y}, \mathbf{X}, \mathbf{Z}) \propto \mathcal{L}(\alpha, \beta_X, \beta_Z, \sigma) \cdot p(\alpha)\, p(\beta_X)\, p(\beta_Z)\, p(\sigma)
 $$ {#eq-multi-posterior}
 
 ---
@@ -539,12 +539,12 @@ For our health spending model, we need priors for **four** parameters:
 ::: {.column width="50%"}
 
 $$
-\alpha \;\sim\; \text{Normal}(10,\; 5)
+\alpha \sim \text{Normal}(10, 5)
 $$ {#eq-prior-alpha-health}
 *"Baseline spending ~10% GDP when $X = Z = 0$; very uncertain"*
 
 $$
-\beta_X \;\sim\; \text{Normal}(0,\; 0.5)
+\beta_X \sim \text{Normal}(0, 0.5)
 $$ {#eq-prior-bx-health}
 *"Per % women in parliament, change in spending probably between $\pm 1.5$ pp"*
 
@@ -553,12 +553,12 @@ $$ {#eq-prior-bx-health}
 ::: {.column width="50%"}
 
 $$
-\beta_Z \;\sim\; \text{Normal}(0,\; 1)
+\beta_Z \sim \text{Normal}(0, 1)
 $$ {#eq-prior-bz-health}
 *"Per \$1k of GDP per capita, change in spending probably between $\pm 3$ pp"*
 
 $$
-\sigma \;\sim\; \text{Exponential}(1)
+\sigma \sim \text{Exponential}(1)
 $$ {#eq-prior-sigma-health}
 *"Residual SD almost certainly below 5pp of GDP"*
 
@@ -725,7 +725,7 @@ $$ {#eq-controls-linpred}
 
 where $X$ = women in parliament, $Z$ = GDP per capita.
 
-**Estimands** (unknown, fixed): $\alpha,\; \beta_X,\; \beta_Z,\; \sigma$
+**Estimands** (unknown, fixed): $\alpha, \beta_X, \beta_Z, \sigma$
 
 We know the truth: $\alpha = 2$, $\beta_X = 0.12$, $\beta_Z = 0.20$, $\sigma = 1.5$.
 
@@ -1143,9 +1143,7 @@ The dummy shifts the **intercept** by $\beta_2$; the product shifts the **slope*
 For each of the $S$ MCMC draws, compute the **conditional marginal effect** at a fixed value $z$ of the moderator:
 
 $$
-
 \text{ME}^{(s)} = \beta_1^{(s)} + \beta_3^{(s)} \cdot z
-
 $$ {#eq-bayes-me}
 
 The resulting $\{\text{ME}^{(s)}\}_{s=1}^S$ **is** the posterior distribution of the marginal effect at $z$ — obtained by ordinary arithmetic.
@@ -1603,7 +1601,7 @@ p_scatter_int | p_box_int
 **Likelihood**
 
 $$
-Y_i \;\sim\; \text{Normal}(\mu_i,\; \sigma)
+Y_i \sim \text{Normal}(\mu_i, \sigma)
 $$ {#eq-interact-step3-likelihood}
 
 $$
@@ -1614,7 +1612,7 @@ $U$ = unemployment, $G$ = left government (0/1)
 
 **True DGP** (known because synthetic):
 
-$\alpha = 10,\; \beta_1 = 0.3,\; \beta_2 = 2,\; \beta_3 = 0.9,\; \sigma = 2.5$
+$\alpha = 10, \beta_1 = 0.3, \beta_2 = 2, \beta_3 = 0.9, \sigma = 2.5$
 
 :::
 
@@ -1623,19 +1621,19 @@ $\alpha = 10,\; \beta_1 = 0.3,\; \beta_2 = 2,\; \beta_3 = 0.9,\; \sigma = 2.5$
 **Priors**
 
 $$
-\alpha \;\sim\; \text{Normal}(12,\; 5)
+\alpha \sim \text{Normal}(12, 5)
 $$ {#eq-interact-prior-alpha}
 
 $$
-\beta_1,\, \beta_2 \;\sim\; \text{Normal}(0,\; 1)
+\beta_1,\, \beta_2 \sim \text{Normal}(0, 1)
 $$ {#eq-interact-prior-b12}
 
 $$
-\beta_3 \;\sim\; \text{Normal}(0,\; 1)
+\beta_3 \sim \text{Normal}(0, 1)
 $$ {#eq-interact-prior-b3}
 
 $$
-\sigma \;\sim\; \text{Exponential}(0.5)
+\sigma \sim \text{Exponential}(0.5)
 $$ {#eq-interact-prior-sigma}
 
 *Prior for $\beta_3$: centered at zero — prior expectation is* **no moderation**. *The data will update this.*
