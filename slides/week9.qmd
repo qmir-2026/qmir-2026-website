@@ -189,7 +189,7 @@ df_interact <- tibble(unemployment, left_gov, transfer_spend) |>
 
 ---
 
-## Take Home Exam -- What to Expect {#sec-exam}
+## Take Home Exam -- What to Expect {#sec-exam .smaller}
 
 - You will receive a dataset with some contextual background and a research question. Your task is to answer that research question using the data and methods you have learned throughout the course.  
 - Think of your submission as the *methods/research design* and *results/analysis* sections of an empirical paper.  
@@ -198,13 +198,22 @@ df_interact <- tibble(unemployment, left_gov, transfer_spend) |>
   - Formulating and justifying a model  
   - Estimating the model  
   - Interpreting and discussing your results  
+
+---
+
+## Take Home Exam -- What to Expect {#sec-exam-2 .smaller}
+
 - Your submission will be graded along **four dimensions**:  
   1. Argumentation — Are your methodological choices well reasoned and justified?  
   2. Interpretation — Are your results interpreted correctly and communicated clearly?  
   3. Formalities — Does your rendered PDF look and read like a section of a published paper?  
   4. Code — Does your code run? Is your repository well-structured and your code readable and well-documented?  
 - The exam will be distributed via GitHub, just like the homework assignments.  
-- The detailed grading scheme will be provided together with the exam. The total is **100 points**; grades are assigned according to the percentage thresholds set out in the *Prüfungsordnung*.  
+- The detailed grading scheme will be provided together with the exam. The total is **100 points**. Grades are assigned according to the percentage thresholds set out in the *Prüfungsordnung*.  
+
+---
+
+## Take Home Exam -- What to Expect {#sec-exam-3 .smaller}
 
 - **Submission timeline and late policy:**  
   - You have **two weeks (14 days)** to complete the exam from the time of release.  
@@ -256,6 +265,7 @@ By the end of today, you should be able to:
 ::: {.column width="55%"}
 
 **The empirical problem**: Wealthier democracies simultaneously have:
+
 - More women in parliament (greater gender equality in politics)
 - Higher health spending (larger government capacity)
 
@@ -280,38 +290,96 @@ True DGP coefficient for $X$: $\beta_X = 0.12$
 
 ---
 
-## Omitted Variable Bias: The Formal Result {#sec-ovb .smaller}
+## What is a DAG? {#sec-dag-intro .smaller}
 
 ::: notes
-- OVB formula: the bivariate slope is equal to the true DGP slope PLUS the product of (a) the association of the omitted variable with Y and (b) the slope from regressing the omitted variable on X.
-- "Both terms are positive here: GDP is associated with health spending (β_gdp > 0), and GDP is associated with women's parliament share (Cov(X,Z)/Var(X) > 0). So we over-estimate the partial association of X with Y."
-- Key lesson: OVB is a design/measurement problem. Adding GDP to the model removes the bias — but only if GDP is the *only* omitted confounder.
+- Introduce the vocabulary before showing the diagram. Students need "node" and "arrow" as shared language.
+- Stress the asymmetry: arrows encode our *theoretical* prior about direction. The data cannot tell us which way the arrow points — that is a substantive judgment.
+- Key point: you draw the DAG *before* looking at the data or fitting any model. It is a commitment, not a discovery.
+- Transition: "Let's draw one for our specific research question."
 :::
 
-Suppose the **true model** has two predictors, $X$ (women in parliament) and $Z$ (GDP per capita):
-
-$$
-Y_i = \alpha + \beta_X X_i + \beta_Z Z_i + \epsilon_i
-$$ {#eq-ovb-true}
-
-But we fit only the **bivariate model**, omitting $Z$. The bivariate OLS estimator converges to:
-
-$$
-\hat{\beta}_X^{\text{biv}} \xrightarrow{p} \beta_X + \beta_Z \cdot \underbrace{\frac{\text{Cov}(X, Z)}{\text{Var}(X)}}_{\text{auxiliary slope: } X \text{ on } Z}
-$$ {#eq-ovb-formula}
+A **Directed Acyclic Graph (DAG)** is a graphical representation of our *theoretical* assumptions about how variables are related.
 
 . . .
 
-**Omitted Variable Bias (OVB)** = $\beta_Z \cdot \frac{\text{Cov}(X, Z)}{\text{Var}(X)}$
+:::::: columns
+::: {.column width="50%"}
+
+**Anatomy**
+
+- **Nodes** (boxes) = variables
+- **Directed arrows** ($\rightarrow$) = theoretical claims about the **direction** of influence
+- **Acyclic** = no variable can cause itself (no feedback loops)
+
+:::
+
+::: {.column width="50%"}
+
+**What a DAG does**
+
+- Translates a verbal theory into a precise graphical structure
+- Makes our assumptions explicit and contestable
+- Tells us *which* variables to include, exclude, or never condition on
+
+:::
+::::::
 
 . . .
 
-In our case: $\beta_Z > 0$ (wealth is associated with health spending) **and** $\text{Cov}(X, Z) > 0$ (wealth is associated with higher representation) $\Rightarrow$ **OVB is positive** — we systematically over-estimate $\beta_X$.
+::: {.callout-note style="font-size: 0.73em"}
+**You draw the DAG before fitting anything.**
+It encodes your prior theoretical beliefs — not what the model estimated.
+The arrows are *your* theoretical commitments, not statistical output.
+:::
+
+---
+
+## Our Research Question as a DAG {#sec-dag-our-rq .smaller}
+
+::: notes
+- Walk through each arrow explicitly: "GDP drives women's representation, GDP drives health spending, women's representation drives health spending."
+- The confounding path: Women in Parliament <- GDP -> Health Spending. This is the back-door path we need to close.
+- "We draw this before we open R. The DAG is our theoretical model. The brms call is just fitting it numerically."
+- Note: the arrow from Women in Parliament to Health Spending is what we care about — the partial association we want to estimate.
+:::
+
+```{r}
+#| label: fig-dag-our-rq
+#| echo: false
+#| fig-height: 3.4
+#| dpi: 500
+#| fig-cap: "DAG for our research question. The back-door path from Women in Parliament to Health Spending runs through GDP per capita (a confounder). We close this path by conditioning on GDP per capita."
+nodes_main <- tibble(
+  x = c(1.1, 3.2, 2.15),
+  y = c(1.1, 1.1, 2.7),
+  label = c("Women\nin Parl. (%)", "Health\nSpending", "GDP\nper Capita")
+)
+edges_main <- tibble(
+  x = c(1.95, 2.35, 1.58),
+  y = c(2.42, 2.42, 1.1),
+  xend = c(1.3, 3.05, 2.72),
+  yend = c(1.35, 1.35, 1.1)
+)
+
+draw_dag(nodes_main, edges_main, xlim = c(0.4, 3.9), ylim = c(0.6, 3.2)) +
+  annotate(
+    "text",
+    x = 2.15,
+    y = 0.68,
+    size = 3.5,
+    color = col_2,
+    label = "Back-door path (GDP): closed by controlling for GDP per capita",
+    fontface = "italic"
+  )
+```
 
 . . .
 
-::: {.callout-important style="font-size: 0.72em"}
-**Bayesian regression cannot fix OVB**. Including $Z$ in the model removes the bias, but only if $Z$ is correctly measured and included. Priors regularize coefficients — they do not discover missing variables. OVB is a *design* problem, not a *computation* problem. (This is Gauss-Markov A2, from last week.)
+::: {style="font-size: 0.85em"}
+**Reading the DAG**: GDP per capita is a **confounder** — it influences both $X$ (Women in Parliament) and $Y$ (Health Spending).
+Omitting it will inflate our estimate of the $X \rightarrow Y$ association.
+Controlling for it closes the back-door path.
 :::
 
 ---
@@ -433,6 +501,75 @@ p_conf | p_med | p_coll
 
 ---
 
+## A Note on Causal Inference {#sec-causal-disclaimer .smaller}
+
+::: notes
+- This is a crucial epistemic boundary. Students sometimes assume that drawing a DAG means we are doing causal inference. We are not.
+- "The regression machinery is blind to arrow direction. It can only tell you the sign and magnitude of associations. The arrows are your theoretical input, not statistical output."
+- Emphasise: DAGs are useful precisely because they force us to be explicit about what we assume. But the machinery only recovers associations — the causal interpretation requires the additional (untestable) assumption that the adjustment set is sufficient.
+- Transition: "With that caveat in mind, let's now formalise what happens when we omit a confounder."
+:::
+
+::: {.callout-important style="font-size: 0.82em"}
+**We are not doing causal inference.**
+
+Our regression models recover **associations**, not causal effects.
+The statistical machinery is **blind to the direction of arrows** — it cannot discover them from data alone.
+Including GDP per capita in the model closes the back-door path *if our DAG is correct* — but that correctness is a **substantive theoretical assumption**, not something the data can verify.
+:::
+
+. . .
+
+So what are DAGs for?
+
+- They make our theoretical **assumptions explicit** and **contestable**
+- They tell us **which variables to condition on** (and which never to touch)
+- They are the bridge between *substantive theory* and *model specification*
+
+. . .
+
+The regression tells us **how strong** the association is, once we have decided what to condition on.
+The DAG tells us **what to condition on**.
+Neither step substitutes for the other.
+
+---
+
+## Omitted Variable Bias: The Formal Result {#sec-ovb .smaller}
+
+::: notes
+- OVB formula: the bivariate slope is equal to the true DGP slope PLUS the product of (a) the association of the omitted variable with Y and (b) the slope from regressing the omitted variable on X.
+- "Both terms are positive here: GDP is associated with health spending (β_gdp > 0), and GDP is associated with women's parliament share (Cov(X,Z)/Var(X) > 0). So we over-estimate the partial association of X with Y."
+- Key lesson: OVB is a design/measurement problem. Adding GDP to the model removes the bias — but only if GDP is the *only* omitted confounder.
+:::
+
+Suppose the **true model** has two predictors, $X$ (women in parliament) and $Z$ (GDP per capita):
+
+$$
+Y_i = \alpha + \beta_X X_i + \beta_Z Z_i + \epsilon_i
+$$ {#eq-ovb-true}
+
+But we fit only the **bivariate model**, omitting $Z$. The bivariate OLS estimator converges to:
+
+$$
+\hat{\beta}_X^{\text{biv}} \xrightarrow{p} \beta_X + \beta_Z \cdot \underbrace{\frac{\text{Cov}(X, Z)}{\text{Var}(X)}}_{\text{auxiliary slope: } X \text{ on } Z}
+$$ {#eq-ovb-formula}
+
+. . .
+
+**Omitted Variable Bias (OVB)** = $\beta_Z \cdot \frac{\text{Cov}(X, Z)}{\text{Var}(X)}$
+
+. . .
+
+In our case: $\beta_Z > 0$ (wealth is associated with health spending) **and** $\text{Cov}(X, Z) > 0$ (wealth is associated with higher representation) $\Rightarrow$ **OVB is positive** — we systematically over-estimate $\beta_X$.
+
+. . .
+
+::: {.callout-important style="font-size: 0.72em"}
+**Bayesian regression cannot fix OVB**. Including $Z$ in the model removes the bias, but only if $Z$ is correctly measured and included. Priors regularize coefficients — they do not discover missing variables. OVB is a *design* problem, not a *computation* problem. (This is Gauss-Markov A2, from last week.)
+:::
+
+---
+
 ## Multiple Regression: The Formal Model {#sec-multi-formal .smaller}
 
 ::: notes
@@ -522,6 +659,154 @@ The dummy shifts the **intercept** — it gives the $D = 1$ group a different ba
 
 ---
 
+## Dummy Variables: The Shifting Intercept {#sec-dummies-visual .smaller}
+
+::: notes
+- This is the key visual intuition. Both lines have the same slope (unemployment effect is the same for both groups), but the Left government line sits higher — that vertical gap is β_D.
+- Ask students: "Where is β_D in this plot? Can you estimate it visually?"
+- Deliberately use the df_interact data here — the same dataset students will work with in Part IV — so the visual is immediately connected to the application.
+- True DGP: intercept shift for Left = 2, slope difference = 0.9 (but that is the interaction, covered in Parts III–IV). Here we show only the intercept-shift logic.
+:::
+
+```{r}
+#| label: fig-dummy-intercepts
+#| echo: false
+#| fig-height: 3.8
+#| dpi: 500
+#| fig-cap: "Dummy variable as a shifting intercept. Both regression lines share the same slope (unemployment effect), but Left governments start from a higher baseline. The vertical gap between the lines is β_D — the dummy coefficient."
+# Use a simpler additive model (no interaction) to illustrate the intercept-shift
+fit_dummy_demo <- lm(
+  transfer_spend ~ unemployment + left_gov,
+  data = df_interact
+)
+
+# Predicted lines for each group at a grid of unemployment values
+x_grid <- seq(
+  min(df_interact$unemployment),
+  max(df_interact$unemployment),
+  length.out = 80
+)
+
+pred_lines <- tibble(
+  unemployment = rep(x_grid, 2),
+  government = rep(c("Right", "Left"), each = 80),
+  left_gov = rep(c(0, 1), each = 80)
+) |>
+  mutate(
+    transfer_spend = predict(
+      fit_dummy_demo,
+      newdata = tibble(unemployment = unemployment, left_gov = left_gov)
+    )
+  )
+
+# Annotate the β_D gap at a fixed x position
+x_ann <- median(x_grid)
+y_right <- predict(
+  fit_dummy_demo,
+  newdata = tibble(unemployment = x_ann, left_gov = 0)
+)
+y_left <- predict(
+  fit_dummy_demo,
+  newdata = tibble(unemployment = x_ann, left_gov = 1)
+)
+
+df_interact |>
+  ggplot(aes(x = unemployment, y = transfer_spend, colour = government)) +
+  geom_point(alpha = 0.45, size = 1.8) +
+  geom_line(
+    data = pred_lines,
+    aes(x = unemployment, y = transfer_spend, colour = government),
+    linewidth = 1.2,
+    inherit.aes = FALSE
+  ) +
+  annotate(
+    "segment",
+    x = x_ann,
+    xend = x_ann,
+    y = y_right,
+    yend = y_left,
+    colour = "gray30",
+    linewidth = 0.9,
+    arrow = arrow(ends = "both", length = unit(0.18, "cm"), type = "closed")
+  ) +
+  annotate(
+    "text",
+    x = x_ann + 0.35,
+    y = (y_right + y_left) / 2,
+    label = expression(beta[D]),
+    size = 5,
+    colour = "gray20",
+    fontface = "bold"
+  ) +
+  scale_colour_manual(values = c("Left" = col_1, "Right" = col_2)) +
+  theme_bw() +
+  theme(panel.grid.minor = element_blank()) +
+  labs(
+    x = "Unemployment Rate (%)",
+    y = "Transfer Spending (% GDP)",
+    colour = "Government",
+    title = "Dummy Variable = Intercept Shift"
+  )
+```
+
+---
+
+## Marginal Effects {#sec-marginal-effects .smaller}
+
+::: notes
+- The key conceptual bridge: in a purely additive model the partial derivative is constant, so the AME equals the coefficient. But students need to understand the AME concept *now* so they can grasp why it diverges from the coefficient in interaction models (Part III) and non-linear models (Week 11).
+- "In the linear additive model, β_X is already the average effect — there is nothing to average over, because the slope doesn't change across observations. But the moment we add an interaction, the slope depends on the value of the other variable. Then we need to average."
+- Foreshadow: "When we get to logistic regression in Week 11, the derivative ∂μ/∂X depends on the value of X itself. We will always average over the data to get a single interpretable number."
+:::
+
+In a multivariate model, the **effect of $X$ on $Y$** depends on what we hold constant.
+
+. . .
+
+The **Average Marginal Effect (AME)** of $X$ is:
+
+$$
+\text{AME}(X) = \frac{1}{n} \sum_{i=1}^{n} \frac{\partial \hat{\mu}_i}{\partial X_i}
+$$ {#eq-ame}
+
+. . .
+
+**In the additive linear model**, $\partial \hat{\mu}_i / \partial X_i = \beta_X$ for every observation — so the AME collapses to the coefficient itself:
+
+$$
+\text{AME}(X) = \beta_X \qquad \text{(additive linear model only)}
+$$ {#eq-ame-linear}
+
+. . .
+
+:::::: columns
+::: {.column width="55%"}
+
+**Why bother defining it?**
+
+The AME concept generalises. As soon as the model has:
+
+- an **interaction term** (Part III today), or
+- a **non-linear link function** (logistic regression, Week 11)
+
+... the partial derivative $\partial \hat{\mu}_i / \partial X_i$ varies across observations, and we *must* average to get a single interpretable number.
+
+:::
+
+::: {.column width="45%"}
+
+::: {.callout-note style="font-size: 0.71em"}
+**Posterior AME**
+
+In the Bayesian workflow, we compute the AME for *each posterior draw* and report the resulting distribution — mean, credible interval, and full density.
+This is the `posterior_epred` averaging workflow used in Parts II and IV.
+:::
+
+:::
+::::::
+
+---
+
 ## Prior Specification for Multivariate Models {#sec-priors-multi .smaller}
 
 ::: notes
@@ -573,52 +858,30 @@ $$ {#eq-prior-sigma-health}
 
 # Part II: Application I — Multivariate `brms` Model {#sec-part2}
 
-## Step 1: DAG and Estimand {#sec-part2-step1 .smaller}
+## Step 1: Estimand {#sec-part2-step1 .smaller}
 
 ::: notes
-- Draw the DAG explicitly before touching any code. The DAG encodes our modelling assumptions.
-- "GDP per capita -> Women in Parliament": richer societies have more gender-equal political institutions. This is the confounding path.
-- "GDP per capita -> Health Spending": wealthier states have larger fiscal capacity. This is also the confounding path.
-- "Women in Parliament -> Health Spending": the partial association we want to estimate.
-- Back-door path: Women in Parliament <- GDP per capita -> Health Spending. We close this path by adjusting for GDP per capita.
+- The DAG was introduced and discussed in Part I (see sec-dag-our-rq). Briefly recall it here and move quickly to the estimand statement.
 - Estimand in words: "The partial association between a 1 percentage point increase in women's share of parliament seats and public health expenditure as a percentage of GDP, holding GDP per capita constant."
+- Emphasise: the estimand is fixed before we touch any code. We commit to it based on the DAG and our research question.
 :::
 
-```{r}
-#| label: fig-dag-controls
-#| echo: false
-#| fig-height: 3.4
-#| fig-cap: "DAG for the women-in-parliament research question. The back-door path runs through GDP per capita. Conditioning on GDP per capita (adjusting for it) closes this path and isolates the partial association between legislative representation and health spending."
-nodes_main <- tibble(
-  x = c(1.1, 3.2, 2.15),
-  y = c(1.1, 1.1, 2.7),
-  label = c("Women\nin Parl. (%)", "Health\nSpending", "GDP\nper Capita")
-)
-edges_main <- tibble(
-  x = c(1.95, 2.35, 1.58),
-  y = c(2.42, 2.42, 1.1),
-  xend = c(1.3, 3.05, 2.72),
-  yend = c(1.35, 1.35, 1.1)
-)
-
-draw_dag(nodes_main, edges_main, xlim = c(0.4, 3.9), ylim = c(0.6, 3.2)) +
-  annotate(
-    "text",
-    x = 2.15,
-    y = 0.68,
-    size = 3.5,
-    color = col_2,
-    label = "Back-door path (GDP): closed by controlling for GDP per capita",
-    fontface = "italic"
-  )
-```
+**Recall from Part I**: GDP per capita is a **confounder** — it opens a back-door path from Women in Parliament to Health Spending.
+Conditioning on GDP per capita (including it as a predictor) closes that path.
 
 . . .
 
-::: {style="font-size: 0.85em"}
+::: {style="font-size: 0.9em"}
 **Estimand**: The partial association between women's parliamentary representation and health spending, **adjusting for GDP per capita** (the minimal sufficient adjustment set that closes the GDP back-door path).
 
-*Under the assumption that the adjustment set is sufficient — i.e., no unobserved confounders remain — this association can be interpreted as a causal effect. In practice, that assumption is substantive, not statistical.*
+*Under the assumption that the adjustment set is sufficient — i.e., no unobserved confounders remain — this partial association can be interpreted as a causal effect. That assumption is substantive, not statistical.*
+:::
+
+. . .
+
+::: {.callout-note style="font-size: 0.73em"}
+We commit to this estimand **before** opening R.
+The model specification follows from the DAG — not the other way around.
 :::
 
 ---
@@ -634,7 +897,7 @@ draw_dag(nodes_main, edges_main, xlim = c(0.4, 3.9), ylim = c(0.6, 3.2)) +
 
 ```{r}
 #| label: fig-controls-summary
-#| echo: false
+#| echo: true
 #| fig-height: 3.6
 #| dpi: 500
 #| fig-cap: "Left: raw scatter of the bivariate association. Right: OVB illustrated with Bayesian posterior means and 95% credible intervals — the bivariate estimate (orange) over-estimates the partial association; the multivariate estimate (purple, controlling for GDP) recovers the true DGP value of 0.12."
