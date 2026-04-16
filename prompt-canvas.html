@@ -76,35 +76,6 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 <meta name="robots" content="noindex">
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -316,18 +287,8 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#reference-materials" id="toc-reference-materials" class="nav-link active" data-scroll-target="#reference-materials">Reference Materials</a></li>
-  <li><a href="#dataset" id="toc-dataset" class="nav-link" data-scroll-target="#dataset">Dataset</a></li>
-  <li><a href="#content-requirements" id="toc-content-requirements" class="nav-link" data-scroll-target="#content-requirements">Content Requirements</a></li>
-  <li><a href="#style-quality-bar" id="toc-style-quality-bar" class="nav-link" data-scroll-target="#style-quality-bar">Style &amp; Quality Bar</a></li>
-  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
-  </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/qmir-2026/qmir-2026.github.io/blob/main/prompt-canvas.md" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/qmir-2026/qmir-2026.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
@@ -336,62 +297,24 @@ window.Quarto = {
 
 
 
-<p>Edit <code>@week8.qmd</code> and create a first full draft of the slides.</p>
-<section id="reference-materials" class="level2">
-<h2 class="anchored" data-anchor-id="reference-materials">Reference Materials</h2>
-<ul>
-<li>Study <code>@week7.qmd</code>, <code>@week6.qmd</code>, <code>@week5.qmd</code> to internalize the exact build pattern, section structure, reveal.js options, CSS classes, callout styles, icon usage, and slide transition conventions used throughout this course. Match them precisely.</li>
-<li>Use <code>@week8.md</code> (preparation file) for the substantive narrative and thematic framing — the slides must tell the story outlined there.</li>
-</ul>
-</section>
-<section id="dataset" class="level2">
-<h2 class="anchored" data-anchor-id="dataset">Dataset</h2>
-<p>Use a <strong>synthetic dataset</strong> (<code>gdp_growth</code> as x, <code>incumbent_vote_share</code> as y) throughout all examples, plots, and code chunks. Synthetic data is intentional: it lets us control and demonstrate Gauss-Markov assumptions cleanly for pedagogical purposes.</p>
-</section>
-<section id="content-requirements" class="level2">
-<h2 class="anchored" data-anchor-id="content-requirements">Content Requirements</h2>
-<p>Frame everything as a <strong>substantive political science story</strong> (economic voting / incumbency), not as abstract statistics. The narrative arc should motivate each concept before formalizing it.</p>
-<p>For each relevant concept, provide <strong>both</strong>: 1. <strong>Graphical explanation</strong> — ggplot2 code that produces a plot directly illustrating the concept (e.g., scatter with regression line, residual plots, assumption violation visuals) 2. <strong>Formal/mathematical explanation</strong> — LaTeX-rendered equations using the slide deck’s existing math conventions</p>
-<p>Cover at minimum: - The bivariate linear model: specification, notation, interpretation - OLS estimation and the logic of minimizing squared residuals - Gauss-Markov assumptions — explain, visualize, and demonstrate each with the synthetic data (including what violation looks like) - Model fit: R², residual standard error - Inference: coefficient uncertainty, credible/confidence intervals (consistent with the Bayesian framing used in prior weeks) - Quantities of interest: predicted values, marginal effects — compute and visualize</p>
-</section>
-<section id="style-quality-bar" class="level2">
-<h2 class="anchored" data-anchor-id="style-quality-bar">Style &amp; Quality Bar</h2>
-<ul>
-<li>Every slide must serve the narrative — no filler slides</li>
-<li>Prefer figures over bullet points wherever possible</li>
-<li>Code chunks should be minimal, clean, and pedagogically focused</li>
-<li>Maintain full stylistic and structural consistency with the reference slide decks</li>
-</ul>
-</section>
-<section id="section" class="level1">
-<h1></h1>
-<p>There was an R code error in the fig-predictions plot: processing file: week8.qmd 1/39 2/39 [setup] 3/39 4/39 [ols-estimate]<br>
-5/39 6/39 [scatter-base-setup]<br>
-7/39 8/39 [fig-scatter] 9/39 10/39 [fig-marginals]<br>
-11/39 12/39 [fig-scatter-line]<br>
-13/39 14/39 [fig-residuals]<br>
-15/39 16/39 [fig-ssr-surface]<br>
-17/39 18/39 [fig-gm-linearity]<br>
-19/39 20/39 [fig-gm-homosc]<br>
-21/39 22/39 [fig-gm-normality]<br>
-23/39 24/39 [fig-likelihood]<br>
-25/39 26/39 [fig-prior-comparison] 27/39 28/39 [fit-model] 29/39 30/39 [fig-posterior-lines] 31/39 32/39 [brms-summary]<br>
-33/39 34/39 [fig-posterior-dist]<br>
-35/39 36/39 [fig-predictions]<br>
-Error in <code>geom_ribbon()</code>: ! Problem while setting up geom. ℹ Error occurred in the 1st layer. Caused by error in <code>order()</code>: ! argument 3 is not a vector Backtrace: ▆ 1. ├─base::withVisible(knit_print(x, …)) 2. ├─knitr::knit_print(x, …) 3. ├─knitr:::knit_print.default(x, …) 4. │ └─knitr::normal_print(x) 5. │ ├─base::print(x) 6. │ └─ggplot2 (local) <code>print.ggplot2::ggplot</code>(x) 7. │ ├─ggplot2::ggplot_build(x) 8. │ └─ggplot2 (local) <code>ggplot_build.ggplot2::ggplot</code>(x) 9. │ └─ggplot2:::by_layer(…) 10. │ ├─rlang::try_fetch(…) 11. │ │ ├─base::tryCatch(…) 12. │ │ │ └─base (local) tryCatchList(expr, classes, parentenv, handlers) 13. │ │ │ └─base (local) tryCatchOne(expr, names, parentenv, handlers[[1L]]) 14. │ │ │ └─base (local) doTryCatch(return(expr), name, parentenv, handler) 15. │ │ └─base::withCallingHandlers(…) 16. │ └─ggplot2 (local) f(l = layers[[i]], d = data[[i]]) 17. │ └─l<span class="math inline">\(compute_geom_1(d)
-18. │             └─ggplot2 (local) compute_geom_1(..., self = self)
-19. │               └─self\)</span>geom<span class="math inline">\(setup_data(data, self\)</span>computed_geom_params) 20. │ └─ggplot2 (local) setup_data(…)<br>
-21. │ ├─data[order(data<span class="math inline">\(PANEL, data\)</span>group, data<span class="math inline">\(x), , drop = FALSE]
-22. │                   ├─base::`[.data.frame`(...)
-23. │                   └─base::order(data\)</span>PANEL, data<span class="math inline">\(group, data\)</span>x) 24. │ ├─base::do.call(…) 25. │ └─base::order(…) 26. └─base::.handleSimpleError(…) 27. └─rlang (local) h(simpleError(msg, call)) 28. └─handlers<a href="cnd">[1L]</a> 29. └─cli::cli_abort(…) 30. └─rlang::abort(…)</p>
-<p>Quitting from week8.qmd:1395-1443 [fig-predictions] Execution halted WARN: Error encountered when rendering files</p>
-<p>can you fix that and make sure it works</p>
-<p>in <span class="citation" data-cites="week8.qmd">(<a href="#ref-week8.qmd" role="doc-biblioref"><strong>week8.qmd?</strong></a>)</span>, can you change the notes block positions so they are the first element after the slide title, that way they are shown directly in speaker mode</p>
-<p>in <span class="citation" data-cites="week8.qmd">(<a href="#ref-week8.qmd" role="doc-biblioref"><strong>week8.qmd?</strong></a>)</span>, can you make sure that for all model post processing steps the code is in the slides (folded but if students click “view source” they can see the code so they have examples when they do homeworks)</p>
-<p>also I am lacking the expected value marginal effects and predicted value distinction, add that too</p>
+<p>Improve this prompt for claude code:</p>
+<p>” Draft a plan to implement the following changes in the week 9 slide deck. Add your plan in <span class="citation" data-cites="week9.md">(<a href="#ref-week9.md" role="doc-biblioref"><strong>week9.md?</strong></a>)</span> the section week9.qmd changes plan in line 71.</p>
+<p>Although overall I am very satisfied with your work, I want some fundamental changes:</p>
+<p>I really want to have 4 blocks, 1 conceptual foundation and 1 application block, once for Control variables multivariate regression, once for interaction multivariate regression.</p>
+<p>Part I should cover all conceptual (and formalized) foundations and concepts that are new this week and necessary for students to understand what is happening. That is: DAG (as an analytical tool linking theory and empirical analysis), types of controls (based on DAGs), binary/categorical controls as shifting the intercept(s), continuous control variables to isolate association of variable of interest (avg. change holding others constant rationale), important takeaway: more control variables not always better, differing types of control variables, appropriateness depends on estimand and research context</p>
+<p>Part II then should demonstrate how this looks in action: now the substantive example (simulated) data comes in, a hypothetical research question, the workflow steps in action. Importantly, in this section the subsections should mirror the analysis workflow. My plan is to switch to the Editor in class and have them open the source too, so I run the code live and students can follow it. So the source code needs to be clean, commented and readable.</p>
+<p>Part III should cover all conceptual (and formalized) foundations and concepts that are new this week and necessary for students to understand what is happening. These are: What if the effect we are interested in (X on Y) depends on a third variable; Dummy/Categorical variables as drawing two/multiple lines with different slopes.</p>
+<p>Part IV should then reiterate the practical application with an example for conditional hypothesis, like for Part II I plan to switch to showing students the source code so they can run the code too. Here it is important to include in the the subsection on data distibution exploration the distribution of the outcome for all categories or across the range of continuous interaction variables</p>
+<p>Other things I would like you to change:</p>
+<ol type="1">
+<li><p>NO Causal framing throughout, I do not causal inference in class, just speak of associations among variables (occasionally one can mention that under these assumption the association can be interpreted as causal effect, but I want to teach them to speak of associations and relationships among variables, not causal effects)</p></li>
+<li><p>Do NOT use raw unicode codes like 3b2, rather use either latex expressions or some R / ggplot way to include beta symbols in figures for instance</p></li>
+<li><p>Do NOT do Bayesian / Frequentist comparisons, this is just confusing. We just focus on Bayes. as OLS for linear estimators is effectively the likelihood, all the “fitting a line” rhetoric still holds, only in the end we simulate 1000s of plausible lines and rank them according to their relative probability given the data.</p></li>
+</ol>
+<p>”</p>
+<p>Return the improved prompt as escaped source markdown</p>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -816,7 +739,7 @@ Licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-N
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/qmir-2026/qmir-2026.github.io/blob/main/prompt-canvas.md" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/qmir-2026/qmir-2026.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions"><ul><li><a href="https://github.com/qmir-2026/qmir-2026.github.io/blob/main/prompt-canvas.md" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/qmir-2026/qmir-2026.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>Made with ♥ and <a href="https://quarto.org/">Quarto</a></p>
 </div>
