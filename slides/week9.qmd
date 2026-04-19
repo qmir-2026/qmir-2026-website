@@ -61,7 +61,7 @@ draw_dag <- function(
       aes(x = x, y = y, xend = xend, yend = yend),
       arrow = arrow(length = unit(0.22, "cm"), type = "closed"),
       linewidth = 0.9,
-      color = "gray25",
+      colour = "gray25",
       lineend = "butt"
     ) +
     geom_label(
@@ -69,7 +69,7 @@ draw_dag <- function(
       aes(x = x, y = y, label = label),
       size = 3.6,
       fill = "white",
-      color = "gray10",
+      colour = "gray10",
       fontface = "bold",
       label.padding = unit(0.45, "lines"),
       label.r = unit(0.25, "lines")
@@ -81,7 +81,7 @@ draw_dag <- function(
         size = 11,
         hjust = 0.5,
         face = "bold",
-        color = "gray25",
+        colour = "gray25",
         margin = margin(b = 6)
       )
     )
@@ -120,7 +120,7 @@ fit_controls_biv <- brm(
   data = df_controls,
   prior = c(
     prior(normal(10, 5), class = "Intercept"), # baseline spending ~10% GDP
-    prior(normal(0, 0.5), class = "b"), # weak prior: ±1.5pp per %
+    prior(normal(0, 2), class = "b"), # weakly informative prior on slope
     prior(exponential(1), class = "sigma") # residual SD almost certainly < 5
   ),
   chains = 4, # four independent chains
@@ -135,8 +135,8 @@ fit_controls <- brm(
   data = df_controls,
   prior = c(
     prior(normal(10, 5), class = "Intercept"), # baseline spending ~10% GDP
-    prior(normal(0, 0.5), class = "b", coef = "women_parl"), # weak prior: ±1.5pp per %
-    prior(normal(0, 1), class = "b", coef = "gdp_pc"), # ±3pp per $1k GDP
+    prior(normal(0, 2), class = "b", coef = "women_parl"), # weakly informative prior
+    prior(normal(0, 2), class = "b", coef = "gdp_pc"), # weakly informative prior
     prior(exponential(1), class = "sigma") # residual SD almost certainly < 5
   ),
   chains = 4,
@@ -253,7 +253,7 @@ By the end of today, you should be able to:
 - Transition: "The challenge is separating the legislative effect from the wealth effect. That is what control variables are for."
 :::
 
-> **Does the share of women in parliament increase public health expenditure?**
+> **Is the share of women in parliament associated with higher public health expenditure?**
 
 . . .
 
@@ -269,7 +269,7 @@ By the end of today, you should be able to:
 - More women in parliament (greater gender equality in politics)
 - Higher health spending (larger government capacity)
 
-A simple bivariate analysis will confuse **the effect of gender representation** with **the effect of wealth**.
+A simple bivariate analysis will conflate **the association attributed to legislative representation** with **the association attributed to wealth**.
 
 :::
 
@@ -335,6 +335,33 @@ The arrows are *your* theoretical commitments, not statistical output.
 
 ---
 
+## DAGs in Quarto: MermaidJS {#sec-dag-mermaid .smaller}
+
+::: notes
+- Quick practical tip: students can draw simple DAGs directly in Quarto using fenced mermaid code blocks — no R package required.
+- `graph LR` = left-to-right layout; `graph TD` = top-down.
+- Arrow syntax: `A --> B` means A has a directed arrow into B.
+- This is one lightweight option for documenting a DAG in a Quarto document or homework submission. The `draw_dag()` ggplot helper used throughout these slides is more customisable for polished figures.
+:::
+
+One quick way to draw a DAG directly in a Quarto document — no R code needed:
+
+```{mermaid}
+graph LR
+  GDP["GDP per Capita"] --> WP["Women in Parliament (%)"]
+  GDP --> HS["Health Spending (% GDP)"]
+  WP --> HS
+```
+
+::: {style="font-size: 0.82em"}
+Use a fenced `{mermaid}` block with `graph LR` (left-to-right) or `graph TD` (top-down).
+Node labels go in `["quoted text"]`; arrows are `-->`.
+This is enough for a homework submission or a quick theoretical sketch.
+The polished ggplot DAGs in these slides use the `draw_dag()` helper defined in the setup chunk.
+:::
+
+---
+
 ## Our Research Question as a DAG {#sec-dag-our-rq .smaller}
 
 ::: notes
@@ -368,7 +395,7 @@ draw_dag(nodes_main, edges_main, xlim = c(0.4, 3.9), ylim = c(0.6, 3.2)) +
     x = 2.15,
     y = 0.68,
     size = 3.5,
-    color = col_2,
+    colour = col_2,
     label = "Back-door path (GDP): closed by controlling for GDP per capita",
     fontface = "italic"
   )
@@ -424,7 +451,7 @@ p_conf <- draw_dag(
     y = 0.55,
     size = 3,
     label = "Control for Z: yes",
-    color = col_1,
+    colour = col_1,
     fontface = "bold"
   )
 
@@ -453,7 +480,7 @@ p_med <- draw_dag(
     y = 0.95,
     size = 3,
     label = "Controlling blocks path: caution",
-    color = col_4,
+    colour = col_4,
     fontface = "bold"
   )
 
@@ -482,7 +509,7 @@ p_coll <- draw_dag(
     y = 0.55,
     size = 3,
     label = "Never control for C: no",
-    color = col_2,
+    colour = col_2,
     fontface = "bold"
   )
 
@@ -829,18 +856,18 @@ $$ {#eq-prior-alpha-health}
 *"Baseline spending ~10% GDP when $X = Z = 0$; very uncertain"*
 
 $$
-\beta_X \sim \text{Normal}(0, 0.5)
+\beta_X \sim \text{Normal}(0, 2)
 $$ {#eq-prior-bx-health}
-*"Per % women in parliament, change in spending probably between $\pm 1.5$ pp"*
+*"Per % women in parliament, change in spending probably between $\pm 6$ pp"*
 
 :::
 
 ::: {.column width="50%"}
 
 $$
-\beta_Z \sim \text{Normal}(0, 1)
+\beta_Z \sim \text{Normal}(0, 2)
 $$ {#eq-prior-bz-health}
-*"Per \$1k of GDP per capita, change in spending probably between $\pm 3$ pp"*
+*"Per \$1k of GDP per capita, change in spending probably between $\pm 6$ pp"*
 
 $$
 \sigma \sim \text{Exponential}(1)
@@ -853,460 +880,16 @@ $$ {#eq-prior-sigma-health}
 . . .
 
 ::: {.callout-important style="font-size: 0.72em"}
-**Priors must be calibrated to the scale of the outcome and predictors**. A prior of $\beta \sim \text{Normal}(0, 100)$ on a percentage-point outcome is nearly flat (uninformative and implausible). A prior of $\text{Normal}(0, 0.5)$ for the women-in-parliament coefficient is defensible: it says extreme effects (say, $+5$ pp per % women) are essentially impossible a priori, while effects of the size found in the literature ($< 0.5$ pp) are plausible.
+**Priors must be calibrated to the scale of the outcome and predictors**. A prior of $\beta \sim \text{Normal}(0, 100)$ on a percentage-point outcome is nearly flat (uninformative and implausible). A prior of $\text{Normal}(0, 2)$ for the women-in-parliament coefficient is a defensible weakly informative choice: it says effects larger than $\pm 6$ pp per % women are unlikely a priori, while leaving the data free to update across a wide and substantively plausible range.
 :::
 
 # Part II: Application I — Multivariate `brms` Model {#sec-part2}
 
-## Step 1: Estimand {#sec-part2-step1 .smaller}
+## Part II: Applied — Live Coding {#sec-part2-live}
 
-::: notes
-- The DAG was introduced and discussed in Part I (see sec-dag-our-rq). Briefly recall it here and move quickly to the estimand statement.
-- Estimand in words: "The partial association between a 1 percentage point increase in women's share of parliament seats and public health expenditure as a percentage of GDP, holding GDP per capita constant."
-- Emphasise: the estimand is fixed before we touch any code. We commit to it based on the DAG and our research question.
-:::
-
-**Recall from Part I**: GDP per capita is a **confounder** — it opens a back-door path from Women in Parliament to Health Spending.
-Conditioning on GDP per capita (including it as a predictor) closes that path.
-
-. . .
-
-::: {style="font-size: 0.9em"}
-**Estimand**: The partial association between women's parliamentary representation and health spending, **adjusting for GDP per capita** (the minimal sufficient adjustment set that closes the GDP back-door path).
-
-*Under the assumption that the adjustment set is sufficient — i.e., no unobserved confounders remain — this partial association can be interpreted as a causal effect. That assumption is substantive, not statistical.*
-:::
-
-. . .
-
-::: {.callout-note style="font-size: 0.73em"}
-We commit to this estimand **before** opening R.
-The model specification follows from the DAG — not the other way around.
-:::
+*→ Switch to Positron. Follow along in `lab/week9_lab.qmd`.*
 
 ---
-
-## Step 2: Data Summary {#sec-part2-step2 .smaller}
-
-::: notes
-- Left panel: bivariate scatter. The positive trend is real, but conflates the partial association of women in parliament and the confounding from GDP.
-- Right panel: OVB in action using Bayesian posterior means and 95% credible intervals. Bivariate model (orange, steeper) vs. multivariate model (purple, controlling for GDP). The gap between posterior means IS the OVB.
-- Ask students: "Why does the bivariate estimate overstate the association? Use the OVB formula."
-- True DGP coefficient β = 0.12. The bivariate posterior mean is around 0.25. The multivariate posterior mean is near 0.12.
-:::
-
-```{r}
-#| label: fig-controls-summary
-#| echo: true
-#| fig-height: 3.6
-#| dpi: 500
-#| fig-cap: "Left: raw scatter of the bivariate association. Right: OVB illustrated with Bayesian posterior means and 95% credible intervals — the bivariate estimate (orange) over-estimates the partial association; the multivariate estimate (purple, controlling for GDP) recovers the true DGP value of 0.12."
-p_raw <- df_controls |>
-  ggplot(aes(x = women_parl, y = health_spend)) +
-  geom_point(colour = col_1, alpha = 0.55, size = 2) +
-  theme_bw() +
-  theme(panel.grid.minor = element_blank()) +
-  labs(
-    x = "Women in Parliament (%)",
-    y = "Health Expenditure (% GDP)",
-    title = "Raw Bivariate Association"
-  )
-
-# Extract posterior summaries for women_parl from both pre-fit models
-post_biv <- posterior_summary(fit_controls_biv)["b_women_parl", ] # bivariate model
-post_multi <- posterior_summary(fit_controls)["b_women_parl", ] # multivariate model
-
-coef_df <- tibble(
-  Model = factor(
-    c("Bivariate\n(no control)", "Multivariate\n(+ GDP per capita)"),
-    levels = c("Bivariate\n(no control)", "Multivariate\n(+ GDP per capita)")
-  ),
-  Estimate = c(post_biv["Estimate"], post_multi["Estimate"]),
-  lo = c(post_biv["Q2.5"], post_multi["Q2.5"]),
-  hi = c(post_biv["Q97.5"], post_multi["Q97.5"])
-)
-
-p_coef <- coef_df |>
-  ggplot(aes(x = Model, y = Estimate)) +
-  geom_hline(
-    yintercept = 0.12,
-    colour = "gray50",
-    linetype = "dashed",
-    linewidth = 0.9
-  ) +
-  geom_errorbar(
-    aes(ymin = lo, ymax = hi, colour = Model),
-    width = 0.12,
-    linewidth = 1.1
-  ) +
-  geom_point(aes(colour = Model), size = 5) +
-  scale_colour_manual(values = c(col_2, col_3), guide = "none") +
-  annotate(
-    "text",
-    x = 1.52,
-    y = 0.127,
-    size = 3.3,
-    colour = "gray40",
-    label = expression(paste("True ", beta, " = 0.12")),
-    hjust = 0
-  ) +
-  theme_bw() +
-  theme(panel.grid.minor = element_blank()) +
-  labs(
-    x = NULL,
-    y = expression(hat(beta) ~ "(women in parliament -> health spending)"),
-    title = "OVB: Bivariate Inflates the Estimate",
-    subtitle = "Controlling for GDP brings posterior mean near true DGP value"
-  )
-
-p_raw | p_coef
-```
-
----
-
-## Step 3: Formal Model Specification {#sec-part2-step3 .smaller}
-
-::: notes
-- Walk through each line. This is the mathematical commitment that precedes any code.
-- "Notice that the likelihood is unchanged from last week. It is still Gaussian. All we have done is expand μ_i to include a second predictor."
-- Priors: "β_women ~ Normal(0, 0.5) means: before seeing data, I believe the partial association per percentage point of women in parliament is almost certainly between -1.5 and +1.5. Is that a reasonable prior belief? Let's discuss."
-- Ask students: "What would a uniform prior on β_women look like? Is it scientifically sensible?"
-:::
-
-:::::: columns
-::: {.column width="50%"}
-
-**Likelihood**
-
-$$
-Y_i \sim \text{Normal}(\mu_i, \sigma)
-$$ {#eq-controls-likelihood}
-
-$$
-\mu_i = \alpha + \beta_X X_i + \beta_Z Z_i
-$$ {#eq-controls-linpred}
-
-where $X$ = women in parliament, $Z$ = GDP per capita.
-
-**Estimands** (unknown, fixed): $\alpha, \beta_X, \beta_Z, \sigma$
-
-We know the truth: $\alpha = 2$, $\beta_X = 0.12$, $\beta_Z = 0.20$, $\sigma = 1.5$.
-
-:::
-
-::: {.column width="50%"}
-
-**Priors**
-
-$$
-\alpha \sim \text{Normal}(10, 5)
-$$ {#eq-step3-prior-alpha}
-
-$$
-\beta_X \sim \text{Normal}(0, 0.5)
-$$ {#eq-step3-prior-bx}
-
-$$
-\beta_Z \sim \text{Normal}(0, 1)
-$$ {#eq-step3-prior-bz}
-
-$$
-\sigma \sim \text{Exponential}(1)
-$$ {#eq-step3-prior-sigma}
-
-**Posterior**
-
-$$
-p(\alpha, \beta_X, \beta_Z, \sigma \mid \mathbf{Y}) \propto \mathcal{L} \cdot p(\alpha)\,p(\beta_X)\,p(\beta_Z)\,p(\sigma)
-$$ {#eq-controls-posterior}
-
-:::
-::::::
-
----
-
-## Step 4: Prior Predictive Check {#sec-part2-step4 .smaller}
-
-::: notes
-- "We sample (α, β_X, β_Z, σ) from the priors and ask: what health spending outcomes does the model predict before seeing any data?"
-- The shaded region should cover [0, 30] — the plausible range for public health expenditure as % of GDP.
-- If the prior predictive puts substantial mass below 0% or above 50%, the priors are too diffuse and need tightening.
-- "A sensible prior predictive is not evidence that the priors are correct — it is a minimum bar for scientific plausibility."
-:::
-
-```{r}
-#| label: fig-prior-ppc-controls
-#| echo: true
-#| code-fold: true
-#| fig-height: 3.5
-#| fig-cap: "Prior predictive distribution for health spending: 2,000 draws from the joint prior, evaluated at the observed X and Z values. The shaded band marks the plausible empirical range (0–30% of GDP). Most prior mass falls in a reasonable range — these priors are defensible."
-set.seed(2026)
-n_pp <- 2000
-
-# draw n_pp parameter sets from the joint prior, then simulate Y for all observations
-prior_pred_controls <- tibble(
-  b0 = rnorm(n_pp, 10, 5), # intercept draws
-  b_wp = rnorm(n_pp, 0, 0.5), # women_parl slope draws
-  b_gdp = rnorm(n_pp, 0, 1), # gdp_pc slope draws
-  sigma = rexp(n_pp, 1) # residual SD draws
-) |>
-  rowwise() |>
-  mutate(
-    y_sim = list(
-      b0 +
-        b_wp * df_controls$women_parl + # linear predictor evaluated at observed X, Z
-        b_gdp * df_controls$gdp_pc +
-        rnorm(nrow(df_controls), 0, sigma) # add Gaussian noise
-    )
-  ) |>
-  unnest(y_sim) |>
-  ungroup()
-
-prior_pred_controls |>
-  ggplot(aes(x = y_sim)) +
-  annotate(
-    "rect",
-    xmin = 0,
-    xmax = 30,
-    ymin = 0,
-    ymax = Inf,
-    fill = col_4,
-    alpha = 0.12
-  ) +
-  geom_density(fill = col_1, alpha = 0.55, color = "white", linewidth = 0.4) +
-  geom_vline(
-    xintercept = c(0, 30),
-    color = col_4,
-    linetype = "dashed",
-    linewidth = 0.9
-  ) +
-  annotate(
-    "text",
-    x = 15,
-    y = Inf,
-    vjust = 1.4,
-    size = 3.2,
-    color = col_4,
-    label = "Plausible empirical range: 0–30% GDP"
-  ) +
-  theme_bw() +
-  theme(panel.grid.minor = element_blank()) +
-  labs(
-    x = "Predicted Health Expenditure (% GDP)",
-    y = "Prior Predictive Density",
-    title = "Prior Predictive Check: Health Spending Model",
-    subtitle = "Before seeing data — does the prior generate plausible outcomes?"
-  )
-```
-
----
-
-## Step 5: Fit the Model with `brms` {#sec-part2-step5 .smaller}
-
-::: notes
-- Same syntax as last week. The only change: add gdp_pc to the formula and add a prior for it.
-- "Notice we specify priors for each coefficient individually using the coef argument. This precision is good scientific practice."
-- Point to iter, warmup, chains: same settings as week 8. Standard defaults.
-- Remind students: they should type this themselves in Positron from the slide source.
-:::
-
-```{r}
-#| label: fit-controls
-#| echo: true
-#| eval: false
-fit_controls <- brm(
-  health_spend ~ women_parl + gdp_pc, # outcome ~ main predictor + control
-  data = df_controls,
-  prior = c(
-    prior(normal(10, 5), class = "Intercept"), # baseline spending ~10% GDP
-    prior(normal(0, 0.5), class = "b", coef = "women_parl"), # weak prior: ±1.5pp per %
-    prior(normal(0, 1), class = "b", coef = "gdp_pc"), # ±3pp per $1k GDP
-    prior(exponential(1), class = "sigma") # residual SD almost certainly < 5
-  ),
-  chains = 4, # four independent chains
-  iter = 2000, # 1000 warmup + 1000 sampling per chain
-  warmup = 1000,
-  seed = 2026 # reproducibility
-)
-```
-
-. . .
-
-::: {style="font-size: 0.8em"}
-`brms` translates this to Stan (C++), runs 4 parallel chains, draws 4,000 posterior samples of $(\alpha, \beta_X, \beta_Z, \sigma)$, and returns them for our analysis.
-:::
-
----
-
-## Step 6a: MCMC Diagnostics {#sec-part2-step6a .smaller}
-
-::: notes
-- Same diagnostics as week 8. The criteria are identical regardless of how many parameters the model has.
-- Rhat < 1.01 for all parameters: chains have mixed and converged.
-- Bulk_ESS and Tail_ESS > 1000: enough effective samples for reliable posterior summaries.
-- Traceplots: should look like "hairy caterpillars" — each chain explores the same range, no trends.
-- If any diagnostic fails: do NOT proceed to interpretation. Investigate the chain.
-:::
-
-```{r}
-#| label: fig-trace-controls
-#| echo: true
-#| code-fold: true
-#| fig-height: 3.6
-#| fig-cap: "Traceplots for the four key parameters. Each chain (colour) should explore the same range with no trends or divergences. The 'hairy caterpillar' pattern confirms convergence."
-mcmc_trace(
-  fit_controls,
-  pars = c("b_Intercept", "b_women_parl", "b_gdp_pc", "sigma"),
-  facet_args = list(ncol = 2)
-) +
-  scale_color_manual(values = chain_cols) +
-  theme_bw() +
-  theme(
-    panel.grid.minor = element_blank(),
-    strip.background = element_rect(fill = "gray90")
-  ) +
-  labs(
-    title = "MCMC Traceplots",
-    subtitle = "All chains must mix well before interpreting results"
-  )
-```
-
----
-
-## Step 6b: Posterior Predictive Check {#sec-part2-step6b .smaller}
-
-::: notes
-- pp_check: "Do the model's predictions look like the observed data?"
-- Blue lines are posterior draws of the predictive distribution. Dark blue line is the observed data density.
-- If the model is well-specified, the blue lines should closely envelope the dark line.
-- Common failure: pp_check reveals that the model over- or under-disperses — indicates a likelihood misspecification.
-:::
-
-```{r}
-#| label: fig-ppc-controls
-#| echo: true
-#| fig-height: 3.5
-#| fig-cap: "Posterior predictive check: 50 simulated outcome distributions from the fitted model (light blue) versus the observed data distribution (dark). The Gaussian model fits well — the posterior predictive envelops the observed distribution."
-pp_check(fit_controls, ndraws = 50) +
-  theme_bw() +
-  theme(panel.grid.minor = element_blank()) +
-  labs(
-    title = "Posterior Predictive Check: Health Spending Model",
-    subtitle = "Light blue: model predictions  |  Dark: observed data"
-  )
-```
-
----
-
-## Step 7: Interpret Results {#sec-part2-step7 .smaller}
-
-::: notes
-- Summary output: Estimate = posterior mean. Est.Error = posterior SD. l/u-95% CI = 95% credible interval.
-- Key comparison to make explicit: bivariate posterior mean was ~0.25; multivariate posterior mean is near the true DGP value of 0.12.
-- β_gdp: "Each additional $1,000 of GDP per capita is associated with about 0.20pp higher health spending, holding women's representation constant."
-- β_women: "Each additional percentage point of women in parliament is associated with about 0.12pp higher health spending, holding GDP constant."
-- Point out that Rhat values in summary confirm convergence.
-:::
-
-```{r}
-#| label: controls-summary
-#| echo: true
-summary(fit_controls)
-```
-
----
-
-## Step 7: Visualising Partial Effects {#sec-part2-step7b .smaller}
-
-::: notes
-- posterior_epred() on a grid: vary women_parl across its range while holding gdp_pc at its mean.
-- The ribbon shows 95% credible interval for E[Y | X, Z = Z_mean].
-- "This is the estimated effect of women's representation, holding income constant. It is narrower and closer to zero than the bivariate estimate — the confounder is doing real work."
-:::
-
-```{r}
-#| label: fig-controls-epred
-#| echo: true
-#| code-fold: true
-#| fig-height: 3.5
-#| fig-cap: "Posterior predictive mean and 95% credible interval for health spending as a function of women's parliamentary share, holding GDP per capita at its mean. The ribbon quantifies our remaining uncertainty about the partial effect after conditioning on GDP."
-grid_controls <- tibble(
-  women_parl = seq(
-    min(df_controls$women_parl),
-    max(df_controls$women_parl),
-    length.out = 80
-  ),
-  gdp_pc = mean(df_controls$gdp_pc)
-)
-
-# posterior_epred: E[Y | X, Z=mean] for each row of grid_controls, averaging over all parameter uncertainty
-epred_mat <- posterior_epred(fit_controls, newdata = grid_controls)
-
-grid_controls <- grid_controls |>
-  mutate(
-    lo = apply(epred_mat, 2, quantile, 0.025),
-    mid = apply(epred_mat, 2, median),
-    hi = apply(epred_mat, 2, quantile, 0.975)
-  )
-
-df_controls |>
-  ggplot(aes(x = women_parl, y = health_spend)) +
-  geom_ribbon(
-    data = grid_controls,
-    aes(x = women_parl, ymin = lo, ymax = hi, y = mid),
-    inherit.aes = FALSE,
-    fill = col_1,
-    alpha = 0.25
-  ) +
-  geom_line(
-    data = grid_controls,
-    aes(x = women_parl, y = mid),
-    inherit.aes = FALSE,
-    color = col_2,
-    linewidth = 1.2
-  ) +
-  geom_point(color = col_1, alpha = 0.45, size = 1.8) +
-  theme_bw() +
-  theme(panel.grid.minor = element_blank()) +
-  labs(
-    x = "Women in Parliament (%)",
-    y = "Health Expenditure (% GDP)",
-    title = "Partial Effect: Women in Parliament -> Health Spending",
-    subtitle = paste0(
-      "GDP per capita held at mean (",
-      round(mean(df_controls$gdp_pc), 1),
-      " thousand USD)  |  posterior_epred()"
-    )
-  )
-```
-
----
-
-## Step 8: LOO-IC Preview and Limitations {#sec-part2-step8 .smaller}
-
-::: notes
-- LOO-IC preview: the bivariate model does worse than the multivariate model — as expected, since we have added a genuinely predictive variable.
-- elpd_diff: "Expected log predictive density difference. Larger = better. The bivariate model has lower elpd_diff (is worse) by about X units, with SE of Y. When the difference exceeds 2×SE, we take it seriously."
-- Limitations:
-  1. We assumed a linear relationship between each predictor and outcome — check residuals.
-  2. We assumed GDP is the ONLY confounder — other confounders (legal institutions, colonial history, religion) may still bias β_X.
-  3. We have panel data (country-years) — A5 (independent errors) may be violated (hierarchical model in Week 12).
-:::
-
-```{r}
-#| label: loo-controls-compare
-#| echo: true
-# add_criterion appends LOO estimates to the fitted model objects
-fit_controls <- add_criterion(fit_controls, "loo")
-fit_controls_biv <- add_criterion(fit_controls_biv, "loo")
-loo_compare(fit_controls_biv, fit_controls)
-```
-
-. . .
-
-::: {.callout-important style="font-size: 0.72em"}
-**Remaining limitations**: (1) GDP may not be the only confounder — country institutional quality, colonial history, and cultural factors may also drive both representation and spending. (2) Country-year observations are likely correlated within countries — a violation of A5 that Week 12 addresses with multilevel models. (3) Linearity is assumed: we should check residuals for nonlinear patterns.
-:::
 
 # Part III: Interaction Terms {#sec-part3}
 
@@ -1319,7 +902,7 @@ loo_compare(fit_controls_biv, fit_controls)
 - "A model without an interaction term is implicitly assuming the slope is constant across all levels of Z. That is a strong assumption. Test it before imposing it."
 :::
 
-> **Does the effect of unemployment on welfare spending depend on government ideology?**
+> **Does the association between unemployment and welfare spending vary by government ideology?**
 
 . . .
 
@@ -1330,7 +913,7 @@ loo_compare(fit_controls_biv, fit_controls)
 :::::: columns
 ::: {.column width="55%"}
 
-The association between $X$ (unemployment) and $Y$ (transfer spending) is **not constant** — it changes depending on $Z$ (government ideology). This is called **moderation** or **effect heterogeneity**.
+The association between $X$ (unemployment) and $Y$ (transfer spending) is **not constant** — it changes depending on $Z$ (government ideology). This is called **moderation** or **association heterogeneity**.
 
 > "The slope of the unemployment–spending relationship is steeper under left governments."
 
@@ -1373,7 +956,7 @@ $$ {#eq-interact-model}
 **Conditional marginal effects** — both slopes are now *functions* of the other variable:
 
 $$
-\frac{\partial \mu}{\partial X} = \beta_1 + \beta_3 Z \qquad \text{(effect of unemployment depends on ideology)}
+\frac{\partial \mu}{\partial X} = \beta_1 + \beta_3 Z \qquad \text{(unemployment slope depends on ideology)}
 $$ {#eq-interact-me-x}
 
 $$
@@ -1483,7 +1066,7 @@ df_lin_check <- bind_rows(
   )
 
 df_lin_check |>
-  ggplot(aes(x = x, y = y, color = z_group)) +
+  ggplot(aes(x = x, y = y, colour = z_group)) +
   geom_smooth(
     aes(group = z_group),
     method = "lm",
@@ -1497,7 +1080,7 @@ df_lin_check |>
     linewidth = 0.9,
     linetype = "dashed"
   ) +
-  scale_color_manual(values = c(col_1, col_4, col_2), name = "Z tertile") +
+  scale_colour_manual(values = c(col_1, col_4, col_2), name = "Z tertile") +
   facet_wrap(~case) +
   theme_bw() +
   theme(panel.grid.minor = element_blank()) +
@@ -1614,10 +1197,10 @@ bind_rows(df_good, df_bad) |>
       levels = c("Good common support", "Poor common support")
     )
   ) |>
-  ggplot(aes(x = x, fill = group, color = group)) +
+  ggplot(aes(x = x, fill = group, colour = group)) +
   geom_density(alpha = 0.35, linewidth = 0.8) +
   scale_fill_manual(values = c(col_1, col_2), name = NULL) +
-  scale_color_manual(values = c(col_1, col_2), name = NULL) +
+  scale_colour_manual(values = c(col_1, col_2), name = NULL) +
   facet_wrap(~case) +
   theme_bw() +
   theme(panel.grid.minor = element_blank(), legend.position = "bottom") +
@@ -1684,545 +1267,16 @@ brm(y ~ x * z, ...)
 ::: {style="font-size: 0.82em"}
 **In `brms`**: `y ~ x * z` is the recommended syntax. It expands to `y ~ x + z + x:z` automatically and documents the constitutive terms requirement.
 
-**Prior for** $\beta_3$: $\text{Normal}(0, 1)$ is a sensible weakly informative prior. It says: *"Before seeing the data, the slope difference between groups is probably between* $-3$ *and* $+3$ *— no moderation is the prior expectation."*
+**Prior for** $\beta_3$: $\text{Normal}(0, 2)$ is a sensible weakly informative prior. It says: *"Before seeing the data, the slope difference between groups is probably between* $-6$ *and* $+6$ *— no moderation is the prior expectation."*
 :::
 
 # Part IV: Application II — Interaction `brms` Model {#sec-part4}
 
-## Step 1: DAG and Estimand {#sec-part4-step1 .smaller}
+## Part IV: Applied — Live Coding {#sec-part4-live}
 
-::: notes
-- The DAG for an interaction model is simpler than for a confounding model: no back-door paths to close.
-- "Unemployment is associated with transfer spending. Government ideology is associated with transfer spending. But the association between unemployment and spending may depend on ideology — ideology moderates the unemployment-spending relationship."
-- DAG notation: both U and G have arrows into Y. The moderation is notated by the curved 'interaction' arrow, but in standard DAG notation it is just shown as two arrows entering Y.
-- Estimand: the conditional marginal effect (partial association) of unemployment on transfer spending for right and left governments separately — two quantities.
-- The interaction β₃ itself answers: "How much does the unemployment slope differ between left and right governments?"
-:::
-
-```{r}
-#| label: fig-dag-interact
-#| echo: false
-#| fig-height: 2.6
-#| fig-cap: "DAG for the partisan welfare state model. Unemployment and government ideology are both causes of transfer spending. The research question concerns the interaction: is the unemployment-to-spending slope larger under left governments?"
-nodes_int <- tibble(
-  x = c(0.9, 3.1, 2),
-  y = c(1.5, 1.5, 0.5),
-  label = c(
-    "Unemployment\n(%)",
-    "Government\nIdeology (L/R)",
-    "Transfer\nSpending (% GDP)"
-  )
-)
-edges_int <- tibble(
-  x = c(1.2, 2.85),
-  y = c(1.35, 1.35),
-  xend = c(1.75, 2.25),
-  yend = c(0.65, 0.65)
-)
-
-draw_dag(nodes_int, edges_int, xlim = c(0.3, 3.7), ylim = c(0.2, 2.2)) +
-  annotate(
-    "text",
-    x = 2,
-    y = 0.18,
-    size = 3.3,
-    color = col_3,
-    fontface = "italic",
-    label = "Interaction: ideology moderates the unemployment -> spending association"
-  )
-```
-
-. . .
-
-::: {style="font-size: 0.83em"}
-**Estimand 1**: $\frac{\partial \mu}{\partial X}\Big|_{Z=0}$ — partial association of unemployment with spending under **right** governments.
-
-**Estimand 2**: $\frac{\partial \mu}{\partial X}\Big|_{Z=1}$ — partial association of unemployment with spending under **left** governments.
-
-**Estimand 3**: $\beta_3$ — the **slope difference**: how much more does unemployment associate with spending under left governments?
-
-*Under the assumption that the adjustment set is sufficient — no unobserved confounders of unemployment or ideology — these associations can be interpreted as causal effects. That assumption is substantive, not statistical.*
-:::
+*→ Switch to Positron. Follow along in `lab/week9_lab.qmd`.*
 
 ---
-
-## Step 2: Data Summary {#sec-part4-step2 .smaller}
-
-::: notes
-- First look: marginal distribution of the outcome by group. Ask students: "Do left and right governments already differ in average spending, ignoring unemployment?"
-- The answer is yes (left governments spend more on average) — this is the intercept shift captured by β₂.
-- The distribution shapes also differ — some skew at the upper end for left governments.
-:::
-
-```{r}
-#| label: fig-outcome-dist-interact
-#| echo: false
-#| fig-height: 3.0
-#| dpi: 500
-#| fig-cap: "Marginal distribution of transfer spending by government ideology. Left governments show higher average spending — the intercept shift captured by β₂ in the interaction model."
-df_interact |>
-  ggplot(aes(x = transfer_spend, fill = government, colour = government)) +
-  geom_density(alpha = 0.45, linewidth = 0.8) +
-  scale_fill_manual(values = c("Left" = col_2, "Right" = col_1)) +
-  scale_colour_manual(values = c("Left" = col_2, "Right" = col_1)) +
-  theme_bw() +
-  theme(panel.grid.minor = element_blank(), legend.position = "bottom") +
-  labs(
-    x = "Transfer Spending (% GDP)",
-    y = "Density",
-    title = "Distribution of Transfer Spending by Government Ideology",
-    subtitle = "Left governments show higher average spending",
-    fill = NULL,
-    colour = NULL
-  )
-```
-
----
-
-## Step 2 (continued): Joint Patterns {#sec-part4-step2b .smaller}
-
-::: notes
-- The left panel: scatter with separate points and lines for each government type. Ask students: "Do the lines look like they have different slopes?"
-- The right panel: box plots of transfer spending by unemployment tercile × ideology. Shows the increasing gap between orange and blue as unemployment rises — the visual signature of an interaction.
-- "This preliminary look motivates fitting the interaction model. But it doesn't prove the interaction is real — we need the posterior to quantify uncertainty."
-:::
-
-```{r}
-#| label: fig-interact-summary
-#| echo: false
-#| fig-height: 3.6
-#| fig-cap: "Left: scatter coloured by government ideology with separate OLS lines. The slopes look clearly different. Right: transfer spending by unemployment tercile and ideology — the gap between left and right governments widens as unemployment rises, the visual signature of an interaction."
-p_scatter_int <- df_interact |>
-  ggplot(aes(x = unemployment, y = transfer_spend, color = government)) +
-  geom_point(alpha = 0.5, size = 1.8) +
-  geom_smooth(
-    aes(group = government),
-    method = "lm",
-    se = FALSE,
-    linewidth = 1.2
-  ) +
-  scale_color_manual(
-    values = c("Left" = col_2, "Right" = col_1),
-    name = "Government"
-  ) +
-  theme_bw() +
-  theme(panel.grid.minor = element_blank(), legend.position = "bottom") +
-  labs(
-    x = "Unemployment (%)",
-    y = "Transfer Spending (% GDP)",
-    title = "Separate Slopes by Ideology",
-    subtitle = "OLS line per group"
-  )
-
-df_interact_plot <- df_interact |>
-  mutate(
-    unemp_tercile = cut(
-      unemployment,
-      breaks = quantile(unemployment, c(0, 1 / 3, 2 / 3, 1)),
-      labels = c("Low\n(~4%)", "Mid\n(~8%)", "High\n(~12%)"),
-      include.lowest = TRUE
-    )
-  )
-
-p_box_int <- df_interact_plot |>
-  ggplot(aes(x = unemp_tercile, y = transfer_spend, fill = government)) +
-  geom_boxplot(
-    alpha = 0.7,
-    position = position_dodge(width = 0.75),
-    width = 0.6
-  ) +
-  scale_fill_manual(
-    values = c("Left" = col_2, "Right" = col_1),
-    name = "Government"
-  ) +
-  theme_bw() +
-  theme(panel.grid.minor = element_blank(), legend.position = "bottom") +
-  labs(
-    x = "Unemployment Tercile",
-    y = "Transfer Spending (% GDP)",
-    title = "Gap Widens with Unemployment",
-    subtitle = "Signature of a positive interaction term"
-  )
-
-p_scatter_int | p_box_int
-```
-
----
-
-## Step 3: Formal Model Specification {#sec-part4-step3 .smaller}
-
-::: notes
-- Walk through the full model block. Emphasize that β₃ is the focal quantity — the interaction term.
-- "β₁ = 0.3 means: under a right government, each percentage point of unemployment is associated with 0.3pp higher transfer spending. β₁ + β₃ = 0.3 + 0.9 = 1.2 means the same under a left government."
-- Prior for β₃: Normal(0, 1). "The prior expectation is zero interaction — no moderation. This is appropriately humble; the data will update us."
-- Note: brms handles the product term automatically when we write `unemployment * left_gov`.
-:::
-
-:::::: columns
-::: {.column width="52%"}
-
-**Likelihood**
-
-$$
-Y_i \sim \text{Normal}(\mu_i, \sigma)
-$$ {#eq-interact-step3-likelihood}
-
-$$
-\mu_i = \alpha + \beta_1 U_i + \beta_2 G_i + \beta_3 (U_i \cdot G_i)
-$$ {#eq-interact-step3-linpred}
-
-$U$ = unemployment, $G$ = left government (0/1)
-
-**True DGP** (known because synthetic):
-
-$\alpha = 10, \beta_1 = 0.3, \beta_2 = 2, \beta_3 = 0.9, \sigma = 2.5$
-
-:::
-
-::: {.column width="48%"}
-
-**Priors**
-
-$$
-\alpha \sim \text{Normal}(12, 5)
-$$ {#eq-interact-prior-alpha}
-
-$$
-\beta_1,\, \beta_2 \sim \text{Normal}(0, 1)
-$$ {#eq-interact-prior-b12}
-
-$$
-\beta_3 \sim \text{Normal}(0, 1)
-$$ {#eq-interact-prior-b3}
-
-$$
-\sigma \sim \text{Exponential}(0.5)
-$$ {#eq-interact-prior-sigma}
-
-*Prior for $\beta_3$: centered at zero — prior expectation is* **no moderation**. *The data will update this.*
-
-:::
-::::::
-
----
-
-## Step 4: Prior Predictive Check {#sec-part4-step4 .smaller}
-
-::: notes
-- Show prior predictive lines separately for left and right governments.
-- The key question: "Do the prior-predicted slope ranges overlap with what we would expect based on substantive knowledge?"
-- "Under a right government, the prior allows slopes from negative to strongly positive. Under a left government, the interaction prior adds additional spread. Both ranges are wide but not implausible."
-:::
-
-```{r}
-#| label: fig-prior-ppc-interact
-#| echo: true
-#| code-fold: true
-#| fig-height: 3.4
-#| fig-cap: "Prior predictive spaghetti: 150 regression lines drawn from the joint prior, separately for left and right governments. The prior is non-dogmatic — it allows a wide range of slopes including no interaction (similar slopes) and strong interaction (very different slopes)."
-set.seed(42)
-n_pp2 <- 150
-unemp_seq <- seq(1.5, 14, length.out = 60)
-
-# draw n_pp2 parameter sets from joint prior; expand over (unemployment, ideology) grid
-prior_lines_int <- tibble(
-  sim = 1:n_pp2,
-  b0 = rnorm(n_pp2, 12, 5), # intercept draws
-  b_u = rnorm(n_pp2, 0, 1), # unemployment slope draws
-  b_g = rnorm(n_pp2, 0, 1), # ideology main effect draws
-  b_int = rnorm(n_pp2, 0, 1) # interaction term draws
-) |>
-  expand_grid(unemployment = unemp_seq, left_gov = c(0L, 1L)) |>
-  mutate(
-    y_hat = b0 +
-      b_u * unemployment +
-      b_g * left_gov +
-      b_int * unemployment * left_gov, # interaction: slope shift for left govts
-    government = if_else(left_gov == 1, "Left", "Right")
-  )
-
-prior_lines_int |>
-  ggplot(aes(
-    x = unemployment,
-    y = y_hat,
-    group = interaction(sim, government),
-    color = government
-  )) +
-  geom_line(alpha = 0.12, linewidth = 0.5) +
-  scale_color_manual(
-    values = c("Left" = col_2, "Right" = col_1),
-    name = "Government"
-  ) +
-  coord_cartesian(ylim = c(-10, 45)) +
-  theme_bw() +
-  theme(panel.grid.minor = element_blank(), legend.position = "bottom") +
-  labs(
-    x = "Unemployment (%)",
-    y = "Predicted Transfer Spending (% GDP)",
-    title = "Prior Predictive Spaghetti: Interaction Model",
-    subtitle = "150 lines per group drawn from joint prior — non-dogmatic about moderation"
-  )
-```
-
----
-
-## Step 5: Fit Both Models {#sec-part4-step5 .smaller}
-
-::: notes
-- We fit two models: one without and one with the interaction term. We will compare them with LOO-IC in Step 8.
-- M1 (no interaction) assumes the unemployment slope is the same regardless of ideology — a testable restriction.
-- M2 (with interaction) relaxes this. If M2 fits substantially better, we have evidence that the restriction is false (i.e., that the interaction is real).
-- The `*` operator in brms: shorthand for x + z + x:z. Always use this, not the colon-only form.
-:::
-
-```{r}
-#| label: fit-interact-m1
-#| echo: true
-#| output: false
-# M1: assumes the unemployment-spending association is the same for all governments
-fit_m1 <- brm(
-  transfer_spend ~ unemployment + left_gov, # no interaction term
-  data = df_interact,
-  prior = c(
-    prior(normal(12, 5), class = "Intercept"), # baseline spending ~12% GDP
-    prior(normal(0, 1), class = "b"), # weak priors on both slopes
-    prior(exponential(0.5), class = "sigma") # residual SD likely < 5
-  ),
-  chains = 4,
-  iter = 2000,
-  warmup = 1000,
-  seed = 42
-)
-```
-
-```{r}
-#| label: fit-interact-m2
-#| echo: true
-#| output: false
-# M2: allows the unemployment-spending association to differ by ideology (interaction term)
-fit_m2 <- brm(
-  transfer_spend ~ unemployment * left_gov, # * expands to: unemp + left_gov + unemp:left_gov
-  data = df_interact,
-  prior = c(
-    prior(normal(12, 5), class = "Intercept"), # baseline spending ~12% GDP
-    prior(normal(0, 1), class = "b"), # prior centred at zero: no moderation by default
-    prior(exponential(0.5), class = "sigma") # residual SD likely < 5
-  ),
-  chains = 4,
-  iter = 2000,
-  warmup = 1000,
-  seed = 42
-)
-```
-
----
-
-## Step 6: Diagnostics and Posterior Predictive Check {#sec-part4-step6 .smaller}
-
-::: notes
-- Rhat and ESS: same criteria as always. Check summary output.
-- PPC: key check — does the model's predictive distribution match the observed distribution?
-- For M2 (interaction model), the PPC should look better than M1 — the model has more flexibility to capture the different slopes.
-:::
-
-```{r}
-#| label: fig-diag-interact
-#| echo: true
-#| code-fold: true
-#| fig-height: 3.5
-#| fig-cap: "Diagnostic checks for the interaction model (M2). Left: traceplots confirming convergence. Right: posterior predictive check — model predictions envelope the observed distribution well."
-p_trace_m2 <- mcmc_trace(
-  fit_m2,
-  pars = c(
-    "b_Intercept",
-    "b_unemployment",
-    "b_left_gov",
-    "b_unemployment:left_gov"
-  ),
-  facet_args = list(ncol = 2)
-) +
-  scale_color_manual(values = chain_cols) +
-  theme_bw() +
-  theme(
-    panel.grid.minor = element_blank(),
-    strip.background = element_rect(fill = "gray90"),
-    legend.position = "none"
-  ) +
-  labs(title = "Traceplots: Interaction Model (M2)")
-
-p_ppc_m2 <- pp_check(fit_m2, ndraws = 50) +
-  theme_bw() +
-  theme(panel.grid.minor = element_blank()) +
-  labs(title = "Posterior Predictive Check (M2)")
-
-p_trace_m2 | p_ppc_m2
-```
-
----
-
-## Step 7: Interpreting Results and Posterior Marginal Effects {#sec-part4-step7 .smaller}
-
-::: notes
-- summary(fit_m2): point out that b_unemployment:left_gov is the key quantity. Its posterior mean should be near 0.9 (the true β₃).
-- The posterior cloud plot: two bundles of lines, one per ideology group. The orange bundle (left) has clearly steeper lines than the blue bundle (right) — the visual representation of β₃ > 0.
-- Posterior marginal effects: the density plot shows the full posterior distribution of each slope. Their separation quantifies the evidence for moderation.
-:::
-
-```{r}
-#| label: fig-posterior-lines-interact
-#| echo: true
-#| code-fold: true
-#| fig-height: 3.5
-#| fig-cap: "Posterior regression line clouds by government ideology. Each line is one MCMC draw. The orange bundle (left governments) is visibly steeper than the blue bundle (right governments) — the posterior evidence for β₃ > 0."
-# as_draws_df: data frame with one row per MCMC draw, one column per parameter
-post_draws_m2 <- as_draws_df(fit_m2) |> slice_sample(n = 200)
-
-df_interact |>
-  ggplot(aes(x = unemployment, y = transfer_spend, color = government)) +
-  geom_abline(
-    data = post_draws_m2,
-    aes(intercept = b_Intercept, slope = b_unemployment),
-    color = col_1,
-    alpha = 0.05,
-    linewidth = 0.4
-  ) +
-  geom_abline(
-    data = post_draws_m2,
-    aes(
-      intercept = b_Intercept + b_left_gov,
-      slope = b_unemployment + `b_unemployment:left_gov`
-    ),
-    color = col_2,
-    alpha = 0.05,
-    linewidth = 0.4
-  ) +
-  geom_point(alpha = 0.5, size = 1.8) +
-  scale_color_manual(
-    values = c("Left" = col_2, "Right" = col_1),
-    name = "Government"
-  ) +
-  theme_bw() +
-  theme(panel.grid.minor = element_blank(), legend.position = "bottom") +
-  labs(
-    x = "Unemployment (%)",
-    y = "Transfer Spending (% GDP)",
-    title = "Posterior Line Clouds by Government Ideology",
-    subtitle = "200 MCMC draws per group — orange bundle (left) is steeper"
-  )
-```
-
----
-
-## Step 7 (continued): Posterior Conditional Marginal Effects {#sec-part4-step7b .smaller}
-
-::: notes
-- This is the key figure. Two density plots: one for the right-government slope, one for the left-government slope.
-- The right slope is concentrated around 0.3 (true β₁ = 0.3).
-- The left slope is concentrated around 1.2 (true β₁ + β₃ = 1.2).
-- The distributions barely overlap — strong posterior evidence that the slopes are different.
-- P(β₃ > 0 | data): near 1. Direct probability statement: "We are virtually certain the interaction effect is positive."
-- "This is the Bayesian advantage: we express our confidence in the moderation as a direct probability statement, not a p-value."
-:::
-
-```{r}
-#| label: fig-marginal-effects-interact
-#| echo: true
-#| code-fold: true
-#| fig-height: 3.4
-#| fig-cap: "Posterior distributions of the conditional marginal effect of unemployment on transfer spending, separately for right (left panel) and left (right panel) governments. Each distribution is computed by arithmetic on MCMC draws — no delta method required."
-# as_draws_df: one row per MCMC draw, one column per parameter — arithmetic gives posterior marginal effects
-post_all_m2 <- as_draws_df(fit_m2)
-
-me_df <- post_all_m2 |>
-  transmute(
-    `Right Government` = b_unemployment,
-    `Left Government` = b_unemployment + `b_unemployment:left_gov`
-  ) |>
-  pivot_longer(
-    everything(),
-    names_to = "government",
-    values_to = "marginal_effect"
-  ) |>
-  mutate(
-    government = factor(
-      government,
-      levels = c("Right Government", "Left Government")
-    )
-  )
-
-prob_b3_pos <- mean(post_all_m2$`b_unemployment:left_gov` > 0)
-
-me_df |>
-  ggplot(aes(x = marginal_effect, fill = government, color = government)) +
-  geom_density(alpha = 0.55, linewidth = 0.8) +
-  geom_vline(
-    xintercept = 0,
-    color = "gray40",
-    linetype = "dotted",
-    linewidth = 0.9
-  ) +
-  scale_fill_manual(
-    values = c("Right Government" = col_1, "Left Government" = col_2),
-    name = NULL
-  ) +
-  scale_color_manual(
-    values = c("Right Government" = col_1, "Left Government" = col_2),
-    name = NULL
-  ) +
-  annotate(
-    "text",
-    x = 1.7,
-    y = 1.2,
-    size = 3.5,
-    color = col_3,
-    label = paste0("P(beta3 > 0 | data) = ", round(prob_b3_pos, 3))
-  ) +
-  theme_bw() +
-  theme(panel.grid.minor = element_blank(), legend.position = "bottom") +
-  labs(
-    x = expression(partialdiff * mu / partialdiff ~ Unemployment),
-    y = "Posterior Density",
-    title = "Posterior Marginal Effects: Unemployment -> Transfer Spending",
-    subtitle = "Left slope ~1.2  |  Right slope ~0.3  |  Exact by arithmetic"
-  )
-```
-
----
-
-## Step 8: LOO-IC Model Comparison {#sec-part4-step8 .smaller}
-
-::: notes
-- loo_compare: the model listed first is the better one (higher elpd).
-- elpd_diff: the difference in expected log predictive density. Larger magnitude = more evidence for the winner.
-- When elpd_diff > 2*se_diff, the difference is substantial (rule of thumb, not a hard threshold).
-- M2 (interaction) should dominate M1 (no interaction) here — we generated the data with an interaction.
-- Key message: LOO-IC does not just tell us which model fits the SAMPLE better (that would always favour the more complex model). It estimates which model would predict NEW data better — penalising complexity implicitly.
-:::
-
-```{r}
-#| label: loo-interact
-#| echo: true
-fit_m1 <- add_criterion(fit_m1, "loo")
-fit_m2 <- add_criterion(fit_m2, "loo")
-loo_compare(fit_m1, fit_m2)
-```
-
-. . .
-
-::: {.callout-note style="font-size: 0.78em"}
-**Reading LOO-IC output**:
-
-- The model with the highest elpd (expected log predictive density) is listed first — this is the **better predictive model**.
-- `elpd_diff`: difference relative to the best model. The best model always shows `0.0`.
-- `se_diff`: standard error of the difference. When `|elpd_diff| > 2 × se_diff`, the evidence strongly favours the better model.
-- LOO-IC evaluates **out-of-sample predictive accuracy** — penalising over-fitted models. A complex model only "wins" if the interaction genuinely improves prediction on new data.
-:::
-
-. . .
-
-::: {.callout-important style="font-size: 0.72em"}
-**Limitations**: (1) The linear interaction assumes a constant slope *difference* across all unemployment levels — we should verify with a LOESS diagnostic. (2) Government-years within the same country are correlated (A5) — a multilevel structure (Week 12) would handle this. (3) Omitted confounders (economic openness, union density) may bias the ideology coefficient.
-:::
 
 # Summary {#sec-summary}
 
