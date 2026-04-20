@@ -287,8 +287,17 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#reference-materials" id="toc-reference-materials" class="nav-link active" data-scroll-target="#reference-materials">Reference Materials</a></li>
+  <li><a href="#substantive-example" id="toc-substantive-example" class="nav-link" data-scroll-target="#substantive-example">Substantive Example</a></li>
+  <li><a href="#homework-structure" id="toc-homework-structure" class="nav-link" data-scroll-target="#homework-structure">Homework Structure</a></li>
+  <li><a href="#style-and-formatting" id="toc-style-and-formatting" class="nav-link" data-scroll-target="#style-and-formatting">Style and Formatting</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/qmir-2026/qmir-2026.github.io/blob/main/prompt-canvas.md" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/qmir-2026/qmir-2026.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
@@ -297,24 +306,42 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<p>Improve this prompt for claude code:</p>
-<p>” Draft a plan to implement the following changes in the week 9 slide deck. Add your plan in <span class="citation" data-cites="week9.md">(<a href="#ref-week9.md" role="doc-biblioref"><strong>week9.md?</strong></a>)</span> the section week9.qmd changes plan in line 71.</p>
-<p>Although overall I am very satisfied with your work, I want some fundamental changes:</p>
-<p>I really want to have 4 blocks, 1 conceptual foundation and 1 application block, once for Control variables multivariate regression, once for interaction multivariate regression.</p>
-<p>Part I should cover all conceptual (and formalized) foundations and concepts that are new this week and necessary for students to understand what is happening. That is: DAG (as an analytical tool linking theory and empirical analysis), types of controls (based on DAGs), binary/categorical controls as shifting the intercept(s), continuous control variables to isolate association of variable of interest (avg. change holding others constant rationale), important takeaway: more control variables not always better, differing types of control variables, appropriateness depends on estimand and research context</p>
-<p>Part II then should demonstrate how this looks in action: now the substantive example (simulated) data comes in, a hypothetical research question, the workflow steps in action. Importantly, in this section the subsections should mirror the analysis workflow. My plan is to switch to the Editor in class and have them open the source too, so I run the code live and students can follow it. So the source code needs to be clean, commented and readable.</p>
-<p>Part III should cover all conceptual (and formalized) foundations and concepts that are new this week and necessary for students to understand what is happening. These are: What if the effect we are interested in (X on Y) depends on a third variable; Dummy/Categorical variables as drawing two/multiple lines with different slopes.</p>
-<p>Part IV should then reiterate the practical application with an example for conditional hypothesis, like for Part II I plan to switch to showing students the source code so they can run the code too. Here it is important to include in the the subsection on data distibution exploration the distribution of the outcome for all categories or across the range of continuous interaction variables</p>
-<p>Other things I would like you to change:</p>
-<ol type="1">
-<li><p>NO Causal framing throughout, I do not causal inference in class, just speak of associations among variables (occasionally one can mention that under these assumption the association can be interpreted as causal effect, but I want to teach them to speak of associations and relationships among variables, not causal effects)</p></li>
-<li><p>Do NOT use raw unicode codes like 3b2, rather use either latex expressions or some R / ggplot way to include beta symbols in figures for instance</p></li>
-<li><p>Do NOT do Bayesian / Frequentist comparisons, this is just confusing. We just focus on Bayes. as OLS for linear estimators is effectively the likelihood, all the “fitting a line” rhetoric still holds, only in the end we simulate 1000s of plausible lines and rank them according to their relative probability given the data.</p></li>
-</ol>
-<p>”</p>
-<p>Return the improved prompt as escaped source markdown</p>
+<p>Edit the files in <code>hw/w9/</code> (or create the folder if it does not exist) to draft a <code>hw-w09.qmd</code> (student-facing) and <code>hw-w09-solution.qmd</code> (instructor solution) for Week 9.</p>
+<section id="reference-materials" class="level2">
+<h2 class="anchored" data-anchor-id="reference-materials">Reference Materials</h2>
+<p>Before writing anything: - Read the existing homeworks in <code>hw/</code> carefully for formatting, style, tone, and structural conventions — match them precisely. - Read <code>slides/week9.qmd</code> Parts I and II only. The homework covers <strong>only</strong> the content from Part I (multivariate regression with control variables) and Part II (hands-on implementation, see also <code>lab/week9_lab.qmd</code>). Parts III and IV (interaction effects) were not covered this week and must not appear in the homework. - Read <code>CLAUDE.md</code> for all course-wide constraints and behavioral rules.</p>
+</section>
+<section id="substantive-example" class="level2">
+<h2 class="anchored" data-anchor-id="substantive-example">Substantive Example</h2>
+<p>Use the following synthetic example throughout:</p>
+<ul>
+<li><strong>Outcome:</strong> income</li>
+<li><strong>Main predictor:</strong> education</li>
+<li><strong>Control variable:</strong> gender (binary: 0/1 or factor)</li>
+</ul>
+<p>Design the synthetic data so that the <strong>bivariate</strong> regression of income on education yields a <strong>negative</strong> (or near-zero) coefficient — the so-called Simpson’s Paradox or omitted variable confounding. When gender is included as a control, the <strong>true positive</strong> relationship between education and income is recovered. This is the core pedagogical point students should discover through their own analysis.</p>
+<p>Generate the synthetic data in a clearly labeled setup chunk at the top of <code>hw-w09-solution.qmd</code> and write it to <code>data/income_education.csv</code>. The student-facing <code>hw-w09.qmd</code> loads the <code>.csv</code> directly — no data generation code there.</p>
+</section>
+<section id="homework-structure" class="level2">
+<h2 class="anchored" data-anchor-id="homework-structure">Homework Structure</h2>
+<p>Organize both files around section headers that mirror the <strong>full empirical workflow</strong> practiced in the lab (Part II) and expected in the take-home exam. Use the lab and exam grading criteria as a checklist for which steps to include. The section headers themselves serve as the scaffolding — do <strong>not</strong> provide extensive hints, helper code, or templates within sections.</p>
+<p>Concretely, the homework should walk students through: 1. Exploring and describing the data (numerically and graphically) 2. Stating the estimand of interest 3. Formulating the statistical model (formal notation, DGP assumptions) 4. Specifying and justifying priors 5. Fitting the model in <code>brms</code> 6. Interpreting and visualizing model output 7. Reporting a substantive conclusion in plain language</p>
+<p>In <code>hw/w9/hw-w09.qmd</code> you shall prepare the work sheet for students. Prepare the section with section headers, but (for the students worksheet) do not fill in anything, no prose, no code, no nothing</p>
+<p>Then create a new file <code>hw-w09-solution.qmd</code>, where you enter a template example solution.</p>
+</section>
+<section id="style-and-formatting" class="level2">
+<h2 class="anchored" data-anchor-id="style-and-formatting">Style and Formatting</h2>
+<ul>
+<li>Self-contained folder: no references to other project files outside <code>hw/w9/</code></li>
+<li>Bayesian framing throughout — no frequentist language, no p-values, no null hypothesis testing</li>
+<li>Associational language only — no causal claims</li>
+<li>LaTeX for all math — no raw Unicode math symbols</li>
+<li>Student file: minimal scaffolding, section headers only, exercise prompts are concise</li>
+<li>Solution file: full working code and prose; demonstrates the Simpson’s Paradox reveal explicitly</li>
+</ul>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -739,7 +766,7 @@ Licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-N
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://github.com/qmir-2026/qmir-2026.github.io/blob/main/prompt-canvas.md" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/qmir-2026/qmir-2026.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/qmir-2026/qmir-2026.github.io/blob/main/prompt-canvas.md" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/qmir-2026/qmir-2026.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>Made with ♥ and <a href="https://quarto.org/">Quarto</a></p>
 </div>
