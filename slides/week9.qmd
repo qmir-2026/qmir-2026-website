@@ -25,7 +25,7 @@ execute:
   cache: true
 ---
 
-```{r}
+```{r,  message = NA}
 #| label: setup
 #| include: false
 #| eval: true
@@ -92,63 +92,51 @@ draw_dag <- function(
 }
 
 # ─────────────────────────────────────────────────────────────────────────────
-# DATASET 1: Women in Parliament → Health Spending
-# Story: Does legislative representation of women increase public health
-#        expenditure? GDP per capita confounds the relationship.
-# Variable `reg_type` stores regime type (1 = parliamentary, 0 = presidential)
+# UNIFIED DATASET: Women in Parliament → Health Spending (moderated by regime type)
+#
+# Research question: Is the share of female legislators associated with higher
+# public health expenditure — and does this association differ between
+# presidential and parliamentary systems?
 #
 # True DGP:
 #   gdp_pc       ~ Normal(18, 7)           [thousands USD, PPP]
-#   women_parl   = 15 + 0.9*gdp_pc + N(0,5)   [% seats, before any clip]
-#   reg_type     ~ Bernoulli(0.55)             [1 = parliamentary, 0 = presidential]
-#   health_spend = 2 + 0.2*gdp_pc + 0.12*women_parl
-#                  + 1.2*reg_type + N(0,1.5)  [% GDP]
+#   women_parl   = 15 + 0.9*gdp_pc + N(0, 5)
+#   reg_type     ~ Bernoulli(0.55)         [1 = parliamentary, 0 = presidential]
+#   health_spend = 2 +
+#     0.2  * gdp_pc       +   [GDP per capita effect]
+#     0.08 * women_parl   +   [baseline women effect, presidential systems]
+#     1.5  * reg_type     +   [parliamentary intercept shift]
+#     0.10 * women_parl * reg_type +   [stronger women slope in parliamentary]
+#     N(0, 1.5)
 #
-# Estimands: α, β_women=0.12, β_gdp=0.20, β_reg=1.2, σ=1.5
-# Bivariate regression will over-estimate β_women (true DGP coefficient) because
-# GDP drives both variables — classic confounding.
-# reg_type shifts the intercept: parliamentary systems spend ~1.2 pp more on
-# health on average, holding gdp_pc and women_parl constant (dummy variable).
+# Women in parliament slope:
+#   Presidential (reg_type = 0): β_women = 0.08
+#   Parliamentary (reg_type = 1): β_women = 0.08 + 0.10 = 0.18
 # ─────────────────────────────────────────────────────────────────────────────
 set.seed(2026)
-n1 <- 120
+n <- 120
 
-gdp_pc     <- rnorm(n1, mean = 18, sd = 7)
-women_parl <- 15 + 0.9 * gdp_pc + rnorm(n1, 0, 5)
-reg_type   <- rbinom(n1, 1, prob = 0.55)           # 1 = parliamentary
+gdp_pc <- rnorm(n, mean = 18, sd = 7)
+women_parl <- 15 + 0.9 * gdp_pc + rnorm(n, 0, 5)
+reg_type <- rbinom(n, 1, prob = 0.55) # 1 = parliamentary, 0 = presidential
 health_spend <- 2 +
-  0.2  * gdp_pc +
-  0.12 * women_parl +
-  1.2  * reg_type +
-  rnorm(n1, 0, 1.5)
+  0.2 * gdp_pc +
+  0.08 * women_parl +
+  1.5 * reg_type +
+  0.10 * women_parl * reg_type +
+  rnorm(n, 0, 1.5)
 
-df_controls <- tibble(gdp_pc, women_parl, reg_type, health_spend) |>
+df <- tibble(gdp_pc, women_parl, reg_type, health_spend) |>
   mutate(system = if_else(reg_type == 1, "Parliamentary", "Presidential"))
 
-# Pre-fit bivariate brms model — available for Step 2 OVB comparison and LOO
-fit_controls_biv <- brm(
-  health_spend ~ women_parl, # outcome ~ main predictor only
-  data = df_controls,
+# Pre-fit bivariate model — used in Part II OVB comparison
+fit_biv <- brm(
+  health_spend ~ women_parl,
+  data = df,
   prior = c(
-    prior(normal(10, 5), class = "Intercept"), # baseline spending ~10% GDP
-    prior(normal(0, 2), class = "b"), # weakly informative prior on slope
-    prior(exponential(1), class = "sigma") # residual SD almost certainly < 5
-  ),
-  chains = 4, # four independent chains
-  iter = 2000, # 1000 warmup + 1000 sampling per chain
-  warmup = 1000,
-  seed = 2026 # reproducibility
-)
-
-# Pre-fit multivariate brms model — available for Step 2 OVB comparison
-fit_controls <- brm(
-  health_spend ~ women_parl + gdp_pc, # outcome ~ main predictor + control
-  data = df_controls,
-  prior = c(
-    prior(normal(10, 5), class = "Intercept"), # baseline spending ~10% GDP
-    prior(normal(0, 2), class = "b", coef = "women_parl"), # weakly informative prior
-    prior(normal(0, 2), class = "b", coef = "gdp_pc"), # weakly informative prior
-    prior(exponential(1), class = "sigma") # residual SD almost certainly < 5
+    prior(normal(10, 5), class = "Intercept"), # baseline ~10% GDP
+    prior(normal(0, 2), class = "b"), # weakly informative slope
+    prior(exponential(1), class = "sigma") # residual SD < 5 almost certainly
   ),
   chains = 4,
   iter = 2000,
@@ -156,33 +144,40 @@ fit_controls <- brm(
   seed = 2026
 )
 
-# ─────────────────────────────────────────────────────────────────────────────
-# DATASET 2: Unemployment × Government Ideology → Transfer Spending
-# Story: Partisan theory of the welfare state — left governments respond
-#        more aggressively to unemployment by raising transfer spending.
-#
-# True DGP:
-#   unemployment   ~ Normal(7.5, 2.5)          [% labour force]
-#   left_gov       ~ Bernoulli(0.5)             [0 = right, 1 = left]
-#   transfer_spend = 10 + 0.3*unemp + 2*left
-#                    + 0.9*(unemp*left) + N(0, 2.5)   [% GDP]
-#
-# Slope for right (left=0): 0.3  |  Slope for left (left=1): 0.3+0.9 = 1.2
-# Intercept for right: 10        |  Intercept for left:       10+2   = 12
-# ─────────────────────────────────────────────────────────────────────────────
-set.seed(42)
-n2 <- 150
+# Pre-fit additive multivariate model — used in Parts II and IV (LOO comparison baseline)
+fit_multi <- brm(
+  health_spend ~ women_parl + gdp_pc + reg_type,
+  data = df,
+  prior = c(
+    prior(normal(10, 5), class = "Intercept"),
+    prior(normal(0, 2), class = "b", coef = "women_parl"), # weakly informative
+    prior(normal(0, 2), class = "b", coef = "gdp_pc"), # weakly informative
+    prior(normal(0, 2), class = "b", coef = "reg_type"), # parliamentary intercept shift
+    prior(exponential(1), class = "sigma")
+  ),
+  chains = 4,
+  iter = 2000,
+  warmup = 1000,
+  seed = 2026
+)
 
-unemployment <- rnorm(n2, mean = 7.5, sd = 2.5)
-left_gov <- rbinom(n2, 1, prob = 0.5)
-transfer_spend <- 10 +
-  0.3 * unemployment +
-  2 * left_gov +
-  0.9 * unemployment * left_gov +
-  rnorm(n2, 0, 2.5)
-
-df_interact <- tibble(unemployment, left_gov, transfer_spend) |>
-  mutate(government = if_else(left_gov == 1, "Left", "Right"))
+# Pre-fit interaction model — used in Part IV
+fit_interact <- brm(
+  health_spend ~ women_parl * reg_type + gdp_pc,
+  data = df,
+  prior = c(
+    prior(normal(10, 5), class = "Intercept"),
+    prior(normal(0, 2), class = "b", coef = "women_parl"), # presidential slope
+    prior(normal(0, 2), class = "b", coef = "reg_type"), # parliamentary shift
+    prior(normal(0, 2), class = "b", coef = "gdp_pc"), # GDP partial effect
+    prior(normal(0, 2), class = "b", coef = "women_parl:reg_type"), # slope difference
+    prior(exponential(1), class = "sigma")
+  ),
+  chains = 4,
+  iter = 2000,
+  warmup = 1000,
+  seed = 2026
+)
 ```
 
 ## QMIR 2026 {#sec-title}
@@ -190,8 +185,9 @@ df_interact <- tibble(unemployment, left_gov, transfer_spend) |>
 ::: notes
 - Opening. Take-home exam details have just been covered (separate 10-minute block). Now: the main session.
 - Arc: formal overview of control variables → live application → formal overview of interactions → live application → canonical workflow recap.
-- The two research questions are connected to real political science literatures, but the data are synthetic and the DGP is known. Emphasize that this is pedagogically deliberate: we know the truth and check whether our models recover it.
-- Both stories will recur in the homework and take-home exam.
+- The research question runs as a single substantive story throughout all four parts: we start with a simple bivariate question, add controls (GDP and regime type), then ask whether regime type moderates the legislative-representation association.
+- The data are synthetic and the DGP is known. Emphasize that this is pedagogically deliberate: we know the truth and check whether our models recover it.
+- The unified story will recur in the homework and take-home exam.
 :::
 
 ### Week 9: Multivariate Regression and Interactions
@@ -249,8 +245,8 @@ By the end of today, you should be able to:
 1. Explain **omitted variable bias (OVB)** formally and use a **DAG** to classify control variables as confounders, mediators, or colliders
 2. Extend the Bayesian regression model to **multiple predictors** and interpret each coefficient as a partial effect
 3. Handle **categorical predictors** using dummy (indicator) variables
-4. Specify a **multiplicative interaction model** and interpret conditional marginal effects formally
-5. Extract **posterior marginal effects** from a `brms` interaction model — correctly, without a delta method approximation
+4. Specify a **multiplicative interaction model** and interpret the conditional marginal effect of `women_parl` as a function of `reg_type` (the moderator)
+5. Extract **posterior marginal effects** for the women-in-parliament–health-spending association separately for presidential and parliamentary systems
 6. Compare competing models using **Bayesian leave-one-out cross-validation** (LOO-IC)
 
 # Part I: Control Variables {#sec-part1}
@@ -261,10 +257,11 @@ By the end of today, you should be able to:
 - Frame the substantive debate before introducing any methods. Students should care about the answer before they learn how to find it.
 - This is a real empirical debate in comparative politics (Bolzendahl & Brooks 2007, Bratton & Ray 2002, Swers 2002). The synthetic data mimics its structure.
 - Key tension: wealthier countries simultaneously have more women in parliament AND spend more on health. Without controlling for wealth, we cannot isolate the legislative representation effect.
-- Transition: "The challenge is separating the legislative effect from the wealth effect. That is what control variables are for."
+- Second layer: parliamentary systems concentrate budget authority in the legislature, so the composition of parliament may matter more for spending outcomes there than in presidential systems (which divide power across branches).
+- Transition: "We start with the simpler question in Parts I–II, then ask whether regime type moderates the relationship in Parts III–IV."
 :::
 
-> **Is the share of women in parliament associated with higher public health expenditure?**
+> **Is the share of women in parliament associated with higher public health expenditure — and does this association differ between presidential and parliamentary systems?**
 
 . . .
 
@@ -275,12 +272,10 @@ By the end of today, you should be able to:
 :::::: columns
 ::: {.column width="55%" style="font-size: 0.8em"}
 
-**The empirical problem**: Wealthier democracies simultaneously have:
+**Two empirical complications**:
 
-- More women in parliament (greater gender equality in politics)
-- Higher health spending (larger government capacity)
-
-A simple bivariate analysis will conflate **the association attributed to legislative representation** with **the association attributed to wealth**.
+1. Wealthier democracies simultaneously have more women in parliament *and* higher health spending — **confounding** by GDP.
+2. Parliamentary systems concentrate budget authority in the legislature; presidential systems divide power across branches. The legislative composition may matter *more* in parliamentary systems.
 
 :::
 
@@ -291,9 +286,10 @@ A simple bivariate analysis will conflate **the association attributed to legisl
 
 - $X$ = Women in parliament (%)
 - $Z$ = GDP per capita (thousands USD, PPP) — the **confounder**
+- $D$ = Regime type (1 = parliamentary, 0 = presidential)
 - $Y$ = Public health expenditure (% GDP)
 
-True DGP coefficient for $X$: $\beta_X = 0.12$
+True DGP slope (presidential): $\beta_X = 0.08$; (parliamentary): $0.18$
 :::
 
 :::
@@ -361,13 +357,14 @@ graph LR
   GDP["GDP per Capita"] --> WP["Women in Parliament (%)"]
   GDP --> HS["Health Spending (% GDP)"]
   WP --> HS
+  RT["Regime Type"] --> HS
 ```
 
 ::: {style="font-size: 0.82em"}
 Use a fenced `{mermaid}` block with `graph LR` (left-to-right) or `graph TD` (top-down).
 Node labels go in `["quoted text"]`; arrows are `-->`.
-This is enough for a homework submission or a quick theoretical sketch.
-The polished ggplot DAGs in these slides use the `draw_dag()` helper defined in the setup chunk.
+**Note**: MermaidJS draws direct effects only — the moderation arrow (regime type moderates the WP → HS slope) cannot be represented as a standard edge here.
+The polished ggplot DAGs in these slides use the `draw_dag()` helper defined in the setup chunk, where a dashed annotation marks the moderation.
 
 [Quarto Diagrams Documentation](https://quarto.org/docs/authoring/diagrams.html#overview)
 :::
@@ -386,27 +383,49 @@ The polished ggplot DAGs in these slides use the `draw_dag()` helper defined in 
 ```{r}
 #| label: fig-dag-our-rq
 #| echo: false
-#| fig-height: 3.4
+#| fig-height: 3.6
 #| dpi: 500
-#| fig-cap: "DAG for our research question. The back-door path from Women in Parliament to Health Spending runs through GDP per capita (a confounder). We close this path by conditioning on GDP per capita."
+#| fig-cap: "DAG for our research question. GDP per capita is a confounder (back-door path). Regime type shifts the baseline level of health spending and moderates the Women in Parliament → Health Spending association (dashed annotation)."
 nodes_main <- tibble(
-  x = c(1.1, 3.2, 2.15),
-  y = c(1.1, 1.1, 2.7),
-  label = c("Women\nin Parl. (%)", "Health\nSpending", "GDP\nper Capita")
+  x = c(1.1, 3.2, 2.15, 2.15),
+  y = c(1.5, 1.5, 2.8, 0.4),
+  label = c(
+    "Women\nin Parl. (%)",
+    "Health\nSpending",
+    "GDP\nper Capita",
+    "Regime\nType"
+  )
 )
 edges_main <- tibble(
-  x = c(1.95, 2.35, 1.58),
-  y = c(2.42, 2.42, 1.1),
-  xend = c(1.3, 3.05, 2.72),
-  yend = c(1.35, 1.35, 1.1)
+  x = c(1.95, 2.35, 1.60, 2.48),
+  y = c(2.52, 2.52, 1.5, 0.63),
+  xend = c(1.28, 3.02, 2.70, 3.02),
+  yend = c(1.75, 1.75, 1.5, 1.32)
 )
 
-draw_dag(nodes_main, edges_main, xlim = c(0.4, 3.9), ylim = c(0.6, 3.2)) +
+draw_dag(nodes_main, edges_main, xlim = c(0.3, 3.9), ylim = c(0.1, 3.2)) +
+  # dashed segment: Regime Type ↑ to WP→HS midpoint — indicates moderation
+  geom_segment(
+    aes(x = 2.15, y = 0.63, xend = 2.15, yend = 1.42),
+    linetype = "dashed",
+    colour = col_3,
+    linewidth = 0.7,
+    arrow = arrow(length = unit(0.15, "cm"), type = "open")
+  ) +
+  annotate(
+    "text",
+    x = 2.52,
+    y = 1.0,
+    size = 3.0,
+    colour = col_3,
+    label = "moderates",
+    fontface = "italic"
+  ) +
   annotate(
     "text",
     x = 2.15,
-    y = 0.68,
-    size = 3.5,
+    y = 0.07,
+    size = 3.2,
     colour = col_2,
     label = "Back-door path (GDP): closed by controlling for GDP per capita",
     fontface = "italic"
@@ -417,8 +436,8 @@ draw_dag(nodes_main, edges_main, xlim = c(0.4, 3.9), ylim = c(0.6, 3.2)) +
 
 ::: {style="font-size: 0.85em"}
 **Reading the DAG**: GDP per capita is a **confounder** — it influences both $X$ (Women in Parliament) and $Y$ (Health Spending).
-Omitting it will inflate our estimate of the $X \rightarrow Y$ association.
-Controlling for it closes the back-door path.
+Regime type has a **direct effect** on health spending (intercept shift) and **moderates** the $X \rightarrow Y$ slope (dashed annotation).
+We close the GDP back-door path by conditioning on it; regime type enters both as a control and as a moderator.
 :::
 
 ---
@@ -673,7 +692,7 @@ $$ {#eq-multi-posterior}
 - K-1 rule: for K categories, we need K-1 dummies. The omitted category is the "reference baseline" — its effect is absorbed into the intercept.
 - Why K-1 and not K? Perfect multicollinearity. If we included a dummy for every category, their values would sum to 1 (a constant), creating perfect collinearity with the intercept. The design matrix would be singular.
 - brms handles dummies automatically: include the character/factor variable, and brms creates the K-1 dummies internally, choosing the first alphabetical level as the reference.
-- Preview: "We'll use a binary dummy (left vs. right government) in the second application. It generalizes directly to 3+ categories."
+- Preview: "We'll use a binary dummy (parliamentary vs. presidential) throughout — as an intercept control in Part II and as the moderator in Part IV. It generalizes directly to 3+ categories."
 :::
 
 ::: {style="font-size: 0.72em"}
@@ -715,10 +734,10 @@ The dummy shifts the **intercept** — it gives the $D = 1$ group a different ba
 ## Dummy Variables: The Shifting Intercept {#sec-dummies-visual .smaller}
 
 ::: notes
-- This is the key visual intuition. Both lines have the same slope (unemployment effect is the same for both groups), but the Left government line sits higher — that vertical gap is β_D.
+- This is the key visual intuition. Both lines have the same slope (women-in-parliament effect on health spending is the same for both systems), but the parliamentary line sits higher — that vertical gap is β_D.
 - Ask students: "Where is β_D in this plot? Can you estimate it visually?"
-- Deliberately use the df_interact data here — the same dataset students will work with in Part IV — so the visual is immediately connected to the application.
-- True DGP: intercept shift for Left = 2, slope difference = 0.9 (but that is the interaction, covered in Parts III–IV). Here we show only the intercept-shift logic.
+- Deliberately use the same `df` dataset students will work with throughout — so the visual is immediately connected to the full application.
+- True DGP: intercept shift for parliamentary = 1.5, slope difference = 0.10 (but that is the interaction, covered in Parts III–IV). Here we show only the intercept-shift logic.
 :::
 
 ```{r}
@@ -730,13 +749,13 @@ The dummy shifts the **intercept** — it gives the $D = 1$ group a different ba
 # Additive model (no interaction) to illustrate the intercept-shift
 fit_dummy_demo <- lm(
   health_spend ~ women_parl + reg_type,
-  data = df_controls
+  data = df
 )
 
 # Predicted lines for each regime type across the range of women_parl
 x_grid <- seq(
-  min(df_controls$women_parl),
-  max(df_controls$women_parl),
+  min(df$women_parl),
+  max(df$women_parl),
   length.out = 80
 )
 
@@ -763,7 +782,7 @@ y_parl <- predict(
   newdata = tibble(women_parl = x_ann, reg_type = 1)
 )
 
-df_controls |>
+df |>
   ggplot(aes(x = women_parl, y = health_spend, colour = system)) +
   geom_point(alpha = 0.45, size = 1.8) +
   geom_line(
@@ -791,7 +810,9 @@ df_controls |>
     colour = "gray20",
     fontface = "bold"
   ) +
-  scale_colour_manual(values = c("Parliamentary" = col_1, "Presidential" = col_2)) +
+  scale_colour_manual(
+    values = c("Parliamentary" = col_1, "Presidential" = col_2)
+  ) +
   theme_bw() +
   theme(panel.grid.minor = element_blank()) +
   labs(
@@ -812,29 +833,36 @@ df_controls |>
 - Foreshadow: "When we get to logistic regression in Week 11, the derivative ∂μ/∂X depends on the value of X itself. We will always average over the data to get a single interpretable number."
 :::
 
+::: {style="font-size: 0.72em"}
 In a multivariate model, the **effect of $X$ on $Y$** depends on what we hold constant.
+:::
 
 . . .
 
+::: {style="font-size: 0.72em"}
 The **Average Marginal Effect (AME)** of $X$ is:
 
 $$
 \text{AME}(X) = \frac{1}{n} \sum_{i=1}^{n} \frac{\partial \hat{\mu}_i}{\partial X_i}
 $$ {#eq-ame}
+:::
 
 . . .
 
+::: {style="font-size: 0.72em"}
 **In the additive linear model**, $\partial \hat{\mu}_i / \partial X_i = \beta_X$ for every observation — so the AME collapses to the coefficient itself:
 
 $$
 \text{AME}(X) = \beta_X \qquad \text{(additive linear model only)}
 $$ {#eq-ame-linear}
+:::
 
 . . .
 
 :::::: columns
 ::: {.column width="55%"}
 
+::: {style="font-size: 0.72em"}
 **Why bother defining it?**
 
 The AME concept generalises. As soon as the model has:
@@ -843,6 +871,7 @@ The AME concept generalises. As soon as the model has:
 - a **non-linear link function** (logistic regression, Week 11)
 
 ... the partial derivative $\partial \hat{\mu}_i / \partial X_i$ varies across observations, and we *must* average to get a single interpretable number.
+:::
 
 :::
 
@@ -860,7 +889,7 @@ This is the `posterior_epred` averaging workflow used in Parts II and IV.
 
 ---
 
-## Prior Specification for Multivariate Models {#sec-priors-multi .smaller}
+## Prior Specification {#sec-priors-multi .smaller}
 
 ::: notes
 - The key message: adding more predictors does not change the prior philosophy. Each coefficient needs its own prior, sized to reflect plausible effect magnitudes.
@@ -869,31 +898,37 @@ This is the `posterior_epred` averaging workflow used in Parts II and IV.
 - σ prior: Exponential(1) implies P(σ < 5) ≈ 0.99 — very likely the residual SD is under 5pp of GDP. Substantively justified.
 :::
 
-For our health spending model, we need priors for **four** parameters:
-
+::: {style="font-size: 0.72em"}
+For our health spending model, we need priors for **five** parameters:
+:::
 . . .
 
 :::::: columns
-::: {.column width="50%"}
+::: {.column width="50%" style="font-size: 0.72em"}
 
 $$
 \alpha \sim \text{Normal}(10, 5)
 $$ {#eq-prior-alpha-health}
-*"Baseline spending ~10% GDP when $X = Z = 0$; very uncertain"*
+*"Baseline spending ~10% GDP when $X = Z = D = 0$; very uncertain"*
 
 $$
 \beta_X \sim \text{Normal}(0, 2)
 $$ {#eq-prior-bx-health}
 *"Per % women in parliament, change in spending probably between $\pm 6$ pp"*
 
-:::
-
-::: {.column width="50%"}
-
 $$
 \beta_Z \sim \text{Normal}(0, 2)
 $$ {#eq-prior-bz-health}
 *"Per \$1k of GDP per capita, change in spending probably between $\pm 6$ pp"*
+
+:::
+
+::: {.column width="50%" style="font-size: 0.72em"}
+
+$$
+\beta_D \sim \text{Normal}(0, 2)
+$$ {#eq-prior-bd-health}
+*"Parliamentary systems may spend 1–2 pp more or less on health than presidential ones, holding other variables constant"*
 
 $$
 \sigma \sim \text{Exponential}(1)
@@ -906,7 +941,7 @@ $$ {#eq-prior-sigma-health}
 . . .
 
 ::: {.callout-important style="font-size: 0.72em"}
-**Priors must be calibrated to the scale of the outcome and predictors**. A prior of $\beta \sim \text{Normal}(0, 100)$ on a percentage-point outcome is nearly flat (uninformative and implausible). A prior of $\text{Normal}(0, 2)$ for the women-in-parliament coefficient is a defensible weakly informative choice: it says effects larger than $\pm 6$ pp per % women are unlikely a priori, while leaving the data free to update across a wide and substantively plausible range.
+**Priors must be calibrated to the scale of the outcome and predictors**. A prior of $\beta \sim \text{Normal}(0, 100)$ on a percentage-point outcome is nearly flat (uninformative and implausible). A prior of $\text{Normal}(0, 2)$ for the women-in-parliament and regime-type coefficients is a defensible weakly informative choice: it says effects larger than $\pm 6$ pp are unlikely a priori, while leaving the data free to update across a wide and substantively plausible range. Priors are philosophical commitments, not computational defaults — $\beta_D \sim \text{Normal}(0, 2)$ says we have no strong prior belief about which system type spends more.
 :::
 
 # Part II: Application I — Multivariate `brms` Model {#sec-part2}
@@ -914,6 +949,8 @@ $$ {#eq-prior-sigma-health}
 ## Part II: Applied — Live Coding {#sec-part2-live}
 
 *→ Switch to Positron. Follow along in `lab/week9_lab.qmd`.*
+
+In this application we fit the multivariate model `health_spend ~ women_parl + gdp_pc + reg_type` on `df`, compare it against the bivariate model via LOO-IC, and visualise omitted variable bias. The interaction (Part IV) extends this by asking whether `reg_type` moderates the `women_parl` slope.
 
 ---
 
@@ -923,38 +960,38 @@ $$ {#eq-prior-sigma-health}
 
 ::: notes
 - The key insight: not all associations are the same everywhere. The association between X and Y may depend on a third variable Z.
-- Real political science example: the association between economic crisis and democratic backsliding may depend on institutional strength. In weak institutions, crises are associated with democratic breakdown; in strong ones, less so.
-- Today's story: the association between unemployment and welfare spending depends on government ideology. Left governments respond more aggressively; right governments do not.
+- Real political science logic: parliamentary systems concentrate budget authority in the legislature (budget sovereignty, party discipline). Presidential systems divide power across branches (executive vs legislature). So the composition of parliament — how many women — may matter more for spending outcomes in parliamentary systems.
 - "A model without an interaction term is implicitly assuming the slope is constant across all levels of Z. That is a strong assumption. Test it before imposing it."
+- Transition: "We already have this dataset. We already have regime type. We just need to ask a different question of the same data."
 :::
 
-> **Does the association between unemployment and welfare spending vary by government ideology?**
+> **Does the association between female legislator share and health spending vary by regime type?**
 
 . . .
 
-**Partisan theory of the welfare state**: left-wing governments use social spending as a counter-cyclical tool — when unemployment rises, they increase transfers. Right-wing governments are more restrained, fearing fiscal imbalance and moral hazard.
+**Legislative composition theory**: parliamentary systems concentrate budget authority in the legislature — party discipline is stronger, and the budget process is rooted in parliamentary sovereignty. Presidential systems divide power across branches, potentially weakening the translation of legislative preferences into policy.
 
 . . .
 
 :::::: columns
 ::: {.column width="55%"}
 
-The association between $X$ (unemployment) and $Y$ (transfer spending) is **not constant** — it changes depending on $Z$ (government ideology). This is called **moderation** or **association heterogeneity**.
+The association between $X$ (women in parliament) and $Y$ (health spending) is **not constant** — it may change depending on $Z$ (regime type). This is called **moderation** or **association heterogeneity**.
 
-> "The slope of the unemployment–spending relationship is steeper under left governments."
+> "The slope of the women-in-parliament–health-spending association is steeper in parliamentary systems."
 
 :::
 
 ::: {.column width="45%"}
 
 ::: {.callout-note style="font-size: 0.75em"}
-**Synthetic dataset**: $n = 150$ government-years.
+**Same dataset as Parts I–II**: $n = 120$ country-years.
 
-- $X$ = Unemployment rate (%)
-- $Z$ = Left government (0/1 dummy)
-- $Y$ = Transfer spending (% GDP)
+- $X$ = Women in parliament (%)
+- $Z$ = Regime type (0 = presidential, 1 = parliamentary)
+- $Y$ = Health spending (% GDP)
 
-True slopes: Right = **0.3**, Left = **0.3 + 0.9 = 1.2**
+True slopes: Presidential = **0.08**, Parliamentary = **0.08 + 0.10 = 0.18**
 :::
 
 :::
@@ -966,9 +1003,9 @@ True slopes: Right = **0.3**, Left = **0.3 + 0.9 = 1.2**
 
 ::: notes
 - Walk through the partial derivatives carefully.
-- ∂μ/∂X = β₁ + β₃Z: "The slope of X on Y is a linear function of Z. When Z = 0 (right government), the slope is β₁. When Z = 1 (left government), the slope is β₁ + β₃."
-- ∂μ/∂Z = β₂ + β₃X: "The 'effect' of Z on Y also depends on X. At zero unemployment, being a left government adds β₂ to spending. At 10% unemployment, it adds β₂ + 10β₃."
-- Constitutive terms: "β₁ and β₂ are the conditional effects when the other modifier equals zero. They must be included. Omitting β₁ imposes β₁ = 0 — usually wrong."
+- ∂μ/∂X = β₁ + β₃Z: "The slope of X (women in parliament) on Y (health spending) is a linear function of Z (regime type). When Z = 0 (presidential), the slope is β₁ = 0.08. When Z = 1 (parliamentary), the slope is β₁ + β₃ = 0.18."
+- ∂μ/∂Z = β₂ + β₃X: "The regime-type gap in spending also depends on X. At zero women in parliament, being parliamentary adds β₂ = 1.5 pp. At 30% women, it adds β₂ + 30β₃."
+- Constitutive terms: "β₁ and β₂ are the conditional associations when the other modifier equals zero. They must be included. Omitting β₁ imposes β₁ = 0 — usually wrong."
 :::
 
 We augment the linear predictor with a **product term**:
@@ -982,11 +1019,11 @@ $$ {#eq-interact-model}
 **Conditional marginal effects** — both slopes are now *functions* of the other variable:
 
 $$
-\frac{\partial \mu}{\partial X} = \beta_1 + \beta_3 Z \qquad \text{(unemployment slope depends on ideology)}
+\frac{\partial \mu}{\partial X} = \beta_1 + \beta_3 Z \qquad \text{(women-in-parliament slope depends on regime type)}
 $$ {#eq-interact-me-x}
 
 $$
-\frac{\partial \mu}{\partial Z} = \beta_2 + \beta_3 X \qquad \text{(ideology gap depends on unemployment level)}
+\frac{\partial \mu}{\partial Z} = \beta_2 + \beta_3 X \qquad \text{(regime-type gap depends on women-in-parliament level)}
 $$ {#eq-interact-me-z}
 
 . . .
@@ -994,12 +1031,12 @@ $$ {#eq-interact-me-z}
 **Two regression lines** (when $Z$ is binary):
 
 ::: {style="font-size: 0.82em"}
-$Z = 0$ (right): $\mu = \alpha + \beta_1 X$
+$Z = 0$ (presidential): $\mu = \alpha + \beta_1 X + \beta_Z \cdot \text{GDP}$
 
-$Z = 1$ (left): $\mu = (\alpha + \beta_2) + (\beta_1 + \beta_3) X$
+$Z = 1$ (parliamentary): $\mu = (\alpha + \beta_2) + (\beta_1 + \beta_3) X + \beta_Z \cdot \text{GDP}$
 :::
 
-The dummy shifts the **intercept** by $\beta_2$; the product shifts the **slope** by $\beta_3$.
+The dummy shifts the **intercept** by $\beta_2$; the product shifts the **slope** of women in parliament by $\beta_3$.
 
 ---
 
@@ -1025,11 +1062,12 @@ The resulting $\{\text{ME}^{(s)}\}_{s=1}^S$ **is** the posterior distribution of
 ```{r}
 #| eval: false
 # as_draws_df: one row per MCMC draw, one column per parameter
-post <- as_draws_df(fit)
+post <- as_draws_df(fit_interact)
 post |>
   mutate(
-    me_left = b_unemployment + # marginal effect at Z = 1 (left gov.)
-      `b_unemployment:left_gov`
+    me_parliamentary = b_women_parl + # marginal effect at Z = 1 (parliamentary)
+      `b_women_parl:reg_type`,
+    me_presidential = b_women_parl # marginal effect at Z = 0 (presidential)
   )
 ```
 
@@ -1186,22 +1224,22 @@ expand_grid(
 
 ::: notes
 - Common support: we need sufficient variation in X within each level of Z. If X only takes high values when Z=0 and low values when Z=1, we are extrapolating, not estimating.
-- "We cannot estimate the slope under left governments at unemployment = 2% if no left governments in our data experienced 2% unemployment. The model will extrapolate — and extrapolation is unreliable."
-- Diagnostic: density/histogram of X, faceted by Z. If the distributions overlap substantially, we have common support. If they are disjoint, we are in trouble.
-- For today's binary Z case: the setup uses rbinom(n, 1, 0.5) so left and right governments are evenly split. Both groups see the full range of unemployment. Common support is satisfied by design.
+- "We cannot estimate the slope for parliamentary systems at 5% women in parliament if no parliamentary country in our data has 5% women. The model will extrapolate — and extrapolation is unreliable."
+- Diagnostic: density/histogram of women_parl, faceted by regime type. If the distributions overlap substantially, we have common support. If they are disjoint, we are in trouble.
+- For today's binary Z case: the setup uses rbinom(n, 1, 0.55) so parliamentary and presidential systems are roughly evenly split. Both groups see the full range of women_parl. Common support is satisfied by design.
 :::
 
-**Common support**: the estimation of conditional marginal effects is credible only where the predictor $X$ has sufficient variation *within each level* of the moderator $Z$.
+**Common support**: the estimation of conditional marginal effects is credible only where women in parliament (%) has sufficient variation *within each regime-type group* (presidential vs. parliamentary).
 
 . . .
 
-Diagnostic: compare the distribution of $X$ across $Z$ groups.
+Diagnostic: compare the distribution of women in parliament across regime-type groups.
 
 ```{r}
 #| label: fig-common-support
 #| echo: false
 #| fig-height: 2.4
-#| fig-cap: "Common support check: compare X distributions across Z groups. Left: good overlap — we can estimate marginal effects across the full X range. Right: poor overlap — estimates in the non-overlapping regions are extrapolations, not estimates."
+#| fig-cap: "Common support check: compare the Women in Parliament (%) distribution across regime-type groups. Left: good overlap — we can estimate marginal effects for both presidential and parliamentary systems across the full range. Right: poor overlap — estimates in the non-overlapping regions are extrapolations, not estimates."
 set.seed(8)
 n_cs <- 200
 
@@ -1231,15 +1269,15 @@ bind_rows(df_good, df_bad) |>
   theme_bw() +
   theme(panel.grid.minor = element_blank(), legend.position = "bottom") +
   labs(
-    x = "X",
+    x = "Women in Parliament (%)",
     y = "Density",
     title = "Common Support Check",
-    subtitle = "Compare X distribution across moderator groups"
+    subtitle = "Compare Women in Parliament (%) distribution across regime-type groups"
   )
 ```
 
 ::: {style="font-size: 0.78em"}
-**Rule**: if the $X$-distributions barely overlap across $Z$ groups, conditional marginal effects in the non-overlapping region are **extrapolations**, not **estimates**. Report honestly.
+**Rule**: if the women-in-parliament distributions barely overlap across presidential and parliamentary countries, the conditional marginal effects in the non-overlapping region are **extrapolations**, not **estimates**. Report honestly.
 :::
 
 ---
@@ -1248,7 +1286,7 @@ bind_rows(df_good, df_bad) |>
 
 ::: notes
 - This is a common and consequential mistake. Students will make it.
-- "If you use `y ~ x:z` instead of `y ~ x * z`, you are constraining β₁ = 0 and β₂ = 0. You are saying: 'At Z=0, the effect of X is exactly zero. At X=0, the effect of Z is exactly zero.' This is almost never true."
+- "If you use `health_spend ~ women_parl:reg_type` instead of `health_spend ~ women_parl * reg_type`, you are constraining β₁ = 0 and β₂ = 0. You are saying: 'In presidential systems, women in parliament has no association with health spending. With zero women in parliament, there is no difference between systems.' This is almost never true."
 - "Always use `*`. The model with constitutive terms is more general; the model without them is a special case with two hard constraints. Let the data decide."
 - In brms: `y ~ x * z` expands to `y ~ x + z + x:z` automatically. Use the `*` notation as shorthand and as a reminder of the requirement.
 :::
@@ -1302,6 +1340,8 @@ brm(y ~ x * z, ...)
 
 *→ Switch to Positron. Follow along in `lab/week9_lab.qmd`.*
 
+In this application we fit `fit_interact` using `health_spend ~ women_parl * reg_type + gdp_pc` on the same `df` dataset from Parts I–II, then compare it against `fit_multi` (no interaction) via LOO-IC.
+
 ---
 
 # Summary {#sec-summary}
@@ -1348,8 +1388,8 @@ By the end of today, you should be able to:
 1. ✓ Explain **omitted variable bias** formally ($\hat{\beta}^{\text{biv}} = \beta + \text{bias}$) and use a **DAG** to classify variables as confounders, mediators, or colliders (Part I)
 2. ✓ Extend the Bayesian regression model to **multiple predictors** and interpret partial effects as $\partial \mu / \partial X_j$ (Parts I–II)
 3. ✓ Handle **categorical predictors** as $K - 1$ dummy variables with an intercept-shift interpretation (Part I)
-4. ✓ Specify a **multiplicative interaction model** and interpret $\partial \mu / \partial X = \beta_1 + \beta_3 Z$ as conditional on $Z$ (Part III)
-5. ✓ Extract **posterior marginal effects** using `as_draws_df()` arithmetic — correctly, without a delta method (Parts III–IV)
+4. ✓ Specify a **multiplicative interaction model** and interpret $\partial \mu / \partial \text{women\_parl} = \beta_1 + \beta_3 \cdot \text{reg\_type}$ as conditional on regime type (Part III)
+5. ✓ Extract **posterior marginal effects** for parliamentary and presidential systems using `as_draws_df()` arithmetic — correctly, without a delta method (Parts III–IV)
 6. ✓ Compare competing models using **LOO-IC** and interpret `elpd_diff` relative to `se_diff` (Parts II + IV)
 
 . . .

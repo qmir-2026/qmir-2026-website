@@ -55,6 +55,7 @@ graph LR
   GDP["GDP per Capita"] --> WP["Women in Parliament (%)"]
   GDP --> HS["Health Spending (% GDP)"]
   WP --> HS
+  RT["Regime Type"] --> HS
 ```
 
 Nodes take labels in `["quoted text"]`; directed edges are `-->`.
@@ -62,57 +63,79 @@ This is enough for a homework submission or a quick theoretical sketch.
 
 ## DGP: Synthetic Data (Dataset 1) {#sec-part2-dgp}
 
-Both applications in this lab use **synthetic (simulated) datasets**.
+This lab uses a **single synthetic dataset** throughout all four parts.
 Working with synthetic data is pedagogically powerful: we know the true
 parameter values, so we can verify whether our models recover them.
 This is something you can almost never do with real data — in practice the DGP
 is unobserved; we only see the outcomes, never the process that produced them.
 
-The research question is: *Does the share of women in parliament associate with higher public health expenditure?*
+The research question has two layers, addressed progressively:
 
-The key complication is **confounding**: wealthier countries simultaneously
-have more women in parliament *and* spend more on health.
-Failing to account for GDP per capita will over-estimate the
-legislative representation association.
+1. **Parts I–II**: Is the share of women in parliament associated with higher public health expenditure, adjusting for GDP per capita and regime type?
+2. **Parts III–IV**: Does this association differ between presidential and parliamentary systems?
+
+The key complication in Part II is **confounding**: wealthier countries
+simultaneously have more women in parliament *and* spend more on health.
+Failing to account for GDP per capita will over-estimate the legislative
+representation association.
+In Part IV we add a second complication: the slope itself may differ across
+regime types — this is **association heterogeneity**, addressed via an
+interaction term.
 
 ```{r}
-#| label: dgp1
+#| label: dgp
 set.seed(2026) # reproducibility: same data every time
-n1 <- 120 # 120 synthetic country-years
+n <- 120 # 120 synthetic country-years
 
 # ── Population-level parameters (the ground truth) ──────────────────────────
-beta_0 <- 2 # intercept
-beta_1_women <- 0.12 # partial association: women in parliament -> health spending
-beta_2_gdp <- 0.20 # partial association: GDP per capita -> health spending
-sigma_1 <- 1.5 # residual standard deviation
+beta_0           <- 2    # intercept (presidential baseline)
+beta_women_pres  <- 0.08 # women_parl slope in presidential systems
+beta_gdp         <- 0.20 # GDP per capita partial association
+beta_reg         <- 1.5  # parliamentary intercept shift
+beta_interact    <- 0.10 # extra women_parl slope in parliamentary systems
+sigma            <- 1.5  # residual standard deviation
 
 # ── Data-generating process ──────────────────────────────────────────────────
-gdp_pc <- rnorm(n1, mean = 18, sd = 7)
-women_parl <- 15 + 0.9 * gdp_pc + rnorm(n1, 0, 5)
-health_spend <- beta_0 +
-  beta_1_women * women_parl +
-  beta_2_gdp * gdp_pc +
-  rnorm(n1, 0, sigma_1)
+gdp_pc     <- rnorm(n, mean = 18, sd = 7)
+women_parl <- 15 + 0.9 * gdp_pc + rnorm(n, 0, 5)
+reg_type   <- rbinom(n, 1, prob = 0.55)   # 1 = parliamentary, 0 = presidential
 
-df_controls <- tibble(gdp_pc, women_parl, health_spend)
+health_spend <- beta_0 +
+  beta_gdp        * gdp_pc +
+  beta_women_pres * women_parl +
+  beta_reg        * reg_type +
+  beta_interact   * women_parl * reg_type +  # steeper slope in parliamentary
+  rnorm(n, 0, sigma)
+
+df <- tibble(gdp_pc, women_parl, reg_type, health_spend) |>
+  mutate(system = if_else(reg_type == 1, "Parliamentary", "Presidential"))
 ```
 
 ::: {.callout-note}
 ## Alternative implementation
 
 ```r
-# OLS check: verify OVB analytically without brms
-m_biv  <- lm(health_spend ~ women_parl, data = df_controls)
-m_full <- lm(health_spend ~ women_parl + gdp_pc, data = df_controls)
+# OLS check: verify OVB direction without brms
+m_biv  <- lm(health_spend ~ women_parl, data = df)
+m_full <- lm(health_spend ~ women_parl + gdp_pc + reg_type, data = df)
 round(coef(m_biv)["women_parl"] - coef(m_full)["women_parl"], 3)
 ```
 
 :::
 
-The true coefficient we want to recover is **$\beta_{\text{women}} = 0.12$**.
-Because GDP drives both variables, a bivariate model (no control)
-will produce an estimate well above 0.12 — that excess is omitted variable
-bias (OVB).
+True women-in-parliament slopes:
+
+| System | Slope |
+|---|---|
+| Presidential (`reg_type = 0`) | **0.08** |
+| Parliamentary (`reg_type = 1`) | **0.08 + 0.10 = 0.18** |
+
+Because GDP drives both variables, a bivariate model (no controls)
+will produce an estimate well above either true value — that excess is omitted
+variable bias (OVB).
+The additive multivariate model (Parts I–II) estimates an *average* slope
+across both system types; the interaction model (Parts III–IV) estimates
+separate slopes.
 
 ## Step 1: Estimand {#sec-part2-step1}
 
@@ -126,11 +149,15 @@ spending.
 A confounder opens a "back-door path" that conflates the association we care
 about with the spurious GDP-driven correlation.
 Conditioning on GDP per capita — including it as a predictor — closes that path.
+Regime type (`reg_type`) enters as a **dummy variable** for the intercept shift
+(parliamentary systems may have a different baseline level of spending) and
+as the moderator in Part IV.
 
-**Estimand**: the partial association between women's parliamentary
-representation and public health expenditure, adjusting for GDP per capita.
+**Estimand (Part II)**: the partial association between women's parliamentary
+representation and public health expenditure, adjusting for GDP per capita and
+regime type — the average slope across both system types.
 
-*Adjusting for GDP per capita shifts the estimate toward the true DGP value. Whether the adjustment set is sufficient is a substantive question the data alone cannot answer.*
+*Adjusting for GDP per capita and regime type shifts the estimate toward the true DGP average. Whether the adjustment set is sufficient is a substantive question the data alone cannot answer.*
 
 ## Step 2: Data Summary {#sec-part2-step2}
 
@@ -146,7 +173,7 @@ We will visualise the OVB explicitly in Step 7, after fitting both models.
 #| fig-height: 3.5
 #| dpi: 500
 #| fig-cap: "Raw bivariate scatter of women's parliamentary share against health expenditure. The positive trend conflates the legislative association with the GDP confounder."
-df_controls |>
+df |>
   ggplot(aes(x = women_parl, y = health_spend)) +
   geom_point(colour = col_1, alpha = 0.55, size = 2) +
   theme_bw() +
@@ -163,7 +190,7 @@ df_controls |>
 ## Alternative implementation
 
 ```r
-df_controls |>
+df |>
   ggplot(aes(x = women_parl, y = health_spend, colour = gdp_pc)) +
   geom_point(size = 2, alpha = 0.7) +
   scale_colour_gradient(low = col_1, high = col_2, name = "GDP pc") +
@@ -187,25 +214,30 @@ Y_i \sim \text{Normal}(\mu_i,\, \sigma)
 $$
 
 $$
-\mu_i = \alpha + \beta_X X_i + \beta_Z Z_i
+\mu_i = \alpha + \beta_X X_i + \beta_Z Z_i + \beta_D D_i
 $$
 
-where $X$ = women in parliament (%), $Z$ = GDP per capita (thousands USD, PPP).
+where $X$ = women in parliament (%), $Z$ = GDP per capita (thousands USD, PPP),
+$D$ = regime type (1 = parliamentary, 0 = presidential).
+The dummy $D$ gives parliamentary systems a different intercept baseline.
 
-**Priors** (one per unknown parameter — all four must be justified):
+**Priors** (one per unknown parameter — all five must be justified):
 
 $$
 \alpha \sim \text{Normal}(10, 5) \qquad \beta_X \sim \text{Normal}(0, 2)
 $$
 
 $$
-\beta_Z \sim \text{Normal}(0, 2) \qquad \sigma \sim \text{Exponential}(1)
+\beta_Z \sim \text{Normal}(0, 2) \qquad \beta_D \sim \text{Normal}(0, 2) \qquad \sigma \sim \text{Exponential}(1)
 $$
 
 The prior on $\beta_X$ says: *before seeing data, a 1 pp increase in women's
 representation is associated with a change of somewhere between −6 and +6 pp
 in health spending (the Normal(0, 2) range at ±3σ is [−6, +6]).*
-This is a weakly informative prior — broad enough to let the data speak,
+The prior on $\beta_D$ says: *parliamentary systems may spend anywhere from about 6 pp
+less to 6 pp more than presidential systems, holding other predictors constant —
+a weakly informative, non-dogmatic prior with no assumption about which system spends more.*
+Both are defensible weakly informative priors: broad enough to let the data speak,
 narrow enough to down-weight implausible extreme values.
 
 ## Step 4: Prior Predictive Check {#sec-part2-step4}
@@ -231,18 +263,20 @@ n_pp <- 2000
 # and add Gaussian noise with the drawn σ.
 # rowwise() + mutate(y_sim = list(...)) creates one simulated dataset per draw.
 prior_pred_controls <- tibble(
-  b0 = rnorm(n_pp, 10, 5), # intercept draws — Normal(10, 5)
-  b_wp = rnorm(n_pp, 0, 2), # women_parl slope draws — Normal(0, 2)
-  b_gdp = rnorm(n_pp, 0, 2), # gdp_pc slope draws — Normal(0, 2)
-  sigma = rexp(n_pp, 1) # residual SD draws — Exponential(1)
+  b0    = rnorm(n_pp, 10, 5), # intercept draws — Normal(10, 5)
+  b_wp  = rnorm(n_pp, 0, 2),  # women_parl slope draws — Normal(0, 2)
+  b_gdp = rnorm(n_pp, 0, 2),  # gdp_pc slope draws — Normal(0, 2)
+  b_reg = rnorm(n_pp, 0, 2),  # regime-type dummy draws — Normal(0, 2)
+  sigma = rexp(n_pp, 1)        # residual SD draws — Exponential(1)
 ) |>
   rowwise() |>
   mutate(
     y_sim = list(
       b0 +
-        b_wp * df_controls$women_parl +
-        b_gdp * df_controls$gdp_pc +
-        rnorm(nrow(df_controls), 0, sigma)
+        b_wp  * df$women_parl +
+        b_gdp * df$gdp_pc +
+        b_reg * df$reg_type +
+        rnorm(nrow(df), 0, sigma)
     )
   ) |>
   unnest(y_sim) |>
@@ -290,8 +324,8 @@ prior_pred_controls |>
 
 ```r
 fit_prior_only <- brm(
-  health_spend ~ women_parl + gdp_pc,
-  data = df_controls,
+  health_spend ~ women_parl + gdp_pc + reg_type,
+  data = df,
   prior = c(
     prior(normal(10, 5), class = "Intercept"),
     prior(normal(0, 2),  class = "b"),
@@ -317,21 +351,21 @@ Markov chains.
 With `iter = 2000` and `warmup = 1000`, each chain contributes 1,000 post-warmup
 draws, giving 4,000 total posterior samples of $(\alpha, \beta_X, \beta_Z, \sigma)$.
 
-We fit **both** the bivariate (no control) and multivariate models here so we
+We fit **both** the bivariate (no controls) and additive multivariate models here so we
 can compare their estimates and assess OVB in Step 7.
 
 ```{r}
-#| label: fit-controls-biv
+#| label: fit-biv
 #| output: false
 # Bivariate model: health spending ~ women in parliament only
-# This model omits GDP and will over-estimate the association (OVB)
-fit_controls_biv <- brm(
+# This model omits GDP and regime type — will over-estimate the association (OVB)
+fit_biv <- brm(
   health_spend ~ women_parl,
-  data = df_controls,
+  data = df,
   prior = c(
-    prior(normal(10, 5), class = "Intercept"), # baseline ~10% GDP
-    prior(normal(0, 2), class = "b"), # weakly informative prior
-    prior(exponential(1), class = "sigma") # residual SD < 5 almost certainly
+    prior(normal(10, 5),  class = "Intercept"), # baseline ~10% GDP
+    prior(normal(0, 2),   class = "b"),          # weakly informative prior
+    prior(exponential(1), class = "sigma")       # residual SD < 5 almost certainly
   ),
   chains = 4,
   iter = 2000,
@@ -347,7 +381,7 @@ fit_controls_biv <- brm(
 # Inspect default prior structure before specifying your own
 get_prior(
   health_spend ~ women_parl,
-  data   = df_controls,
+  data   = df,
   family = gaussian()
 )
 ```
@@ -355,17 +389,19 @@ get_prior(
 :::
 
 ```{r}
-#| label: fit-controls-multi
+#| label: fit-multi
 #| output: false
-# Multivariate model: health spending ~ women in parliament + GDP per capita
-# Including GDP closes the back-door path and removes the OVB
-fit_controls <- brm(
-  health_spend ~ women_parl + gdp_pc,
-  data = df_controls,
+# Additive multivariate model: health spending ~ women + GDP + regime type
+# Including GDP and regime type closes the back-door path and accounts for
+# the intercept-level difference between system types
+fit_multi <- brm(
+  health_spend ~ women_parl + gdp_pc + reg_type,
+  data = df,
   prior = c(
-    prior(normal(10, 5), class = "Intercept"),
-    prior(normal(0, 2), class = "b", coef = "women_parl"), # weakly informative
-    prior(normal(0, 2), class = "b", coef = "gdp_pc"), # weakly informative
+    prior(normal(10, 5),  class = "Intercept"),
+    prior(normal(0, 2),   class = "b", coef = "women_parl"), # weakly informative
+    prior(normal(0, 2),   class = "b", coef = "gdp_pc"),     # weakly informative
+    prior(normal(0, 2),   class = "b", coef = "reg_type"),   # parliamentary shift
     prior(exponential(1), class = "sigma")
   ),
   chains = 4,
@@ -380,7 +416,7 @@ fit_controls <- brm(
 
 ```r
 # Confirm the priors actually applied to the fitted model
-prior_summary(fit_controls)
+prior_summary(fit_multi)
 ```
 
 :::
@@ -400,15 +436,15 @@ Three things to check:
 If any diagnostic fails, stop and investigate before interpreting results.
 
 ```{r}
-#| label: fig-trace-controls
+#| label: fig-trace-multi
 #| echo: true
 #| code-fold: true
 #| fig-height: 3.6
 #| dpi: 500
-#| fig-cap: "Traceplots for the four model parameters. Each colour is one chain. The 'hairy caterpillar' pattern — chains overlapping and mixing rapidly — confirms convergence."
+#| fig-cap: "Traceplots for the five model parameters. Each colour is one chain. The 'hairy caterpillar' pattern — chains overlapping and mixing rapidly — confirms convergence."
 mcmc_trace(
-  fit_controls,
-  pars = c("b_Intercept", "b_women_parl", "b_gdp_pc", "sigma"),
+  fit_multi,
+  pars = c("b_Intercept", "b_women_parl", "b_gdp_pc", "b_reg_type", "sigma"),
   facet_args = list(ncol = 2)
 ) +
   scale_colour_manual(values = chain_cols) +
@@ -428,8 +464,8 @@ mcmc_trace(
 
 ```r
 mcmc_rank_hist(
-  fit_controls,
-  pars = c("b_Intercept", "b_women_parl", "b_gdp_pc", "sigma")
+  fit_multi,
+  pars = c("b_Intercept", "b_women_parl", "b_gdp_pc", "b_reg_type", "sigma")
 ) +
   labs(title = "Rank histograms: uniform bars confirm good mixing")
 ```
@@ -446,12 +482,12 @@ A well-specified model should produce simulated outcome distributions that
 closely envelope the observed one.
 
 ```{r}
-#| label: fig-ppc-controls
+#| label: fig-ppc-multi
 #| echo: true
 #| fig-height: 3.5
 #| dpi: 500
 #| fig-cap: "Posterior predictive check for the health spending model. The dark line is the observed distribution; light blue lines are 50 draws from the posterior predictive. The Gaussian model fits well."
-pp_check(fit_controls, ndraws = 50) +
+pp_check(fit_multi, ndraws = 50) +
   theme_bw() +
   theme(panel.grid.minor = element_blank()) +
   labs(
@@ -464,7 +500,7 @@ pp_check(fit_controls, ndraws = 50) +
 ## Alternative implementation
 
 ```r
-pp_check(fit_controls, type = "stat_2d", stat = c("mean", "sd")) +
+pp_check(fit_multi, type = "stat_2d", stat = c("mean", "sd")) +
   labs(title = "Joint PPC: posterior mean and SD vs observed")
 ```
 
@@ -481,15 +517,15 @@ The `Rhat` column confirms convergence (should be < 1.01 everywhere) and
 ```{r}
 #| label: controls-summary
 #| echo: true
-summary(fit_controls)
+summary(fit_multi)
 ```
 
 ::: {.callout-note}
 ## Alternative implementation
 
 ```r
-as_draws_df(fit_controls) |>
-  select(b_women_parl, b_gdp_pc, sigma) |>
+as_draws_df(fit_multi) |>
+  select(b_women_parl, b_gdp_pc, b_reg_type, sigma) |>
   summarise(across(
     everything(),
     list(mean  = mean,
@@ -503,9 +539,10 @@ as_draws_df(fit_controls) |>
 
 **What to look for**:
 
-- `b_women_parl` posterior mean should be near 0.12 (the true DGP value).
-  Compare this to the bivariate estimate — the difference is the OVB.
+- `b_women_parl` posterior mean should be near the DGP average across both system types (approximately 0.08 + 0.10 × mean(`reg_type`) ≈ 0.135, since the additive model averages over the interaction).
+  Compare this to the bivariate estimate — the difference is the OVB from omitting GDP.
 - `b_gdp_pc` posterior mean should be near 0.20.
+- `b_reg_type` posterior mean should be near 1.5 (parliamentary intercept shift).
 - `sigma` should be near 1.5.
 
 ### OVB: Comparing Bivariate and Multivariate Estimates
@@ -520,24 +557,27 @@ the multivariate estimate recovers a value close to the true DGP value of 0.12.
 #| code-fold: true
 #| fig-height: 3.0
 #| dpi: 500
-#| fig-cap: "OVB visualised: posterior mean and 95% credible interval for the women_parl coefficient from the bivariate (orange) and multivariate (purple) models. The dashed line marks the true DGP value β = 0.12. The gap between the two estimates is the omitted variable bias."
-post_biv <- posterior_summary(fit_controls_biv)["b_women_parl", ]
-post_multi <- posterior_summary(fit_controls)["b_women_parl", ]
+#| fig-cap: "OVB visualised: posterior mean and 95% credible interval for the women_parl coefficient from the bivariate (orange) and multivariate (purple) models. The bivariate estimate is inflated by the GDP confounder; the multivariate model gives a better-controlled average slope across both regime types."
+post_biv   <- posterior_summary(fit_biv)["b_women_parl", ]
+post_multi <- posterior_summary(fit_multi)["b_women_parl", ]
 
 coef_df <- tibble(
   Model = factor(
-    c("Bivariate\n(no control)", "Multivariate\n(+ GDP per capita)"),
-    levels = c("Bivariate\n(no control)", "Multivariate\n(+ GDP per capita)")
+    c("Bivariate\n(no controls)", "Multivariate\n(+ GDP + Regime Type)"),
+    levels = c("Bivariate\n(no controls)", "Multivariate\n(+ GDP + Regime Type)")
   ),
   Estimate = c(post_biv["Estimate"], post_multi["Estimate"]),
-  lo = c(post_biv["Q2.5"], post_multi["Q2.5"]),
-  hi = c(post_biv["Q97.5"], post_multi["Q97.5"])
+  lo = c(post_biv["Q2.5"],    post_multi["Q2.5"]),
+  hi = c(post_biv["Q97.5"],   post_multi["Q97.5"])
 )
+
+# DGP average slope: 0.08 + 0.10 * mean(reg_type) ≈ 0.135
+dgp_avg <- 0.08 + 0.10 * mean(df$reg_type)
 
 coef_df |>
   ggplot(aes(x = Model, y = Estimate)) +
   geom_hline(
-    yintercept = 0.12,
+    yintercept = dgp_avg,
     colour = "gray50",
     linetype = "dashed",
     linewidth = 0.9
@@ -552,10 +592,10 @@ coef_df |>
   annotate(
     "text",
     x = 1.52,
-    y = 0.127,
+    y = dgp_avg + 0.005,
     size = 3.3,
     colour = "gray40",
-    label = expression(paste("True ", beta, " = 0.12")),
+    label = "DGP average slope (~0.135)",
     hjust = 0
   ) +
   theme_bw() +
@@ -564,11 +604,9 @@ coef_df |>
     x = NULL,
     y = expression(hat(beta) ~ "(women in parliament -> health spending)"),
     title = "OVB: Bivariate Inflates the Estimate",
-    subtitle = "Controlling for GDP brings posterior mean near the true DGP value"
+    subtitle = "Adding GDP + regime type controls reduces the estimate toward the DGP average"
   ) +
-  scale_y_continuous(
-    limits = c(0, 0.35)
-  )
+  scale_y_continuous(limits = c(0, 0.40))
 ```
 
 ::: {.callout-note}
@@ -576,14 +614,13 @@ coef_df |>
 
 ```r
 bind_rows(
-  as_draws_df(fit_controls_biv) |>
+  as_draws_df(fit_biv) |>
     transmute(b_women_parl, model = "Bivariate"),
-  as_draws_df(fit_controls) |>
-    transmute(b_women_parl, model = "Multivariate (+GDP)")
+  as_draws_df(fit_multi) |>
+    transmute(b_women_parl, model = "Multivariate (+ GDP + Regime Type)")
 ) |>
   ggplot(aes(x = b_women_parl, fill = model)) +
   geom_density(alpha = 0.55) +
-  geom_vline(xintercept = 0.12, linetype = "dashed", colour = "gray40") +
   scale_fill_manual(values = c(col_2, col_3)) +
   theme_bw() +
   labs(title = "Full posterior densities: OVB as distributional shift",
@@ -612,18 +649,19 @@ interval for the partial effect at each value of `women_parl`.
 #| fig-height: 3.5
 #| dpi: 500
 #| fig-cap: "Partial effect of women's parliamentary share on health spending, holding GDP per capita at its sample mean. The ribbon is the 95% posterior credible interval."
-# Grid: vary women_parl, hold gdp_pc fixed at mean
+# Grid: vary women_parl, hold gdp_pc at mean, regime type at modal value (1 = parliamentary)
 grid_controls <- tibble(
   women_parl = seq(
-    min(df_controls$women_parl),
-    max(df_controls$women_parl),
+    min(df$women_parl),
+    max(df$women_parl),
     length.out = 80
   ),
-  gdp_pc = mean(df_controls$gdp_pc)
+  gdp_pc   = mean(df$gdp_pc),
+  reg_type = 1L   # evaluate partial effect for parliamentary systems
 )
 
-# posterior_epred returns a draws × grid matrix of E[Y | X, Z] values
-epred_mat <- posterior_epred(fit_controls, newdata = grid_controls)
+# posterior_epred returns a draws × grid matrix of E[Y | X, Z, D] values
+epred_mat <- posterior_epred(fit_multi, newdata = grid_controls)
 
 grid_controls <- grid_controls |>
   mutate(
@@ -632,7 +670,7 @@ grid_controls <- grid_controls |>
     hi = apply(epred_mat, 2, quantile, 0.975) # 97.5th percentile across draws
   )
 
-df_controls |>
+df |>
   ggplot(aes(x = women_parl, y = health_spend)) +
   geom_ribbon(
     data = grid_controls,
@@ -657,8 +695,8 @@ df_controls |>
     title = "Partial Effect: Women in Parliament -> Health Spending",
     subtitle = paste0(
       "GDP per capita held at mean (",
-      round(mean(df_controls$gdp_pc), 1),
-      " thousand USD)  |  posterior_epred()"
+      round(mean(df$gdp_pc), 1),
+      " thousand USD)  |  Parliamentary systems  |  posterior_epred()"
     )
   )
 ```
@@ -668,7 +706,7 @@ df_controls |>
 
 ```r
 # brms built-in: partial effect marginalised over other predictors
-plot(conditional_effects(fit_controls, effects = "women_parl"))
+plot(conditional_effects(fit_multi, effects = "women_parl"))
 ```
 
 :::
@@ -688,9 +726,9 @@ substantial.
 ```{r}
 #| label: loo-controls-compare
 #| echo: true
-fit_controls <- add_criterion(fit_controls, "loo")
-fit_controls_biv <- add_criterion(fit_controls_biv, "loo")
-loo_compare(fit_controls_biv, fit_controls)
+fit_multi <- add_criterion(fit_multi, "loo")
+fit_biv   <- add_criterion(fit_biv,   "loo")
+loo_compare(fit_biv, fit_multi)
 ```
 
 ::: {.callout-note}
@@ -698,15 +736,15 @@ loo_compare(fit_controls_biv, fit_controls)
 
 ```r
 # WAIC as alternative information criterion (same ranking expected)
-fit_controls     <- add_criterion(fit_controls,     "waic")
-fit_controls_biv <- add_criterion(fit_controls_biv, "waic")
-loo_compare(fit_controls_biv, fit_controls, criterion = "waic")
+fit_multi <- add_criterion(fit_multi, "waic")
+fit_biv   <- add_criterion(fit_biv,   "waic")
+loo_compare(fit_biv, fit_multi, criterion = "waic")
 ```
 
 :::
 
-The multivariate model should dominate: GDP genuinely predicts health spending,
-so including it improves out-of-sample accuracy.
+The multivariate model should dominate: GDP and regime type both genuinely predict health spending,
+so including them improves out-of-sample accuracy.
 
 **Remaining limitations** to keep in mind:
 
@@ -721,114 +759,81 @@ so including it improves out-of-sample accuracy.
 
 # Part IV: Application II — Interaction `brms` Model {#sec-part4}
 
-## DGP: Synthetic Data (Dataset 2) {#sec-part4-dgp}
+## The Research Question Revisited {#sec-part4-intro}
 
-The research question is: *Does the association between unemployment and transfer
-spending depend on government ideology?*
+Parts I–II established that women's parliamentary representation is associated
+with higher health spending, even after controlling for GDP per capita and regime
+type as an additive intercept shift.
+But the additive model assumes the **slope** of the women-in-parliament
+association is the same for both presidential and parliamentary systems.
 
-The **partisan theory of the welfare state** predicts that left-wing governments
-respond more aggressively to rising unemployment by raising social transfers.
-Right-wing governments are more fiscally restrained.
-This is a claim about **association heterogeneity** — the slope of the
-unemployment–spending relationship is steeper under left governments.
+Part IV relaxes this assumption:
 
-In real research the DGP is unobserved — the interaction coefficient $\beta_3$
-is what we are trying to *discover*, not something we already know.
-Here we know it because we generated the data, which lets us check whether the
-model recovers the true values.
+> **Does the association between female legislator share and health spending vary by regime type?**
 
-```{r}
-#| label: dgp2
-set.seed(42)
-n2 <- 150 # 150 synthetic government-years
+**Legislative composition theory**: parliamentary systems concentrate budget
+authority in the legislature — strong party discipline, parliamentary
+sovereignty, budget processes rooted in the legislature.
+Presidential systems divide power across branches, potentially weakening the
+translation of legislative preferences into policy.
+This predicts a **steeper slope** for women in parliament in parliamentary systems.
 
-# ── Population-level parameters (the ground truth) ──────────────────────────
-beta_0 <- 10 # intercept (right-government baseline)
-beta_1_unemp <- 0.3 # unemployment slope under right government
-beta_2_gov <- 2 # intercept shift for left government
-beta_3_interact <- 0.9 # extra unemployment slope under left government (the interaction)
-sigma_2 <- 2.5 # residual standard deviation
+We use the **same `df` dataset** as Parts I–II.
+The true DGP already encodes this interaction:
 
-# ── Data-generating process ──────────────────────────────────────────────────
-unemployment <- rnorm(n2, mean = 7.5, sd = 2.5)
-left_gov <- rbinom(n2, 1, prob = 0.5) # coin flip: equal left/right share
+| System | Women-in-parliament slope |
+|---|---|
+| Presidential (`reg_type = 0`) | **0.08** |
+| Parliamentary (`reg_type = 1`) | **0.08 + 0.10 = 0.18** |
 
-transfer_spend <- beta_0 +
-  beta_1_unemp * unemployment +
-  beta_2_gov * left_gov +
-  beta_3_interact * unemployment * left_gov + # slope shifts up for left govts
-  rnorm(n2, 0, sigma_2)
-
-df_interact <- tibble(unemployment, left_gov, transfer_spend) |>
-  mutate(government = if_else(left_gov == 1, "Left", "Right"))
-```
-
-::: {.callout-note}
-## Alternative implementation
-
-```r
-# OLS preview: inspect interaction coefficient before running brms
-m_ols <- lm(transfer_spend ~ unemployment * left_gov, data = df_interact)
-round(coef(m_ols), 3)
-```
-
-:::
-
-Key quantities to recover:
-
-| Government | Intercept | Unemployment slope |
-|---|---|---|
-| Right (`left_gov = 0`) | 10 | **0.3** |
-| Left  (`left_gov = 1`) | 12 | **0.3 + 0.9 = 1.2** |
-
-The interaction coefficient **$\beta_3 = 0.9$** captures *how much steeper* the
-left slope is relative to the right slope.
+The interaction coefficient **$\beta_3 = 0.10$** captures *how much steeper*
+the parliamentary slope is relative to the presidential slope.
 
 ## Step 1: DAG and Estimand {#sec-part4-step1}
 
-The partisan welfare state story involves two independent causes of transfer
-spending — unemployment and government ideology — where ideology also
-*moderates* the unemployment effect.
-The DAG has arrows from both Unemployment and Government Ideology into
-Transfer Spending; the research question concerns the interaction: is the
-unemployment slope steeper under left governments?
+The DAG (introduced in the lecture) shows regime type having a **direct arrow**
+into health spending (intercept shift, captured in Parts I–II) and a **moderation
+role** on the women-in-parliament → health-spending edge (the interaction, the
+focus of Part IV).
 
-Because this DAG has no confounders (no variable that causes both unemployment
-and ideology), we do not need a control variable to close a back-door path.
-The interaction term itself is the quantity of interest.
+Because we already control for GDP per capita (the confounder), no additional
+adjustment is needed.
+The interaction term itself is the new quantity of interest.
 
-**Estimand 1**: $\partial\mu/\partial X|_{Z=0}$ — unemployment slope under
-*right* governments.
+**Estimand 1**: $\partial\mu/\partial X \mid Z=0$ — women-in-parliament slope
+in *presidential* systems.
 
-**Estimand 2**: $\partial\mu/\partial X|_{Z=1}$ — unemployment slope under
-*left* governments.
+**Estimand 2**: $\partial\mu/\partial X \mid Z=1$ — women-in-parliament slope
+in *parliamentary* systems.
 
-**Estimand 3**: β₃ — the slope difference; how much more does unemployment
-associate with spending under left vs. right governments?
+**Estimand 3**: $\beta_3$ — the slope difference; how much more does women's
+representation associate with health spending in parliamentary vs. presidential
+systems?
 
 ## Step 2: Data Summary {#sec-part4-step2}
 
-We start with a quick look at the outcome distribution by ideology group,
-then examine the joint scatter and a box-plot comparison.
+We start with the marginal distribution of health spending by system type,
+then examine the joint scatter with separate OLS lines per group and a
+tercile-based boxplot comparison.
 
 ```{r}
 #| label: fig-outcome-dist-interact
 #| echo: true
 #| fig-height: 3.0
 #| dpi: 500
-#| fig-cap: "Marginal distribution of transfer spending by government ideology. Left governments show higher average spending — the intercept shift captured by β₂ in the interaction model."
-df_interact |>
-  ggplot(aes(x = transfer_spend, fill = government, colour = government)) +
+#| fig-cap: "Marginal distribution of health spending by regime type. Parliamentary systems show a higher average — the intercept shift β₂ captured in the additive model (Parts I–II)."
+df |>
+  ggplot(aes(x = health_spend, fill = system, colour = system)) +
   geom_density(alpha = 0.45, linewidth = 0.8) +
-  scale_fill_manual(values = c("Left" = col_2, "Right" = col_1)) +
-  scale_colour_manual(values = c("Left" = col_2, "Right" = col_1)) +
+  scale_fill_manual(values = c("Parliamentary" = col_1, "Presidential" = col_2)) +
+  scale_colour_manual(values = c("Parliamentary" = col_1, "Presidential" = col_2)) +
   theme_bw() +
   theme(panel.grid.minor = element_blank(), legend.position = "bottom") +
   labs(
-    x = "Transfer Spending (% GDP)",
+    x = "Health Spending (% GDP)",
     y = "Density",
-    title = "Distribution of Transfer Spending by Government Ideology",
-    subtitle = "Left governments show higher average spending",
+    title = "Distribution of Health Spending by Regime Type",
+    subtitle = "Parliamentary systems spend more on average",
     fill = NULL,
     colour = NULL
   )
@@ -838,27 +843,27 @@ df_interact |>
 ## Alternative implementation
 
 ```r
-df_interact |>
-  ggplot(aes(x = government, y = transfer_spend, fill = government)) +
+df |>
+  ggplot(aes(x = system, y = health_spend, fill = system)) +
   geom_violin(alpha = 0.6) +
   geom_jitter(width = 0.1, alpha = 0.35, size = 1.2) +
   scale_fill_manual(
-    values = c("Left" = col_2, "Right" = col_1), guide = "none"
+    values = c("Parliamentary" = col_1, "Presidential" = col_2), guide = "none"
   ) +
   theme_bw() +
-  labs(title = "Transfer spending by ideology — violin view",
-       x = NULL, y = "Transfer Spending (% GDP)")
+  labs(title = "Health spending by regime type — violin view",
+       x = NULL, y = "Health Spending (% GDP)")
 ```
 
 :::
 
-The scatter below puts unemployment on the x-axis and draws separate OLS lines
-for each ideology group.
+The scatter below puts women in parliament on the x-axis and draws separate OLS
+lines for each system type.
 If the lines have visibly different slopes, that is preliminary evidence for
 an interaction.
-The box-plot facets unemployment into terciles and shows the widening gap
-between left and right governments as unemployment rises — the visual signature
-of β₃ > 0.
+The boxplot facets women in parliament into terciles and shows whether the gap
+between systems widens with more female legislators — the visual signature of
+$\beta_3 > 0$.
 
 ```{r}
 #| label: fig-interact-summary
@@ -866,57 +871,57 @@ of β₃ > 0.
 #| code-fold: true
 #| fig-height: 3.6
 #| dpi: 500
-#| fig-cap: "Left: scatter with separate OLS lines per ideology group — slopes look clearly different. Right: transfer spending by unemployment tercile and ideology — the gap widens with unemployment, the visual signature of a positive interaction."
-p_scatter_int <- df_interact |>
-  ggplot(aes(x = unemployment, y = transfer_spend, colour = government)) +
+#| fig-cap: "Left: scatter with separate OLS lines per system — slopes appear different. Right: health spending by women-in-parliament tercile and system type — if the gap widens with more women in parliament, that is the visual signature of a positive interaction."
+p_scatter_int <- df |>
+  ggplot(aes(x = women_parl, y = health_spend, colour = system)) +
   geom_point(alpha = 0.5, size = 1.8) +
   geom_smooth(
-    aes(group = government),
+    aes(group = system),
     method = "lm",
     se = FALSE,
     linewidth = 1.2
   ) +
   scale_colour_manual(
-    values = c("Left" = col_2, "Right" = col_1),
-    name = "Government"
+    values = c("Parliamentary" = col_1, "Presidential" = col_2),
+    name = "System"
   ) +
   theme_bw() +
   theme(panel.grid.minor = element_blank(), legend.position = "bottom") +
   labs(
-    x = "Unemployment (%)",
-    y = "Transfer Spending (% GDP)",
-    title = "Separate Slopes by Ideology",
-    subtitle = "OLS line per group"
+    x = "Women in Parliament (%)",
+    y = "Health Spending (% GDP)",
+    title = "Separate Slopes by Regime Type",
+    subtitle = "OLS line per system"
   )
 
-df_interact_plot <- df_interact |>
+df_interact_plot <- df |>
   mutate(
-    unemp_tercile = cut(
-      unemployment,
-      breaks = quantile(unemployment, c(0, 1 / 3, 2 / 3, 1)),
-      labels = c("Low\n(~4%)", "Mid\n(~8%)", "High\n(~12%)"),
+    wp_tercile = cut(
+      women_parl,
+      breaks = quantile(women_parl, c(0, 1 / 3, 2 / 3, 1)),
+      labels = c("Low\n(<25%)", "Mid\n(~33%)", "High\n(>40%)"),
       include.lowest = TRUE
     )
   )
 
 p_box_int <- df_interact_plot |>
-  ggplot(aes(x = unemp_tercile, y = transfer_spend, fill = government)) +
+  ggplot(aes(x = wp_tercile, y = health_spend, fill = system)) +
   geom_boxplot(
     alpha = 0.7,
     position = position_dodge(width = 0.75),
     width = 0.6
   ) +
   scale_fill_manual(
-    values = c("Left" = col_2, "Right" = col_1),
-    name = "Government"
+    values = c("Parliamentary" = col_1, "Presidential" = col_2),
+    name = "System"
   ) +
   theme_bw() +
   theme(panel.grid.minor = element_blank(), legend.position = "bottom") +
   labs(
-    x = "Unemployment Tercile",
-    y = "Transfer Spending (% GDP)",
-    title = "Gap Widens with Unemployment",
-    subtitle = "Signature of a positive interaction term"
+    x = "Women in Parliament Tercile",
+    y = "Health Spending (% GDP)",
+    title = "Gap Across Systems by Women-in-Parliament Level",
+    subtitle = "Widening gap = signature of a positive interaction"
   )
 
 p_scatter_int | p_box_int
@@ -926,17 +931,17 @@ p_scatter_int | p_box_int
 ## Alternative implementation
 
 ```r
-df_interact |>
-  mutate(tercile = cut(unemployment,
-    breaks = quantile(unemployment, c(0, 1/3, 2/3, 1)),
-    labels = c("Low unemp.", "Mid unemp.", "High unemp."),
+df |>
+  mutate(tercile = cut(women_parl,
+    breaks = quantile(women_parl, c(0, 1/3, 2/3, 1)),
+    labels = c("Low WP", "Mid WP", "High WP"),
     include.lowest = TRUE)) |>
-  ggplot(aes(x = tercile, y = transfer_spend, fill = government)) +
+  ggplot(aes(x = tercile, y = health_spend, fill = system)) +
   geom_boxplot(position = position_dodge(0.75), alpha = 0.7) +
-  scale_fill_manual(values = c("Left" = col_2, "Right" = col_1)) +
+  scale_fill_manual(values = c("Parliamentary" = col_1, "Presidential" = col_2)) +
   theme_bw() +
-  labs(title = "Spending gap widens with unemployment",
-       x = "Unemployment tercile", y = "Transfer Spending (% GDP)", fill = NULL)
+  labs(title = "Spending gap across systems — tercile view",
+       x = "Women in Parliament Tercile", y = "Health Spending (% GDP)", fill = NULL)
 ```
 
 :::
@@ -950,25 +955,26 @@ Y_i \sim \text{Normal}(\mu_i,\, \sigma)
 $$
 
 $$
-\mu_i = \alpha + \beta_1 U_i + \beta_2 G_i + \beta_3 (U_i \cdot G_i)
+\mu_i = \alpha + \beta_1 X_i + \beta_2 D_i + \beta_3 (X_i \cdot D_i) + \beta_Z Z_i
 $$
 
-where $U$ = unemployment (%), $G$ = left government (0/1).
+where $X$ = women in parliament (%), $D$ = regime type (1 = parliamentary),
+$Z$ = GDP per capita.
 
 The two conditional marginal effects are now *functions* of the moderator:
 
 $$
-\frac{\partial\mu}{\partial U} = \beta_1 + \beta_3 G \qquad
-\frac{\partial\mu}{\partial G} = \beta_2 + \beta_3 U
+\frac{\partial\mu}{\partial X} = \beta_1 + \beta_3 D \qquad
+\frac{\partial\mu}{\partial D} = \beta_2 + \beta_3 X
 $$
 
 **Priors**:
 
 $$
-\alpha \sim \text{Normal}(12, 5) \qquad
-\beta_1, \beta_2 \sim \text{Normal}(0, 2) \qquad
+\alpha \sim \text{Normal}(10, 5) \qquad
+\beta_1, \beta_2, \beta_Z \sim \text{Normal}(0, 2) \qquad
 \beta_3 \sim \text{Normal}(0, 2) \qquad
-\sigma \sim \text{Exponential}(0.5)
+\sigma \sim \text{Exponential}(1)
 $$
 
 The prior for $\beta_3$ is centred at zero — our prior expectation is *no moderation*.
@@ -978,19 +984,19 @@ the direction of an interaction before seeing the evidence.
 
 We fit two competing models:
 
-- **M1** (no interaction): assumes the unemployment slope is the same for all
-  governments — a testable restriction.
-- **M2** (interaction): relaxes this.
-  If M2 fits substantially better via LOO-IC, we have evidence that the
+- **`fit_multi`** (no interaction): assumes the women-in-parliament slope is the
+  same for all system types — a testable restriction (already fitted in Part II).
+- **`fit_interact`** (interaction): relaxes this restriction.
+  If `fit_interact` fits substantially better via LOO-IC, we have evidence that the
   restriction is false.
 
 ## Step 4: Prior Predictive Check {#sec-part4-step4}
 
 For the interaction model, we draw regression lines from the joint prior —
-one bundle per ideology group.
-The check asks: *does the prior allow a wide enough range of slopes, including
-no moderation (similar slopes), strong moderation (very different slopes), and
-implausible configurations (e.g., enormous negative slopes)?*
+one bundle per regime type.
+The check asks: *does the prior allow a wide enough range of slope differences,
+including no moderation (parallel lines), strong moderation (strongly diverging
+lines), and implausible configurations?*
 
 ```{r}
 #| label: fig-prior-ppc-interact
@@ -998,110 +1004,85 @@ implausible configurations (e.g., enormous negative slopes)?*
 #| code-fold: true
 #| fig-height: 3.4
 #| dpi: 500
-#| fig-cap: "Prior predictive spaghetti: 150 regression lines drawn from the joint prior, separately for left (orange) and right (blue) governments. The prior is wide but not implausible — it allows no interaction, moderate interaction, and strong interaction."
-set.seed(42)
+#| fig-cap: "Prior predictive spaghetti: 150 regression lines drawn from the joint prior, separately for parliamentary (blue) and presidential (orange) systems. The prior is wide but not implausible — it allows no interaction, moderate interaction, and strong interaction."
+set.seed(2026)
 n_pp2 <- 150
-unemp_seq <- seq(1.5, 14, length.out = 60)
+wp_seq <- seq(10, 55, length.out = 60)
+gdp_mean <- mean(df$gdp_pc)
 
 prior_lines_int <- tibble(
-  sim = 1:n_pp2,
-  b0 = rnorm(n_pp2, 12, 5), # intercept draws — Normal(12, 5)
-  b_u = rnorm(n_pp2, 0, 2), # unemployment slope draws — Normal(0, 2)
-  b_g = rnorm(n_pp2, 0, 2), # ideology main effect draws — Normal(0, 2)
-  b_int = rnorm(n_pp2, 0, 2) # interaction term draws — Normal(0, 2)
+  sim   = 1:n_pp2,
+  b0    = rnorm(n_pp2, 10, 5),  # intercept draws — Normal(10, 5)
+  b_wp  = rnorm(n_pp2, 0, 2),   # women_parl slope draws — Normal(0, 2)
+  b_reg = rnorm(n_pp2, 0, 2),   # regime-type main effect draws — Normal(0, 2)
+  b_int = rnorm(n_pp2, 0, 2),   # interaction term draws — Normal(0, 2)
+  b_gdp = rnorm(n_pp2, 0, 2)    # GDP slope draws — Normal(0, 2)
 ) |>
-  expand_grid(unemployment = unemp_seq, left_gov = c(0L, 1L)) |>
+  expand_grid(women_parl = wp_seq, reg_type = c(0L, 1L)) |>
   mutate(
     y_hat = b0 +
-      b_u * unemployment +
-      b_g * left_gov +
-      b_int * unemployment * left_gov, # slope shifts by b_int for left govts
-    government = if_else(left_gov == 1, "Left", "Right")
+      b_wp  * women_parl +
+      b_reg * reg_type +
+      b_int * women_parl * reg_type +  # slope shifts by b_int in parliamentary
+      b_gdp * gdp_mean,
+    system = if_else(reg_type == 1, "Parliamentary", "Presidential")
   )
 
 prior_lines_int |>
   ggplot(aes(
-    x = unemployment,
+    x = women_parl,
     y = y_hat,
-    group = interaction(sim, government),
-    colour = government
+    group = interaction(sim, system),
+    colour = system
   )) +
   geom_line(alpha = 0.12, linewidth = 0.5) +
   scale_colour_manual(
-    values = c("Left" = col_2, "Right" = col_1),
-    name = "Government"
+    values = c("Parliamentary" = col_1, "Presidential" = col_2),
+    name = "System"
   ) +
-  coord_cartesian(ylim = c(-10, 45)) +
+  coord_cartesian(ylim = c(-5, 30)) +
   theme_bw() +
   theme(panel.grid.minor = element_blank(), legend.position = "bottom") +
   labs(
-    x = "Unemployment (%)",
-    y = "Predicted Transfer Spending (% GDP)",
+    x = "Women in Parliament (%)",
+    y = "Predicted Health Spending (% GDP)",
     title = "Prior Predictive Spaghetti: Interaction Model",
-    subtitle = "150 lines per group — prior is non-dogmatic about moderation"
+    subtitle = "150 lines per system — prior is non-dogmatic about moderation"
   )
 ```
 
 ## Step 5: Fit Both Models {#sec-part4-step5}
 
 We use the `*` operator in the `brm()` formula.
-`unemployment * left_gov` is shorthand for `unemployment + left_gov + unemployment:left_gov`.
+`women_parl * reg_type` is shorthand for `women_parl + reg_type + women_parl:reg_type`.
 Always use `*`, not just the colon form (`:`).
-The colon-only form omits the main effects, which forces β₁ = 0 and β₂ = 0 —
-usually a false and arbitrary constraint.
+The colon-only form omits the main effects, which forces $\beta_1 = 0$ and
+$\beta_2 = 0$ — usually a false and arbitrary constraint.
+
+`fit_multi` (the additive model, no interaction) was already fitted in Part II.
+We fit `fit_interact` here.
 
 ```{r}
-#| label: fit-interact-m1
+#| label: fit-interact
 #| echo: true
 #| output: false
-# M1: no interaction — assumes unemployment slope is identical for both ideology groups
-fit_m1 <- brm(
-  transfer_spend ~ unemployment + left_gov, # additive model: same slope for all
-  data = df_interact,
+# Interaction model — allows the women_parl slope to differ by regime type
+# * expands to: women_parl + reg_type + women_parl:reg_type
+fit_interact <- brm(
+  health_spend ~ women_parl * reg_type + gdp_pc,
+  data = df,
   prior = c(
-    prior(normal(12, 5), class = "Intercept"), # baseline spending ~12% GDP
-    prior(normal(0, 2), class = "b"), # weakly informative prior on slopes
-    prior(exponential(0.5), class = "sigma") # residual SD likely < 5
+    prior(normal(10, 5),  class = "Intercept"),
+    prior(normal(0, 2),   class = "b", coef = "women_parl"),          # presidential slope
+    prior(normal(0, 2),   class = "b", coef = "reg_type"),            # parliamentary shift
+    prior(normal(0, 2),   class = "b", coef = "gdp_pc"),              # GDP partial effect
+    prior(normal(0, 2),   class = "b", coef = "women_parl:reg_type"), # slope difference
+    prior(exponential(1), class = "sigma")
   ),
   chains = 4,
   iter = 2000,
   warmup = 1000,
-  seed = 42
-)
-```
-
-::: {.callout-note}
-## Alternative implementation
-
-```r
-# Inspect default prior structure for M1
-get_prior(
-  transfer_spend ~ unemployment + left_gov,
-  data   = df_interact,
-  family = gaussian()
-)
-```
-
-:::
-
-```{r}
-#| label: fit-interact-m2
-#| echo: true
-#| output: false
-# M2: interaction model — allows the unemployment slope to differ by ideology
-# * expands to: unemployment + left_gov + unemployment:left_gov
-fit_m2 <- brm(
-  transfer_spend ~ unemployment * left_gov,
-  data = df_interact,
-  prior = c(
-    prior(normal(12, 5), class = "Intercept"), # baseline spending ~12% GDP
-    prior(normal(0, 2), class = "b"), # weakly informative; centred at zero (no moderation by default)
-    prior(exponential(0.5), class = "sigma") # residual SD likely < 5
-  ),
-  chains = 4,
-  iter = 2000,
-  warmup = 1000,
-  seed = 42
+  seed = 2026
 )
 ```
 
@@ -1110,7 +1091,7 @@ fit_m2 <- brm(
 
 ```r
 # Confirm priors actually applied to the interaction model
-prior_summary(fit_m2)
+prior_summary(fit_interact)
 ```
 
 :::
@@ -1118,7 +1099,7 @@ prior_summary(fit_m2)
 ## Step 6: Diagnostics and Posterior Predictive Check {#sec-part4-step6}
 
 We run the same convergence checks as before.
-The traceplots and PPC are shown side-by-side for the interaction model (M2).
+The traceplots and PPC are shown side-by-side for the interaction model.
 
 ```{r}
 #| label: fig-diag-interact
@@ -1126,14 +1107,15 @@ The traceplots and PPC are shown side-by-side for the interaction model (M2).
 #| code-fold: true
 #| fig-height: 3.5
 #| dpi: 500
-#| fig-cap: "Left: traceplots for the four parameters of M2 — all chains mix well. Right: posterior predictive check — model predictions envelope the observed distribution."
-p_trace_m2 <- mcmc_trace(
-  fit_m2,
+#| fig-cap: "Left: traceplots for the five parameters of the interaction model — all chains mix well. Right: posterior predictive check — model predictions envelope the observed distribution."
+p_trace_int <- mcmc_trace(
+  fit_interact,
   pars = c(
     "b_Intercept",
-    "b_unemployment",
-    "b_left_gov",
-    "b_unemployment:left_gov"
+    "b_women_parl",
+    "b_reg_type",
+    "b_women_parl:reg_type",
+    "b_gdp_pc"
   ),
   facet_args = list(ncol = 2)
 ) +
@@ -1144,14 +1126,14 @@ p_trace_m2 <- mcmc_trace(
     strip.background = element_rect(fill = "gray90"),
     legend.position = "none"
   ) +
-  labs(title = "Traceplots: Interaction Model (M2)")
+  labs(title = "Traceplots: Interaction Model")
 
-p_ppc_m2 <- pp_check(fit_m2, ndraws = 50) +
+p_ppc_int <- pp_check(fit_interact, ndraws = 50) +
   theme_bw() +
   theme(panel.grid.minor = element_blank()) +
-  labs(title = "Posterior Predictive Check (M2)")
+  labs(title = "Posterior Predictive Check")
 
-p_trace_m2 | p_ppc_m2
+p_trace_int | p_ppc_int
 ```
 
 ::: {.callout-note}
@@ -1159,11 +1141,11 @@ p_trace_m2 | p_ppc_m2
 
 ```r
 mcmc_rank_hist(
-  fit_m2,
-  pars = c("b_Intercept", "b_unemployment",
-           "b_left_gov", "b_unemployment:left_gov")
+  fit_interact,
+  pars = c("b_Intercept", "b_women_parl",
+           "b_reg_type", "b_women_parl:reg_type", "b_gdp_pc")
 ) +
-  labs(title = "Rank histograms: M2 convergence check")
+  labs(title = "Rank histograms: interaction model convergence check")
 ```
 
 :::
@@ -1171,26 +1153,26 @@ mcmc_rank_hist(
 ## Step 7: Interpreting Results and Posterior Marginal Effects {#sec-part4-step7}
 
 Inspect the summary output.
-The key quantity is `b_unemployment:left_gov` — the interaction coefficient β₃.
-Its posterior mean should be near 0.9 (the true DGP value).
+The key quantity is `b_women_parl:reg_type` — the interaction coefficient $\beta_3$.
+Its posterior mean should be near 0.10 (the true DGP value).
 
 ```{r}
 #| label: interact-summary
 #| echo: true
-summary(fit_m2)
+summary(fit_interact)
 ```
 
 ::: {.callout-note}
 ## Alternative implementation
 
 ```r
-as_draws_df(fit_m2) |>
+as_draws_df(fit_interact) |>
   mutate(
-    slope_right = b_unemployment,
-    slope_left  = b_unemployment + `b_unemployment:left_gov`
+    slope_presidential  = b_women_parl,
+    slope_parliamentary = b_women_parl + `b_women_parl:reg_type`
   ) |>
   summarise(across(
-    c(slope_right, slope_left),
+    c(slope_presidential, slope_parliamentary),
     list(mean  = mean,
          q2.5  = \(x) quantile(x, 0.025),
          q97.5 = \(x) quantile(x, 0.975))
@@ -1201,15 +1183,10 @@ as_draws_df(fit_m2) |>
 
 ### Posterior Line Clouds
 
-A powerful way to visualise an interaction model is to plot many regression
-lines directly from the MCMC draws.
-`as_draws_df()` returns a data frame with one row per MCMC draw and one column
-per parameter.
-For each draw, we compute the intercept and slope for each ideology group
+For each MCMC draw we compute the intercept and slope for each system type
 by simple arithmetic and draw the resulting line.
-
-The bundle of blue lines (right governments) should be clearly less steep
-than the bundle of orange lines (left governments).
+The bundle of parliamentary lines (blue) should be steeper than the presidential
+bundle (orange).
 
 ```{r}
 #| label: fig-posterior-lines-interact
@@ -1217,44 +1194,49 @@ than the bundle of orange lines (left governments).
 #| code-fold: true
 #| fig-height: 3.5
 #| dpi: 500
-#| fig-cap: "Posterior regression line clouds: 200 MCMC draws per ideology group. The orange bundle (left governments) is visibly steeper — posterior evidence for β₃ > 0."
-# Sample 200 draws for visual clarity (4000 lines would be too dense)
-post_draws_m2 <- as_draws_df(fit_m2) |> slice_sample(n = 200)
+#| fig-cap: "Posterior regression line clouds: 200 MCMC draws per system type. The blue bundle (parliamentary) is visibly steeper — posterior evidence for β₃ > 0."
+set.seed(2026)
+post_draws_int <- as_draws_df(fit_interact) |> slice_sample(n = 200)
+gdp_mean <- mean(df$gdp_pc)
 
-df_interact |>
-  ggplot(aes(x = unemployment, y = transfer_spend, colour = government)) +
-  # Right government lines: intercept = b_Intercept, slope = b_unemployment
+df |>
+  ggplot(aes(x = women_parl, y = health_spend, colour = system)) +
+  # Presidential lines: intercept = b_Intercept + b_gdp_pc * gdp_mean,
+  #                     slope     = b_women_parl
   geom_abline(
-    data = post_draws_m2,
-    aes(intercept = b_Intercept, slope = b_unemployment),
-    colour = col_1,
-    alpha = 0.05,
-    linewidth = 0.4
-  ) +
-  # Left government lines: intercept = b_Intercept + b_left_gov,
-  #                          slope   = b_unemployment + b_unemployment:left_gov
-  geom_abline(
-    data = post_draws_m2,
+    data = post_draws_int,
     aes(
-      intercept = b_Intercept + b_left_gov,
-      slope = b_unemployment + `b_unemployment:left_gov`
+      intercept = b_Intercept + b_gdp_pc * gdp_mean,
+      slope = b_women_parl
     ),
     colour = col_2,
     alpha = 0.05,
     linewidth = 0.4
   ) +
+  # Parliamentary lines: intercept = b_Intercept + b_reg_type + b_gdp_pc * gdp_mean,
+  #                      slope     = b_women_parl + b_women_parl:reg_type
+  geom_abline(
+    data = post_draws_int,
+    aes(
+      intercept = b_Intercept + b_reg_type + b_gdp_pc * gdp_mean,
+      slope = b_women_parl + `b_women_parl:reg_type`
+    ),
+    colour = col_1,
+    alpha = 0.05,
+    linewidth = 0.4
+  ) +
   geom_point(alpha = 0.5, size = 1.8) +
   scale_colour_manual(
-    values = c("Left" = col_2, "Right" = col_1),
-    name = "Government"
+    values = c("Parliamentary" = col_1, "Presidential" = col_2),
+    name = "System"
   ) +
   theme_bw() +
   theme(panel.grid.minor = element_blank(), legend.position = "bottom") +
   labs(
-    x = "Unemployment (%)",
-    y = "Transfer Spending (% GDP)",
-    title = "Posterior Line Clouds by Government Ideology",
-    subtitle = "200 MCMC draws per group — orange bundle (left) is steeper"
+    x = "Women in Parliament (%)",
+    y = "Health Spending (% GDP)",
+    title = "Posterior Line Clouds by Regime Type",
+    subtitle = "200 MCMC draws per group — blue bundle (parliamentary) is steeper"
   )
 ```
 
@@ -1264,8 +1246,8 @@ df_interact |>
 ```r
 # brms built-in: automatic interaction plot
 plot(conditional_effects(
-  fit_m2,
-  effects = "unemployment:left_gov"
+  fit_interact,
+  effects = "women_parl:reg_type"
 ))
 ```
 
@@ -1273,18 +1255,16 @@ plot(conditional_effects(
 
 ### Posterior Conditional Marginal Effects
 
-The conditional marginal effect of unemployment for a given ideology group
-is a function of β₁ and β₃:
+The conditional marginal effect of women in parliament for a given system type
+is a function of $\beta_1$ and $\beta_3$:
 
 $$
-\text{ME}_{\text{right}} = \beta_1 \qquad
-\text{ME}_{\text{left}}  = \beta_1 + \beta_3
+\text{ME}_{\text{presidential}}  = \beta_1 \qquad
+\text{ME}_{\text{parliamentary}} = \beta_1 + \beta_3
 $$
 
-Because we have full posterior draws of both β₁ and β₃, we compute these
-by arithmetic — no approximation or delta method needed.
-The resulting collections of values *are* the posterior distributions of the
-conditional marginal effects.
+Because we have full posterior draws of both $\beta_1$ and $\beta_3$, we compute
+these by arithmetic — no approximation or delta method needed.
 
 ```{r}
 #| label: fig-marginal-effects-interact
@@ -1292,31 +1272,28 @@ conditional marginal effects.
 #| code-fold: true
 #| fig-height: 3.4
 #| dpi: 500
-#| fig-cap: "Posterior distributions of the conditional marginal effect of unemployment on transfer spending by ideology group. The left slope (~1.2) and right slope (~0.3) are well separated — strong posterior evidence for moderation."
-post_all_m2 <- as_draws_df(fit_m2)
+#| fig-cap: "Posterior distributions of the conditional marginal effect of women in parliament on health spending by system type. The parliamentary slope (~0.18) and presidential slope (~0.08) should be well separated — posterior evidence for β₃ > 0."
+post_all_int <- as_draws_df(fit_interact)
 
-me_df <- post_all_m2 |>
+me_df <- post_all_int |>
   transmute(
-    `Right Government` = b_unemployment, # ME at G = 0
-    `Left Government` = b_unemployment + `b_unemployment:left_gov` # ME at G = 1
+    `Presidential`  = b_women_parl,                              # ME at D = 0
+    `Parliamentary` = b_women_parl + `b_women_parl:reg_type`     # ME at D = 1
   ) |>
   pivot_longer(
     everything(),
-    names_to = "government",
+    names_to = "system",
     values_to = "marginal_effect"
   ) |>
   mutate(
-    government = factor(
-      government,
-      levels = c("Right Government", "Left Government")
-    )
+    system = factor(system, levels = c("Presidential", "Parliamentary"))
   )
 
-# Compute P(β₃ > 0 | data) directly from posterior draws — a direct probability statement
-prob_b3_pos <- mean(post_all_m2$`b_unemployment:left_gov` > 0)
+# P(β₃ > 0 | data): direct posterior probability — not a p-value
+prob_b3_pos <- mean(post_all_int$`b_women_parl:reg_type` > 0)
 
 me_df |>
-  ggplot(aes(x = marginal_effect, fill = government, colour = government)) +
+  ggplot(aes(x = marginal_effect, fill = system, colour = system)) +
   geom_density(alpha = 0.55, linewidth = 0.8) +
   geom_vline(
     xintercept = 0,
@@ -1325,28 +1302,29 @@ me_df |>
     linewidth = 0.9
   ) +
   scale_fill_manual(
-    values = c("Right Government" = col_1, "Left Government" = col_2),
+    values = c("Presidential" = col_2, "Parliamentary" = col_1),
     name = NULL
   ) +
   scale_colour_manual(
-    values = c("Right Government" = col_1, "Left Government" = col_2),
+    values = c("Presidential" = col_2, "Parliamentary" = col_1),
     name = NULL
   ) +
   annotate(
     "text",
-    x = 1.7,
-    y = 1.2,
+    x = max(me_df$marginal_effect) * 0.7,
+    y = Inf,
+    vjust = 1.5,
     size = 3.5,
     colour = col_3,
-    label = paste0("P(β₃ > 0 | data) = ", round(prob_b3_pos, 3))
+    label = paste0("P(\u03b2\u2083 > 0 | data) = ", round(prob_b3_pos, 3))
   ) +
   theme_bw() +
   theme(panel.grid.minor = element_blank(), legend.position = "bottom") +
   labs(
-    x = expression(partialdiff * mu / partialdiff ~ Unemployment),
+    x = expression(partialdiff * mu / partialdiff ~ "Women in Parliament (%)"),
     y = "Posterior Density",
-    title = "Posterior Marginal Effects: Unemployment -> Transfer Spending",
-    subtitle = "Left slope ~1.2  |  Right slope ~0.3  |  Exact by arithmetic"
+    title = "Posterior Marginal Effects: Women in Parliament -> Health Spending",
+    subtitle = "Parliamentary slope ~0.18  |  Presidential slope ~0.08  |  Exact by arithmetic"
   )
 ```
 
@@ -1355,34 +1333,34 @@ me_df |>
 
 ```r
 # Direct posterior summary of the interaction term
-as_draws_df(fit_m2) |>
+as_draws_df(fit_interact) |>
   summarise(
-    mean_b3  = mean(`b_unemployment:left_gov`),
-    q2.5     = quantile(`b_unemployment:left_gov`, 0.025),
-    q97.5    = quantile(`b_unemployment:left_gov`, 0.975),
-    prob_pos = mean(`b_unemployment:left_gov` > 0)
+    mean_b3  = mean(`b_women_parl:reg_type`),
+    q2.5     = quantile(`b_women_parl:reg_type`, 0.025),
+    q97.5    = quantile(`b_women_parl:reg_type`, 0.975),
+    prob_pos = mean(`b_women_parl:reg_type` > 0)
   )
 ```
 
 :::
 
-**Reading the figure**: the two density curves should be well separated.
+**Reading the figure**: the two density curves should be separated.
 `P(β₃ > 0 | data)` near 1.0 means we are nearly certain the interaction is
-positive — left governments show a steeper unemployment–spending slope.
-This is the Bayesian analogue of a one-sided test, but it is a direct
-probability statement, not a p-value.
+positive — parliamentary systems show a steeper women-in-parliament–health-spending
+association.
+This is a direct posterior probability statement, not a p-value.
 
 ## Step 8: LOO-IC Model Comparison {#sec-part4-step8}
 
-We compare M1 (no interaction) against M2 (interaction) using LOO-IC.
-Because we generated the data with an interaction, M2 should dominate M1.
+We compare `fit_multi` (no interaction) against `fit_interact` (interaction) using LOO-IC.
+Because we generated the data with an interaction, `fit_interact` should dominate `fit_multi`.
 
 ```{r}
 #| label: loo-interact
 #| echo: true
-fit_m1 <- add_criterion(fit_m1, "loo")
-fit_m2 <- add_criterion(fit_m2, "loo")
-loo_compare(fit_m1, fit_m2)
+fit_multi    <- add_criterion(fit_multi,    "loo")
+fit_interact <- add_criterion(fit_interact, "loo")
+loo_compare(fit_multi, fit_interact)
 ```
 
 ::: {.callout-note}
@@ -1390,9 +1368,9 @@ loo_compare(fit_m1, fit_m2)
 
 ```r
 # WAIC as alternative to LOO-IC — should rank models identically
-fit_m1 <- add_criterion(fit_m1, "waic")
-fit_m2 <- add_criterion(fit_m2, "waic")
-loo_compare(fit_m1, fit_m2, criterion = "waic")
+fit_multi    <- add_criterion(fit_multi,    "waic")
+fit_interact <- add_criterion(fit_interact, "waic")
+loo_compare(fit_multi, fit_interact, criterion = "waic")
 ```
 
 :::
@@ -1407,11 +1385,11 @@ loo_compare(fit_m1, fit_m2, criterion = "waic")
 **Remaining limitations**:
 
 1. The linear interaction assumes the slope *difference* is constant across all
-   unemployment levels — check with a LOESS diagnostic when Z is continuous.
-2. Government-years within the same country are correlated (A5) — a multilevel
-   structure (Week 12) would handle this.
-3. Omitted confounders (economic openness, union density) may bias the ideology
-   coefficient.
+   values of women in parliament — check with a LOESS diagnostic if needed.
+2. Country-year observations within the same country are correlated (assumption A5) —
+   a multilevel structure (Week 12) would handle this.
+3. Omitted confounders (institutional quality, colonial history, cultural factors)
+   may bias the women-in-parliament coefficient.
 
 ---
 
