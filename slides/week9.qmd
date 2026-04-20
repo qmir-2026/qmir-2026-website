@@ -100,20 +100,30 @@ draw_dag <- function(
 # True DGP:
 #   gdp_pc       ~ Normal(18, 7)           [thousands USD, PPP]
 #   women_parl   = 15 + 0.9*gdp_pc + N(0,5)   [% seats, before any clip]
-#   health_spend = 2 + 0.2*gdp_pc + 0.12*women_parl + N(0,1.5)  [% GDP]
+#   reg_type     ~ Bernoulli(0.55)             [1 = parliamentary, 0 = presidential]
+#   health_spend = 2 + 0.2*gdp_pc + 0.12*women_parl
+#                  + 1.2*reg_type + N(0,1.5)  [% GDP]
 #
-# Estimands: α, β_women=0.12, β_gdp=0.20, σ=1.5
+# Estimands: α, β_women=0.12, β_gdp=0.20, β_reg=1.2, σ=1.5
 # Bivariate regression will over-estimate β_women (true DGP coefficient) because
 # GDP drives both variables — classic confounding.
+# reg_type shifts the intercept: parliamentary systems spend ~1.2 pp more on
+# health on average, holding gdp_pc and women_parl constant (dummy variable).
 # ─────────────────────────────────────────────────────────────────────────────
 set.seed(2026)
 n1 <- 120
 
-gdp_pc <- rnorm(n1, mean = 18, sd = 7)
+gdp_pc     <- rnorm(n1, mean = 18, sd = 7)
 women_parl <- 15 + 0.9 * gdp_pc + rnorm(n1, 0, 5)
-health_spend <- 2 + 0.2 * gdp_pc + 0.12 * women_parl + rnorm(n1, 0, 1.5)
+reg_type   <- rbinom(n1, 1, prob = 0.55)           # 1 = parliamentary
+health_spend <- 2 +
+  0.2  * gdp_pc +
+  0.12 * women_parl +
+  1.2  * reg_type +
+  rnorm(n1, 0, 1.5)
 
-df_controls <- tibble(gdp_pc, women_parl, health_spend)
+df_controls <- tibble(gdp_pc, women_parl, reg_type, health_spend) |>
+  mutate(system = if_else(reg_type == 1, "Parliamentary", "Presidential"))
 
 # Pre-fit bivariate brms model — available for Step 2 OVB comparison and LOO
 fit_controls_biv <- brm(
@@ -716,49 +726,49 @@ The dummy shifts the **intercept** — it gives the $D = 1$ group a different ba
 #| echo: false
 #| fig-height: 3.8
 #| dpi: 500
-#| fig-cap: "Dummy variable as a shifting intercept. Both regression lines share the same slope (unemployment effect), but Left governments start from a higher baseline. The vertical gap between the lines is β_D — the dummy coefficient."
-# Use a simpler additive model (no interaction) to illustrate the intercept-shift
+#| fig-cap: "Dummy variable as a shifting intercept. Both regression lines share the same slope (women-in-parliament effect on health spending), but parliamentary systems start from a higher baseline. The vertical gap between the lines is β_D — the regime-type dummy coefficient."
+# Additive model (no interaction) to illustrate the intercept-shift
 fit_dummy_demo <- lm(
-  transfer_spend ~ unemployment + left_gov,
-  data = df_interact
+  health_spend ~ women_parl + reg_type,
+  data = df_controls
 )
 
-# Predicted lines for each group at a grid of unemployment values
+# Predicted lines for each regime type across the range of women_parl
 x_grid <- seq(
-  min(df_interact$unemployment),
-  max(df_interact$unemployment),
+  min(df_controls$women_parl),
+  max(df_controls$women_parl),
   length.out = 80
 )
 
 pred_lines <- tibble(
-  unemployment = rep(x_grid, 2),
-  government = rep(c("Right", "Left"), each = 80),
-  left_gov = rep(c(0, 1), each = 80)
+  women_parl = rep(x_grid, 2),
+  system = rep(c("Presidential", "Parliamentary"), each = 80),
+  reg_type = rep(c(0, 1), each = 80)
 ) |>
   mutate(
-    transfer_spend = predict(
+    health_spend = predict(
       fit_dummy_demo,
-      newdata = tibble(unemployment = unemployment, left_gov = left_gov)
+      newdata = tibble(women_parl = women_parl, reg_type = reg_type)
     )
   )
 
 # Annotate the β_D gap at a fixed x position
 x_ann <- median(x_grid)
-y_right <- predict(
+y_pres <- predict(
   fit_dummy_demo,
-  newdata = tibble(unemployment = x_ann, left_gov = 0)
+  newdata = tibble(women_parl = x_ann, reg_type = 0)
 )
-y_left <- predict(
+y_parl <- predict(
   fit_dummy_demo,
-  newdata = tibble(unemployment = x_ann, left_gov = 1)
+  newdata = tibble(women_parl = x_ann, reg_type = 1)
 )
 
-df_interact |>
-  ggplot(aes(x = unemployment, y = transfer_spend, colour = government)) +
+df_controls |>
+  ggplot(aes(x = women_parl, y = health_spend, colour = system)) +
   geom_point(alpha = 0.45, size = 1.8) +
   geom_line(
     data = pred_lines,
-    aes(x = unemployment, y = transfer_spend, colour = government),
+    aes(x = women_parl, y = health_spend, colour = system),
     linewidth = 1.2,
     inherit.aes = FALSE
   ) +
@@ -766,28 +776,28 @@ df_interact |>
     "segment",
     x = x_ann,
     xend = x_ann,
-    y = y_right,
-    yend = y_left,
+    y = y_pres,
+    yend = y_parl,
     colour = "gray30",
     linewidth = 0.9,
     arrow = arrow(ends = "both", length = unit(0.18, "cm"), type = "closed")
   ) +
   annotate(
     "text",
-    x = x_ann + 0.35,
-    y = (y_right + y_left) / 2,
+    x = x_ann + 1.2,
+    y = (y_pres + y_parl) / 2,
     label = expression(beta[D]),
     size = 5,
     colour = "gray20",
     fontface = "bold"
   ) +
-  scale_colour_manual(values = c("Left" = col_1, "Right" = col_2)) +
+  scale_colour_manual(values = c("Parliamentary" = col_1, "Presidential" = col_2)) +
   theme_bw() +
   theme(panel.grid.minor = element_blank()) +
   labs(
-    x = "Unemployment Rate (%)",
-    y = "Transfer Spending (% GDP)",
-    colour = "Government",
+    x = "Women in Parliament (%)",
+    y = "Health Spending (% GDP)",
+    colour = "Regime Type",
     title = "Dummy Variable = Intercept Shift"
   )
 ```
