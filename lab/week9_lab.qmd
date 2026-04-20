@@ -88,23 +88,23 @@ set.seed(2026) # reproducibility: same data every time
 n <- 120 # 120 synthetic country-years
 
 # ── Population-level parameters (the ground truth) ──────────────────────────
-beta_0           <- 2    # intercept (presidential baseline)
-beta_women_pres  <- 0.08 # women_parl slope in presidential systems
-beta_gdp         <- 0.20 # GDP per capita partial association
-beta_reg         <- 1.5  # parliamentary intercept shift
-beta_interact    <- 0.10 # extra women_parl slope in parliamentary systems
-sigma            <- 1.5  # residual standard deviation
+beta_0 <- 2 # intercept (presidential baseline)
+beta_women_pres <- 0.08 # women_parl slope in presidential systems
+beta_gdp <- 0.20 # GDP per capita partial association
+beta_reg <- 1.5 # parliamentary intercept shift
+beta_interact <- 0.10 # extra women_parl slope in parliamentary systems
+sigma <- 1.5 # residual standard deviation
 
 # ── Data-generating process ──────────────────────────────────────────────────
-gdp_pc     <- rnorm(n, mean = 18, sd = 7)
+gdp_pc <- rnorm(n, mean = 18, sd = 7)
 women_parl <- 15 + 0.9 * gdp_pc + rnorm(n, 0, 5)
-reg_type   <- rbinom(n, 1, prob = 0.55)   # 1 = parliamentary, 0 = presidential
+reg_type <- rbinom(n, 1, prob = 0.55) # 1 = parliamentary, 0 = presidential
 
 health_spend <- beta_0 +
-  beta_gdp        * gdp_pc +
+  beta_gdp * gdp_pc +
   beta_women_pres * women_parl +
-  beta_reg        * reg_type +
-  beta_interact   * women_parl * reg_type +  # steeper slope in parliamentary
+  beta_reg * reg_type +
+  beta_interact * women_parl * reg_type + # steeper slope in parliamentary
   rnorm(n, 0, sigma)
 
 df <- tibble(gdp_pc, women_parl, reg_type, health_spend) |>
@@ -263,17 +263,17 @@ n_pp <- 2000
 # and add Gaussian noise with the drawn σ.
 # rowwise() + mutate(y_sim = list(...)) creates one simulated dataset per draw.
 prior_pred_controls <- tibble(
-  b0    = rnorm(n_pp, 10, 5), # intercept draws — Normal(10, 5)
-  b_wp  = rnorm(n_pp, 0, 2),  # women_parl slope draws — Normal(0, 2)
-  b_gdp = rnorm(n_pp, 0, 2),  # gdp_pc slope draws — Normal(0, 2)
-  b_reg = rnorm(n_pp, 0, 2),  # regime-type dummy draws — Normal(0, 2)
-  sigma = rexp(n_pp, 1)        # residual SD draws — Exponential(1)
+  b0 = rnorm(n_pp, 10, 5), # intercept draws — Normal(10, 5)
+  b_wp = rnorm(n_pp, 0, 2), # women_parl slope draws — Normal(0, 2)
+  b_gdp = rnorm(n_pp, 0, 2), # gdp_pc slope draws — Normal(0, 2)
+  b_reg = rnorm(n_pp, 0, 2), # regime-type dummy draws — Normal(0, 2)
+  sigma = rexp(n_pp, 1) # residual SD draws — Exponential(1)
 ) |>
   rowwise() |>
   mutate(
     y_sim = list(
       b0 +
-        b_wp  * df$women_parl +
+        b_wp * df$women_parl +
         b_gdp * df$gdp_pc +
         b_reg * df$reg_type +
         rnorm(nrow(df), 0, sigma)
@@ -363,9 +363,9 @@ fit_biv <- brm(
   health_spend ~ women_parl,
   data = df,
   prior = c(
-    prior(normal(10, 5),  class = "Intercept"), # baseline ~10% GDP
-    prior(normal(0, 2),   class = "b"),          # weakly informative prior
-    prior(exponential(1), class = "sigma")       # residual SD < 5 almost certainly
+    prior(normal(10, 5), class = "Intercept"), # baseline ~10% GDP
+    prior(normal(0, 2), class = "b"), # weakly informative prior
+    prior(exponential(1), class = "sigma") # residual SD < 5 almost certainly
   ),
   chains = 4,
   iter = 2000,
@@ -398,10 +398,10 @@ fit_multi <- brm(
   health_spend ~ women_parl + gdp_pc + reg_type,
   data = df,
   prior = c(
-    prior(normal(10, 5),  class = "Intercept"),
-    prior(normal(0, 2),   class = "b", coef = "women_parl"), # weakly informative
-    prior(normal(0, 2),   class = "b", coef = "gdp_pc"),     # weakly informative
-    prior(normal(0, 2),   class = "b", coef = "reg_type"),   # parliamentary shift
+    prior(normal(10, 5), class = "Intercept"),
+    prior(normal(0, 2), class = "b", coef = "women_parl"), # weakly informative
+    prior(normal(0, 2), class = "b", coef = "gdp_pc"), # weakly informative
+    prior(normal(0, 2), class = "b", coef = "reg_type"), # parliamentary shift
     prior(exponential(1), class = "sigma")
   ),
   chains = 4,
@@ -558,17 +558,20 @@ the multivariate estimate recovers a value close to the true DGP value of 0.12.
 #| fig-height: 3.0
 #| dpi: 500
 #| fig-cap: "OVB visualised: posterior mean and 95% credible interval for the women_parl coefficient from the bivariate (orange) and multivariate (purple) models. The bivariate estimate is inflated by the GDP confounder; the multivariate model gives a better-controlled average slope across both regime types."
-post_biv   <- posterior_summary(fit_biv)["b_women_parl", ]
+post_biv <- posterior_summary(fit_biv)["b_women_parl", ]
 post_multi <- posterior_summary(fit_multi)["b_women_parl", ]
 
 coef_df <- tibble(
   Model = factor(
     c("Bivariate\n(no controls)", "Multivariate\n(+ GDP + Regime Type)"),
-    levels = c("Bivariate\n(no controls)", "Multivariate\n(+ GDP + Regime Type)")
+    levels = c(
+      "Bivariate\n(no controls)",
+      "Multivariate\n(+ GDP + Regime Type)"
+    )
   ),
   Estimate = c(post_biv["Estimate"], post_multi["Estimate"]),
-  lo = c(post_biv["Q2.5"],    post_multi["Q2.5"]),
-  hi = c(post_biv["Q97.5"],   post_multi["Q97.5"])
+  lo = c(post_biv["Q2.5"], post_multi["Q2.5"]),
+  hi = c(post_biv["Q97.5"], post_multi["Q97.5"])
 )
 
 # DGP average slope: 0.08 + 0.10 * mean(reg_type) ≈ 0.135
@@ -656,8 +659,8 @@ grid_controls <- tibble(
     max(df$women_parl),
     length.out = 80
   ),
-  gdp_pc   = mean(df$gdp_pc),
-  reg_type = 1L   # evaluate partial effect for parliamentary systems
+  gdp_pc = mean(df$gdp_pc),
+  reg_type = 1L # evaluate partial effect for parliamentary systems
 )
 
 # posterior_epred returns a draws × grid matrix of E[Y | X, Z, D] values
@@ -727,7 +730,7 @@ substantial.
 #| label: loo-controls-compare
 #| echo: true
 fit_multi <- add_criterion(fit_multi, "loo")
-fit_biv   <- add_criterion(fit_biv,   "loo")
+fit_biv <- add_criterion(fit_biv, "loo")
 loo_compare(fit_biv, fit_multi)
 ```
 
@@ -825,8 +828,12 @@ tercile-based boxplot comparison.
 df |>
   ggplot(aes(x = health_spend, fill = system, colour = system)) +
   geom_density(alpha = 0.45, linewidth = 0.8) +
-  scale_fill_manual(values = c("Parliamentary" = col_1, "Presidential" = col_2)) +
-  scale_colour_manual(values = c("Parliamentary" = col_1, "Presidential" = col_2)) +
+  scale_fill_manual(
+    values = c("Parliamentary" = col_1, "Presidential" = col_2)
+  ) +
+  scale_colour_manual(
+    values = c("Parliamentary" = col_1, "Presidential" = col_2)
+  ) +
   theme_bw() +
   theme(panel.grid.minor = element_blank(), legend.position = "bottom") +
   labs(
@@ -1011,19 +1018,19 @@ wp_seq <- seq(10, 55, length.out = 60)
 gdp_mean <- mean(df$gdp_pc)
 
 prior_lines_int <- tibble(
-  sim   = 1:n_pp2,
-  b0    = rnorm(n_pp2, 10, 5),  # intercept draws — Normal(10, 5)
-  b_wp  = rnorm(n_pp2, 0, 2),   # women_parl slope draws — Normal(0, 2)
-  b_reg = rnorm(n_pp2, 0, 2),   # regime-type main effect draws — Normal(0, 2)
-  b_int = rnorm(n_pp2, 0, 2),   # interaction term draws — Normal(0, 2)
-  b_gdp = rnorm(n_pp2, 0, 2)    # GDP slope draws — Normal(0, 2)
+  sim = 1:n_pp2,
+  b0 = rnorm(n_pp2, 10, 5), # intercept draws — Normal(10, 5)
+  b_wp = rnorm(n_pp2, 0, 2), # women_parl slope draws — Normal(0, 2)
+  b_reg = rnorm(n_pp2, 0, 2), # regime-type main effect draws — Normal(0, 2)
+  b_int = rnorm(n_pp2, 0, 2), # interaction term draws — Normal(0, 2)
+  b_gdp = rnorm(n_pp2, 0, 2) # GDP slope draws — Normal(0, 2)
 ) |>
   expand_grid(women_parl = wp_seq, reg_type = c(0L, 1L)) |>
   mutate(
     y_hat = b0 +
-      b_wp  * women_parl +
+      b_wp * women_parl +
       b_reg * reg_type +
-      b_int * women_parl * reg_type +  # slope shifts by b_int in parliamentary
+      b_int * women_parl * reg_type + # slope shifts by b_int in parliamentary
       b_gdp * gdp_mean,
     system = if_else(reg_type == 1, "Parliamentary", "Presidential")
   )
@@ -1072,11 +1079,11 @@ fit_interact <- brm(
   health_spend ~ women_parl * reg_type + gdp_pc,
   data = df,
   prior = c(
-    prior(normal(10, 5),  class = "Intercept"),
-    prior(normal(0, 2),   class = "b", coef = "women_parl"),          # presidential slope
-    prior(normal(0, 2),   class = "b", coef = "reg_type"),            # parliamentary shift
-    prior(normal(0, 2),   class = "b", coef = "gdp_pc"),              # GDP partial effect
-    prior(normal(0, 2),   class = "b", coef = "women_parl:reg_type"), # slope difference
+    prior(normal(10, 5), class = "Intercept"),
+    prior(normal(0, 2), class = "b", coef = "women_parl"), # presidential slope
+    prior(normal(0, 2), class = "b", coef = "reg_type"), # parliamentary shift
+    prior(normal(0, 2), class = "b", coef = "gdp_pc"), # GDP partial effect
+    prior(normal(0, 2), class = "b", coef = "women_parl:reg_type"), # slope difference
     prior(exponential(1), class = "sigma")
   ),
   chains = 4,
@@ -1277,8 +1284,8 @@ post_all_int <- as_draws_df(fit_interact)
 
 me_df <- post_all_int |>
   transmute(
-    `Presidential`  = b_women_parl,                              # ME at D = 0
-    `Parliamentary` = b_women_parl + `b_women_parl:reg_type`     # ME at D = 1
+    `Presidential` = b_women_parl, # ME at D = 0
+    `Parliamentary` = b_women_parl + `b_women_parl:reg_type` # ME at D = 1
   ) |>
   pivot_longer(
     everything(),
@@ -1358,7 +1365,7 @@ Because we generated the data with an interaction, `fit_interact` should dominat
 ```{r}
 #| label: loo-interact
 #| echo: true
-fit_multi    <- add_criterion(fit_multi,    "loo")
+fit_multi <- add_criterion(fit_multi, "loo")
 fit_interact <- add_criterion(fit_interact, "loo")
 loo_compare(fit_multi, fit_interact)
 ```

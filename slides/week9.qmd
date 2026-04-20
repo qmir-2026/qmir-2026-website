@@ -893,11 +893,10 @@ This is the `posterior_epred` averaging workflow used in Parts II and IV.
 
 ::: notes
 - The key message: adding more predictors does not change the prior philosophy. Each coefficient needs its own prior, sized to reflect plausible effect magnitudes.
-- "A prior on β_women says: 'Before seeing the data, I expect that each additional percentage point of women in parliament is associated with a change in health spending of between -1.5 and +1.5 pp (Normal(0, 0.5) covers 99.7% of values in that range).'"
+- "A prior on β_women says: 'Before seeing the data, I expect that each additional percentage point of women in parliament is associated with a change in health spending of between -4 and +4 pp (Normal(0, 2) covers 99.7% of values in that range).'"
 - Standardizing predictors: an alternative approach is to standardize all predictors (z-score), which makes priors easier to set uniformly (all slopes roughly Normal(0, 1)). We won't do that here, but it's worth knowing.
 - σ prior: Exponential(1) implies P(σ < 5) ≈ 0.99 — very likely the residual SD is under 5pp of GDP. Substantively justified.
 :::
-
 ::: {style="font-size: 0.72em"}
 For our health spending model, we need priors for **five** parameters:
 :::
@@ -905,37 +904,32 @@ For our health spending model, we need priors for **five** parameters:
 
 :::::: columns
 ::: {.column width="50%" style="font-size: 0.72em"}
-
 $$
 \alpha \sim \text{Normal}(10, 5)
 $$ {#eq-prior-alpha-health}
 *"Baseline spending ~10% GDP when $X = Z = D = 0$; very uncertain"*
-
 $$
 \beta_X \sim \text{Normal}(0, 2)
 $$ {#eq-prior-bx-health}
-*"Per % women in parliament, change in spending probably between $\pm 6$ pp"*
-
+*"Per % women in parliament, zero change in spending is most plausible a priori; effects larger than $\pm 6$ pp would be surprising"*
 $$
 \beta_Z \sim \text{Normal}(0, 2)
 $$ {#eq-prior-bz-health}
-*"Per \$1k of GDP per capita, change in spending probably between $\pm 6$ pp"*
-
+*"Per \$1k of GDP per capita, zero change in spending is most plausible a priori; effects larger than $\pm 6$ pp would be surprising"*
 :::
 
 ::: {.column width="50%" style="font-size: 0.72em"}
-
 $$
 \beta_D \sim \text{Normal}(0, 2)
 $$ {#eq-prior-bd-health}
-*"Parliamentary systems may spend 1–2 pp more or less on health than presidential ones, holding other variables constant"*
+*"Parliamentary and presidential systems are assumed equally likely to spend more on health a priori; differences larger than $\pm 6$ pp would be surprising"*
 
 $$
 \sigma \sim \text{Exponential}(1)
 $$ {#eq-prior-sigma-health}
 *"Residual SD almost certainly below 5pp of GDP"*
-
 :::
+
 ::::::
 
 . . .
@@ -969,12 +963,14 @@ In this application we fit the multivariate model `health_spend ~ women_parl + g
 
 . . .
 
+::: {style="font-size: 0.72em"}
 **Legislative composition theory**: parliamentary systems concentrate budget authority in the legislature — party discipline is stronger, and the budget process is rooted in parliamentary sovereignty. Presidential systems divide power across branches, potentially weakening the translation of legislative preferences into policy.
+:::
 
 . . .
 
 :::::: columns
-::: {.column width="55%"}
+::: {.column width="55%" style="font-size: 0.72em"}
 
 The association between $X$ (women in parliament) and $Y$ (health spending) is **not constant** — it may change depending on $Z$ (regime type). This is called **moderation** or **association heterogeneity**.
 
@@ -1089,19 +1085,25 @@ post |>
 - For continuous Z: this diagnostic matters. We'll see this in future weeks.
 :::
 
+::: {style="font-size: 0.82em"}
 The interaction model imposes that the marginal effect of $X$ is **linear in** $Z$:
 
 $$
 \frac{\partial \mu}{\partial X} = \beta_1 + \beta_3 Z \quad \text{(linear in } Z\text{)}
 $$ {#eq-linearity-mod}
+:::
 
 . . .
 
+::: {style="font-size: 0.82em"}
 **When $Z$ is binary** (our case today): the assumption is trivially satisfied — there are only two groups and we estimate one slope per group.
+:::
 
 . . .
 
+::: {style="font-size: 0.82em"}
 **When $Z$ is continuous** (a future concern): check by comparing the linear fit with a flexible nonparametric smoother (LOESS) within quantile-based groups of $Z$:
+:::
 
 ```{r}
 #| label: fig-linearity-check
@@ -1359,9 +1361,9 @@ The same eight-step workflow applies to **every** model, regardless of complexit
 
 . . .
 
-::: {style="font-size: 0.82em"}
+::: {style="font-size: 0.7em"}
 | Step | What you do | Why |
-|------|-------------|-----|
+|------|-----------------|-----------------|
 | 1. DAG + Estimand | Draw the causal graph; state the quantity of interest | Clarifies what you're estimating and what to control for |
 | 2. Data Summary | Visualise and numerically describe your variables | Check for patterns, outliers, and whether an interaction is plausible |
 | 3. Formal Model | Write out $\mathcal{L}$ and all priors before coding | Forces precision; makes assumptions explicit |
@@ -1383,14 +1385,16 @@ The same eight-step workflow applies to **every** model, regardless of complexit
 - Week 10 preview: we go deeper into model assumptions and diagnostics — residual plots, heteroscedasticity, outlier detection.
 :::
 
+::: {style="font-size: 0.82em"}
 By the end of today, you should be able to:
 
 1. ✓ Explain **omitted variable bias** formally ($\hat{\beta}^{\text{biv}} = \beta + \text{bias}$) and use a **DAG** to classify variables as confounders, mediators, or colliders (Part I)
 2. ✓ Extend the Bayesian regression model to **multiple predictors** and interpret partial effects as $\partial \mu / \partial X_j$ (Parts I–II)
 3. ✓ Handle **categorical predictors** as $K - 1$ dummy variables with an intercept-shift interpretation (Part I)
-4. ✓ Specify a **multiplicative interaction model** and interpret $\partial \mu / \partial \text{women\_parl} = \beta_1 + \beta_3 \cdot \text{reg\_type}$ as conditional on regime type (Part III)
+4. ✓ Specify a **multiplicative interaction model** and interpret $\partial \mu / \partial \text{women\_parl} = \beta_1 + \beta_3 \cdot \text{reg_type}$ as conditional on regime type (Part III)
 5. ✓ Extract **posterior marginal effects** for parliamentary and presidential systems using `as_draws_df()` arithmetic — correctly, without a delta method (Parts III–IV)
 6. ✓ Compare competing models using **LOO-IC** and interpret `elpd_diff` relative to `se_diff` (Parts II + IV)
+:::
 
 . . .
 
@@ -1399,5 +1403,37 @@ By the end of today, you should be able to:
 :::
 
 ---
+
+## Bonus: Caching Model Calls in Quarto {.smaller}
+
+**The problem:** Every time you render your Quarto document, all code chunks re-execute — including expensive model calls. This gets annoying fast.
+
+**The solution:** Caching!
+
+**Global caching** (in your YAML header):
+
+````yaml
+execute:
+  cache: true
+````
+
+**Local caching** (per chunk):
+
+````r
+#| cache: true
+fit <- lm(y ~ x, data = df)
+````
+
+Quarto stores results in a `_cache/` folder and only reruns chunks when their code or dependencies change.
+
+
+**⚠️ Don't forget:** Add `_cache/` to your `.gitignore`!
+
+````
+# .gitignore
+_cache/
+````
+
+Cache folders can be large and are machine-specific — no need to commit them.
 
 ## References {#sec-references}
