@@ -95,6 +95,7 @@ draw_dag <- function(
 # DATASET 1: Women in Parliament → Health Spending
 # Story: Does legislative representation of women increase public health
 #        expenditure? GDP per capita confounds the relationship.
+# Variable `reg_type` stores regime type (1 = parliamentary, 0 = presidential)
 #
 # True DGP:
 #   gdp_pc       ~ Normal(18, 7)           [thousands USD, PPP]
@@ -262,7 +263,7 @@ By the end of today, you should be able to:
 . . .
 
 :::::: columns
-::: {.column width="55%"}
+::: {.column width="55%" style="font-size: 0.8em"}
 
 **The empirical problem**: Wealthier democracies simultaneously have:
 
@@ -338,10 +339,9 @@ The arrows are *your* theoretical commitments, not statistical output.
 ## DAGs in Quarto: MermaidJS {#sec-dag-mermaid .smaller}
 
 ::: notes
-- Quick practical tip: students can draw simple DAGs directly in Quarto using fenced mermaid code blocks — no R package required.
-- `graph LR` = left-to-right layout; `graph TD` = top-down.
-- Arrow syntax: `A --> B` means A has a directed arrow into B.
-- This is one lightweight option for documenting a DAG in a Quarto document or homework submission. The `draw_dag()` ggplot helper used throughout these slides is more customisable for polished figures.
+- Model recovers associations (correlations), not causation
+- In DAG metaphor: models can detect connections/edges, but not the direction of the arrow
+- You need theory (or research design based approach) for that 
 :::
 
 One quick way to draw a DAG directly in a Quarto document — no R code needed:
@@ -358,6 +358,8 @@ Use a fenced `{mermaid}` block with `graph LR` (left-to-right) or `graph TD` (to
 Node labels go in `["quoted text"]`; arrows are `-->`.
 This is enough for a homework submission or a quick theoretical sketch.
 The polished ggplot DAGs in these slides use the `draw_dag()` helper defined in the setup chunk.
+
+[Quarto Diagrams Documentation](https://quarto.org/docs/authoring/diagrams.html#overview)
 :::
 
 ---
@@ -508,7 +510,7 @@ p_coll <- draw_dag(
     x = 2,
     y = 0.55,
     size = 3,
-    label = "Never control for C: no",
+    label = "Control for C: no",
     colour = col_2,
     fontface = "bold"
   )
@@ -569,6 +571,8 @@ Neither step substitutes for the other.
 - Key lesson: OVB is a design/measurement problem. Adding GDP to the model removes the bias — but only if GDP is the *only* omitted confounder.
 :::
 
+::: {style="font-size: 0.72em"}
+
 Suppose the **true model** has two predictors, $X$ (women in parliament) and $Z$ (GDP per capita):
 
 $$
@@ -580,6 +584,7 @@ But we fit only the **bivariate model**, omitting $Z$. The bivariate OLS estimat
 $$
 \hat{\beta}_X^{\text{biv}} \xrightarrow{p} \beta_X + \beta_Z \cdot \underbrace{\frac{\text{Cov}(X, Z)}{\text{Var}(X)}}_{\text{auxiliary slope: } X \text{ on } Z}
 $$ {#eq-ovb-formula}
+:::
 
 . . .
 
@@ -587,7 +592,9 @@ $$ {#eq-ovb-formula}
 
 . . .
 
+::: {style="font-size: 0.72em"}
 In our case: $\beta_Z > 0$ (wealth is associated with health spending) **and** $\text{Cov}(X, Z) > 0$ (wealth is associated with higher representation) $\Rightarrow$ **OVB is positive** — we systematically over-estimate $\beta_X$.
+:::
 
 . . .
 
@@ -605,6 +612,7 @@ In our case: $\beta_Z > 0$ (wealth is associated with health spending) **and** $
 - Formally writing out the model (likelihood + priors for every parameter) is the key discipline. Priors for control variables are subject to the same scientific scrutiny as priors for the main predictor.
 :::
 
+::: {style="font-size: 0.72em"}
 Everything from Week 8 carries over. We simply extend the linear predictor:
 
 $$
@@ -614,9 +622,11 @@ $$ {#eq-multi-likelihood}
 $$
 \mu_i = \alpha + \beta_X X_i + \beta_Z Z_i + \cdots + \beta_k X_{ki}
 $$ {#eq-multi-linpred}
+:::
 
 . . .
 
+::: {style="font-size: 0.72em"}
 **Interpreting coefficients as partial effects**:
 
 $$
@@ -626,6 +636,7 @@ $$ {#eq-partial-x}
 $$
 \frac{\partial \mu}{\partial Z} = \beta_Z \qquad \text{(holding all other predictors constant)}
 $$ {#eq-partial-z}
+:::
 
 . . .
 
@@ -635,11 +646,13 @@ $$ {#eq-partial-z}
 
 . . .
 
+::: {style="font-size: 0.72em"}
 Posterior:
 
 $$
 p(\alpha, \beta_X, \beta_Z, \sigma \mid \mathbf{Y}, \mathbf{X}, \mathbf{Z}) \propto \mathcal{L}(\alpha, \beta_X, \beta_Z, \sigma) \cdot p(\alpha)\, p(\beta_X)\, p(\beta_Z)\, p(\sigma)
 $$ {#eq-multi-posterior}
+:::
 
 ---
 
@@ -653,6 +666,7 @@ $$ {#eq-multi-posterior}
 - Preview: "We'll use a binary dummy (left vs. right government) in the second application. It generalizes directly to 3+ categories."
 :::
 
+::: {style="font-size: 0.72em"}
 When a predictor is **categorical** (nominal), we encode it as $K - 1$ binary indicator variables:
 
 $$
@@ -660,23 +674,25 @@ $$
 $$ {#eq-dummy-model}
 
 where $D_i \in \{0, 1\}$ is an indicator for one of $K = 2$ groups.
+:::
 
 . . .
 
+::: {style="font-size: 0.72em"}
 **Interpretation**:
 
 - $\alpha$: expected $Y$ when $D = 0$ (reference category) and other predictors = 0
 - $\beta_D$: expected *difference* in $Y$ between $D = 1$ and $D = 0$, holding $X$ and $Z$ constant
 
-::: {style="font-size: 0.8em"}
 $D = 0$ (reference group): $\mu_i = \alpha + \beta_X X_i + \beta_Z Z_i$
 
 $D = 1$ (indicator group): $\mu_i = (\alpha + \beta_D) + \beta_X X_i + \beta_Z Z_i$
 :::
-
 . . .
 
+::: {style="font-size: 0.72em"}
 The dummy shifts the **intercept** — it gives the $D = 1$ group a different baseline level while holding the slopes constant.
+:::
 
 . . .
 
