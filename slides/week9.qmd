@@ -1036,6 +1036,10 @@ The dummy shifts the **intercept** by $\beta_2$; the product shifts the **slope*
 
 ---
 
+![Source: Brambor et al. (2006)](images/Interaction.png)
+
+---
+
 ## Posterior Marginal Effects: Exact by Arithmetic {#sec-posterior-me .smaller}
 
 ::: notes
@@ -1102,60 +1106,22 @@ $$ {#eq-linearity-mod}
 . . .
 
 ::: {style="font-size: 0.82em"}
-**When $Z$ is continuous** (a future concern): check by comparing the linear fit with a flexible nonparametric smoother (LOESS) within quantile-based groups of $Z$:
+**When $Z$ is continuous** (a future concern): check by comparing the linear fit with a flexible nonparametric smoother (LOESS) within groups of $Z$:
 :::
 
 ```{r}
 #| label: fig-linearity-check
 #| echo: false
 #| fig-height: 2.4
-#| fig-cap: "Linearity check for a continuous moderator: split into thirds and compare linear vs. LOESS slopes. If they diverge, the linearity-of-moderation assumption is violated."
-set.seed(7)
-n_ex <- 200
-z_vals <- rnorm(n_ex, 0, 1)
-x_vals <- rnorm(n_ex, 0, 1)
-y_lin <- 1 + 0.5 * x_vals + 1.2 * x_vals * z_vals + rnorm(n_ex, 0, 0.5)
-y_nlin <- 1 + 0.5 * x_vals + sin(z_vals) * x_vals + rnorm(n_ex, 0, 0.5)
-
-df_lin_check <- bind_rows(
-  tibble(x = x_vals, y = y_lin, z = z_vals, case = "Linearity holds"),
-  tibble(x = x_vals, y = y_nlin, z = z_vals, case = "Non-linear moderation")
-) |>
-  mutate(
-    z_group = cut(
-      z,
-      breaks = quantile(z, c(0, 1 / 3, 2 / 3, 1)),
-      labels = c("Z low", "Z mid", "Z high"),
-      include.lowest = TRUE
-    ),
-    case = factor(case, levels = c("Linearity holds", "Non-linear moderation"))
-  )
-
-df_lin_check |>
-  ggplot(aes(x = x, y = y, colour = z_group)) +
-  geom_smooth(
-    aes(group = z_group),
-    method = "lm",
-    se = FALSE,
-    linewidth = 0.9
-  ) +
-  geom_smooth(
-    aes(group = z_group),
-    method = "loess",
-    se = FALSE,
-    linewidth = 0.9,
-    linetype = "dashed"
-  ) +
-  scale_colour_manual(values = c(col_1, col_4, col_2), name = "Z tertile") +
-  facet_wrap(~case) +
-  theme_bw() +
-  theme(panel.grid.minor = element_blank()) +
-  labs(
-    x = "X",
-    y = "Y",
-    title = "Linearity of Moderation Check",
-    subtitle = "Solid = OLS  |  Dashed = LOESS  |  Left: assumption holds  |  Right: violated"
-  )
+#| fig-cap: "Linearity check for a moderator: Across groups ($Z = 0$, $Z = 1$), check if line is appropriate representation of relationship"
+ggplot(
+  data = df,
+  aes(x = women_parl, y = health_spend, color = as.factor(reg_type))
+) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  geom_smooth(method = "loess") +
+  theme_bw()
 ```
 
 ---
