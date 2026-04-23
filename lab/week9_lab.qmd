@@ -487,7 +487,7 @@ closely envelope the observed one.
 #| fig-height: 3.5
 #| dpi: 500
 #| fig-cap: "Posterior predictive check for the health spending model. The dark line is the observed distribution; light blue lines are 50 draws from the posterior predictive. The Gaussian model fits well."
-pp_check(fit_multi, ndraws = 50) +
+pp_check(fit_multi, ndraws = 4000) +
   theme_bw() +
   theme(panel.grid.minor = element_blank()) +
   labs(
