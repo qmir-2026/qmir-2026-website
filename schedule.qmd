@@ -42,10 +42,25 @@ Here's your roadmap for the semester!
 
 | Week | Topic | Monday | Thursday | Slides | Exercise | Homework | Resources |
 |:----:|:-----|:------|:--------|:------:|:---:|:------:|:------:|
-| 8    | Bivariate Linear Regression    | Apr 13 | Apr 16 | [<i class="fa fa-chalkboard" style="color: black; font-weight: bold;"></i>](slides/week8.qmd) | [{{< fa code >}}]{style="color: lightgray"}  | Mon [<i class="fa fa-laptop-code" style="color: black; font-weight: bold;"></i>](https://classroom.github.com/a/lw0Ewijh)<br>Thu [<i class="fa fa-laptop-code" style="color: black; font-weight: bold;"></i>](https://classroom.github.com/a/gtaSEMcO) | [<i class="fa fa-book" style="color: black; font-weight: bold;"></i>](resources/08_resources.qmd) |
-| 9    | Multivariate Regression & Interactions | Apr 20 | Apr 23 | [<i class="fa fa-chalkboard" style="color: black; font-weight: bold;"></i>](slides/week9.qmd) | [<i class="fa fa-code" style="color: black; font-weight: bold;"></i>](lab/week9_lab.qmd)  | Mon [<i class="fa fa-laptop-code" style="color: black; font-weight: bold;"></i>](https://classroom.github.com/a/F4z8dLAo)<br>Thu [<i class="fa fa-laptop-code" style="color: black; font-weight: bold;"></i>](https://classroom.github.com/a/jJS_ouIM) | <i class="fa fa-book" style="color: lightgray; font-weight: bold;"></i> |
-| 10    | Modeling Binary Outcomes | Apr 27 | Apr 30 | [{{< fa chalkboard >}}]{style="color: lightgray"} | [{{< fa code >}}]{style="color: lightgray"}  | [{{< fa laptop-code >}}]{style="color: lightgray"} | <i class="fa fa-book" style="color: lightgray; font-weight: bold;"></i> |
-| 11    | Fixed Effects & Within-Unit Inference | May 04 | May 07 | [{{< fa chalkboard >}}]{style="color: lightgray"} | [{{< fa code >}}]{style="color: lightgray"}  | [{{< fa laptop-code >}}]{style="color: lightgray"} | <i class="fa fa-book" style="color: lightgray; font-weight: bold;"></i> |
-| 12    | Multilevel Models & Partial Pooling  | May 11 | May 21 | [{{< fa chalkboard >}}]{style="color: lightgray"} | [{{< fa code >}}]{style="color: lightgray"}  | [{{< fa laptop-code >}}]{style="color: lightgray"} | <i class="fa fa-book" style="color: lightgray; font-weight: bold;"></i> |
-| 13    | Beyond the Course: Applying What You’ve Learned | May 18 | May 28 | [{{< fa chalkboard >}}]{style="color: lightgray"} | [{{< fa code >}}]{style="color: lightgray"}  | [{{< fa laptop-code >}}]{style="color: lightgray"} | <i class="fa fa-book" style="color: lightgray; font-weight: bold;"></i> |
-| 14    | Take Home Exam | May 28 19:00 -- June 05 23:59 | May 28 19:00 -- June 05 23:59 | [{{< fa chalkboard >}}]{style="color: lightgray"} | [{{< fa code >}}]{style="color: lightgray"}  | [{{< fa laptop-code >}}]{style="color: lightgray"} | [{{< fa book >}}]{style="color: lightgray"} |
+| 8    | Bivariate Linear Regression    | Apr 13 | Apr 16 | [<i class="fa fa-chalkboard" style="color: black; font-weight: bold;"></i>](slides/week8.qmd) | [{{< fa code >}}]{style="color: lightgray"}  | <span class="hw-visible"> Mon [<i class="fa fa-laptop-code" style="color: black; font-weight: bold;"></i>](https://classroom.github.com/a/lw0Ewijh)<br>Thu [<i class="fa fa-laptop-code" style="color: black; font-weight: bold;"></i>](https://classroom.github.com/a/gtaSEMcO) </span> | [<i class="fa fa-book" style="color: black; font-weight: bold;"></i>](resources/08_resources.qmd) |
+| 9    | Multivariate Regression | Apr 20 | Apr 23 | [<i class="fa fa-chalkboard" style="color: black; font-weight: bold;"></i>](slides/week9.qmd) | [<i class="fa fa-code" style="color: black; font-weight: bold;"></i>](lab/week9_lab.qmd)  | <span class="hw-visible"> Mon [<i class="fa fa-laptop-code" style="color: black; font-weight: bold;"></i>](https://classroom.github.com/a/F4z8dLAo)<br>Thu [<i class="fa fa-laptop-code" style="color: black; font-weight: bold;"></i>](https://classroom.github.com/a/jJS_ouIM) </span> | [<i class="fa fa-book" style="color: black; font-weight: bold;"></i>](resources/09_resources.qmd) |
+| 10   | Interactions | Apr 27 | Apr 30 | [{{< fa chalkboard >}}]{style="color: lightgray"} | [{{< fa code >}}]{style="color: lightgray"}  | [{{< fa laptop-code >}}]{style="color: lightgray"} | [<i class="fa fa-book" style="color: black; font-weight: bold;"></i>](resources/10_resources.qmd) |
+| 11   | Modeling Binary Outcomes | May 04 | May 07 | [{{< fa chalkboard >}}]{style="color: lightgray"} | [{{< fa code >}}]{style="color: lightgray"}  | [{{< fa laptop-code >}}]{style="color: lightgray"} | <i class="fa fa-book" style="color: lightgray; font-weight: bold;"></i> |
+| 12   | Multilevel Models & Partial Pooling  | May 11 | May 21 | [{{< fa chalkboard >}}]{style="color: lightgray"} | [{{< fa code >}}]{style="color: lightgray"}  | [{{< fa laptop-code >}}]{style="color: lightgray"} | <i class="fa fa-book" style="color: lightgray; font-weight: bold;"></i> |
+| 13   | Beyond the Course: Applying What You've Learned | May 18 | May 28 | [{{< fa chalkboard >}}]{style="color: lightgray"} | [{{< fa code >}}]{style="color: lightgray"}  | [{{< fa laptop-code >}}]{style="color: lightgray"} | <i class="fa fa-book" style="color: lightgray; font-weight: bold;"></i> |
+
+#### Take Home Exam
+
+::: {.callout-note icon=false}
+## {{< fa file-pen >}} Take Home Exam
+
+**Window:** May 28 19:00 — June 11 23:59 (two weeks)
+
+**Distribution:** via GitHub Classroom, like the weekly homework assignments.
+
+**Submission:** the version of your repository at the moment the deadline passes (i.e., your last push before June 11 23:59) will be graded.
+
+**What to expect:** you will receive a dataset, contextual background, and a research question, and are expected to conduct a full empirical analysis on your own — covering data exploration, model formulation and justification, estimation, and interpretation — submitted as a reproducible repository with a rendered PDF.
+
+Detailed grading criteria and the late submission policy will be announced together with the exam.
+:::
