@@ -639,6 +639,10 @@ me_df <- post_all_int |>
 # P(β₃ > 0 | data): direct posterior probability — not a p-value
 prob_b3_pos <- mean(post_all_int$`b_women_parl:reg_type` > 0)
 
+# or alternatively
+post_all_int |>
+  summarise("Pr(beta_int>0)" = sum(`b_women_parl:reg_type` > 0) / n())
+
 me_df |>
   ggplot(aes(x = marginal_effect, fill = system, colour = system)) +
   geom_density(alpha = 0.55, linewidth = 0.8) +
@@ -705,9 +709,14 @@ Because we generated the data with an interaction, `fit_interact` should dominat
 ```{r}
 #| label: loo-interact
 #| echo: true
-fit_multi <- add_criterion(fit_multi, "loo")
-fit_interact <- add_criterion(fit_interact, "loo")
-loo_compare(fit_multi, fit_interact)
+loo(fit_interact)
+
+loo(fit_multi)
+
+loo(
+  fit_interact,
+  fit_multi
+)
 ```
 
 ::: {.callout-note}
