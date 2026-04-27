@@ -1015,123 +1015,179 @@
     "text": "Live Demo 2: Clone repo from GitHub\n\nStep 1: Go to GitHub repo Step 2: Copy link Step 3: Open Positron Step 4: Click Open Folder from GitHub Step 5: Paste Link Step 6: Create Step 7: Change files -&gt; show file changes viewe Step 8: Push wont work, you dont have access Step 9: For homeworks you will Step 10: Show how I see in GitHub the date and time of commits"
   },
   {
-    "objectID": "slides/images/COPYRIGHTS.html",
-    "href": "slides/images/COPYRIGHTS.html",
+    "objectID": "slides/week1.html#qmir-2026",
+    "href": "slides/week1.html#qmir-2026",
     "title": "QMIR 2026",
-    "section": "",
-    "text": "Copyright and Usage Restrictions for University Assets\nImportant Notice: The R package code is licensed under the GNU General Public License v3.0. However, the following assets included in this package are the intellectual property of the University of Mannheim and are not covered by the GPL-3.0 license.\nThe logo of the University of Mannheim and the photo of the main palace are the exclusive property of the university, and their use is subject to strict conditions as outlined on the university’s homepage. The marketing rights are exclusively held by the university’s Service und Marketing GmbH.\n\nCopyright Holder: Universität Mannheim Service und Marketing GmbH\nCopyright Status: All Rights Reserved.\nPermitted Use: These assets are provided in this package for the official, work-related use of university staff and faculty (e.g., for presentations, posters, and publications) to create materials in line with the university’s corporate design. According to university policy, the use of the logo is strictly reserved for employees and, in specific cases, Ph.D. students.\nProhibited Use: Use of these assets by students (except for Ph.D. students on presentations and dissertations) and external partners is not permitted without prior, explicit authorization from the university’s Communications and Marketing department.\n\nFor a full overview of the university’s corporate design guidelines and official usage policies, please refer to the university’s official website. The brief descriptions provided here are for informational purposes only; the legally binding rules are those stated on the university’s website.\nBy using this package, you agree to abide by these terms and confirm that your use of the logo is in accordance with the university’s official policies."
+    "section": "QMIR 2026",
+    "text": "QMIR 2026\nWeek 1: Course Roadmap & Research Workflow\n Tristan Muno            March 9, 2026"
   },
   {
-    "objectID": "resources/13_resources.html",
-    "href": "resources/13_resources.html",
-    "title": "Week 13 Resources",
+    "objectID": "slides/week1.html#agenda",
+    "href": "slides/week1.html#agenda",
+    "title": "QMIR 2026",
+    "section": "Agenda",
+    "text": "Agenda\n\nIntroduction\n\nAbout me\nAbout you\n\nCourse overview and expectations\n\nWhat you will learn\nWhat this course does not cover\nWhy the course is structured this way\n\nGetting started\n\nInstallation\nFirst look at Positron"
+  },
+  {
+    "objectID": "slides/week1.html#survey",
+    "href": "slides/week1.html#survey",
+    "title": "QMIR 2026",
+    "section": "Survey",
+    "text": "Survey\nPlease fill out the following survey:\ndertristan.limesurvey.net/qmir-2026-welcome"
+  },
+  {
+    "objectID": "slides/week1.html#about-me",
+    "href": "slides/week1.html#about-me",
+    "title": "QMIR 2026",
+    "section": "About me",
+    "text": "About me"
+  },
+  {
+    "objectID": "slides/week1.html#about-you",
+    "href": "slides/week1.html#about-you",
+    "title": "QMIR 2026",
+    "section": "About you",
+    "text": "About you\n\nWhat name would you like us to call you?\nWhat natural (spoken) languages do you speak or are currently learning? (e.g., German, Spanish, Arabic – not programming languages)\nHow do you usually spend your time outside university? (This can be anything: a side job, vocational/civilian service, volunteering, sports, creative hobbies, gaming, family time – whatever is part of your life)"
+  },
+  {
+    "objectID": "slides/week1.html#about-you-continued",
+    "href": "slides/week1.html#about-you-continued",
+    "title": "QMIR 2026",
+    "section": "About you continued",
+    "text": "About you continued"
+  },
+  {
+    "objectID": "slides/week1.html#what-you-will-learn",
+    "href": "slides/week1.html#what-you-will-learn",
+    "title": "QMIR 2026",
+    "section": "What you will learn",
+    "text": "What you will learn\n\nHow to build a reproducible, open-source research workflow – integrating data, code, analysis, and writing into a transparent scientific process\nHow to use statistical models to learn from data – understanding what models assume, what they estimate, how they update our beliefs, and how to interpret results responsibly\nHow to communicate empirical results clearly and responsibly – through well-structured reports, visualizations, and reproducible documents"
+  },
+  {
+    "objectID": "slides/week1.html#what-this-course-does-not-cover",
+    "href": "slides/week1.html#what-this-course-does-not-cover",
+    "title": "QMIR 2026",
+    "section": "What this course does not cover",
+    "text": "What this course does not cover\n\nData collection and research design – we work with existing datasets and do not cover survey design, measurement strategies, or fieldwork (the university offers dedicated courses and resources in these areas)\nCausal inference methods – we focus on analyzing and interpreting associations between variables rather than formal causal identification (specialized courses cover causal inference in depth)\nSubstantive political theory or normative argumentation – we use real political science examples, but the focus is methodological and conceptual training rather than developing theoretical frameworks"
+  },
+  {
+    "objectID": "slides/week1.html#why-the-course-is-structured-this-way",
+    "href": "slides/week1.html#why-the-course-is-structured-this-way",
+    "title": "QMIR 2026",
+    "section": "Why the course is structured this way",
+    "text": "Why the course is structured this way"
+  },
+  {
+    "objectID": "slides/week1.html#why-the-course-is-structured-this-way-1",
+    "href": "slides/week1.html#why-the-course-is-structured-this-way-1",
+    "title": "QMIR 2026",
+    "section": "Why the course is structured this way",
+    "text": "Why the course is structured this way\n\nAn (toy) example of a fully integrated, reproducible research pipeline in action: Quarto manuscript\nWe will build up to this step by step, learning and integrating each piece along the way"
+  },
+  {
+    "objectID": "slides/week1.html#why-the-course-is-structured-this-way-2",
+    "href": "slides/week1.html#why-the-course-is-structured-this-way-2",
+    "title": "QMIR 2026",
+    "section": "Why the course is structured this way",
+    "text": "Why the course is structured this way\n\nAdmittedly overkill for simple tasks, but it provides a scalable, FOSS toolbox for complex projects, advanced models, and fully reproducible workflows\n\nBuilds a foundation in quantitative methods and data science that’s useful across disciplines and careers, helping you understand research from other fields while gaining essential data skills"
+  },
+  {
+    "objectID": "slides/week1.html#installation",
+    "href": "slides/week1.html#installation",
+    "title": "QMIR 2026",
+    "section": "Installation",
+    "text": "Installation\nInstallation guide"
+  },
+  {
+    "objectID": "slides/week1.html#first-glance-at-positron",
+    "href": "slides/week1.html#first-glance-at-positron",
+    "title": "QMIR 2026",
+    "section": "First glance at Positron",
+    "text": "First glance at Positron\nPositron documentation"
+  },
+  {
+    "objectID": "schedule.html",
+    "href": "schedule.html",
+    "title": "Schedule",
+    "section": "",
+    "text": "Here’s your roadmap for the semester!\n\nClass\n\n Instructor-led lecture: concepts, theory and foundations.\n Hands-on exercises with guidance.\n\nHomework ()\n\nAssigned at the end of class.\nDue 7 days later (Mon → next Mon 13:30; Thu → next Thu 18:45)\n\nAdditional resources ()\n\nFurther readings and online learning resources\n\n\n\nSemester Schedule\n\n\n\nWeek\nTopic\nMonday\nThursday\nSlides\nExercise\nHomework\nResources\n\n\n\n\n1\nCourse Roadmap & Research Workflow\nFeb 09\nFeb 12\n\n\n\n\n\n\n\n\nBlock I: Scientific Programming Fundamentals\n\n\n\nWeek\nTopic\nMonday\nThursday\nSlides\nExercise\nHomework\nResources\n\n\n\n\n2\nReproducible Research with R, Quarto & Git\nFeb 16\nFeb 19\n\n\n\n\n\n\n3\nR Fundamentals: Data Types & Structures\nFeb 23\nFeb 26\n\n\n Mon Thu  \n\n\n\n4\nTidy Data: Wrangling & Visualization\nMar 02\nMar 05\n\n\n Mon Thu \n\n\n\n5\nReshaping, Merging & Data Visualization\nMar 09\nMar 12\n\n\n Mon Thu \n\n\n\n\n\n\nBlock II: The Logic of Bayesian Inference\n\n\n\nWeek\nTopic\nMonday\nThursday\nSlides\nExercise\nHomework\nResources\n\n\n\n\n6\nProbability, Simulation & Bayes’ Theorem\nMar 16\nMar 19\n\n\n Mon Thu \n\n\n\n7\nMarkov Chain Monte Carlo\nMar 23\nMar 26\n\n\n Mon Thu \n\n\n\n\n\n\nBlock III: Applied Data Analysis\n\n\n\nWeek\nTopic\nMonday\nThursday\nSlides\nExercise\nHomework\nResources\n\n\n\n\n8\nBivariate Linear Regression\nApr 13\nApr 16\n\n\n Mon Thu  \n\n\n\n9\nMultivariate Regression\nApr 20\nApr 23\n\n\n Mon Thu  \n\n\n\n10\nInteractions\nApr 27\nApr 30\n\n\n\n\n\n\n11\nModeling Binary Outcomes\nMay 04\nMay 07\n\n\n\n\n\n\n12\nMultilevel Models & Partial Pooling\nMay 11\nMay 21\n\n\n\n\n\n\n13\nBeyond the Course: Applying What You’ve Learned\nMay 18\nMay 28\n\n\n\n\n\n\n\n\n\nTake Home Exam\n\n\n\n\n\n\nNote Take Home Exam\n\n\n\nWindow: May 28 19:00 — June 11 23:59 (two weeks)\nDistribution: via GitHub Classroom, like the weekly homework assignments.\nSubmission: the version of your repository at the moment the deadline passes (i.e., your last push before June 11 23:59) will be graded.\nWhat to expect: you will receive a dataset, contextual background, and a research question, and are expected to conduct a full empirical analysis on your own — covering data exploration, model formulation and justification, estimation, and interpretation — submitted as a reproducible repository with a rendered PDF.\nDetailed grading criteria and the late submission policy will be announced together with the exam."
+  },
+  {
+    "objectID": "resources/12_resources.html",
+    "href": "resources/12_resources.html",
+    "title": "Week 12 Resources",
     "section": "",
     "text": "McElreath, Richard. 2020. Statistical Rethinking: A Bayesian Course with Examples in r and STAN. 2nd ed. Chapman; Hall/CRC. https://doi.org/10.1201/9780429029608."
   },
   {
-    "objectID": "resources/11_resources.html",
-    "href": "resources/11_resources.html",
-    "title": "Week 11 Resources",
+    "objectID": "resources/10_resources.html",
+    "href": "resources/10_resources.html",
+    "title": "Week 10 Resources",
     "section": "",
     "text": "McElreath, Richard. 2020. Statistical Rethinking: A Bayesian Course with Examples in r and STAN. 2nd ed. Chapman; Hall/CRC. https://doi.org/10.1201/9780429029608."
   },
   {
-    "objectID": "resources/09_resources.html",
-    "href": "resources/09_resources.html",
-    "title": "Week 9 Resources",
+    "objectID": "resources/08_resources.html",
+    "href": "resources/08_resources.html",
+    "title": "Week 8 Resources",
     "section": "",
-    "text": "McElreath, Richard. 2020. Statistical Rethinking: A Bayesian Course with Examples in r and STAN. 2nd ed. Chapman; Hall/CRC. https://doi.org/10.1201/9780429029608."
+    "text": "Bürkner, Paul-Christian. 2017. “Brms: An R Package for Bayesian Multilevel Models Using Stan.” Journal of Statistical Software 80: 1–28.\n\n\nGelman, Andrew, John B. Carlin, Hal S. Stern, David B. Dunson, Aki Vehtari, and Donald B. Rubin. 2013a. “Introduction to Regression Models.” In Bayesian Data Analysis, 3rd ed. Chapman; Hall/CRC. https://sites.stat.columbia.edu/gelman/book/BDA3.pdf.\n\n\nGelman, Andrew, John B. Carlin, Hal S. Stern, David B. Dunson, Aki Vehtari, and Donald B. Rubin. 2013b. “Single-Parameter Models.” In Bayesian Data Analysis, 3rd ed. Chapman; Hall/CRC. https://sites.stat.columbia.edu/gelman/book/BDA3.pdf.\n\n\nMcElreath, Richard. 2020. “Geocentric Models.” In Statistical Rethinking: A Bayesian Course with Examples in r and STAN, 2nd ed. Chapman; Hall/CRC. https://doi.org/10.1201/9780429029608.\n\n\nMcElreath, Richard. 2026. “Statistical Rethinking 2026 Lecture A04: Linear Models.” YouTube. https://www.youtube.com/watch?v=6z4YxVYp9R8."
   },
   {
-    "objectID": "resources/07_resources.html",
-    "href": "resources/07_resources.html",
-    "title": "Week 7 Resources",
+    "objectID": "resources/06_resources.html",
+    "href": "resources/06_resources.html",
+    "title": "Week 6 Resources",
     "section": "",
-    "text": "Bürkner, Paul-Christian. 2017. “Brms: An R Package for Bayesian Multilevel Models Using Stan.” Journal of Statistical Software 80: 1–28.\n\n\nCarpenter, Bob, Andrew Gelman, Matthew D. Hoffman, et al. 2017. “Stan: A Probabilistic Programming Language.” Journal of Statistical Software 76: 1–32. https://doi.org/10.18637/jss.v076.i01.\n\n\nGelfand, Alan E., Susan E. Hills, Amy Racine-Poon, and Adrian FM Smith. 1990. “Illustration of Bayesian Inference in Normal Data Models Using Gibbs Sampling.” Journal of the American Statistical Association 85 (412): 972–85. https://doi.org/10.1080/01621459.1990.10474968.\n\n\nGelfand, Alan E., and Adrian FM Smith. 1990. “Sampling-Based Approaches to Calculating Marginal Densities.” Journal of the American Statistical Association 85 (410): 398–409. https://doi.org/10.1080/01621459.1990.10476213.\n\n\nGelman, Andrew, John B. Carlin, Hal S. Stern, David B. Dunson, Aki Vehtari, and Donald B. Rubin. 2013a. “Basics of Markov Chain Simulation.” In Bayesian Data Analysis, 3rd ed. Chapman; Hall/CRC. https://sites.stat.columbia.edu/gelman/book/BDA3.pdf.\n\n\nGelman, Andrew, John B. Carlin, Hal S. Stern, David B. Dunson, Aki Vehtari, and Donald B. Rubin. 2013b. “Computationally Efficient Markov Chain Simulation.” In Bayesian Data Analysis, 3rd ed. Chapman; Hall/CRC. https://sites.stat.columbia.edu/gelman/book/BDA3.pdf.\n\n\nGelman, Andrew, John B. Carlin, Hal S. Stern, David B. Dunson, Aki Vehtari, and Donald B. Rubin. 2013c. “Introduction to Bayesian Computation.” In Bayesian Data Analysis, 3rd ed. Chapman; Hall/CRC. https://sites.stat.columbia.edu/gelman/book/BDA3.pdf.\n\n\nHoffman, Matthew D., and Andrew Gelman. 2014. “The No-u-Turn Sampler: Adaptively Setting Path Lengths in Hamiltonian Monte Carlo.” Journal of Machine Learning Research 15 (47): 1593–623. http://jmlr.org/papers/v15/hoffman14a.html.\n\n\nMarbleScience. 2021. “Monte Carlo Simulation.” YouTube. https://www.youtube.com/watch?v=7ESK5SaP-bc.\n\n\nMcElreath, Richard. 2020. “Markov Chain Monte Carlo.” In Statistical Rethinking: A Bayesian Course with Examples in r and STAN, 2nd ed. Chapman; Hall/CRC. https://doi.org/10.1201/9780429029608.\n\n\nMcElreath, Richard. 2026a. “Statistical Rethinking 2026 Lecture A08: MCMC and Item Response Models.” YouTube. https://www.youtube.com/watch?v=N_LRQUrdHag.\n\n\nMcElreath, Richard. 2026b. “Statistical Rethinking 2026 Lecture B01: Hamiltonian Monte Carlo.” YouTube. https://www.youtube.com/watch?v=7JHkq0l9p2M.\n\n\nMetropolis, Nicholas, Arianna W. Rosenbluth, Marshall N. Rosenbluth, Augusta H. Teller, and Edward Teller. 1953. “Equation of State Calculations by Fast Computing Machines.” The Journal of Chemical Physics 21 (6): 1087–92. https://doi.org/10.1063/1.1699114.\n\n\nMetropolis, Nicholas, and Stanislaw Ulam. 1949. “The Monte Carlo Method.” Journal of the American Statistical Association 44 (247): 335–41. https://doi.org/10.1080/01621459.1949.10483310.\n\n\nVehtari, Aki, Andrew Gelman, Daniel Simpson, Bob Carpenter, and Paul-Christian Bürkner. 2021. “Rank-Normalization, Folding, and Localization: An Improved \\(\\hat{R}\\) for Assessing Convergence of MCMC (with Discussion).” Bayesian Analysis 16 (2): 667–718. https://doi.org/10.1214/20-BA1221."
+    "text": "3blue1brown. 2019. “Bayes Theorem, the Geometry of Changing Beliefs.” YouTube. https://www.youtube.com/watch?v=HZGCoVF3YvM.\n\n\nDataCamp. 2022. Foundations of Probability in r. DataCamp. https://www.datacamp.com/courses/foundations-of-probability-in-r.\n\n\nGelman, Andrew, John B. Carlin, Hal S. Stern, David B. Dunson, Aki Vehtari, and Donald B. Rubin. 2013. “Probability and Inference.” In Bayesian Data Analysis, 3rd ed. Chapman; Hall/CRC. https://sites.stat.columbia.edu/gelman/book/BDA3.pdf.\n\n\nMcElreath, Richard. 2020a. “Small Worlds and Large Worlds.” In Statistical Rethinking: A Bayesian Course with Examples in r and STAN, 2nd ed. Chapman; Hall/CRC. https://doi.org/10.1201/9780429029608.\n\n\nMcElreath, Richard. 2020b. “The Golem of Prague.” In Statistical Rethinking: A Bayesian Course with Examples in r and STAN, 2nd ed. Chapman; Hall/CRC. https://doi.org/10.1201/9780429029608.\n\n\nMcElreath, Richard. 2026. “Statistical Rethinking 2026 Lecture A01: Introduction to Bayesian Workflow.” YouTube. https://www.youtube.com/watch?v=ztbYkBPDOgU.\n\n\nVeritasium. 2017. “The Bayesian Trap.” YouTube. https://www.youtube.com/watch?v=R13BD8qKeTg."
   },
   {
-    "objectID": "resources/05_resources.html",
-    "href": "resources/05_resources.html",
-    "title": "Week 5 Resources",
+    "objectID": "resources/04_resources.html",
+    "href": "resources/04_resources.html",
+    "title": "Week 4 Resources",
     "section": "",
-    "text": "DataCamp. 2024. Intermediate Data Visualization with Ggplot2. DataCamp. https://app.datacamp.com/learn/courses/intermediate-data-visualization-with-ggplot2.\n\n\nDataCamp. 2025. Introduction to Data Visualization with Ggplot2. DataCamp. https://app.datacamp.com/learn/courses/introduction-to-data-visualization-with-ggplot2.\n\n\nPosit Software, PBC. 2024a. Data Tidying with Tidyr: Cheatsheet. Posit. https://rstudio.github.io/cheatsheets/html/tidyr.html.\n\n\nPosit Software, PBC. 2024b. Dates and Times with Lubridate: Cheatsheet. Posit. https://rstudio.github.io/cheatsheets/html/lubridate.html.\n\n\nPosit Software, PBC. 2024c. Factors with Forcats: Cheatsheet. Posit. https://rstudio.github.io/cheatsheets/html/factors.html.\n\n\nPosit Software, PBC. 2025a. Data Transformation with Dplyr: Cheatsheet. Posit. https://rstudio.github.io/cheatsheets/html/data-transformation.html.\n\n\nPosit Software, PBC. 2025b. Data Visualization with Ggplot2: Cheatsheet. Posit. https://rstudio.github.io/cheatsheets/html/data-visualization.html.\n\n\nPosit Software, PBC. 2025c. String Manipulation with Stringr: Cheatsheet. Posit. https://rstudio.github.io/cheatsheets/html/strings.html.\n\n\nPosit Software, PBC. n.d. Data Import with the Tidyverse: Cheatsheet. Posit. https://rstudio.github.io/cheatsheets/html/data-import.html.\n\n\nWickham, Hadley, Danielle Navarro, and Thomas Lin Pedersen. 2023. Ggplot2: Elegant Graphics for Data Analysis. 3rd ed. https://ggplot2-book.org/."
+    "text": "Çetinkaya-Rundel, Mine, Johanna Hardin, Benjamin S Baumer, Amelia McNamara, Nicholas J Horton, and Colin Rundel. 2021. “An Educator’s Perspective of the Tidyverse.” arXiv Preprint arXiv:2108.03510, ahead of print. https://doi.org/10.48550/arXiv.2108.03510.\n\n\nDataCamp. 2026. Introduction to the Tidyverse. DataCamp. https://www.datacamp.com/courses/introduction-to-the-tidyverse.\n\n\nWickham, Hadley, Mine Çetinkaya-Rundel, and Garrett Grolemund. 2023. “Whole Game.” In R for Data Science: Import, Tidy, Transform, Visualize, and Model Data, 2nd ed., edited by Hadley Wickham, Mine Çetinkaya-Rundel, and Garrett Grolemund. O’Reilly. https://r4ds.hadley.nz/intro.html.\n\n\nWickham, Hadley, Danielle Navarro, and Thomas Lin Pedersen. 2023. Ggplot2: Elegant Graphics for Data Analysis. 3rd ed. https://ggplot2-book.org/."
   },
   {
-    "objectID": "resources/03_resources.html",
-    "href": "resources/03_resources.html",
-    "title": "Week 3 Resources",
+    "objectID": "resources/02_resources.html",
+    "href": "resources/02_resources.html",
+    "title": "Week 2 Resources",
     "section": "",
-    "text": "DataCamp. 2022. Getting Started with R Cheat Sheet. DataCamp. https://www.datacamp.com/cheat-sheet/getting-started-r.\n\n\nDataCamp. 2026. Introduction to R. DataCamp. https://www.datacamp.com/courses/free-introduction-to-r.\n\n\nMcNeill, Mhairi. 2015. Base R: Cheatsheet. IQSS, Harvard University. https://iqss.github.io/dss-workshops/R/Rintro/base-r-cheat-sheet.pdf.\n\n\nWickham, Hadley, Mine Çetinkaya-Rundel, and Garrett Grolemund. 2023. “Introduction.” In R for Data Science: Import, Tidy, Transform, Visualize, and Model Data, 2nd ed., edited by Hadley Wickham, Mine Çetinkaya-Rundel, and Garrett Grolemund. O’Reilly. https://r4ds.hadley.nz/intro.html."
+    "text": "Knuth, Donald Ervin. 1984. “Literate Programming.” The Computer Journal 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97.\n\n\nNick White. 2021. Git Tutorial for Dummies. YouTube. https://www.youtube.com/watch?v=mJ-qvsxPHpY.\n\n\nPosit Software, PBC. 2025. Publish and Share with Quarto: Quarto Cheatsheet. Posit. https://rstudio.github.io/cheatsheets/html/quarto.html.\n\n\nPosit Software, PBC. n.d.a. Positron Layout. Posit. https://positron.posit.co/layout.html.\n\n\nPosit Software, PBC. n.d.b. Quarto Guide. Posit. https://quarto.org/docs/guide/.\n\n\nWickham, Hadley, Mine Çetinkaya-Rundel, and Garrett Grolemund. 2023. “Quarto.” In R for Data Science: Import, Tidy, Transform, Visualize, and Model Data, 2nd ed., edited by Hadley Wickham, Mine Çetinkaya-Rundel, and Garrett Grolemund. O’Reilly. https://r4ds.hadley.nz/quarto.html."
   },
   {
-    "objectID": "resources/01_resources.html",
-    "href": "resources/01_resources.html",
-    "title": "Week 1 Ressources",
-    "section": "",
-    "text": "References\n\nPosit Software, PBC. n.d. Positron Layout. Posit. https://positron.posit.co/layout.html."
-  },
-  {
-    "objectID": "LICENSE.html",
-    "href": "LICENSE.html",
+    "objectID": "prompt-canvas.html",
+    "href": "prompt-canvas.html",
     "title": "QMIR 2026",
     "section": "",
-    "text": "Attribution-NonCommercial 4.0 International\n=======================================================================\nCreative Commons Corporation (“Creative Commons”) is not a law firm and does not provide legal services or legal advice. Distribution of Creative Commons public licenses does not create a lawyer-client or other relationship. Creative Commons makes its licenses and related information available on an “as-is” basis. Creative Commons gives no warranties regarding its licenses, any material licensed under their terms and conditions, or any related information. Creative Commons disclaims all liability for damages resulting from their use to the fullest extent possible.\nUsing Creative Commons Public Licenses\nCreative Commons public licenses provide a standard set of terms and conditions that creators and other rights holders may use to share original works of authorship and other material subject to copyright and certain other rights specified in the public license below. The following considerations are for informational purposes only, are not exhaustive, and do not form part of our licenses.\n Considerations for licensors: Our public licenses are\n intended for use by those authorized to give the public\n permission to use material in ways otherwise restricted by\n copyright and certain other rights. Our licenses are\n irrevocable. Licensors should read and understand the terms\n and conditions of the license they choose before applying it.\n Licensors should also secure all rights necessary before\n applying our licenses so that the public can reuse the\n material as expected. Licensors should clearly mark any\n material not subject to the license. This includes other CC-\n licensed material, or material used under an exception or\n limitation to copyright. More considerations for licensors:\nwiki.creativecommons.org/Considerations_for_licensors\n\n Considerations for the public: By using one of our public\n licenses, a licensor grants the public permission to use the\n licensed material under specified terms and conditions. If\n the licensor's permission is not necessary for any reason--for\n example, because of any applicable exception or limitation to\n copyright--then that use is not regulated by the license. Our\n licenses grant only permissions under copyright and certain\n other rights that a licensor has authority to grant. Use of\n the licensed material may still be restricted for other\n reasons, including because others have copyright or other\n rights in the material. A licensor may make special requests,\n such as asking that all changes be marked or described.\n Although not required by our licenses, you are encouraged to\n respect those requests where reasonable. More considerations\n for the public:\nwiki.creativecommons.org/Considerations_for_licensees\n=======================================================================\nCreative Commons Attribution-NonCommercial 4.0 International Public License\nBy exercising the Licensed Rights (defined below), You accept and agree to be bound by the terms and conditions of this Creative Commons Attribution-NonCommercial 4.0 International Public License (“Public License”). To the extent this Public License may be interpreted as a contract, You are granted the Licensed Rights in consideration of Your acceptance of these terms and conditions, and the Licensor grants You such rights in consideration of benefits the Licensor receives from making the Licensed Material available under these terms and conditions.\nSection 1 – Definitions.\n\nAdapted Material means material subject to Copyright and Similar Rights that is derived from or based upon the Licensed Material and in which the Licensed Material is translated, altered, arranged, transformed, or otherwise modified in a manner requiring permission under the Copyright and Similar Rights held by the Licensor. For purposes of this Public License, where the Licensed Material is a musical work, performance, or sound recording, Adapted Material is always produced where the Licensed Material is synched in timed relation with a moving image.\nAdapter’s License means the license You apply to Your Copyright and Similar Rights in Your contributions to Adapted Material in accordance with the terms and conditions of this Public License.\nCopyright and Similar Rights means copyright and/or similar rights closely related to copyright including, without limitation, performance, broadcast, sound recording, and Sui Generis Database Rights, without regard to how the rights are labeled or categorized. For purposes of this Public License, the rights specified in Section 2(b)(1)-(2) are not Copyright and Similar Rights.\nEffective Technological Measures means those measures that, in the absence of proper authority, may not be circumvented under laws fulfilling obligations under Article 11 of the WIPO Copyright Treaty adopted on December 20, 1996, and/or similar international agreements.\nExceptions and Limitations means fair use, fair dealing, and/or any other exception or limitation to Copyright and Similar Rights that applies to Your use of the Licensed Material.\nLicensed Material means the artistic or literary work, database, or other material to which the Licensor applied this Public License.\nLicensed Rights means the rights granted to You subject to the terms and conditions of this Public License, which are limited to all Copyright and Similar Rights that apply to Your use of the Licensed Material and that the Licensor has authority to license.\nLicensor means the individual(s) or entity(ies) granting rights under this Public License.\nNonCommercial means not primarily intended for or directed towards commercial advantage or monetary compensation. For purposes of this Public License, the exchange of the Licensed Material for other material subject to Copyright and Similar Rights by digital file-sharing or similar means is NonCommercial provided there is no payment of monetary compensation in connection with the exchange.\nShare means to provide material to the public by any means or process that requires permission under the Licensed Rights, such as reproduction, public display, public performance, distribution, dissemination, communication, or importation, and to make material available to the public including in ways that members of the public may access the material from a place and at a time individually chosen by them.\nSui Generis Database Rights means rights other than copyright resulting from Directive 96/9/EC of the European Parliament and of the Council of 11 March 1996 on the legal protection of databases, as amended and/or succeeded, as well as other essentially equivalent rights anywhere in the world.\nYou means the individual or entity exercising the Licensed Rights under this Public License. Your has a corresponding meaning.\n\nSection 2 – Scope.\n\nLicense grant.\n\nSubject to the terms and conditions of this Public License, the Licensor hereby grants You a worldwide, royalty-free, non-sublicensable, non-exclusive, irrevocable license to exercise the Licensed Rights in the Licensed Material to:\n\nreproduce and Share the Licensed Material, in whole or in part, for NonCommercial purposes only; and\nproduce, reproduce, and Share Adapted Material for NonCommercial purposes only.\n\nExceptions and Limitations. For the avoidance of doubt, where Exceptions and Limitations apply to Your use, this Public License does not apply, and You do not need to comply with its terms and conditions.\nTerm. The term of this Public License is specified in Section 6(a).\nMedia and formats; technical modifications allowed. The Licensor authorizes You to exercise the Licensed Rights in all media and formats whether now known or hereafter created, and to make technical modifications necessary to do so. The Licensor waives and/or agrees not to assert any right or authority to forbid You from making technical modifications necessary to exercise the Licensed Rights, including technical modifications necessary to circumvent Effective Technological Measures. For purposes of this Public License, simply making modifications authorized by this Section 2(a)\n\nnever produces Adapted Material.\n\nDownstream recipients.\n\nOffer from the Licensor – Licensed Material. Every recipient of the Licensed Material automatically receives an offer from the Licensor to exercise the Licensed Rights under the terms and conditions of this Public License.\nNo downstream restrictions. You may not offer or impose any additional or different terms or conditions on, or apply any Effective Technological Measures to, the Licensed Material if doing so restricts exercise of the Licensed Rights by any recipient of the Licensed Material.\n\nNo endorsement. Nothing in this Public License constitutes or may be construed as permission to assert or imply that You are, or that Your use of the Licensed Material is, connected with, or sponsored, endorsed, or granted official status by, the Licensor or others designated to receive attribution as provided in Section 3(a)(1)(A)(i).\n\nOther rights.\n\nMoral rights, such as the right of integrity, are not licensed under this Public License, nor are publicity, privacy, and/or other similar personality rights; however, to the extent possible, the Licensor waives and/or agrees not to assert any such rights held by the Licensor to the limited extent necessary to allow You to exercise the Licensed Rights, but not otherwise.\nPatent and trademark rights are not licensed under this Public License.\nTo the extent possible, the Licensor waives any right to collect royalties from You for the exercise of the Licensed Rights, whether directly or through a collecting society under any voluntary or waivable statutory or compulsory licensing scheme. In all other cases the Licensor expressly reserves any right to collect such royalties, including when the Licensed Material is used other than for NonCommercial purposes.\n\n\nSection 3 – License Conditions.\nYour exercise of the Licensed Rights is expressly made subject to the following conditions.\n\nAttribution.\n\nIf You Share the Licensed Material (including in modified form), You must:\n\nretain the following if it is supplied by the Licensor with the Licensed Material:\n\nidentification of the creator(s) of the Licensed Material and any others designated to receive attribution, in any reasonable manner requested by the Licensor (including by pseudonym if designated);\na copyright notice;\na notice that refers to this Public License;\na notice that refers to the disclaimer of warranties;\na URI or hyperlink to the Licensed Material to the extent reasonably practicable;\n\nindicate if You modified the Licensed Material and retain an indication of any previous modifications; and\nindicate the Licensed Material is licensed under this Public License, and include the text of, or the URI or hyperlink to, this Public License.\n\nYou may satisfy the conditions in Section 3(a)(1) in any reasonable manner based on the medium, means, and context in which You Share the Licensed Material. For example, it may be reasonable to satisfy the conditions by providing a URI or hyperlink to a resource that includes the required information.\nIf requested by the Licensor, You must remove any of the information required by Section 3(a)(1)(A) to the extent reasonably practicable.\nIf You Share Adapted Material You produce, the Adapter’s License You apply must not prevent recipients of the Adapted Material from complying with this Public License.\n\n\nSection 4 – Sui Generis Database Rights.\nWhere the Licensed Rights include Sui Generis Database Rights that apply to Your use of the Licensed Material:\n\nfor the avoidance of doubt, Section 2(a)(1) grants You the right to extract, reuse, reproduce, and Share all or a substantial portion of the contents of the database for NonCommercial purposes only;\nif You include all or a substantial portion of the database contents in a database in which You have Sui Generis Database Rights, then the database in which You have Sui Generis Database Rights (but not its individual contents) is Adapted Material; and\nYou must comply with the conditions in Section 3(a) if You Share all or a substantial portion of the contents of the database.\n\nFor the avoidance of doubt, this Section 4 supplements and does not replace Your obligations under this Public License where the Licensed Rights include other Copyright and Similar Rights.\nSection 5 – Disclaimer of Warranties and Limitation of Liability.\n\nUNLESS OTHERWISE SEPARATELY UNDERTAKEN BY THE LICENSOR, TO THE EXTENT POSSIBLE, THE LICENSOR OFFERS THE LICENSED MATERIAL AS-IS AND AS-AVAILABLE, AND MAKES NO REPRESENTATIONS OR WARRANTIES OF ANY KIND CONCERNING THE LICENSED MATERIAL, WHETHER EXPRESS, IMPLIED, STATUTORY, OR OTHER. THIS INCLUDES, WITHOUT LIMITATION, WARRANTIES OF TITLE, MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, ABSENCE OF LATENT OR OTHER DEFECTS, ACCURACY, OR THE PRESENCE OR ABSENCE OF ERRORS, WHETHER OR NOT KNOWN OR DISCOVERABLE. WHERE DISCLAIMERS OF WARRANTIES ARE NOT ALLOWED IN FULL OR IN PART, THIS DISCLAIMER MAY NOT APPLY TO YOU.\nTO THE EXTENT POSSIBLE, IN NO EVENT WILL THE LICENSOR BE LIABLE TO YOU ON ANY LEGAL THEORY (INCLUDING, WITHOUT LIMITATION, NEGLIGENCE) OR OTHERWISE FOR ANY DIRECT, SPECIAL, INDIRECT, INCIDENTAL, CONSEQUENTIAL, PUNITIVE, EXEMPLARY, OR OTHER LOSSES, COSTS, EXPENSES, OR DAMAGES ARISING OUT OF THIS PUBLIC LICENSE OR USE OF THE LICENSED MATERIAL, EVEN IF THE LICENSOR HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH LOSSES, COSTS, EXPENSES, OR DAMAGES. WHERE A LIMITATION OF LIABILITY IS NOT ALLOWED IN FULL OR IN PART, THIS LIMITATION MAY NOT APPLY TO YOU.\nThe disclaimer of warranties and limitation of liability provided above shall be interpreted in a manner that, to the extent possible, most closely approximates an absolute disclaimer and waiver of all liability.\n\nSection 6 – Term and Termination.\n\nThis Public License applies for the term of the Copyright and Similar Rights licensed here. However, if You fail to comply with this Public License, then Your rights under this Public License terminate automatically.\nWhere Your right to use the Licensed Material has terminated under Section 6(a), it reinstates:\n\nautomatically as of the date the violation is cured, provided it is cured within 30 days of Your discovery of the violation; or\nupon express reinstatement by the Licensor.\n\nFor the avoidance of doubt, this Section 6(b) does not affect any right the Licensor may have to seek remedies for Your violations of this Public License.\nFor the avoidance of doubt, the Licensor may also offer the Licensed Material under separate terms or conditions or stop distributing the Licensed Material at any time; however, doing so will not terminate this Public License.\nSections 1, 5, 6, 7, and 8 survive termination of this Public License.\n\nSection 7 – Other Terms and Conditions.\n\nThe Licensor shall not be bound by any additional or different terms or conditions communicated by You unless expressly agreed.\nAny arrangements, understandings, or agreements regarding the Licensed Material not stated herein are separate from and independent of the terms and conditions of this Public License.\n\nSection 8 – Interpretation.\n\nFor the avoidance of doubt, this Public License does not, and shall not be interpreted to, reduce, limit, restrict, or impose conditions on any use of the Licensed Material that could lawfully be made without permission under this Public License.\nTo the extent possible, if any provision of this Public License is deemed unenforceable, it shall be automatically reformed to the minimum extent necessary to make it enforceable. If the provision cannot be reformed, it shall be severed from this Public License without affecting the enforceability of the remaining terms and conditions.\nNo term or condition of this Public License will be waived and no failure to comply consented to unless expressly agreed to by the Licensor.\nNothing in this Public License constitutes or may be interpreted as a limitation upon, or waiver of, any privileges and immunities that apply to the Licensor or You, including from the legal processes of any jurisdiction or authority.\n\n=======================================================================\nCreative Commons is not a party to its public licenses. Notwithstanding, Creative Commons may elect to apply one of its public licenses to material it publishes and in those instances will be considered the “Licensor.” The text of the Creative Commons public licenses is dedicated to the public domain under the CC0 Public Domain Dedication. Except for the limited purpose of indicating that material is shared under a Creative Commons public license or as otherwise permitted by the Creative Commons policies published at creativecommons.org/policies, Creative Commons does not authorize the use of the trademark “Creative Commons” or any other trademark or logo of Creative Commons without its prior written consent including, without limitation, in connection with any unauthorized modifications to any of its public licenses or any other arrangements, understandings, or agreements concerning use of licensed material. For the avoidance of doubt, this paragraph does not form part of the public licenses.\nCreative Commons may be contacted at creativecommons.org."
+    "text": "Edit the files in hw/w9/ (or create the folder if it does not exist) to draft a hw-w09.qmd (student-facing) and hw-w09-solution.qmd (instructor solution) for Week 9."
   },
   {
-    "objectID": "lab/quarto-welcome.html",
-    "href": "lab/quarto-welcome.html",
-    "title": "Welcome to Quarto",
-    "section": "",
-    "text": "Welcome to Quarto! This is a simple example showing basic Markdown syntax.\n\n\n\n\nYou can apply:\n\nBold text\nItalic text\nInline code\nStrikethrough\n\n\n\n\nUnordered list:\n\nItem 1\nItem 2\n\nSubitem 2a\nSubitem 2b\n\n\nOrdered list:\n\nFirst\nSecond\nThird\n\n\n\n\nQuarto website\n\n\n\nQuarto Logo\n\n\n\n\n\n# R code example\nx &lt;- 1:5\nmean(x)\n\n\n\n\n\n\nName\nAge\nCity\n\n\n\n\nAlice\n30\nBerlin\n\n\nBob\n25\nParis\n\n\nCharlie\n28\nMadrid\n\n\n\n\n\n\n\nThis is a blockquote. Quarto supports Markdown-style quotes.\n\nNested blockquote example."
-  },
-  {
-    "objectID": "lab/quarto-welcome.html#subsection-header",
-    "href": "lab/quarto-welcome.html#subsection-header",
-    "title": "Welcome to Quarto",
-    "section": "",
-    "text": "You can apply:\n\nBold text\nItalic text\nInline code\nStrikethrough\n\n\n\n\nUnordered list:\n\nItem 1\nItem 2\n\nSubitem 2a\nSubitem 2b\n\n\nOrdered list:\n\nFirst\nSecond\nThird\n\n\n\n\nQuarto website\n\n\n\nQuarto Logo\n\n\n\n\n\n# R code example\nx &lt;- 1:5\nmean(x)\n\n\n\n\n\n\nName\nAge\nCity\n\n\n\n\nAlice\n30\nBerlin\n\n\nBob\n25\nParis\n\n\nCharlie\n28\nMadrid\n\n\n\n\n\n\n\nThis is a blockquote. Quarto supports Markdown-style quotes.\n\nNested blockquote example."
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Quantitative Methods in International Relations",
-    "section": "",
-    "text": "Spring 2026 Department of Political Science School of Social Sciences University of Mannheim\n\n\n\nInstructor\n\n Tristan Muno\n A 5, 6 – Room A 351\n tristan.muno@uni-mannheim.de\n\n\n\nCourse details\n\n\n\n\nMonday\nThursday\n\n\n\nFeb 9 – May 18\nFeb 12 – May 28\n\n\n\n12:00 – 13:30\n17:15 – 18:45\n\n\n\nA5,6 C-108\nA5,6 C-108\n\n\n\nMarch 30, April 6, May 25\nApril 2, April 9, May 14\n\n\n\n\n\nContacting me\n\n Mondays 14:00-17:00: Open office consultation (no appointment needed)\nYou are welcome to stop by on Mondays between 14:00 and 17:00 for open consultation.\nFor other times, please email me to arrange an appointment (in person or online). I aim to reply within 24 hours."
-  },
-  {
-    "objectID": "debug.html",
-    "href": "debug.html",
+    "objectID": "prompt-canvas.html#reference-materials",
+    "href": "prompt-canvas.html#reference-materials",
     "title": "QMIR 2026",
-    "section": "",
-    "text": "qmd preview error (something with “Deno”) -&gt; close / delete current terminal session and click preview again -&gt; most of the times works now -&gt; delete .quarto or .freeze folders -&gt; else manually type quarto render [file], as preview does much more complicated stuff behind the scenes\nQuarto works in the following order: -&gt; is YAML correct? -&gt; are code cell options correct? -&gt; evaluate code -&gt; “knit” together code, code output and markdown text -&gt; render to desired output"
+    "section": "Reference Materials",
+    "text": "Reference Materials\nBefore writing anything: - Read the existing homeworks in hw/ carefully for formatting, style, tone, and structural conventions — match them precisely. - Read slides/week9.qmd Parts I and II only. The homework covers only the content from Part I (multivariate regression with control variables) and Part II (hands-on implementation, see also lab/week9_lab.qmd). Parts III and IV (interaction effects) were not covered this week and must not appear in the homework. - Read CLAUDE.md for all course-wide constraints and behavioral rules."
   },
   {
-    "objectID": "installation.html",
-    "href": "installation.html",
-    "title": "Getting Started: Installation Guide",
-    "section": "",
-    "text": "This course introduces you to a range of software tools which, taken together, form a powerful and contemporary toolbox for transparent, reproducible, and scalable empirical research. Rather than relying on a single piece of software, you will learn how different tools interact and complement one another — much like they do in real-world research workflows."
+    "objectID": "prompt-canvas.html#substantive-example",
+    "href": "prompt-canvas.html#substantive-example",
+    "title": "QMIR 2026",
+    "section": "Substantive Example",
+    "text": "Substantive Example\nUse the following synthetic example throughout:\n\nOutcome: income\nMain predictor: education\nControl variable: gender (binary: 0/1 or factor)\n\nDesign the synthetic data so that the bivariate regression of income on education yields a negative (or near-zero) coefficient — the so-called Simpson’s Paradox or omitted variable confounding. When gender is included as a control, the true positive relationship between education and income is recovered. This is the core pedagogical point students should discover through their own analysis.\nGenerate the synthetic data in a clearly labeled setup chunk at the top of hw-w09-solution.qmd and write it to data/income_education.csv. The student-facing hw-w09.qmd loads the .csv directly — no data generation code there."
   },
   {
-    "objectID": "installation.html#configure-git",
-    "href": "installation.html#configure-git",
-    "title": "Getting Started: Installation Guide",
-    "section": "Configure Git",
-    "text": "Configure Git\nTo use Git, you need to set a name and email address. These will be associated with every change (commit) you make, acting like a digital signature. You do not need to use your full name, but it is recommended.\ngit config --global user.name \"Your Name\"\ngit config --global user.email \"your@mail.com\""
+    "objectID": "prompt-canvas.html#homework-structure",
+    "href": "prompt-canvas.html#homework-structure",
+    "title": "QMIR 2026",
+    "section": "Homework Structure",
+    "text": "Homework Structure\nOrganize both files around section headers that mirror the full empirical workflow practiced in the lab (Part II) and expected in the take-home exam. Use the lab and exam grading criteria as a checklist for which steps to include. The section headers themselves serve as the scaffolding — do not provide extensive hints, helper code, or templates within sections.\nConcretely, the homework should walk students through: 1. Exploring and describing the data (numerically and graphically) 2. Stating the estimand of interest 3. Formulating the statistical model (formal notation, DGP assumptions) 4. Specifying and justifying priors 5. Fitting the model in brms 6. Interpreting and visualizing model output 7. Reporting a substantive conclusion in plain language\nIn hw/w9/hw-w09.qmd you shall prepare the work sheet for students. Prepare the section with section headers, but (for the students worksheet) do not fill in anything, no prose, no code, no nothing\nThen create a new file hw-w09-solution.qmd, where you enter a template example solution."
   },
   {
-    "objectID": "installation.html#create-a-github-account",
-    "href": "installation.html#create-a-github-account",
-    "title": "Getting Started: Installation Guide",
-    "section": "Create a GitHub account",
-    "text": "Create a GitHub account\nIf you don’t already have one, create a free GitHub account here.\nGitHub will allow you to store repositories online, collaborate with others, and track your work from anywhere. We will use GitHub to distribute course materials."
-  },
-  {
-    "objectID": "installation.html#footnotes",
-    "href": "installation.html#footnotes",
-    "title": "Getting Started: Installation Guide",
-    "section": "Footnotes",
-    "text": "Footnotes\n\n\nThe engine-dashboard-analogy is borrowed from Andrew Heiss.↩︎\nPositron layout overview↩︎"
+    "objectID": "prompt-canvas.html#style-and-formatting",
+    "href": "prompt-canvas.html#style-and-formatting",
+    "title": "QMIR 2026",
+    "section": "Style and Formatting",
+    "text": "Style and Formatting\n\nSelf-contained folder: no references to other project files outside hw/w9/\nBayesian framing throughout — no frequentist language, no p-values, no null hypothesis testing\nAssociational language only — no causal claims\nLaTeX for all math — no raw Unicode math symbols\nStudent file: minimal scaffolding, section headers only, exercise prompts are concise\nSolution file: full working code and prose; demonstrates the Simpson’s Paradox reveal explicitly"
   },
   {
     "objectID": "lab/week9_lab.html",
@@ -1281,179 +1337,221 @@
     "text": "Step 8: LOO-IC Model Comparison\nWe compare fit_multi (no interaction) against fit_interact (interaction) using LOO-IC. Because we generated the data with an interaction, fit_interact should dominate fit_multi.\n\n\nCode\nfit_multi &lt;- add_criterion(fit_multi, \"loo\")\nfit_interact &lt;- add_criterion(fit_interact, \"loo\")\nloo_compare(fit_multi, fit_interact)\n\n\n             elpd_diff se_diff\nfit_interact  0.0       0.0   \nfit_multi    -4.1       2.9   \n\n\n\n\n\n\n\n\nNoteAlternative implementation\n\n\n\n# WAIC as alternative to LOO-IC — should rank models identically\nfit_multi    &lt;- add_criterion(fit_multi,    \"waic\")\nfit_interact &lt;- add_criterion(fit_interact, \"waic\")\nloo_compare(fit_multi, fit_interact, criterion = \"waic\")\n\n\nReading the output:\n\nThe model listed first has the highest elpd — it is the better predictive model.\nelpd_diff = 0 for the winner; all other models show a negative difference (i.e., they predict worse).\nWhen |elpd_diff| &gt; 2 × se_diff, the evidence strongly favours the winner.\n\nRemaining limitations:\n\nThe linear interaction assumes the slope difference is constant across all values of women in parliament — check with a LOESS diagnostic if needed.\nCountry-year observations within the same country are correlated (assumption A5) — a multilevel structure (Week 12) would handle this.\nOmitted confounders (institutional quality, colonial history, cultural factors) may bias the women-in-parliament coefficient."
   },
   {
-    "objectID": "prompt-canvas.html",
-    "href": "prompt-canvas.html",
+    "objectID": "installation.html",
+    "href": "installation.html",
+    "title": "Getting Started: Installation Guide",
+    "section": "",
+    "text": "This course introduces you to a range of software tools which, taken together, form a powerful and contemporary toolbox for transparent, reproducible, and scalable empirical research. Rather than relying on a single piece of software, you will learn how different tools interact and complement one another — much like they do in real-world research workflows."
+  },
+  {
+    "objectID": "installation.html#configure-git",
+    "href": "installation.html#configure-git",
+    "title": "Getting Started: Installation Guide",
+    "section": "Configure Git",
+    "text": "Configure Git\nTo use Git, you need to set a name and email address. These will be associated with every change (commit) you make, acting like a digital signature. You do not need to use your full name, but it is recommended.\ngit config --global user.name \"Your Name\"\ngit config --global user.email \"your@mail.com\""
+  },
+  {
+    "objectID": "installation.html#create-a-github-account",
+    "href": "installation.html#create-a-github-account",
+    "title": "Getting Started: Installation Guide",
+    "section": "Create a GitHub account",
+    "text": "Create a GitHub account\nIf you don’t already have one, create a free GitHub account here.\nGitHub will allow you to store repositories online, collaborate with others, and track your work from anywhere. We will use GitHub to distribute course materials."
+  },
+  {
+    "objectID": "installation.html#footnotes",
+    "href": "installation.html#footnotes",
+    "title": "Getting Started: Installation Guide",
+    "section": "Footnotes",
+    "text": "Footnotes\n\n\nThe engine-dashboard-analogy is borrowed from Andrew Heiss.↩︎\nPositron layout overview↩︎"
+  },
+  {
+    "objectID": "debug.html",
+    "href": "debug.html",
     "title": "QMIR 2026",
     "section": "",
-    "text": "Edit the files in hw/w9/ (or create the folder if it does not exist) to draft a hw-w09.qmd (student-facing) and hw-w09-solution.qmd (instructor solution) for Week 9."
+    "text": "qmd preview error (something with “Deno”) -&gt; close / delete current terminal session and click preview again -&gt; most of the times works now -&gt; delete .quarto or .freeze folders -&gt; else manually type quarto render [file], as preview does much more complicated stuff behind the scenes\nQuarto works in the following order: -&gt; is YAML correct? -&gt; are code cell options correct? -&gt; evaluate code -&gt; “knit” together code, code output and markdown text -&gt; render to desired output"
   },
   {
-    "objectID": "prompt-canvas.html#reference-materials",
-    "href": "prompt-canvas.html#reference-materials",
-    "title": "QMIR 2026",
-    "section": "Reference Materials",
-    "text": "Reference Materials\nBefore writing anything: - Read the existing homeworks in hw/ carefully for formatting, style, tone, and structural conventions — match them precisely. - Read slides/week9.qmd Parts I and II only. The homework covers only the content from Part I (multivariate regression with control variables) and Part II (hands-on implementation, see also lab/week9_lab.qmd). Parts III and IV (interaction effects) were not covered this week and must not appear in the homework. - Read CLAUDE.md for all course-wide constraints and behavioral rules."
-  },
-  {
-    "objectID": "prompt-canvas.html#substantive-example",
-    "href": "prompt-canvas.html#substantive-example",
-    "title": "QMIR 2026",
-    "section": "Substantive Example",
-    "text": "Substantive Example\nUse the following synthetic example throughout:\n\nOutcome: income\nMain predictor: education\nControl variable: gender (binary: 0/1 or factor)\n\nDesign the synthetic data so that the bivariate regression of income on education yields a negative (or near-zero) coefficient — the so-called Simpson’s Paradox or omitted variable confounding. When gender is included as a control, the true positive relationship between education and income is recovered. This is the core pedagogical point students should discover through their own analysis.\nGenerate the synthetic data in a clearly labeled setup chunk at the top of hw-w09-solution.qmd and write it to data/income_education.csv. The student-facing hw-w09.qmd loads the .csv directly — no data generation code there."
-  },
-  {
-    "objectID": "prompt-canvas.html#homework-structure",
-    "href": "prompt-canvas.html#homework-structure",
-    "title": "QMIR 2026",
-    "section": "Homework Structure",
-    "text": "Homework Structure\nOrganize both files around section headers that mirror the full empirical workflow practiced in the lab (Part II) and expected in the take-home exam. Use the lab and exam grading criteria as a checklist for which steps to include. The section headers themselves serve as the scaffolding — do not provide extensive hints, helper code, or templates within sections.\nConcretely, the homework should walk students through: 1. Exploring and describing the data (numerically and graphically) 2. Stating the estimand of interest 3. Formulating the statistical model (formal notation, DGP assumptions) 4. Specifying and justifying priors 5. Fitting the model in brms 6. Interpreting and visualizing model output 7. Reporting a substantive conclusion in plain language\nIn hw/w9/hw-w09.qmd you shall prepare the work sheet for students. Prepare the section with section headers, but (for the students worksheet) do not fill in anything, no prose, no code, no nothing\nThen create a new file hw-w09-solution.qmd, where you enter a template example solution."
-  },
-  {
-    "objectID": "prompt-canvas.html#style-and-formatting",
-    "href": "prompt-canvas.html#style-and-formatting",
-    "title": "QMIR 2026",
-    "section": "Style and Formatting",
-    "text": "Style and Formatting\n\nSelf-contained folder: no references to other project files outside hw/w9/\nBayesian framing throughout — no frequentist language, no p-values, no null hypothesis testing\nAssociational language only — no causal claims\nLaTeX for all math — no raw Unicode math symbols\nStudent file: minimal scaffolding, section headers only, exercise prompts are concise\nSolution file: full working code and prose; demonstrates the Simpson’s Paradox reveal explicitly"
-  },
-  {
-    "objectID": "resources/02_resources.html",
-    "href": "resources/02_resources.html",
-    "title": "Week 2 Resources",
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Quantitative Methods in International Relations",
     "section": "",
-    "text": "Knuth, Donald Ervin. 1984. “Literate Programming.” The Computer Journal 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97.\n\n\nNick White. 2021. Git Tutorial for Dummies. YouTube. https://www.youtube.com/watch?v=mJ-qvsxPHpY.\n\n\nPosit Software, PBC. 2025. Publish and Share with Quarto: Quarto Cheatsheet. Posit. https://rstudio.github.io/cheatsheets/html/quarto.html.\n\n\nPosit Software, PBC. n.d.a. Positron Layout. Posit. https://positron.posit.co/layout.html.\n\n\nPosit Software, PBC. n.d.b. Quarto Guide. Posit. https://quarto.org/docs/guide/.\n\n\nWickham, Hadley, Mine Çetinkaya-Rundel, and Garrett Grolemund. 2023. “Quarto.” In R for Data Science: Import, Tidy, Transform, Visualize, and Model Data, 2nd ed., edited by Hadley Wickham, Mine Çetinkaya-Rundel, and Garrett Grolemund. O’Reilly. https://r4ds.hadley.nz/quarto.html."
+    "text": "Spring 2026 Department of Political Science School of Social Sciences University of Mannheim\n\n\n\nInstructor\n\n Tristan Muno\n A 5, 6 – Room A 351\n tristan.muno@uni-mannheim.de\n\n\n\nCourse details\n\n\n\n\nMonday\nThursday\n\n\n\nFeb 9 – May 18\nFeb 12 – May 28\n\n\n\n12:00 – 13:30\n17:15 – 18:45\n\n\n\nA5,6 C-108\nA5,6 C-108\n\n\n\nMarch 30, April 6, May 25\nApril 2, April 9, May 14\n\n\n\n\n\nContacting me\n\n Mondays 14:00-17:00: Open office consultation (no appointment needed)\nYou are welcome to stop by on Mondays between 14:00 and 17:00 for open consultation.\nFor other times, please email me to arrange an appointment (in person or online). I aim to reply within 24 hours."
   },
   {
-    "objectID": "resources/04_resources.html",
-    "href": "resources/04_resources.html",
-    "title": "Week 4 Resources",
+    "objectID": "lab/quarto-welcome.html",
+    "href": "lab/quarto-welcome.html",
+    "title": "Welcome to Quarto",
     "section": "",
-    "text": "Çetinkaya-Rundel, Mine, Johanna Hardin, Benjamin S Baumer, Amelia McNamara, Nicholas J Horton, and Colin Rundel. 2021. “An Educator’s Perspective of the Tidyverse.” arXiv Preprint arXiv:2108.03510, ahead of print. https://doi.org/10.48550/arXiv.2108.03510.\n\n\nDataCamp. 2026. Introduction to the Tidyverse. DataCamp. https://www.datacamp.com/courses/introduction-to-the-tidyverse.\n\n\nWickham, Hadley, Mine Çetinkaya-Rundel, and Garrett Grolemund. 2023. “Whole Game.” In R for Data Science: Import, Tidy, Transform, Visualize, and Model Data, 2nd ed., edited by Hadley Wickham, Mine Çetinkaya-Rundel, and Garrett Grolemund. O’Reilly. https://r4ds.hadley.nz/intro.html.\n\n\nWickham, Hadley, Danielle Navarro, and Thomas Lin Pedersen. 2023. Ggplot2: Elegant Graphics for Data Analysis. 3rd ed. https://ggplot2-book.org/."
+    "text": "Welcome to Quarto! This is a simple example showing basic Markdown syntax.\n\n\n\n\nYou can apply:\n\nBold text\nItalic text\nInline code\nStrikethrough\n\n\n\n\nUnordered list:\n\nItem 1\nItem 2\n\nSubitem 2a\nSubitem 2b\n\n\nOrdered list:\n\nFirst\nSecond\nThird\n\n\n\n\nQuarto website\n\n\n\nQuarto Logo\n\n\n\n\n\n# R code example\nx &lt;- 1:5\nmean(x)\n\n\n\n\n\n\nName\nAge\nCity\n\n\n\n\nAlice\n30\nBerlin\n\n\nBob\n25\nParis\n\n\nCharlie\n28\nMadrid\n\n\n\n\n\n\n\nThis is a blockquote. Quarto supports Markdown-style quotes.\n\nNested blockquote example."
   },
   {
-    "objectID": "resources/06_resources.html",
-    "href": "resources/06_resources.html",
-    "title": "Week 6 Resources",
+    "objectID": "lab/quarto-welcome.html#subsection-header",
+    "href": "lab/quarto-welcome.html#subsection-header",
+    "title": "Welcome to Quarto",
     "section": "",
-    "text": "3blue1brown. 2019. “Bayes Theorem, the Geometry of Changing Beliefs.” YouTube. https://www.youtube.com/watch?v=HZGCoVF3YvM.\n\n\nDataCamp. 2022. Foundations of Probability in r. DataCamp. https://www.datacamp.com/courses/foundations-of-probability-in-r.\n\n\nGelman, Andrew, John B. Carlin, Hal S. Stern, David B. Dunson, Aki Vehtari, and Donald B. Rubin. 2013. “Probability and Inference.” In Bayesian Data Analysis, 3rd ed. Chapman; Hall/CRC. https://sites.stat.columbia.edu/gelman/book/BDA3.pdf.\n\n\nMcElreath, Richard. 2020a. “Small Worlds and Large Worlds.” In Statistical Rethinking: A Bayesian Course with Examples in r and STAN, 2nd ed. Chapman; Hall/CRC. https://doi.org/10.1201/9780429029608.\n\n\nMcElreath, Richard. 2020b. “The Golem of Prague.” In Statistical Rethinking: A Bayesian Course with Examples in r and STAN, 2nd ed. Chapman; Hall/CRC. https://doi.org/10.1201/9780429029608.\n\n\nMcElreath, Richard. 2026. “Statistical Rethinking 2026 Lecture A01: Introduction to Bayesian Workflow.” YouTube. https://www.youtube.com/watch?v=ztbYkBPDOgU.\n\n\nVeritasium. 2017. “The Bayesian Trap.” YouTube. https://www.youtube.com/watch?v=R13BD8qKeTg."
+    "text": "You can apply:\n\nBold text\nItalic text\nInline code\nStrikethrough\n\n\n\n\nUnordered list:\n\nItem 1\nItem 2\n\nSubitem 2a\nSubitem 2b\n\n\nOrdered list:\n\nFirst\nSecond\nThird\n\n\n\n\nQuarto website\n\n\n\nQuarto Logo\n\n\n\n\n\n# R code example\nx &lt;- 1:5\nmean(x)\n\n\n\n\n\n\nName\nAge\nCity\n\n\n\n\nAlice\n30\nBerlin\n\n\nBob\n25\nParis\n\n\nCharlie\n28\nMadrid\n\n\n\n\n\n\n\nThis is a blockquote. Quarto supports Markdown-style quotes.\n\nNested blockquote example."
   },
   {
-    "objectID": "resources/08_resources.html",
-    "href": "resources/08_resources.html",
-    "title": "Week 8 Resources",
+    "objectID": "LICENSE.html",
+    "href": "LICENSE.html",
+    "title": "QMIR 2026",
     "section": "",
-    "text": "Bürkner, Paul-Christian. 2017. “Brms: An R Package for Bayesian Multilevel Models Using Stan.” Journal of Statistical Software 80: 1–28.\n\n\nGelman, Andrew, John B. Carlin, Hal S. Stern, David B. Dunson, Aki Vehtari, and Donald B. Rubin. 2013a. “Introduction to Regression Models.” In Bayesian Data Analysis, 3rd ed. Chapman; Hall/CRC. https://sites.stat.columbia.edu/gelman/book/BDA3.pdf.\n\n\nGelman, Andrew, John B. Carlin, Hal S. Stern, David B. Dunson, Aki Vehtari, and Donald B. Rubin. 2013b. “Single-Parameter Models.” In Bayesian Data Analysis, 3rd ed. Chapman; Hall/CRC. https://sites.stat.columbia.edu/gelman/book/BDA3.pdf.\n\n\nMcElreath, Richard. 2020. “Geocentric Models.” In Statistical Rethinking: A Bayesian Course with Examples in r and STAN, 2nd ed. Chapman; Hall/CRC. https://doi.org/10.1201/9780429029608.\n\n\nMcElreath, Richard. 2026. “Statistical Rethinking 2026 Lecture A04: Linear Models.” YouTube. https://www.youtube.com/watch?v=6z4YxVYp9R8."
+    "text": "Attribution-NonCommercial 4.0 International\n=======================================================================\nCreative Commons Corporation (“Creative Commons”) is not a law firm and does not provide legal services or legal advice. Distribution of Creative Commons public licenses does not create a lawyer-client or other relationship. Creative Commons makes its licenses and related information available on an “as-is” basis. Creative Commons gives no warranties regarding its licenses, any material licensed under their terms and conditions, or any related information. Creative Commons disclaims all liability for damages resulting from their use to the fullest extent possible.\nUsing Creative Commons Public Licenses\nCreative Commons public licenses provide a standard set of terms and conditions that creators and other rights holders may use to share original works of authorship and other material subject to copyright and certain other rights specified in the public license below. The following considerations are for informational purposes only, are not exhaustive, and do not form part of our licenses.\n Considerations for licensors: Our public licenses are\n intended for use by those authorized to give the public\n permission to use material in ways otherwise restricted by\n copyright and certain other rights. Our licenses are\n irrevocable. Licensors should read and understand the terms\n and conditions of the license they choose before applying it.\n Licensors should also secure all rights necessary before\n applying our licenses so that the public can reuse the\n material as expected. Licensors should clearly mark any\n material not subject to the license. This includes other CC-\n licensed material, or material used under an exception or\n limitation to copyright. More considerations for licensors:\nwiki.creativecommons.org/Considerations_for_licensors\n\n Considerations for the public: By using one of our public\n licenses, a licensor grants the public permission to use the\n licensed material under specified terms and conditions. If\n the licensor's permission is not necessary for any reason--for\n example, because of any applicable exception or limitation to\n copyright--then that use is not regulated by the license. Our\n licenses grant only permissions under copyright and certain\n other rights that a licensor has authority to grant. Use of\n the licensed material may still be restricted for other\n reasons, including because others have copyright or other\n rights in the material. A licensor may make special requests,\n such as asking that all changes be marked or described.\n Although not required by our licenses, you are encouraged to\n respect those requests where reasonable. More considerations\n for the public:\nwiki.creativecommons.org/Considerations_for_licensees\n=======================================================================\nCreative Commons Attribution-NonCommercial 4.0 International Public License\nBy exercising the Licensed Rights (defined below), You accept and agree to be bound by the terms and conditions of this Creative Commons Attribution-NonCommercial 4.0 International Public License (“Public License”). To the extent this Public License may be interpreted as a contract, You are granted the Licensed Rights in consideration of Your acceptance of these terms and conditions, and the Licensor grants You such rights in consideration of benefits the Licensor receives from making the Licensed Material available under these terms and conditions.\nSection 1 – Definitions.\n\nAdapted Material means material subject to Copyright and Similar Rights that is derived from or based upon the Licensed Material and in which the Licensed Material is translated, altered, arranged, transformed, or otherwise modified in a manner requiring permission under the Copyright and Similar Rights held by the Licensor. For purposes of this Public License, where the Licensed Material is a musical work, performance, or sound recording, Adapted Material is always produced where the Licensed Material is synched in timed relation with a moving image.\nAdapter’s License means the license You apply to Your Copyright and Similar Rights in Your contributions to Adapted Material in accordance with the terms and conditions of this Public License.\nCopyright and Similar Rights means copyright and/or similar rights closely related to copyright including, without limitation, performance, broadcast, sound recording, and Sui Generis Database Rights, without regard to how the rights are labeled or categorized. For purposes of this Public License, the rights specified in Section 2(b)(1)-(2) are not Copyright and Similar Rights.\nEffective Technological Measures means those measures that, in the absence of proper authority, may not be circumvented under laws fulfilling obligations under Article 11 of the WIPO Copyright Treaty adopted on December 20, 1996, and/or similar international agreements.\nExceptions and Limitations means fair use, fair dealing, and/or any other exception or limitation to Copyright and Similar Rights that applies to Your use of the Licensed Material.\nLicensed Material means the artistic or literary work, database, or other material to which the Licensor applied this Public License.\nLicensed Rights means the rights granted to You subject to the terms and conditions of this Public License, which are limited to all Copyright and Similar Rights that apply to Your use of the Licensed Material and that the Licensor has authority to license.\nLicensor means the individual(s) or entity(ies) granting rights under this Public License.\nNonCommercial means not primarily intended for or directed towards commercial advantage or monetary compensation. For purposes of this Public License, the exchange of the Licensed Material for other material subject to Copyright and Similar Rights by digital file-sharing or similar means is NonCommercial provided there is no payment of monetary compensation in connection with the exchange.\nShare means to provide material to the public by any means or process that requires permission under the Licensed Rights, such as reproduction, public display, public performance, distribution, dissemination, communication, or importation, and to make material available to the public including in ways that members of the public may access the material from a place and at a time individually chosen by them.\nSui Generis Database Rights means rights other than copyright resulting from Directive 96/9/EC of the European Parliament and of the Council of 11 March 1996 on the legal protection of databases, as amended and/or succeeded, as well as other essentially equivalent rights anywhere in the world.\nYou means the individual or entity exercising the Licensed Rights under this Public License. Your has a corresponding meaning.\n\nSection 2 – Scope.\n\nLicense grant.\n\nSubject to the terms and conditions of this Public License, the Licensor hereby grants You a worldwide, royalty-free, non-sublicensable, non-exclusive, irrevocable license to exercise the Licensed Rights in the Licensed Material to:\n\nreproduce and Share the Licensed Material, in whole or in part, for NonCommercial purposes only; and\nproduce, reproduce, and Share Adapted Material for NonCommercial purposes only.\n\nExceptions and Limitations. For the avoidance of doubt, where Exceptions and Limitations apply to Your use, this Public License does not apply, and You do not need to comply with its terms and conditions.\nTerm. The term of this Public License is specified in Section 6(a).\nMedia and formats; technical modifications allowed. The Licensor authorizes You to exercise the Licensed Rights in all media and formats whether now known or hereafter created, and to make technical modifications necessary to do so. The Licensor waives and/or agrees not to assert any right or authority to forbid You from making technical modifications necessary to exercise the Licensed Rights, including technical modifications necessary to circumvent Effective Technological Measures. For purposes of this Public License, simply making modifications authorized by this Section 2(a)\n\nnever produces Adapted Material.\n\nDownstream recipients.\n\nOffer from the Licensor – Licensed Material. Every recipient of the Licensed Material automatically receives an offer from the Licensor to exercise the Licensed Rights under the terms and conditions of this Public License.\nNo downstream restrictions. You may not offer or impose any additional or different terms or conditions on, or apply any Effective Technological Measures to, the Licensed Material if doing so restricts exercise of the Licensed Rights by any recipient of the Licensed Material.\n\nNo endorsement. Nothing in this Public License constitutes or may be construed as permission to assert or imply that You are, or that Your use of the Licensed Material is, connected with, or sponsored, endorsed, or granted official status by, the Licensor or others designated to receive attribution as provided in Section 3(a)(1)(A)(i).\n\nOther rights.\n\nMoral rights, such as the right of integrity, are not licensed under this Public License, nor are publicity, privacy, and/or other similar personality rights; however, to the extent possible, the Licensor waives and/or agrees not to assert any such rights held by the Licensor to the limited extent necessary to allow You to exercise the Licensed Rights, but not otherwise.\nPatent and trademark rights are not licensed under this Public License.\nTo the extent possible, the Licensor waives any right to collect royalties from You for the exercise of the Licensed Rights, whether directly or through a collecting society under any voluntary or waivable statutory or compulsory licensing scheme. In all other cases the Licensor expressly reserves any right to collect such royalties, including when the Licensed Material is used other than for NonCommercial purposes.\n\n\nSection 3 – License Conditions.\nYour exercise of the Licensed Rights is expressly made subject to the following conditions.\n\nAttribution.\n\nIf You Share the Licensed Material (including in modified form), You must:\n\nretain the following if it is supplied by the Licensor with the Licensed Material:\n\nidentification of the creator(s) of the Licensed Material and any others designated to receive attribution, in any reasonable manner requested by the Licensor (including by pseudonym if designated);\na copyright notice;\na notice that refers to this Public License;\na notice that refers to the disclaimer of warranties;\na URI or hyperlink to the Licensed Material to the extent reasonably practicable;\n\nindicate if You modified the Licensed Material and retain an indication of any previous modifications; and\nindicate the Licensed Material is licensed under this Public License, and include the text of, or the URI or hyperlink to, this Public License.\n\nYou may satisfy the conditions in Section 3(a)(1) in any reasonable manner based on the medium, means, and context in which You Share the Licensed Material. For example, it may be reasonable to satisfy the conditions by providing a URI or hyperlink to a resource that includes the required information.\nIf requested by the Licensor, You must remove any of the information required by Section 3(a)(1)(A) to the extent reasonably practicable.\nIf You Share Adapted Material You produce, the Adapter’s License You apply must not prevent recipients of the Adapted Material from complying with this Public License.\n\n\nSection 4 – Sui Generis Database Rights.\nWhere the Licensed Rights include Sui Generis Database Rights that apply to Your use of the Licensed Material:\n\nfor the avoidance of doubt, Section 2(a)(1) grants You the right to extract, reuse, reproduce, and Share all or a substantial portion of the contents of the database for NonCommercial purposes only;\nif You include all or a substantial portion of the database contents in a database in which You have Sui Generis Database Rights, then the database in which You have Sui Generis Database Rights (but not its individual contents) is Adapted Material; and\nYou must comply with the conditions in Section 3(a) if You Share all or a substantial portion of the contents of the database.\n\nFor the avoidance of doubt, this Section 4 supplements and does not replace Your obligations under this Public License where the Licensed Rights include other Copyright and Similar Rights.\nSection 5 – Disclaimer of Warranties and Limitation of Liability.\n\nUNLESS OTHERWISE SEPARATELY UNDERTAKEN BY THE LICENSOR, TO THE EXTENT POSSIBLE, THE LICENSOR OFFERS THE LICENSED MATERIAL AS-IS AND AS-AVAILABLE, AND MAKES NO REPRESENTATIONS OR WARRANTIES OF ANY KIND CONCERNING THE LICENSED MATERIAL, WHETHER EXPRESS, IMPLIED, STATUTORY, OR OTHER. THIS INCLUDES, WITHOUT LIMITATION, WARRANTIES OF TITLE, MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, ABSENCE OF LATENT OR OTHER DEFECTS, ACCURACY, OR THE PRESENCE OR ABSENCE OF ERRORS, WHETHER OR NOT KNOWN OR DISCOVERABLE. WHERE DISCLAIMERS OF WARRANTIES ARE NOT ALLOWED IN FULL OR IN PART, THIS DISCLAIMER MAY NOT APPLY TO YOU.\nTO THE EXTENT POSSIBLE, IN NO EVENT WILL THE LICENSOR BE LIABLE TO YOU ON ANY LEGAL THEORY (INCLUDING, WITHOUT LIMITATION, NEGLIGENCE) OR OTHERWISE FOR ANY DIRECT, SPECIAL, INDIRECT, INCIDENTAL, CONSEQUENTIAL, PUNITIVE, EXEMPLARY, OR OTHER LOSSES, COSTS, EXPENSES, OR DAMAGES ARISING OUT OF THIS PUBLIC LICENSE OR USE OF THE LICENSED MATERIAL, EVEN IF THE LICENSOR HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH LOSSES, COSTS, EXPENSES, OR DAMAGES. WHERE A LIMITATION OF LIABILITY IS NOT ALLOWED IN FULL OR IN PART, THIS LIMITATION MAY NOT APPLY TO YOU.\nThe disclaimer of warranties and limitation of liability provided above shall be interpreted in a manner that, to the extent possible, most closely approximates an absolute disclaimer and waiver of all liability.\n\nSection 6 – Term and Termination.\n\nThis Public License applies for the term of the Copyright and Similar Rights licensed here. However, if You fail to comply with this Public License, then Your rights under this Public License terminate automatically.\nWhere Your right to use the Licensed Material has terminated under Section 6(a), it reinstates:\n\nautomatically as of the date the violation is cured, provided it is cured within 30 days of Your discovery of the violation; or\nupon express reinstatement by the Licensor.\n\nFor the avoidance of doubt, this Section 6(b) does not affect any right the Licensor may have to seek remedies for Your violations of this Public License.\nFor the avoidance of doubt, the Licensor may also offer the Licensed Material under separate terms or conditions or stop distributing the Licensed Material at any time; however, doing so will not terminate this Public License.\nSections 1, 5, 6, 7, and 8 survive termination of this Public License.\n\nSection 7 – Other Terms and Conditions.\n\nThe Licensor shall not be bound by any additional or different terms or conditions communicated by You unless expressly agreed.\nAny arrangements, understandings, or agreements regarding the Licensed Material not stated herein are separate from and independent of the terms and conditions of this Public License.\n\nSection 8 – Interpretation.\n\nFor the avoidance of doubt, this Public License does not, and shall not be interpreted to, reduce, limit, restrict, or impose conditions on any use of the Licensed Material that could lawfully be made without permission under this Public License.\nTo the extent possible, if any provision of this Public License is deemed unenforceable, it shall be automatically reformed to the minimum extent necessary to make it enforceable. If the provision cannot be reformed, it shall be severed from this Public License without affecting the enforceability of the remaining terms and conditions.\nNo term or condition of this Public License will be waived and no failure to comply consented to unless expressly agreed to by the Licensor.\nNothing in this Public License constitutes or may be interpreted as a limitation upon, or waiver of, any privileges and immunities that apply to the Licensor or You, including from the legal processes of any jurisdiction or authority.\n\n=======================================================================\nCreative Commons is not a party to its public licenses. Notwithstanding, Creative Commons may elect to apply one of its public licenses to material it publishes and in those instances will be considered the “Licensor.” The text of the Creative Commons public licenses is dedicated to the public domain under the CC0 Public Domain Dedication. Except for the limited purpose of indicating that material is shared under a Creative Commons public license or as otherwise permitted by the Creative Commons policies published at creativecommons.org/policies, Creative Commons does not authorize the use of the trademark “Creative Commons” or any other trademark or logo of Creative Commons without its prior written consent including, without limitation, in connection with any unauthorized modifications to any of its public licenses or any other arrangements, understandings, or agreements concerning use of licensed material. For the avoidance of doubt, this paragraph does not form part of the public licenses.\nCreative Commons may be contacted at creativecommons.org."
   },
   {
-    "objectID": "resources/10_resources.html",
-    "href": "resources/10_resources.html",
-    "title": "Week 10 Resources",
+    "objectID": "resources/01_resources.html",
+    "href": "resources/01_resources.html",
+    "title": "Week 1 Ressources",
+    "section": "",
+    "text": "References\n\nPosit Software, PBC. n.d. Positron Layout. Posit. https://positron.posit.co/layout.html."
+  },
+  {
+    "objectID": "resources/03_resources.html",
+    "href": "resources/03_resources.html",
+    "title": "Week 3 Resources",
+    "section": "",
+    "text": "DataCamp. 2022. Getting Started with R Cheat Sheet. DataCamp. https://www.datacamp.com/cheat-sheet/getting-started-r.\n\n\nDataCamp. 2026. Introduction to R. DataCamp. https://www.datacamp.com/courses/free-introduction-to-r.\n\n\nMcNeill, Mhairi. 2015. Base R: Cheatsheet. IQSS, Harvard University. https://iqss.github.io/dss-workshops/R/Rintro/base-r-cheat-sheet.pdf.\n\n\nWickham, Hadley, Mine Çetinkaya-Rundel, and Garrett Grolemund. 2023. “Introduction.” In R for Data Science: Import, Tidy, Transform, Visualize, and Model Data, 2nd ed., edited by Hadley Wickham, Mine Çetinkaya-Rundel, and Garrett Grolemund. O’Reilly. https://r4ds.hadley.nz/intro.html."
+  },
+  {
+    "objectID": "resources/05_resources.html",
+    "href": "resources/05_resources.html",
+    "title": "Week 5 Resources",
+    "section": "",
+    "text": "DataCamp. 2024. Intermediate Data Visualization with Ggplot2. DataCamp. https://app.datacamp.com/learn/courses/intermediate-data-visualization-with-ggplot2.\n\n\nDataCamp. 2025. Introduction to Data Visualization with Ggplot2. DataCamp. https://app.datacamp.com/learn/courses/introduction-to-data-visualization-with-ggplot2.\n\n\nPosit Software, PBC. 2024a. Data Tidying with Tidyr: Cheatsheet. Posit. https://rstudio.github.io/cheatsheets/html/tidyr.html.\n\n\nPosit Software, PBC. 2024b. Dates and Times with Lubridate: Cheatsheet. Posit. https://rstudio.github.io/cheatsheets/html/lubridate.html.\n\n\nPosit Software, PBC. 2024c. Factors with Forcats: Cheatsheet. Posit. https://rstudio.github.io/cheatsheets/html/factors.html.\n\n\nPosit Software, PBC. 2025a. Data Transformation with Dplyr: Cheatsheet. Posit. https://rstudio.github.io/cheatsheets/html/data-transformation.html.\n\n\nPosit Software, PBC. 2025b. Data Visualization with Ggplot2: Cheatsheet. Posit. https://rstudio.github.io/cheatsheets/html/data-visualization.html.\n\n\nPosit Software, PBC. 2025c. String Manipulation with Stringr: Cheatsheet. Posit. https://rstudio.github.io/cheatsheets/html/strings.html.\n\n\nPosit Software, PBC. n.d. Data Import with the Tidyverse: Cheatsheet. Posit. https://rstudio.github.io/cheatsheets/html/data-import.html.\n\n\nWickham, Hadley, Danielle Navarro, and Thomas Lin Pedersen. 2023. Ggplot2: Elegant Graphics for Data Analysis. 3rd ed. https://ggplot2-book.org/."
+  },
+  {
+    "objectID": "resources/07_resources.html",
+    "href": "resources/07_resources.html",
+    "title": "Week 7 Resources",
+    "section": "",
+    "text": "Bürkner, Paul-Christian. 2017. “Brms: An R Package for Bayesian Multilevel Models Using Stan.” Journal of Statistical Software 80: 1–28.\n\n\nCarpenter, Bob, Andrew Gelman, Matthew D. Hoffman, et al. 2017. “Stan: A Probabilistic Programming Language.” Journal of Statistical Software 76: 1–32. https://doi.org/10.18637/jss.v076.i01.\n\n\nGelfand, Alan E., Susan E. Hills, Amy Racine-Poon, and Adrian FM Smith. 1990. “Illustration of Bayesian Inference in Normal Data Models Using Gibbs Sampling.” Journal of the American Statistical Association 85 (412): 972–85. https://doi.org/10.1080/01621459.1990.10474968.\n\n\nGelfand, Alan E., and Adrian FM Smith. 1990. “Sampling-Based Approaches to Calculating Marginal Densities.” Journal of the American Statistical Association 85 (410): 398–409. https://doi.org/10.1080/01621459.1990.10476213.\n\n\nGelman, Andrew, John B. Carlin, Hal S. Stern, David B. Dunson, Aki Vehtari, and Donald B. Rubin. 2013a. “Basics of Markov Chain Simulation.” In Bayesian Data Analysis, 3rd ed. Chapman; Hall/CRC. https://sites.stat.columbia.edu/gelman/book/BDA3.pdf.\n\n\nGelman, Andrew, John B. Carlin, Hal S. Stern, David B. Dunson, Aki Vehtari, and Donald B. Rubin. 2013b. “Computationally Efficient Markov Chain Simulation.” In Bayesian Data Analysis, 3rd ed. Chapman; Hall/CRC. https://sites.stat.columbia.edu/gelman/book/BDA3.pdf.\n\n\nGelman, Andrew, John B. Carlin, Hal S. Stern, David B. Dunson, Aki Vehtari, and Donald B. Rubin. 2013c. “Introduction to Bayesian Computation.” In Bayesian Data Analysis, 3rd ed. Chapman; Hall/CRC. https://sites.stat.columbia.edu/gelman/book/BDA3.pdf.\n\n\nHoffman, Matthew D., and Andrew Gelman. 2014. “The No-u-Turn Sampler: Adaptively Setting Path Lengths in Hamiltonian Monte Carlo.” Journal of Machine Learning Research 15 (47): 1593–623. http://jmlr.org/papers/v15/hoffman14a.html.\n\n\nMarbleScience. 2021. “Monte Carlo Simulation.” YouTube. https://www.youtube.com/watch?v=7ESK5SaP-bc.\n\n\nMcElreath, Richard. 2020. “Markov Chain Monte Carlo.” In Statistical Rethinking: A Bayesian Course with Examples in r and STAN, 2nd ed. Chapman; Hall/CRC. https://doi.org/10.1201/9780429029608.\n\n\nMcElreath, Richard. 2026a. “Statistical Rethinking 2026 Lecture A08: MCMC and Item Response Models.” YouTube. https://www.youtube.com/watch?v=N_LRQUrdHag.\n\n\nMcElreath, Richard. 2026b. “Statistical Rethinking 2026 Lecture B01: Hamiltonian Monte Carlo.” YouTube. https://www.youtube.com/watch?v=7JHkq0l9p2M.\n\n\nMetropolis, Nicholas, Arianna W. Rosenbluth, Marshall N. Rosenbluth, Augusta H. Teller, and Edward Teller. 1953. “Equation of State Calculations by Fast Computing Machines.” The Journal of Chemical Physics 21 (6): 1087–92. https://doi.org/10.1063/1.1699114.\n\n\nMetropolis, Nicholas, and Stanislaw Ulam. 1949. “The Monte Carlo Method.” Journal of the American Statistical Association 44 (247): 335–41. https://doi.org/10.1080/01621459.1949.10483310.\n\n\nVehtari, Aki, Andrew Gelman, Daniel Simpson, Bob Carpenter, and Paul-Christian Bürkner. 2021. “Rank-Normalization, Folding, and Localization: An Improved \\(\\hat{R}\\) for Assessing Convergence of MCMC (with Discussion).” Bayesian Analysis 16 (2): 667–718. https://doi.org/10.1214/20-BA1221."
+  },
+  {
+    "objectID": "resources/09_resources.html",
+    "href": "resources/09_resources.html",
+    "title": "Week 9 Resources",
     "section": "",
     "text": "McElreath, Richard. 2020. Statistical Rethinking: A Bayesian Course with Examples in r and STAN. 2nd ed. Chapman; Hall/CRC. https://doi.org/10.1201/9780429029608."
   },
   {
-    "objectID": "resources/12_resources.html",
-    "href": "resources/12_resources.html",
-    "title": "Week 12 Resources",
+    "objectID": "resources/11_resources.html",
+    "href": "resources/11_resources.html",
+    "title": "Week 11 Resources",
     "section": "",
     "text": "McElreath, Richard. 2020. Statistical Rethinking: A Bayesian Course with Examples in r and STAN. 2nd ed. Chapman; Hall/CRC. https://doi.org/10.1201/9780429029608."
   },
   {
-    "objectID": "schedule.html",
-    "href": "schedule.html",
-    "title": "Schedule",
+    "objectID": "resources/13_resources.html",
+    "href": "resources/13_resources.html",
+    "title": "Week 13 Resources",
     "section": "",
-    "text": "Here’s your roadmap for the semester!\n\nClass\n\n Instructor-led lecture: concepts, theory and foundations.\n Hands-on exercises with guidance.\n\nHomework ()\n\nAssigned at the end of class.\nDue 7 days later (Mon → next Mon 13:30; Thu → next Thu 18:45)\n\nAdditional resources ()\n\nFurther readings and online learning resources\n\n\n\nSemester Schedule\n\n\n\nWeek\nTopic\nMonday\nThursday\nSlides\nExercise\nHomework\nResources\n\n\n\n\n1\nCourse Roadmap & Research Workflow\nFeb 09\nFeb 12\n\n\n\n\n\n\n\n\nBlock I: Scientific Programming Fundamentals\n\n\n\nWeek\nTopic\nMonday\nThursday\nSlides\nExercise\nHomework\nResources\n\n\n\n\n2\nReproducible Research with R, Quarto & Git\nFeb 16\nFeb 19\n\n\n\n\n\n\n3\nR Fundamentals: Data Types & Structures\nFeb 23\nFeb 26\n\n\n Mon Thu  \n\n\n\n4\nTidy Data: Wrangling & Visualization\nMar 02\nMar 05\n\n\n Mon Thu \n\n\n\n5\nReshaping, Merging & Data Visualization\nMar 09\nMar 12\n\n\n Mon Thu \n\n\n\n\n\n\nBlock II: The Logic of Bayesian Inference\n\n\n\nWeek\nTopic\nMonday\nThursday\nSlides\nExercise\nHomework\nResources\n\n\n\n\n6\nProbability, Simulation & Bayes’ Theorem\nMar 16\nMar 19\n\n\n Mon Thu \n\n\n\n7\nMarkov Chain Monte Carlo\nMar 23\nMar 26\n\n\n Mon Thu \n\n\n\n\n\n\nBlock III: Applied Data Analysis\n\n\n\nWeek\nTopic\nMonday\nThursday\nSlides\nExercise\nHomework\nResources\n\n\n\n\n8\nBivariate Linear Regression\nApr 13\nApr 16\n\n\nMon Thu \n\n\n\n9\nMultivariate Regression & Interactions\nApr 20\nApr 23\n\n\nMon Thu \n\n\n\n10\nModeling Binary Outcomes\nApr 27\nApr 30\n\n\n\n\n\n\n11\nFixed Effects & Within-Unit Inference\nMay 04\nMay 07\n\n\n\n\n\n\n12\nMultilevel Models & Partial Pooling\nMay 11\nMay 21\n\n\n\n\n\n\n13\nBeyond the Course: Applying What You’ve Learned\nMay 18\nMay 28\n\n\n\n\n\n\n14\nTake Home Exam\nMay 28 19:00 – June 05 23:59\nMay 28 19:00 – June 05 23:59"
+    "text": "McElreath, Richard. 2020. Statistical Rethinking: A Bayesian Course with Examples in r and STAN. 2nd ed. Chapman; Hall/CRC. https://doi.org/10.1201/9780429029608."
   },
   {
-    "objectID": "slides/week1.html#qmir-2026",
-    "href": "slides/week1.html#qmir-2026",
+    "objectID": "slides/images/COPYRIGHTS.html",
+    "href": "slides/images/COPYRIGHTS.html",
+    "title": "QMIR 2026",
+    "section": "",
+    "text": "Copyright and Usage Restrictions for University Assets\nImportant Notice: The R package code is licensed under the GNU General Public License v3.0. However, the following assets included in this package are the intellectual property of the University of Mannheim and are not covered by the GPL-3.0 license.\nThe logo of the University of Mannheim and the photo of the main palace are the exclusive property of the university, and their use is subject to strict conditions as outlined on the university’s homepage. The marketing rights are exclusively held by the university’s Service und Marketing GmbH.\n\nCopyright Holder: Universität Mannheim Service und Marketing GmbH\nCopyright Status: All Rights Reserved.\nPermitted Use: These assets are provided in this package for the official, work-related use of university staff and faculty (e.g., for presentations, posters, and publications) to create materials in line with the university’s corporate design. According to university policy, the use of the logo is strictly reserved for employees and, in specific cases, Ph.D. students.\nProhibited Use: Use of these assets by students (except for Ph.D. students on presentations and dissertations) and external partners is not permitted without prior, explicit authorization from the university’s Communications and Marketing department.\n\nFor a full overview of the university’s corporate design guidelines and official usage policies, please refer to the university’s official website. The brief descriptions provided here are for informational purposes only; the legally binding rules are those stated on the university’s website.\nBy using this package, you agree to abide by these terms and confirm that your use of the logo is in accordance with the university’s official policies."
+  },
+  {
+    "objectID": "slides/week10.html#sec-title",
+    "href": "slides/week10.html#sec-title",
     "title": "QMIR 2026",
     "section": "QMIR 2026",
-    "text": "QMIR 2026\nWeek 1: Course Roadmap & Research Workflow\n Tristan Muno            March 9, 2026"
+    "text": "QMIR 2026\n\n\nOpening. We continue with the same dataset and substantive story from Week 9.\nArc: formal overview of interactions → live application → canonical workflow recap.\nIn Week 9 we established that women’s parliamentary representation is associated with health spending after controlling for GDP and regime type. Today we ask whether that association is the same across both system types.\nThe data are synthetic and the DGP is known — the true interaction coefficient is β₃ = 0.10.\n\n\nWeek 10: Interactions\n Tristan Muno            April 27, 2026"
   },
   {
-    "objectID": "slides/week1.html#agenda",
-    "href": "slides/week1.html#agenda",
+    "objectID": "slides/week10.html#sec-goals",
+    "href": "slides/week10.html#sec-goals",
     "title": "QMIR 2026",
-    "section": "Agenda",
-    "text": "Agenda\n\nIntroduction\n\nAbout me\nAbout you\n\nCourse overview and expectations\n\nWhat you will learn\nWhat this course does not cover\nWhy the course is structured this way\n\nGetting started\n\nInstallation\nFirst look at Positron"
+    "section": "Week 10 Learning Goals",
+    "text": "Week 10 Learning Goals\n\n\nRead aloud. Three goals map onto two parts + summary.\nGoal 1 → Part I (formal theory); Goals 2–3 → Part II (application).\nThese goals build directly on Week 9: students already have the multivariate model and LOO-IC; today they extend it with an interaction.\n\n\nBy the end of today, you should be able to:\n\nSpecify a multiplicative interaction model and interpret the conditional marginal effect of women_parl as a function of reg_type (the moderator)\nExtract posterior marginal effects for the women-in-parliament–health-spending association separately for presidential and parliamentary systems\nCompare the interaction model against the additive model using Bayesian leave-one-out cross-validation (LOO-IC)"
   },
   {
-    "objectID": "slides/week1.html#survey",
-    "href": "slides/week1.html#survey",
+    "objectID": "slides/week10.html#sec-part1-intro",
+    "href": "slides/week10.html#sec-part1-intro",
     "title": "QMIR 2026",
-    "section": "Survey",
-    "text": "Survey\nPlease fill out the following survey:\ndertristan.limesurvey.net/qmir-2026-welcome"
+    "section": "When Effects Are Conditional",
+    "text": "When Effects Are Conditional\n\n\nThe key insight: not all associations are the same everywhere. The association between X and Y may depend on a third variable Z.\nReal political science logic: parliamentary systems concentrate budget authority in the legislature (budget sovereignty, party discipline). Presidential systems divide power across branches (executive vs legislature). So the composition of parliament — how many women — may matter more for spending outcomes in parliamentary systems.\n“A model without an interaction term is implicitly assuming the slope is constant across all levels of Z. That is a strong assumption. Test it before imposing it.”\nTransition: “We already have this dataset. We already have regime type. We just need to ask a different question of the same data.”\n\n\n\nDoes the association between female legislator share and health spending vary by regime type?\n\n\n\nLegislative composition theory: parliamentary systems concentrate budget authority in the legislature — party discipline is stronger, and the budget process is rooted in parliamentary sovereignty. Presidential systems divide power across branches, potentially weakening the translation of legislative preferences into policy.\n\n\n\n\n\nThe association between \\(X\\) (women in parliament) and \\(Y\\) (health spending) is not constant — it may change depending on \\(Z\\) (regime type). This is called moderation or association heterogeneity.\n\n“The slope of the women-in-parliament–health-spending association is steeper in parliamentary systems.”\n\n\n\n\n\n\n\n\n\nNote\n\n\nSame dataset as Week 9: \\(n = 120\\) country-years.\n\n\\(X\\) = Women in parliament (%)\n\\(Z\\) = Regime type (0 = presidential, 1 = parliamentary)\n\\(Y\\) = Health spending (% GDP)\n\nTrue slopes: Presidential = 0.08, Parliamentary = 0.08 + 0.10 = 0.18"
   },
   {
-    "objectID": "slides/week1.html#about-me",
-    "href": "slides/week1.html#about-me",
+    "objectID": "slides/week10.html#sec-interact-formal",
+    "href": "slides/week10.html#sec-interact-formal",
     "title": "QMIR 2026",
-    "section": "About me",
-    "text": "About me"
+    "section": "The Formal Interaction Model",
+    "text": "The Formal Interaction Model\n\n\nWalk through the partial derivatives carefully.\n∂μ/∂X = β₁ + β₃Z: “The slope of X (women in parliament) on Y (health spending) is a linear function of Z (regime type). When Z = 0 (presidential), the slope is β₁ = 0.08. When Z = 1 (parliamentary), the slope is β₁ + β₃ = 0.18.”\n∂μ/∂Z = β₂ + β₃X: “The regime-type gap in spending also depends on X. At zero women in parliament, being parliamentary adds β₂ = 1.5 pp. At 30% women, it adds β₂ + 30β₃.”\nConstitutive terms: “β₁ and β₂ are the conditional associations when the other modifier equals zero. They must be included. Omitting β₁ imposes β₁ = 0 — usually wrong.”\n\n\nWe augment the linear predictor with a product term:\n\\[\n\\mu_i = \\alpha + \\beta_1 X_i + \\beta_2 Z_i + \\beta_3 (X_i \\cdot Z_i)\n\\tag{1}\\]\n\nConditional marginal effects — both slopes are now functions of the other variable:\n\\[\n\\frac{\\partial \\mu}{\\partial X} = \\beta_1 + \\beta_3 Z \\qquad \\text{(women-in-parliament slope depends on regime type)}\n\\tag{2}\\]\n\\[\n\\frac{\\partial \\mu}{\\partial Z} = \\beta_2 + \\beta_3 X \\qquad \\text{(regime-type gap depends on women-in-parliament level)}\n\\tag{3}\\]\n\n\nTwo regression lines (when \\(Z\\) is binary):\n\n\\(Z = 0\\) (presidential): \\(\\mu = \\alpha + \\beta_1 X + \\beta_Z \\cdot \\text{GDP}\\)\n\\(Z = 1\\) (parliamentary): \\(\\mu = (\\alpha + \\beta_2) + (\\beta_1 + \\beta_3) X + \\beta_Z \\cdot \\text{GDP}\\)\n\nThe dummy shifts the intercept by \\(\\beta_2\\); the product shifts the slope of women in parliament by \\(\\beta_3\\)."
   },
   {
-    "objectID": "slides/week1.html#about-you",
-    "href": "slides/week1.html#about-you",
+    "objectID": "slides/week10.html#sec-posterior-me",
+    "href": "slides/week10.html#sec-posterior-me",
     "title": "QMIR 2026",
-    "section": "About you",
-    "text": "About you\n\nWhat name would you like us to call you?\nWhat natural (spoken) languages do you speak or are currently learning? (e.g., German, Spanish, Arabic – not programming languages)\nHow do you usually spend your time outside university? (This can be anything: a side job, vocational/civilian service, volunteering, sports, creative hobbies, gaming, family time – whatever is part of your life)"
+    "section": "Posterior Marginal Effects: Exact by Arithmetic",
+    "text": "Posterior Marginal Effects: Exact by Arithmetic\n\n\nThe key insight: the conditional marginal effect is a function of β₁ and β₃. Because we have full posterior draws for both, we can compute the marginal effect at any z by simple arithmetic — no approximation needed.\nFor every MCMC draw (β₁^(s), β₃^(s)), compute β₁^(s) + β₃^(s)*z directly. The resulting set of S values IS the posterior distribution of the conditional marginal effect at z.\n“This is not a minor technical point. It means posterior credible intervals for conditional marginal effects are exact — not approximate — as long as MCMC has converged.”\nThe same principle generalises: any quantity that is a function of parameters can be obtained by applying that function to each row of the posterior draws data frame.\n\n\nFor each of the \\(S\\) MCMC draws, compute the conditional marginal effect at a fixed value \\(z\\) of the moderator:\n\\[\n\\text{ME}^{(s)} = \\beta_1^{(s)} + \\beta_3^{(s)} \\cdot z\n\\tag{4}\\]\nThe resulting \\(\\{\\text{ME}^{(s)}\\}_{s=1}^S\\) is the posterior distribution of the marginal effect at \\(z\\) — obtained by ordinary arithmetic.\n\n\n\nView source\n# as_draws_df: one row per MCMC draw, one column per parameter\npost &lt;- as_draws_df(fit_interact)\npost |&gt;\n  mutate(\n    me_parliamentary = b_women_parl + # marginal effect at Z = 1 (parliamentary)\n      `b_women_parl:reg_type`,\n    me_presidential = b_women_parl # marginal effect at Z = 0 (presidential)\n  )\n\n\n\n\n\n\n\n\n\n\n\nNote\n\n\nThis generalises immediately: compute any quantity that is a function of posterior draws using ordinary arithmetic — predicted probabilities, differences in predicted values, ratios, non-linear transformations. No additional packages or approximations needed."
   },
   {
-    "objectID": "slides/week1.html#about-you-continued",
-    "href": "slides/week1.html#about-you-continued",
+    "objectID": "slides/week10.html#sec-diag-linearity",
+    "href": "slides/week10.html#sec-diag-linearity",
     "title": "QMIR 2026",
-    "section": "About you continued",
-    "text": "About you continued"
+    "section": "Diagnostic I: Linearity of Moderation",
+    "text": "Diagnostic I: Linearity of Moderation\n\n\nThe interaction model assumes the heterogeneous effect is LINEAR in Z. “The slope increases by β₃ for each unit increase in Z.” This is a strong assumption.\nBrambor et al. (2006) show this assumption is violated in roughly half of empirical studies.\nDiagnostic: compare linear fit vs. LOESS within each Z-group. If LOESS and the linear fit track closely, linearity holds. If they diverge substantially, the interaction may be non-linear.\nFor binary Z: linearity of moderation means the slope changes by a constant amount between groups. This is inherently satisfied for a binary moderator — there are only two levels.\nFor continuous Z: this diagnostic matters. We’ll see this in future weeks.\n\n\n\nThe interaction model imposes that the marginal effect of \\(X\\) is linear in \\(Z\\):\n\\[\n\\frac{\\partial \\mu}{\\partial X} = \\beta_1 + \\beta_3 Z \\quad \\text{(linear in } Z\\text{)}\n\\tag{5}\\]\n\n\n\nWhen \\(Z\\) is binary (our case today): the assumption is trivially satisfied — there are only two groups and we estimate one slope per group.\n\n\n\n\nWhen \\(Z\\) is continuous (a future concern): check by comparing the linear fit with a flexible nonparametric smoother (LOESS) within groups of \\(Z\\):\n\n\n\n\n\n\n\n\n\nFigure 1: Linearity check for a moderator: Across groups (\\(Z = 0\\), \\(Z = 1\\)), check if line is appropriate representation of relationship"
   },
   {
-    "objectID": "slides/week1.html#what-you-will-learn",
-    "href": "slides/week1.html#what-you-will-learn",
+    "objectID": "slides/week10.html#sec-continuous-interact",
+    "href": "slides/week10.html#sec-continuous-interact",
     "title": "QMIR 2026",
-    "section": "What you will learn",
-    "text": "What you will learn\n\nHow to build a reproducible, open-source research workflow – integrating data, code, analysis, and writing into a transparent scientific process\nHow to use statistical models to learn from data – understanding what models assume, what they estimate, how they update our beliefs, and how to interpret results responsibly\nHow to communicate empirical results clearly and responsibly – through well-structured reports, visualizations, and reproducible documents"
+    "section": "Continuous Moderators: Interpreting the Interaction Coefficient",
+    "text": "Continuous Moderators: Interpreting the Interaction Coefficient\n\n\nWhen Z is continuous, the marginal effect of X is a continuously changing function of Z.\nAt Z = 0: ME = β₁. At Z = 1: ME = β₁ + β₃. At Z = z: ME = β₁ + β₃ * z.\nGeometrically: the relationship between X and Y is a family of lines, each line corresponding to a fixed value of Z. The slope increases (or decreases) continuously as Z changes — like twisting a flat surface into a ramp.\nIn the 2D cross-section you draw X vs Y at three fixed values of Z (low, mid, high). Three parallel lines? No interaction. Fan-shaped divergence? Positive β₃.\n\n\nWhen \\(Z\\) is continuous, the conditional marginal effect \\(\\frac{\\partial \\mu}{\\partial X} = \\beta_1 + \\beta_3 Z\\) is a continuous linear function of \\(Z\\):\n\nAt \\(Z = 0\\): the effect of \\(X\\) is \\(\\beta_1\\)\nAt \\(Z = 1\\): the effect of \\(X\\) is \\(\\beta_1 + \\beta_3\\)\nAt \\(Z = z\\): the effect of \\(X\\) is \\(\\beta_1 + \\beta_3 z\\) — the slope changes continuously as \\(Z\\) changes\n\n\n\n\n\n\n\n\n\n\nFigure 2: Predicted Y vs. X at three fixed values of a continuous moderator Z (low = -1, median = 0, high = +1), using hypothetical coefficients β₁ = 0.5, β₃ = 0.8. The fan-shaped divergence is the visual signature of a positive interaction term."
   },
   {
-    "objectID": "slides/week1.html#what-this-course-does-not-cover",
-    "href": "slides/week1.html#what-this-course-does-not-cover",
+    "objectID": "slides/week10.html#sec-diag-support",
+    "href": "slides/week10.html#sec-diag-support",
     "title": "QMIR 2026",
-    "section": "What this course does not cover",
-    "text": "What this course does not cover\n\nData collection and research design – we work with existing datasets and do not cover survey design, measurement strategies, or fieldwork (the university offers dedicated courses and resources in these areas)\nCausal inference methods – we focus on analyzing and interpreting associations between variables rather than formal causal identification (specialized courses cover causal inference in depth)\nSubstantive political theory or normative argumentation – we use real political science examples, but the focus is methodological and conceptual training rather than developing theoretical frameworks"
+    "section": "Diagnostic II: Common Support",
+    "text": "Diagnostic II: Common Support\n\n\nCommon support: we need sufficient variation in X within each level of Z. If X only takes high values when Z=0 and low values when Z=1, we are extrapolating, not estimating.\n“We cannot estimate the slope for parliamentary systems at 5% women in parliament if no parliamentary country in our data has 5% women. The model will extrapolate — and extrapolation is unreliable.”\nDiagnostic: density/histogram of women_parl, faceted by regime type. If the distributions overlap substantially, we have common support. If they are disjoint, we are in trouble.\nFor today’s binary Z case: the setup uses rbinom(n, 1, 0.55) so parliamentary and presidential systems are roughly evenly split. Both groups see the full range of women_parl. Common support is satisfied by design.\n\n\nCommon support: the estimation of conditional marginal effects is credible only where women in parliament (%) has sufficient variation within each regime-type group (presidential vs. parliamentary).\n\nDiagnostic: compare the distribution of women in parliament across regime-type groups.\n\n\n\n\n\n\n\n\nFigure 3: Common support check: compare the Women in Parliament (%) distribution across regime-type groups. Left: good overlap — we can estimate marginal effects for both presidential and parliamentary systems across the full range. Right: poor overlap — estimates in the non-overlapping regions are extrapolations, not estimates.\n\n\n\n\n\n\nRule: if the women-in-parliament distributions barely overlap across presidential and parliamentary countries, the conditional marginal effects in the non-overlapping region are extrapolations, not estimates. Report honestly."
   },
   {
-    "objectID": "slides/week1.html#why-the-course-is-structured-this-way",
-    "href": "slides/week1.html#why-the-course-is-structured-this-way",
+    "objectID": "slides/week10.html#sec-constitutive",
+    "href": "slides/week10.html#sec-constitutive",
     "title": "QMIR 2026",
-    "section": "Why the course is structured this way",
-    "text": "Why the course is structured this way"
+    "section": "The Constitutive Terms Rule",
+    "text": "The Constitutive Terms Rule\n\n\nThis is a common and consequential mistake. Students will make it.\n“If you use health_spend ~ women_parl:reg_type instead of health_spend ~ women_parl * reg_type, you are constraining β₁ = 0 and β₂ = 0. You are saying: ‘In presidential systems, women in parliament has no association with health spending. With zero women in parliament, there is no difference between systems.’ This is almost never true.”\n“Always use *. The model with constitutive terms is more general; the model without them is a special case with two hard constraints. Let the data decide.”\nIn brms: y ~ x * z expands to y ~ x + z + x:z automatically. Use the * notation as shorthand and as a reminder of the requirement.\n\n\nAlways include the main effects (\\(X\\), \\(Z\\)) when specifying an interaction \\((X \\cdot Z)\\):\n\n\n\n\n\n\n\n\n\nImportant\n\n\nWrong: omitting constitutive terms\nbrm(y ~ x:z, ...)\n# implicitly: β₁ = 0 and β₂ = 0\n# At Z = 0: no effect of X\n# At X = 0: no effect of Z\n# These are strong constraints, usually false\n\n\n\n\n\n\n\n\n\n\n\n\nNote\n\n\nCorrect: include all constitutive terms\nbrm(y ~ x * z, ...)\n# equivalent to: y ~ x + z + x:z\n# β₁, β₂, β₃ all estimated freely\n# No artificial constraints imposed\n\n\n\n\n\n\n\nIn brms: y ~ x * z is the recommended syntax. It expands to y ~ x + z + x:z automatically and documents the constitutive terms requirement.\nPrior for \\(\\beta_3\\): \\(\\text{Normal}(0, 2)\\) is a sensible weakly informative prior. It says: “Before seeing the data, the slope difference between groups is probably between \\(-6\\) and \\(+6\\) — no moderation is the prior expectation.”"
   },
   {
-    "objectID": "slides/week1.html#why-the-course-is-structured-this-way-1",
-    "href": "slides/week1.html#why-the-course-is-structured-this-way-1",
+    "objectID": "slides/week10.html#sec-part2-live",
+    "href": "slides/week10.html#sec-part2-live",
     "title": "QMIR 2026",
-    "section": "Why the course is structured this way",
-    "text": "Why the course is structured this way\n\nAn (toy) example of a fully integrated, reproducible research pipeline in action: Quarto manuscript\nWe will build up to this step by step, learning and integrating each piece along the way"
+    "section": "Part II: Applied — Live Coding",
+    "text": "Part II: Applied — Live Coding\n→ Switch to Positron. Follow along in lab/week10_lab.qmd.\nIn this application we fit fit_interact using health_spend ~ women_parl * reg_type + gdp_pc on the same df dataset from Week 9, then compare it against fit_multi (no interaction) via LOO-IC."
   },
   {
-    "objectID": "slides/week1.html#why-the-course-is-structured-this-way-2",
-    "href": "slides/week1.html#why-the-course-is-structured-this-way-2",
+    "objectID": "slides/week10.html#sec-workflow",
+    "href": "slides/week10.html#sec-workflow",
     "title": "QMIR 2026",
-    "section": "Why the course is structured this way",
-    "text": "Why the course is structured this way\n\nAdmittedly overkill for simple tasks, but it provides a scalable, FOSS toolbox for complex projects, advanced models, and fully reproducible workflows\n\nBuilds a foundation in quantitative methods and data science that’s useful across disciplines and careers, helping you understand research from other fields while gaining essential data skills"
+    "section": "The Canonical Workflow",
+    "text": "The Canonical Workflow\n\n\nRead through the eight steps. This workflow applies regardless of model type.\n“Every analysis you submit must have these eight elements — bivariate, multivariate, interaction, logistic (Week 11), multilevel (Week 12). The likelihood changes; the workflow does not.”\nSpend a few minutes on Q&A. Ask students: “Which step felt least familiar today?” and plan accordingly.\n\n\nThe same eight-step workflow applies to every model, regardless of complexity:\n\n\n\n\n\n\n\n\n\n\nStep\nWhat you do\nWhy\n\n\n\n\n1. DAG + Estimand\nDraw the causal graph; state the quantity of interest\nClarifies what you’re estimating and what to control for\n\n\n2. Data Summary\nVisualise and numerically describe your variables\nCheck for patterns, outliers, and whether an interaction is plausible\n\n\n3. Formal Model\nWrite out \\(\\mathcal{L}\\) and all priors before coding\nForces precision; makes assumptions explicit\n\n\n4. Prior Predictive\nSimulate \\(Y\\) from priors; check plausibility\nCatches implausible priors before MCMC\n\n\n5. Fit with brms\nRun brm() with explicit priors\nObtains posterior draws\n\n\n6a. MCMC Diagnostics\nCheck \\(\\hat{R}\\), ESS, traceplots\nConfirms convergence before interpreting\n\n\n6b. PPC\nRun pp_check()\nChecks model adequacy\n\n\n7. Interpretation\nPosterior summaries, credible intervals, marginal effects\nAnswers the research question\n\n\n8. Limitations\nState what could still bias results\nScientific honesty"
   },
   {
-    "objectID": "slides/week1.html#installation",
-    "href": "slides/week1.html#installation",
+    "objectID": "slides/week10.html#sec-goals-check",
+    "href": "slides/week10.html#sec-goals-check",
     "title": "QMIR 2026",
-    "section": "Installation",
-    "text": "Installation\nInstallation guide"
+    "section": "Learning Goals: Check",
+    "text": "Learning Goals: Check\n\n\nRead through quickly. Connect each goal to the part of today’s session where it was covered.\nHomework: students will apply the full workflow including an interaction term to a real dataset.\nWeek 11 preview: generalized linear models — the Gaussian likelihood is replaced by Bernoulli. The workflow stays the same.\n\n\n\nBy the end of today, you should be able to:\n\n✓ Specify a multiplicative interaction model and interpret \\(\\partial \\mu / \\partial \\text{women\\_parl} = \\beta_1 + \\beta_3 \\cdot \\text{reg\\_type}\\) as conditional on regime type (Part I)\n✓ Extract posterior marginal effects for parliamentary and presidential systems using as_draws_df() arithmetic — correctly, without a delta method (Part II)\n✓ Compare the interaction model against the additive model using LOO-IC and interpret elpd_diff relative to se_diff (Part II)\n\n\n\n\n\n\n\n\n\n\nImportant\n\n\nHomework (due before next session): Apply the full 8-step workflow to a new dataset, fitting and interpreting an interaction model. Instructions and GitHub Classroom link on the course website. The take-home exam will expect the same workflow."
   },
   {
-    "objectID": "slides/week1.html#first-glance-at-positron",
-    "href": "slides/week1.html#first-glance-at-positron",
+    "objectID": "slides/week10.html#bonus-caching-model-calls-in-quarto",
+    "href": "slides/week10.html#bonus-caching-model-calls-in-quarto",
     "title": "QMIR 2026",
-    "section": "First glance at Positron",
-    "text": "First glance at Positron\nPositron documentation"
+    "section": "Bonus: Caching Model Calls in Quarto",
+    "text": "Bonus: Caching Model Calls in Quarto\nThe problem: Every time you render your Quarto document, all code chunks re-execute — including expensive model calls. This gets annoying fast.\nThe solution: Caching!\nGlobal caching (in your YAML header):\nexecute:\n  cache: true\nLocal caching (per chunk):\n#| cache: true\nfit &lt;- lm(y ~ x, data = df)\nQuarto stores results in a _cache/ folder and only reruns chunks when their code or dependencies change.\n⚠️ Don’t forget: Add _cache/ to your .gitignore!\n# .gitignore\n_cache/\nCache folders can be large and are machine-specific — no need to commit them."
+  },
+  {
+    "objectID": "slides/week10.html#sec-references",
+    "href": "slides/week10.html#sec-references",
+    "title": "QMIR 2026",
+    "section": "References",
+    "text": "References"
   },
   {
     "objectID": "slides/week3.html#qmir-2026",
@@ -2349,7 +2447,7 @@
     "href": "slides/week9.html#sec-title",
     "title": "QMIR 2026",
     "section": "QMIR 2026",
-    "text": "QMIR 2026\n\n\nOpening. Take-home exam details have just been covered (separate 10-minute block). Now: the main session.\nArc: formal overview of control variables → live application → formal overview of interactions → live application → canonical workflow recap.\nThe research question runs as a single substantive story throughout all four parts: we start with a simple bivariate question, add controls (GDP and regime type), then ask whether regime type moderates the legislative-representation association.\nThe data are synthetic and the DGP is known. Emphasize that this is pedagogically deliberate: we know the truth and check whether our models recover it.\nThe unified story will recur in the homework and take-home exam.\n\n\nWeek 9: Multivariate Regression and Interactions\n Tristan Muno            April 20, 2026"
+    "text": "QMIR 2026\n\n\nOpening. Take-home exam details have just been covered (separate 10-minute block). Now: the main session.\nArc: formal overview of control variables → live application → formal overview of interactions → live application → canonical workflow recap.\nThe research question runs as a single substantive story throughout all four parts: we start with a simple bivariate question, add controls (GDP and regime type), then ask whether regime type moderates the legislative-representation association.\nThe data are synthetic and the DGP is known. Emphasize that this is pedagogically deliberate: we know the truth and check whether our models recover it.\nThe unified story will recur in the homework and take-home exam.\n\n\nWeek 9: Multivariate Regression and Interactions\n Tristan Muno            April 27, 2026"
   },
   {
     "objectID": "slides/week9.html#sec-exam",
