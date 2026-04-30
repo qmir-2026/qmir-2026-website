@@ -2,7 +2,16 @@
 title: Week 11 Resources
 nocite: |
   @gelman2013bda-ch16
+  @burkner2017brms
   @king1989unifying
+  @humphreys2015mixing
+  @stegmueller2013many
+  @jackman2000estimation
+  @grimmer2010bayesian
+  @linzer2015global
+  @lauderdale2014supreme
+  @claassen2019estimating
+  @clinton2004statistical
 ---
 
 ::: {#refs}
