@@ -1,7 +1,8 @@
 ---
 title: Week 11 Resources
 nocite: |
-  @mcelreath2020statistical
+  @gelman2013bda-ch16
+  @king1989unifying
 ---
 
 ::: {#refs}
