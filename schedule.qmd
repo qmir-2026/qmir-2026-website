@@ -54,7 +54,7 @@ Here's your roadmap for the semester!
 ::: {.callout-note icon=false}
 ## {{< fa file-pen >}} Take Home Exam
 
-**Window:** May 28 19:00 — June 11 23:59 (two weeks)
+**Window:** May 28 19:00 — June 11 23:59 (three weeks)
 
 **Distribution:** via GitHub Classroom, like the weekly homework assignments.
 
