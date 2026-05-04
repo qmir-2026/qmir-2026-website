@@ -474,7 +474,7 @@ p_trace_int <- mcmc_trace(
   ) +
   labs(title = "Traceplots: Interaction Model")
 
-p_ppc_int <- pp_check(fit_interact, ndraws = 50) +
+p_ppc_int <- pp_check(fit_interact, ndraws = 500) +
   theme_bw() +
   theme(panel.grid.minor = element_blank()) +
   labs(title = "Posterior Predictive Check")

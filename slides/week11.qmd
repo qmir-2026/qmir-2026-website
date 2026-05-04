@@ -36,6 +36,7 @@ library(brms) # Bayesian models via Stan
 library(bayesplot) # MCMC diagnostics and posterior plots
 library(patchwork) # combine ggplot panels
 library(modelsummary) # regression tables
+library(ggpubr) # nice theme
 
 # ─────────────────────────────────────────────────────────────────────────────
 # SHARED COLOURS
@@ -109,17 +110,17 @@ education <- rnorm(n, 0, 1)
 gender <- rbinom(n, 1, 0.5) # 0 = female, 1 = male
 
 pol_interest_latent <- 5 +
-  1.2 * income +
-  0.8 * education +
-  0.3 * gender +
-  rnorm(n, 0, 1.2)
+  1.8 * income +
+  1.2 * education +
+  0.5 * gender +
+  rnorm(n, 0, 1.0)
 pol_interest <- as.integer(round(pmin(pmax(pol_interest_latent, 0), 10)))
 
-eta <- -0.2 +
-  0.12 * pol_interest +
-  0.45 * income +
-  0.55 * education +
-  0.20 * gender
+eta <- -2.5 +
+  0.45 * pol_interest +
+  1.20 * income +
+  1.40 * education +
+  0.60 * gender
 prob_voted <- plogis(eta)
 voted <- rbinom(n, 1, prob_voted)
 
@@ -204,7 +205,7 @@ fit_adjusted <- brm(
 
 By the end of today, you should be able to:
 
-1. Explain why **OLS is structurally wrong for binary outcomes** and how the GLM framework resolves this via the Bernoulli likelihood and a link function
+1. Explain why **Linear models are structurally wrong for binary outcomes** and how the GLM framework resolves this via the Bernoulli likelihood and a link function
 2. **Fit and interpret a Bayesian logistic regression** with `brms` — including priors on the logit scale, posterior coefficient summaries, and predicted probability ribbons
 3. Assess model quality using **posterior predictive checks, confusion matrix, ROC/AUC, and LOO** — and compare models using Bayesian leave-one-out cross-validation
 
@@ -247,20 +248,25 @@ Before we can use the Bernoulli likelihood, we need to understand why the Gaussi
 
 # Part 1: Conceptual Foundations {#sec-part1}
 
-## Why Not Just Use OLS? {#sec-ols-problem .smaller}
+## Why Linear Models Fail for Binary Outcomes {#sec-ols-problem .smaller}
 
-*1.1 Why OLS Fails for Binary Outcomes*
+::: {style="font-size: 0.72em"}
+*1.1 Why Linear Models Fail for Binary Outcomes*
+:::
 
 ::: notes
-- "The linear probability model (LPM) is OLS applied to a 0/1 outcome. It produces predicted values interpreted as probabilities. But it has three structural problems that are not fixable with better data or better priors."
+- "The linear probability model (LPM) is the linear model applied to a 0/1 outcome. It produces predicted values interpreted as probabilities. But it has three structural problems that are not fixable with better data or better priors."
 - The problems are not a frequentist vs. Bayesian issue — a Bayesian model with `family = gaussian()` on binary data is equally broken.
 - Key insight: these problems are properties of the Gaussian + linear model combination, not of any inferential framework.
 :::
 
-Apply OLS to a binary outcome $Y_i \in \{0, 1\}$: the **Linear Probability Model (LPM)**.
+::: {style="font-size: 0.72em"}
+Apply a **linear model** to a binary outcome $Y_i \in \{0, 1\}$: this is sometimes called the Linear Probability Model.
+:::
 
 . . .
 
+::: {style="font-size: 0.75em"}
 **Problem 1 — Out-of-range predictions**:
 
 $$
@@ -268,33 +274,38 @@ $$
 $$ {#eq-lpm}
 
 For extreme values of $X$, $\hat{\mu}_i \notin [0, 1]$ — a "probability" above 1 or below 0 is nonsensical.
+:::
 
 . . .
 
+::: {style="font-size: 0.75em"}
 **Problem 2 — Heteroskedasticity by construction**:
 
 For a Bernoulli outcome, $\text{Var}(Y_i \mid X_i) = \mu_i(1 - \mu_i)$, which depends on $\mu_i$.
 OLS assumes constant variance (Gauss-Markov A3); that assumption is structurally violated *regardless of the data*.
+:::
 
 . . .
 
+::: {style="font-size: 0.75em"}
 **Problem 3 — Residuals are not Normal**:
 
 Binary $Y$ residuals take only two values ($1 - \hat{\mu}_i$ and $-\hat{\mu}_i$) — the Gaussian likelihood (A6) is mechanically wrong.
+:::
 
 ---
 
-## The LPM in Practice {#sec-lpm-plot .smaller}
+## The Linear Model Applied to Binary Data {#sec-lpm-plot .smaller}
 
 ::: notes
 - Show the scatter and ask students: "What happens at pol_interest = 0 or pol_interest = 10?"
-- The OLS line exits [0, 1] on both sides — this is the visual proof of Problem 1.
+- The linear model line exits [0, 1] on both sides — this is the visual proof of Problem 1.
 - "A Bayesian model with family = gaussian() would produce exactly the same impossible predictions. The problem is the Gaussian + linear predictor combination, not the inferential framework."
 :::
 
 ```{r}
 #| label: fig-lpm
-#| fig-cap: "OLS applied to a binary outcome: the linear fit exits [0, 1] for extreme predictor values."
+#| fig-cap: "A linear model applied to a binary outcome: predicted values exit [0, 1] for extreme values of the predictor."
 #| dpi: 500
 #| echo: true
 fit_lpm <- lm(voted ~ pol_interest, data = df)
@@ -315,7 +326,7 @@ tibble(pol_interest = seq(-2, 13, by = 0.1)) |>
   annotate(
     "text",
     x = 11,
-    y = 1.06,
+    y = 1.1,
     label = "P > 1",
     colour = col_2,
     size = 3.5
@@ -330,7 +341,7 @@ tibble(pol_interest = seq(-2, 13, by = 0.1)) |>
   ) +
   theme_bw() +
   labs(
-    title = "Linear Probability Model: Predictions Exit [0, 1]",
+    title = "Linear Model on Binary Outcome: Predictions Exit [0, 1]",
     x = "Political Interest (0–10)",
     y = "Predicted P(voted = 1)"
   )
@@ -494,7 +505,6 @@ tibble(eta = seq(-4, 4, length.out = 400)) |>
 
 ::: {style="font-size: 0.72em"}
 - Both produce nearly identical results in practice — the choice rarely matters
-- Rule of thumb: probit coefficients $\times 1.6 \approx$ logit coefficients (useful for reading applied papers)
 - `family = bernoulli()` uses logit by default; `family = bernoulli(link = "probit")` switches
 :::
 
@@ -710,10 +720,10 @@ pp_check(fit_adjusted, type = "bars", ndraws = 50)
 
 . . .
 
-- **Dark bar**: observed proportion of `voted = 1`
-- **Grey bars**: proportions in posterior-replicated datasets
+- **Light bar**: observed proportion of `voted = 1`
+- **Dark points and segments**: mean proportions in posterior-replicated datasets with 95% credible intervals
 
-A well-calibrated model produces grey bars clustered tightly around the dark bar.
+A well-calibrated model produces grey bars clustered tightly around the light bar.
 
 . . .
 
@@ -825,7 +835,6 @@ Pareto-smoothing stabilises the importance weights to make the approximation rel
 ::: {.callout-note style="font-size: 0.75em"}
 **Same `loo()` call for all `brms` models** — Gaussian, Bernoulli, multilevel.
 This is the key selling point: one tool, one workflow, all model types.
-Students will use it again in Week 12.
 :::
 
 # Part 2: Applied Walkthrough — Voter Turnout {#sec-part10}
@@ -851,6 +860,28 @@ education ──→ pol_interest ──→ voted
           ↗                    ↑
 gender ────────────────────────┘
 ```
+
+. . .
+
+**Variable definitions:**
+
+| Symbol | Substantive variable | Scale |
+|---|---|---|
+| $Y_i$ | `voted` — whether individual $i$ voted | Binary $\{0, 1\}$ |
+| $X_i^{(1)}$ | `pol_interest` — political interest | Ordinal 0–10 |
+| $X_i^{(2)}$ | `income` — standardised household income | Continuous |
+| $X_i^{(3)}$ | `education` — standardised years of education | Continuous |
+| $X_i^{(4)}$ | `gender` — 0 = female, 1 = male | Binary |
+
+. . .
+
+**Estimand:** The association between political interest and the probability of voting, after adjusting for the confounding influence of income, education, and gender:
+
+$$
+\tau = E\!\left[P(Y_i = 1 \mid X_i^{(1)} = x + 1,\, X_i^{(2)},\, X_i^{(3)},\, X_i^{(4)}) - P(Y_i = 1 \mid X_i^{(1)} = x,\, X_i^{(2)},\, X_i^{(3)},\, X_i^{(4)})\right]
+$$
+
+Because the link function is non-linear, $\tau$ varies with the baseline value $x$ — use predicted probabilities (subpart 2.10) for substantive interpretation.
 
 ---
 
@@ -887,6 +918,102 @@ df |>
     y = "Proportion"
   )
 ```
+
+---
+
+## 2.3 Model Formalization {#sec-step2a .smaller}
+
+*Workflow Step 3 — Formal Model Specification*
+
+::: notes
+- "Before writing a single line of brms code, write down the model. This forces you to make three decisions explicit: what distribution generates your outcome, which variables enter the linear predictor, and which link function connects the two."
+- "The posterior notation at the bottom tells you exactly how many parameters you have — and therefore exactly how many priors you need to write."
+- "In the take-home exam, I expect you to produce something that looks like this table before fitting anything."
+- Walk through each row top to bottom.
+:::
+
+::: {style="font-size: 0.82em"}
+
+**Step 1 — Outcome distribution (model family):**
+
+$$
+Y_i \sim \text{Bernoulli}(\mu_i)
+$$
+
+$Y_i \in \{0, 1\}$ is binary $\Rightarrow$ Bernoulli family. No $\sigma$ to estimate: variance $= \mu_i(1 - \mu_i)$ is determined by the mean.
+
+. . .
+
+**Step 2 — Linear predictor (variable structure):**
+
+$$
+\eta_i = \alpha + \beta_1\, X_i^{(1)} + \beta_2\, X_i^{(2)} + \beta_3\, X_i^{(3)} + \beta_4\, X_i^{(4)}
+$$
+
+Four predictors, no interactions $\Rightarrow$ five parameters: one intercept $\alpha$ and four slopes $\beta_1, \ldots, \beta_4$.
+
+. . .
+
+**Step 3 — Link function:**
+
+$$
+\mu_i = \text{logistic}(\eta_i) = \frac{1}{1 + e^{-\eta_i}}
+$$
+
+The logistic function maps $\eta_i \in \mathbb{R}$ to $\mu_i \in (0, 1)$.
+
+. . .
+
+**Step 4 — Posterior (proportional form):**
+
+$$
+p(\alpha, \beta_1, \beta_2, \beta_3, \beta_4 \mid \mathbf{Y}, \mathbf{X}) \;\propto\; L(\mathbf{Y}, \mathbf{X} \mid \alpha, \boldsymbol{\beta}) \;\times\; p(\alpha)\, p(\beta_1)\, p(\beta_2)\, p(\beta_3)\, p(\beta_4)
+$$
+
+Five parameters $\Rightarrow$ five priors to specify on the next slide.
+
+:::
+
+---
+
+## 2.3 Prior Specification {#sec-step2b .smaller}
+
+*Workflow Step 3 — Prior Specification*
+
+::: notes
+- "The posterior notation on the previous slide told us we need five priors. Here they are."
+- "All priors are on the logit scale. Normal(0, 1.5) on the intercept covers the range (0.05, 0.95) on the probability scale — genuine uncertainty. Normal(0, 1) on each slope says 'most predictors have modest effects' — a unit increase in a standardised predictor rarely shifts the log-odds by more than ±2."
+- "These are the same priors we use in the brm() call. The model spec and the code should be consistent — always write the spec first."
+:::
+
+Given the model formalized on the previous slide, the five priors are:
+
+$$
+\begin{aligned}
+\alpha      &\sim \text{Normal}(0,\; 1.5) \\[4pt]
+\beta_1     &\sim \text{Normal}(0,\; 1) \quad [\text{pol\_interest}] \\[4pt]
+\beta_2     &\sim \text{Normal}(0,\; 1) \quad [\text{income}] \\[4pt]
+\beta_3     &\sim \text{Normal}(0,\; 1) \quad [\text{education}] \\[4pt]
+\beta_4     &\sim \text{Normal}(0,\; 1) \quad [\text{gender}]
+\end{aligned}
+$$ {#eq-priors-adjusted}
+
+. . .
+
+**Rationale:**
+
+::: {style="font-size: 0.82em"}
+- $\alpha \sim \text{Normal}(0, 1.5)$: on the logit scale, the 95% interval $(-2.94, +2.94)$ maps to probabilities $(0.05, 0.95)$ — genuine prior uncertainty about the baseline turnout rate
+- $\beta_j \sim \text{Normal}(0, 1)$: a slope of $\pm 2$ log-odds per unit is already a very large effect; this prior is moderately regularising without being informative about direction
+- Verify both choices with a prior predictive check (subpart 2.4)
+:::
+
+. . .
+
+::: {.callout-note style="font-size: 0.75em"}
+In `brms`: `prior(normal(0, 1.5), class = "Intercept")` and `prior(normal(0, 1), class = "b")`.
+The `class = "b"` prior applies to **all** slope coefficients simultaneously — consistent with the identical $\text{Normal}(0, 1)$ specification above.
+:::
 
 ---
 
@@ -1079,6 +1206,11 @@ pp_check(fit_adjusted, type = "bars", ndraws = 50) +
 - Remind students: coefficients are in log-odds. They are honest but not directly interpretable as probability changes — that's the purpose of the predicted probability plot in Step 9.
 :::
 
+
+:::: {.columns}
+
+::: {.column width="55%"}
+::: {style="font-size: 0.6em"}
 ```{r}
 #| label: tbl-step8-coefs
 #| tbl-cap: "Posterior coefficient summaries (log-odds scale) with 95% credible intervals. The pol_interest coefficient shrinks substantially from the naive to the adjusted model — confirming the DAG's confounding prediction."
@@ -1088,10 +1220,11 @@ modelsummary(
   shape = term ~ model + statistic
 )
 ```
+:::
+:::
 
-. . .
-
-::: {.callout-important style="font-size: 0.78em"}
+::: {.column width="45%"}
+::: {.callout-important style="font-size: 0.72em"}
 **What you CAN read from this table:**
 
 - **Sign**: direction of association (positive = higher X → higher probability of Y = 1)
@@ -1102,6 +1235,9 @@ modelsummary(
 - **Magnitude as probability change**: the marginal effect is non-linear — a coefficient of 0.12 does NOT mean "0.12 pp increase in turnout probability per unit of political interest"
 - **Effect size in any intuitive unit**: use predicted probabilities (subpart 2.10) for substantive interpretation
 :::
+:::
+
+::::
 
 ---
 
@@ -1129,7 +1265,8 @@ brms_condeff <- conditional_effects(
 )
 
 plot(brms_condeff, plot = FALSE)[[1]] +
-  labs(x = "Political Interest Index")
+  labs(x = "Political Interest Index") +
+  theme_pubr()
 ```
 
 ::: {.callout-note style="font-size: 0.78em"}
@@ -1212,14 +1349,18 @@ roc_df |>
 - Continuity callout: same call again in Week 12 for pooled vs. partially pooled models.
 :::
 
+:::: {.columns}
+
+::: {.column width="52%"}
 ```{r}
 #| label: step11-loo
 loo(fit_naive, fit_adjusted)
 ```
+:::
 
-. . .
+::: {.column width="48%"}
 
-Reading the output:
+**Reading the output:**
 
 ::: {style="font-size: 0.82em"}
 1. **`elpd_loo`** per model — higher = better out-of-sample predictive performance
@@ -1227,11 +1368,13 @@ Reading the output:
 3. **Comparison table** — `elpd_diff` and `se_diff`: meaningful when $|\text{elpd_diff}| \gtrsim 2 \times \text{se_diff}$
 :::
 
-. . .
-
 ::: {.callout-note style="font-size: 0.75em"}
 **Continuity**: same `loo()` call, same interpretation, in Week 12 — comparing pooled vs. partially pooled multilevel models.
 :::
+
+:::
+
+::::
 
 # Summary {#sec-summary}
 
@@ -1273,43 +1416,18 @@ The same eight-step workflow applies to **every** model:
 ::: {style="font-size: 0.82em"}
 By the end of today, you should be able to:
 
-1. ✓ Explain why OLS is structurally wrong for binary outcomes (out-of-range predictions, heteroskedasticity, non-Normal residuals) and how the GLM framework resolves this via Bernoulli likelihood + link function (subparts 1.1–1.4)
+1. ✓ Explain why Linear models are structurally wrong for binary outcomes (out-of-range predictions, heteroskedasticity, non-Normal residuals) and how the GLM framework resolves this via Bernoulli likelihood + link function (subparts 1.1–1.4)
 
 2. ✓ Fit and interpret a Bayesian logistic regression with `brms` — including weakly informative priors on the logit scale, posterior coefficient summaries, and predicted probability ribbons (subparts 1.5–1.8, steps 2.5–2.10)
 
 3. ✓ Assess model quality using posterior predictive checks, confusion matrix, ROC/AUC, and LOO — and compare models using Bayesian leave-one-out cross-validation (subpart 1.9, steps 2.8–2.12)
 :::
 
-. . .
-
-::: {.callout-important style="font-size: 0.78em"}
-**Homework (due before next session)**: Apply the full 8-step workflow to a new dataset, fitting and interpreting a Bayesian logistic regression. GitHub Classroom link on the course website.
-:::
-
 ---
 
 ## Course Evaluation Survey {#sec-survey .smaller}
 
-Your feedback matters — it shapes this course and future iterations.
 
-. . .
-
-Please take 5 minutes at the end of today (or this week) to complete the **official course evaluation survey**.
-
-. . .
-
-The survey is **anonymous** and covers:
-
-- Quality of teaching and materials
-- Pace and difficulty level
-- What worked well and what could be improved
-
-. . .
-
-::: {.callout-note style="font-size: 0.82em"}
-Honest, constructive feedback — including critical feedback — is genuinely appreciated.
-The evaluation results are shared with the department and influence course design.
-:::
 
 ---
 
