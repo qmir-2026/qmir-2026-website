@@ -58,7 +58,7 @@ Here's your roadmap for the semester!
 
 **Distribution:** via GitHub Classroom, like the weekly homework assignments.
 
-**Submission:** the version of your repository at the moment the deadline passes (i.e., your last push before June 11 23:59) will be graded.
+**Submission:** the version of your repository at the moment the deadline passes (i.e., your last push before June 18 23:59) will be graded.
 
 **What to expect:** you will receive a dataset, contextual background, and a research question, and are expected to conduct a full empirical analysis on your own — covering data exploration, model formulation and justification, estimation, and interpretation — submitted as a reproducible repository with a rendered PDF.
 
