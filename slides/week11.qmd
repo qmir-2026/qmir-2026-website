@@ -841,6 +841,9 @@ This is the key selling point: one tool, one workflow, all model types.
 
 ## Research Question and Causal Structure {#sec-rq .smaller}
 
+:::: {.columns}
+
+::: {.column width="45%"}
 *2.1 Research Question and Causal Structure*
 
 *Workflow Step 1 — DAG + Estimand*
@@ -860,28 +863,27 @@ education ──→ pol_interest ──→ voted
           ↗                    ↑
 gender ────────────────────────┘
 ```
+:::
 
-. . .
-
+::: {.column width="55%"}
 **Variable definitions:**
 
+::: {style="font-size: 0.75em"}
 | Symbol | Substantive variable | Scale |
-|---|---|---|
+|---|----------------------|--------|
 | $Y_i$ | `voted` — whether individual $i$ voted | Binary $\{0, 1\}$ |
 | $X_i^{(1)}$ | `pol_interest` — political interest | Ordinal 0–10 |
 | $X_i^{(2)}$ | `income` — standardised household income | Continuous |
 | $X_i^{(3)}$ | `education` — standardised years of education | Continuous |
 | $X_i^{(4)}$ | `gender` — 0 = female, 1 = male | Binary |
 
-. . .
+**Estimand:** The association between political interest and the probability of voting, after adjusting for the confounding influence of income, education, and gender.
 
-**Estimand:** The association between political interest and the probability of voting, after adjusting for the confounding influence of income, education, and gender:
+:::
 
-$$
-\tau = E\!\left[P(Y_i = 1 \mid X_i^{(1)} = x + 1,\, X_i^{(2)},\, X_i^{(3)},\, X_i^{(4)}) - P(Y_i = 1 \mid X_i^{(1)} = x,\, X_i^{(2)},\, X_i^{(3)},\, X_i^{(4)})\right]
-$$
+:::
 
-Because the link function is non-linear, $\tau$ varies with the baseline value $x$ — use predicted probabilities (subpart 2.10) for substantive interpretation.
+::::
 
 ---
 
@@ -932,7 +934,7 @@ df |>
 - Walk through each row top to bottom.
 :::
 
-::: {style="font-size: 0.82em"}
+::: {style="font-size: 0.75em"}
 
 **Step 1 — Outcome distribution (model family):**
 
@@ -941,9 +943,11 @@ Y_i \sim \text{Bernoulli}(\mu_i)
 $$
 
 $Y_i \in \{0, 1\}$ is binary $\Rightarrow$ Bernoulli family. No $\sigma$ to estimate: variance $= \mu_i(1 - \mu_i)$ is determined by the mean.
+:::
 
 . . .
 
+::: {style="font-size: 0.75em"}
 **Step 2 — Linear predictor (variable structure):**
 
 $$
@@ -951,9 +955,11 @@ $$
 $$
 
 Four predictors, no interactions $\Rightarrow$ five parameters: one intercept $\alpha$ and four slopes $\beta_1, \ldots, \beta_4$.
+:::
 
 . . .
 
+::: {style="font-size: 0.75em"}
 **Step 3 — Link function:**
 
 $$
@@ -961,9 +967,11 @@ $$
 $$
 
 The logistic function maps $\eta_i \in \mathbb{R}$ to $\mu_i \in (0, 1)$.
+:::
 
 . . .
 
+::: {style="font-size: 0.75em"}
 **Step 4 — Posterior (proportional form):**
 
 $$
@@ -971,8 +979,8 @@ p(\alpha, \beta_1, \beta_2, \beta_3, \beta_4 \mid \mathbf{Y}, \mathbf{X}) \;\pro
 $$
 
 Five parameters $\Rightarrow$ five priors to specify on the next slide.
-
 :::
+
 
 ---
 
@@ -986,23 +994,25 @@ Five parameters $\Rightarrow$ five priors to specify on the next slide.
 - "These are the same priors we use in the brm() call. The model spec and the code should be consistent — always write the spec first."
 :::
 
+::: {style="font-size: 0.75em"}
 Given the model formalized on the previous slide, the five priors are:
 
 $$
 \begin{aligned}
-\alpha      &\sim \text{Normal}(0,\; 1.5) \\[4pt]
-\beta_1     &\sim \text{Normal}(0,\; 1) \quad [\text{pol\_interest}] \\[4pt]
-\beta_2     &\sim \text{Normal}(0,\; 1) \quad [\text{income}] \\[4pt]
-\beta_3     &\sim \text{Normal}(0,\; 1) \quad [\text{education}] \\[4pt]
-\beta_4     &\sim \text{Normal}(0,\; 1) \quad [\text{gender}]
+\alpha      &\sim \text{Normal}(0,\; 1.5) \\
+\beta_1     &\sim \text{Normal}(0,\; 1) \quad [\text{pol_interest}] \\
+\beta_2     &\sim \text{Normal}(0,\; 1) \quad [\text{income}] \\
+\beta_3     &\sim \text{Normal}(0,\; 1) \quad [\text{education}] \\ 
+\beta_4     &\sim \text{Normal}(0,\; 1) \quad [\text{gender}] \\
 \end{aligned}
 $$ {#eq-priors-adjusted}
+:::
 
 . . .
 
+::: {style="font-size: 0.75em"}
 **Rationale:**
 
-::: {style="font-size: 0.82em"}
 - $\alpha \sim \text{Normal}(0, 1.5)$: on the logit scale, the 95% interval $(-2.94, +2.94)$ maps to probabilities $(0.05, 0.95)$ — genuine prior uncertainty about the baseline turnout rate
 - $\beta_j \sim \text{Normal}(0, 1)$: a slope of $\pm 2$ log-odds per unit is already a very large effect; this prior is moderately regularising without being informative about direction
 - Verify both choices with a prior predictive check (subpart 2.4)
@@ -1012,7 +1022,7 @@ $$ {#eq-priors-adjusted}
 
 ::: {.callout-note style="font-size: 0.75em"}
 In `brms`: `prior(normal(0, 1.5), class = "Intercept")` and `prior(normal(0, 1), class = "b")`.
-The `class = "b"` prior applies to **all** slope coefficients simultaneously — consistent with the identical $\text{Normal}(0, 1)$ specification above.
+The `class = "b"` prior applies to **all** slope coefficients simultaneously -- consistent with the identical $\text{Normal}(0, 1)$ specification above.
 :::
 
 ---
