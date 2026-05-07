@@ -61,7 +61,7 @@ Both components must be passed in order to fulfill the *Studienleistung* require
 
 The final examination consists of a **take-home exam**, currently scheduled for:
 
-**May 28, 19:00 — June 05, 23:59**
+**May 28, 19:00 — June 11 23:59**
 
 The exam will be distributed via GitHub. You will receive a dataset and a problem description for a cumulative data analysis project.
 
@@ -69,7 +69,6 @@ You must submit a complete project repository (project folder) via GitHub. The r
 
 - Fully documented and reproducible code  
 - A rendered PDF file presenting your results (structured similarly to a data, methods, and analysis section of a research paper)  
-- All relevant LLM chat histories, if AI tools were used
 - A statutory declaration according to the [University's guidelines](https://www.sowi.uni-mannheim.de/media/Fakultaeten/sowi/Dokumente/Studiengangsmanagement/Eigenstaendigkeitserklaerung_Statutory_Declaration.pdf)
 
 The version of the repository available on GitHub at the moment the deadline passes will be evaluated.
