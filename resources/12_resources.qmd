@@ -1,7 +1,13 @@
 ---
 title: Week 12 Resources
 nocite: |
-  @mcelreath2020statistical
+  @stegmueller2013many
+  @gelman2013bda-ch5
+  @mcelreath2020rethinking-ch13
+  @burkner2017advanced
+  @burkner2017brms
+  @mcelreath2026rethinking-B02
+  @mcelreath2026rethinking-B03
 ---
 
 ::: {#refs}
