@@ -46,7 +46,7 @@ Here's your roadmap for the semester!
 | 10 | Interactions | Apr 27 | Apr 30 | [<i class="fa fa-chalkboard" style="color: black; font-weight: bold;"></i>](slides/week10.qmd) | [<i class="fa fa-code" style="color: black; font-weight: bold;"></i>](lab/week10_lab.qmd) | <span class="hw-visible"> Mon [<i class="fa fa-laptop-code" style="color: black; font-weight: bold;"></i>](https://classroom.github.com/a/fYsza2Mp)<br>Thu [<i class="fa fa-laptop-code" style="color: black; font-weight: bold;"></i>](https://classroom.github.com/a/fjDyxChq)<br>Sol [<i class="fa fa-laptop-code" style="color: darkgreen; font-weight: bold;"></i>](https://github.com/qmir-2026/hw-w10) | [<i class="fa fa-book" style="color: black; font-weight: bold;"></i>](resources/10_resources.qmd) |
 | 11 | Modeling Binary Outcomes | May 04 | May 07 | [<i class="fa fa-chalkboard" style="color: black; font-weight: bold;"></i>](slides/week11.qmd) | [{{< fa code >}}]{style="color: lightgray"} | <span class="hw-visible"> Mon [<i class="fa fa-laptop-code" style="color: black; font-weight: bold;"></i>](https://classroom.github.com/a/x40XSInP)<br>Thu [<i class="fa fa-laptop-code" style="color: black; font-weight: bold;"></i>](https://classroom.github.com/a/verxmbWv) | [<i class="fa fa-book" style="color: black; font-weight: bold;"></i>](resources/11_resources.qmd) |
 | 12 | Multilevel Models & Partial Pooling | May 11 | May 21 |  [<i class="fa fa-chalkboard" style="color: black; font-weight: bold;"></i>](slides/week12.qmd)  | [{{< fa code >}}]{style="color: lightgray"} | <span class="hw-visible"> Mon [<i class="fa fa-laptop-code" style="color: black; font-weight: bold;"></i>](https://classroom.github.com/a/Ce6KXjja)<br>Thu [<i class="fa fa-laptop-code" style="color: black; font-weight: bold;"></i>](https://classroom.github.com/a/nfVJwbeZ) | [<i class="fa fa-book" style="color: black; font-weight: bold;"></i>](resources/12_resources.qmd) |
-| 13 | Beyond the Course: Applying What You've Learned | May 18 | May 28 | [{{< fa chalkboard >}}]{style="color: lightgray"} | [{{< fa code >}}]{style="color: lightgray"} | [{{< fa laptop-code >}}]{style="color: lightgray"} | <i class="fa fa-book" style="color: lightgray; font-weight: bold;"></i> |
+| 13 | Beyond the Course: Applying What You've Learned | May 18 | May 28 | [<i class="fa fa-chalkboard" style="color: black; font-weight: bold;"></i>](slides/week13.qmd) | [{{< fa code >}}]{style="color: lightgray"} | [{{< fa laptop-code >}}]{style="color: lightgray"} | <i class="fa fa-book" style="color: lightgray; font-weight: bold;"></i> |
 
 #### Take Home Exam
 
@@ -61,5 +61,5 @@ Here's your roadmap for the semester!
 
 **What to expect:** you will receive a dataset, contextual background, and a research question, and are expected to conduct a full empirical analysis on your own — covering data exploration, model formulation and justification, estimation, and interpretation — submitted as a reproducible repository with a rendered PDF.
 
-Detailed grading criteria and the late submission policy will be announced together with the exam.
+Detailed grading criteria will be provided together with the exam.
 :::
